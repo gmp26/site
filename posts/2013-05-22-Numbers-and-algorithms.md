@@ -15,7 +15,6 @@ tags: NA1, NA2, NA3, NA4, NA5, NA6
 NA1        Interesting number sequences Primes, square, fib, triangle
 
 NA2        Primality testing            Notions of complexity for different tests
-           testing
 
 NA3        Finding factors              Highest common factors
                                         Prime factorisation - existence and uniqueness

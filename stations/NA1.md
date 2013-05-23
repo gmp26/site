@@ -1,11 +1,14 @@
 ---
 id: NA1
 title: Interesting Number Sequences
+lines: NA
 ---
 
-#Interesting Number Sequences
+#NA1
+##Interesting Number Sequences
 
 * Primes
 * Squares
 * Fibonacci
 * Triangles
+
