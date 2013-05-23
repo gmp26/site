@@ -9,6 +9,15 @@ pre code {
     color: black;
 }
 
+table .odd {
+    background-color: #dde;
+}
+
+/* home page list of recent blogs */
+ul.noindent {
+    margin-left:0;
+}
+
 .site-logo {
     float:left;
     padding-right:10px;
