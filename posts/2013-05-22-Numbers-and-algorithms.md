@@ -1,7 +1,6 @@
 ---
-title: Numbers and Algorithms Line
-layout: line
 id: NA
+title: Numbers and Algorithms
 tags: NA1, NA2, NA3, NA4, NA5, NA6
 ---
 % Numbers and Algorithms Line
