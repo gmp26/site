@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>CamMathsEd $title$</title>
+
+        <link rel="stylesheet" type="text/css" href="/css/bootswatch/cosmo.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>  
+        <script>
+            $$(document).ready(function(){
+                $$("#menu-$title$").addClass("active");
+            }); 
+        </script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <img class="site-logo" src="images/cmep-logo.png" alt="CMEP logo">
+                    <a class="brand" href="/index.html"><small>Cambridge Mathematics Education Project</small></a>
+                    <ul class="nav">
+                        <li id="menu-Home"><a href="/index.html">Home</a></li>
+                        <li id="menu-About"><a href="/about.html">About</a></li>
+                        <li id="menu-Posts"><a href="/posts.html">Posts</a></li>
+                        <li id="menu-Tags"><a href="/tags.html">Tags</a></li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li><a href="https://github.com/organizations/CMEPorg"><img src="/images/github.png" style="margin:0 5px 0 0" />GitHub</a></li>
+                        <li><a href="http://www.twitter.com/CamMathsEd"><img src="images/twitter.png" style="margin:0 5px 0 0" />Twitter</a></li>
+                        <li><a href="http://www.linkedin.com/pub/CamMathsEd"><img src="/images/linkedin.png" style="margin:0 5px 0 0" />LinkedIn</a></li>
+                        <li><a href="/rss.xml"><img src="/images/rss.png" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            $body$
+        </div>
+
+        <script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+    </body>
+</html>

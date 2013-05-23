@@ -1,0 +1,6 @@
+*.swp
+site
+site.o
+site.hi
+_*
+posts/
