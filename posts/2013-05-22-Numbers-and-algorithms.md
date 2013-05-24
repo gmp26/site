@@ -4,9 +4,8 @@ title: Numbers and Algorithms
 tags: NA1, NA2, NA3, NA4, NA5, NA6
 ---
 
-# Numbers and algorithms^[Revision 1.0, sfh, 22Jan2013]
 
-## Throughout there may be many possibilities for optional computer use
+## Throughout there may be many possibilities for optional computer use^[Revision 1.0, sfh, 22Jan2013]
 
 -----      ---------------------------- ----------------------------------------------            
 NA1        Interesting number sequences Primes, square, fib, triangle

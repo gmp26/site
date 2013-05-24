@@ -13,6 +13,14 @@ table .odd {
     background-color: #dde;
 }
 
+h1 {
+    line-height: 45px;
+}
+
+h2 {
+    line-height: 35px;
+}
+
 /* home page list of recent blogs */
 ul.noindent {
     margin-left:0;

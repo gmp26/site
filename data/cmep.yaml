@@ -1,0 +1,519 @@
+%YAML 1.2
+
+# CMEP structure
+#
+# This is a computer readable transliteration of the files on Camtools
+# as of Snapshot of 24th May 2013. 
+#
+# I'll split it into individual files at some point.
+# 
+---
+
+lines:
+    NA:
+        title: Numbers and Algorithms
+        colour: darkgreen
+    G:
+        title: Geometry
+        colour: red
+    C:
+        title: Calculus
+        colour: yellow
+        notes: 
+            - Fundamentals of Calculus
+            - Note the distinction between tools, objects and concepts
+            - Lots of good applications from mechanics and probability
+
+    E:
+        title: Equations
+        colour: darkBlue
+        notes:
+            - Throughout make links between sketches and equations
+            - Basics of the solutions of equations
+    F:
+        title: Functions
+        colour: midGreen
+    A:
+        title: Algebra
+        colour: puce
+
+    FC:
+        title: Functions and Calculus
+        colour: [darkGreen, yellow]
+
+    AC:
+        title: Algebra and Calculus
+        colour: [darkGreen, yellow, puce]
+
+    CX:
+        title: Complex Numbers
+        colour: orange
+
+    DE: 
+        title: Differential Equations
+        colour: black
+
+    V:
+        title: Vectors
+        colour: pink
+
+#
+# Describe station dependencies on other stations and on milestones 
+# (from the Route Map v1.0)
+#
+# A milestone is a dependency that is not also a station
+# 
+dependencies:
+    NA1: null
+    NA2: NA1
+    NA3: NA2
+    NA4: NA3
+    NA5: NA4
+    NA6: NA5
+    G1: null
+    EG2: G1
+    EG3: EG2
+    G4: EG3
+    G5: G4
+    G6: G5
+    G7: G6
+    G8: G7
+    G9: G8
+    G10: G9
+    C1: null
+    C2: C1
+    C3: C2
+    C4: C3
+    C5: C4
+    C6: C5
+    C7: [C6, F3]
+    C8: C7
+    CG1: [G4, C3]
+    CG2: [G5, C5]
+    E1: null
+    E2: E1
+    E3: E2
+    E4: [E3, CG1]
+    E5: E4
+    E6: E5
+    E7: E6
+    E8: E7
+    E9: E8
+    A1: null
+    A2: A1
+    A3: A2
+    A4: A3
+    A5: A4
+    A6: A5
+    A7: A6
+    A8: A7
+    AE1: [E6, A4]
+    F1: null
+    F2: F1
+    F3: F2
+    F4: F3
+    FC1: [AE1, F4, C8]
+    FC2: FC1
+    FC3: FC2
+    AC1: [FC3, A7]
+    AC2: [AC1]
+    AC3: [AC2]
+    AC4: [AC3]
+    CX: [G8, E3]
+    DE: [AE1]
+    V: G8
+
+#
+# in parallel
+#
+parallel:
+    EG2: [E2, G2]
+    EG3: [E3, G3]
+
+#
+# aliases
+#
+aliases:
+    FC1: [F5, C9]
+    FC2: [F6, C10]
+    FC3: [F7, C11]
+
+#
+# stations have content
+#
+stations:
+    #
+    # do not list milestones like CG1, CG2, AE1 here
+    #
+    NA1:
+        title: Interesting number sequences
+        topics:
+            - Primes
+            - Square numbers
+            - Fibonacci
+            - Triangle numbers
+
+    NA2:
+        title: Primality testing,
+        topics:
+            - Notions of complexity for different tests
+
+    NA3:
+        title: Finding factors
+        topics: 
+            - Highest common factors
+            - Prime factorisation - existence  and uniqueness
+            - Euclid's algorithm
+
+    NA4:
+        title: Modular arithmetic
+        topics:
+            - Remainders and modular arithmetic
+            - Inverses mod p
+
+    NA5:
+        title: Theorems about primes                    
+        topics:
+            - Fermat's little theorem
+            - Fermat-Euler and other gems
+            - Links to RSA crypography
+
+    NA6:        
+        title: Algorithms                   
+        topics:
+            - Multiplication algorithms
+            - Sorting algorithms,
+            - Complexity and implementation
+
+
+    C1:
+        title: The what and why of calculus
+        topics:
+            - Tangents and areas
+            - Basics of differentiation
+            - Note relationship to speed, time problems
+            - Expression for derivative
+    C2:
+        title: Derivatives of polynomials
+        topics:
+            - Finding derivatives from first principles
+    C3:
+        title: Differentiation
+        topics:
+            - Finding tangents and normals at a point
+
+    C4:
+        title: Stationary points and points of inflection
+        topics:
+            - For general polynomials
+
+    C5:
+        title: Inverses of differentiation and applications
+        topics:
+            - Integration defined as inverse to differentiation
+            - Fundamental theorem of calculus
+            - Integrals of polynomials
+            - Definite and indefinite integration
+            - Area under a curve
+            - Integration as method to find areas under curves
+            - Geometrical understanding of the fund. theorem of calculus
+            - Trapezium methods and integration
+            - Volumes of solids with rotational symmetry
+
+    C6:
+        title: Differentiation and integration of known functions from first principles
+        topics:
+            - sin(x) and cos(x) small values
+            - calculus of trig functions from first principles
+            - Stress that these are difficult to work out directly
+
+    C7:
+        title: Calculus on composites - differentials
+        topics:
+            - Calculus of sums, products, functions of functions
+            - Implicit differentiation differentiation
+
+    C8:
+        title: Calculus on composites - integration
+        topics:
+            - Integration by parts
+            - Integration by substitution
+
+    F1:
+        title: What and why of functions
+        theme: Pre-calculus
+        topics:
+            - Examples and non-examples
+            - Essential terminology
+            - Circles as f(x,y)=1
+
+    F2:
+        title: Key properties and graphing
+        topics:
+            - Appreciation of relationship between graphical and algebraic 
+              relationships for continuous functions                      
+            - Trig functions                                              
+            - Polynomials                                                 
+            - Modulus
+            - Examples for physics such as speed-time
+            - Important questions (bounded, behaviour for large/small x etc)
+
+    F3:
+        title: Working with functions
+        topics:
+            - Composition, transformation, inverses, iteration
+            - Representing with functions                     
+            - Properties such as convex, linearity.
+
+    F4:
+        title: Important functions
+        topics:
+            - Trig, polynomials, modulus                                   
+            - Realisation that complicated functions are often compounds of
+              simpler functions                                            
+
+    G1:
+        title: Motivation for geometry beyond KS4
+        thread: Geometry pre-calculus
+        topics:
+            - Recap of known facts about geometry                                
+            - Note importance of geometry in engineering, math physics and other 
+              areas                                                              
+            - Stress that geometrical objects will now be described              
+              algebraically. 
+            - Understand the key geometrical properties of 2D shapes and solids                                                  
+            - Stress importance of Descartes 
+
+    G2:
+        title: The link between algebra and geometry        
+        topics:
+            - Understand that many known geometrical objects may be described as 
+              regions of R2 or R3 bounded by lines and planes                   
+            - Cartesian coordinate grids and distances                          
+            - Algebraic descriptions of circles , ?planes, ?conics              
+            - Understand that solutions of linear simultaneous equations
+              correspond to intersections.                                      
+            - Understanding that certain shapes are much easier to describe than others.                                                           
+
+    G3:
+        title: Simultaneous equations and inequalities       
+        topics:
+            - Both multiple linear and linear/quadratic
+
+    G4:
+        title: Differentiation
+        thread: Calculus and Geometry
+        topics:
+            - Finding tangents and normals at a point
+
+    G5:
+        title: Triangle geometry
+        thread: Calculus and Geometry
+        topics: 
+            - sin and cos as coordinates of point on unit circle
+            - sine and cosine rules, areas                      
+
+    G6:
+        title: Circle geometry
+        thread: Calculus and Geometry
+        topics:
+            - conics(?), review of circle theorems             
+            - radians                                        
+            - Arc length and areas of circles, sectors       
+            - Finding normals and tangent lines to circles   
+            - Understanding of sin(x) and cos(x) for small x 
+
+    G7:
+        title: Inverses of differentiation and applications       
+        thread: Calculus and Geometry
+        topics:
+            - Integration defined as inverse to differentiation         
+            - Fundamental theorem of calculus                           
+            - Integrals of polynomials                                  
+            - Definite and indefinite integration                       
+            - Area under a curve                                        
+            - Integration as method to find areas under curves          
+            - Geometrical understanding of the fund. theorem of calculus
+            - Trapezium methods and integration                         
+            - Volumes of solids with rotational symmetry 
+
+    G8:
+        title: Polar coordinates
+        thread: Further geometry   
+        topics:
+            - Understanding that coordinate system is a choice
+            - Geometry of cardioids, spirals etc              
+
+    G9:
+        title: 3D geometry
+        thread: Further geometry   
+        topics:
+            - Equations of planes, spheres, spheres in cartesian coordinates
+
+    G10:
+        title: Spherical geometry
+        thread: Further geometry   
+        topics:
+            - Spherical polar coordinates                                   
+            - Parallel lines and geodesics on spheres                       
+            - Spherical triangles
+
+    FC1:
+        title: Discovery of exponential and logarithm
+        topics:
+            - Finding functions given a set of desired properties
+            - Posing the questions 'is there a function which is its own derivative'
+              and 'is there a function whose derivative is $\frac{1}{x}$'
+
+    FC2:
+        title: Calculus of functions
+        topics:
+            - Concepts of differentials and integrals as functions of a function
+
+    FC3:
+        title: More important functions
+        topics: 
+            - Inverse trig functions and rational functions
+            - Mobius stuff?
+
+    AC1:
+        title: The what and why of power series
+        topics:
+        
+    AC2:
+        title: Power series of key functions
+        topics:
+            - Maclaurin
+        
+    AC3:
+        title: Finding power series from general functions
+        topics:
+            - sin, cos, exp, ln binomial theorem
+        
+    AC4:
+        title: Hyperbolic functions and inverses
+        topics:
+            - Taylors
+
+    A1:
+        title: Basic algebraic manipulation
+        topics:
+            - Surds
+            - Difference of 2 squares
+            - Rationalising the denominator
+            - Algebra on different number systems (?)
+
+    A2:
+        title: Binomial expansion
+        topics: 
+            - Binomial expansion for natural powers
+
+    A3: 
+        title: Laws of indices
+        topics:
+            - For any powers
+
+    A4:
+        title: Exp and log
+        topics:
+            - Natural bases
+            - Laws of logs
+            - power equations
+
+    A5: 
+        title: Finite sequences and series
+        topics:
+            - Concept of generating sequences by algebraic rule
+            - Adding and manipulating finite sequences and series
+
+    A6:
+        title:
+            Infinite sequences and series
+        topics:
+            - Concepts of convergence and divergence
+            - Awareness of 'allowable' operations
+            - Calculation of infinite sums (using intuitive notions of manipulation)
+
+    A7:
+        title:
+            Binomial theorem for any
+        topics:
+            - Note that this is a significant milestone power
+
+    A8:
+        title: Further algebra
+        topics: null
+
+    E1:
+        title: The what and why of solving equations
+        topics:
+            - What is means to solve an equation
+            - Concepts of difference sets of solutions
+            - Concepts of multiple solutions, unique solutions, no solutions in a given set
+            - Understanding of = sign and inequalities
+            - Understanding of issues surrounding applying inverses to both sides of an equation                                                           |       |
+            - Concepts of different 'categories' of equations
+            - Concept of multiple variables
+            - Assumptions of continuity allowing inference from graphical methods - e.g counting solutions which cannot be found exactly 
+
+    E2:
+        title: Linear equations, quadratics, and circles
+        topics:
+            - Understanding these categories of equations
+            - Links between algebraic and geometric manipulations
+
+    E3:
+        title: Polynomials with real variables
+        topics:
+            - Expansion
+            - Factor theorem
+            - Concepts of number of solution and repeated solutions
+            - Sketching polynomials
+            - Simple (non-calculus) numerical methods to find roots to given accuracy
+
+    E4:
+        title: Solving trig equations
+        thread: Equations and major functions
+        topics:
+            - Solving trig equations
+
+    E5:
+        title: The modulus function and compund functions
+        thread: Equations and major functions
+        topics:
+            - Examples include Step functions
+            - Construction of equations from graphs
+
+    E6:
+        title: Exp and log
+        thread: Equations and major functions
+        topics:
+            - Natural bases
+            - Laws of logs
+            - power equations
+
+    E7:
+        title: Building  and transforming equations
+        thread: Further equations
+        topics:
+            - Focus is on constructing and not solving                    
+            - Constructing candidate equations from key points of a graph 
+            - Dimensional analysis                                        
+            - Transformation following a change of units or coordinates   
+            - Using auxilliary variables to simplify equations            
+            - Constructing parametric equations                           
+
+    E8:
+        title: Further polynomials
+        thread: Further equations
+        topics:
+            - Conditions on sum, products of roots etc
+            - Newton-Raphson
+            - Solving equations involving rational functions
+
+    E9:
+        title: Functional equations
+        thread: Further equations
+        topics:
+            - Including recurrence relations 
+
