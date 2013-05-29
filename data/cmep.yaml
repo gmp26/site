@@ -26,7 +26,7 @@ lines:
             - Lots of good applications from mechanics and probability
 
     E:
-        title: Equations
+        title: Equations and Inequalities
         colour: darkBlue
         notes:
             - Throughout make links between sketches and equations
@@ -36,7 +36,7 @@ lines:
         colour: midGreen
     A:
         title: Algebra
-        colour: puce
+        colour: purple
 
     FC:
         title: Functions and Calculus
@@ -64,6 +64,7 @@ lines:
 #
 # A milestone is a dependency that is not also a station
 # 
+# Please don't pay any attention to these dependencies, I haven't yet updated them to reflect new station numbers etc.
 dependencies:
     NA1: null
     NA2: NA1
@@ -397,22 +398,28 @@ stations:
             - Taylors
 
     A1:
-        title: Basic algebraic manipulation
+        title: Which numbers can be written as the ratio of two integers?
         topics:
-            - Surds
-            - Difference of 2 squares
-            - Rationalising the denominator
-            - Algebra on different number systems (?)
+            - What do we mean by rational and irrational numbers?
+            - What can we say about the decimal expansions of rational and irrational numbers?
+            - How can we show that a number is rational?  How can we show that a number is irrational?
+            - What do we mean by proof by contradiction?
+            - How do the numbers of rational and irrational numbers compare?
+            - What are the similarities between numerical fractions and algebraic fractions, and how can we use them to work more effectively with each?
 
     A2:
-        title: Binomial expansion
+        title: Help!
         topics: 
-            - Binomial expansion for natural powers
+            - How do we define square roots, cube roots, nth roots?
+            - What do we mean by the difference of two squares, and when is it useful?
+            - How can we generalise the difference of two squares?
+            - How can we rationalise the denominator of an expression involving surds?
 
     A3: 
-        title: Laws of indices
+        title: How can we expand (a+b)^n for positive integers n?
         topics:
-            - For any powers
+            - How can we expand (1+x)^n for positive integers n?
+            - How can we expand (a+b)^n for positive integers n?
 
     A4:
         title: Exp and log
