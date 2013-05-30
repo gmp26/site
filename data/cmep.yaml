@@ -73,9 +73,9 @@ dependencies:
     NA5: NA4
     NA6: NA5
     G1: null
-    EG2: G1
-    EG3: EG2
-    G4: EG3
+    G2: G1
+    G3: G2
+    G4: G3
     G5: G4
     G6: G5
     G7: G6
