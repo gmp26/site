@@ -38,9 +38,10 @@ lines:
         title: Algebra
         colour: purple
 
-    FA:
-        title: Further Algebra
-        colour: brown
+ #   FA:
+  #      title: Further Algebra
+   #     colour: brown
+   # Further Algebra commented out as I'm not sure that it'll exist.
 
 #
 #   Commented out as line colouring can be inferred from the new station names 
