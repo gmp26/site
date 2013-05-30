@@ -197,57 +197,125 @@ stations:
 
 
     C1:
-        title: The what and why of calculus
+        title: What is calculus about, and what is it useful for?
         topics:
-            - Tangents and areas
-            - Basics of differentiation
-            - Note relationship to speed, time problems
-            - Expression for derivative
+            - Why might we want to find the gradient of a curve, and what might we mean by that?
+            - Why might we want to find the area under a curve, and what might we mean by that?
+            
     C2:
-        title: Derivatives of polynomials
+        title: How can we find the gradient of a polynomial at a point?
         topics:
-            - Finding derivatives from first principles
+            - What do we mean by the _derivative_ of a function at a point?
+            - How can we find the derivative of $x^2$ at a point?
+            - How can we find the derivative of $x^3$ at a point?
+            - How can we generalise this to find the derivative of $x^n$ for positive integers $n$?
+            - What is the effect on the derivative of multiplying a polynomial by a constant?
+            - If we know the derivatives of two polynomials at a point, can we find the derivative of their sum at that point?
+            - How can we find the derivative of a polynomial?
+            - Are there any functions that do not have a derivative at certain points?
+            
     C3:
-        title: Differentiation
+        title: What are tangents and normals?
         topics:
-            - Finding tangents and normals at a point
+            - What do we mean by the tangent and normal of a function at a point?
+            - What is the relationship between the tangent and normal of a function at a point?
+            - How can we find the equation of a tangent to a polynomial at a point?
+            - How can we find the equation of a normal to a polynomial at a point?
 
     C4:
-        title: Stationary points and points of inflection
+        title: What does it mean to find the derivative of a sum or product of two functions?
         topics:
-            - For general polynomials
+            - If we know the derivatives of two functions at a point, can we find the derivative of their sum at that point?
+            - If we know the derivatives of two functions at a point, can we find the derivative of their product at that point?
+            - Can we find the derivative of $1/x$?
+            
 
     C5:
-        title: Inverses of differentiation and applications
+        title: When and how can we locate maxima and minima of polynomials?
         topics:
-            - Integration defined as inverse to differentiation
-            - Fundamental theorem of calculus
-            - Integrals of polynomials
-            - Definite and indefinite integration
-            - Area under a curve
-            - Integration as method to find areas under curves
-            - Geometrical understanding of the fund. theorem of calculus
-            - Trapezium methods and integration
-            - Volumes of solids with rotational symmetry
+            - What do we mean by a _local maximum_ and a _global maximum_?
+            - What do we mean by a stationary point, and what types of stationary point are there?
+            - How can we locate the stationary points of a polynomial?
+            - How can we classify a stationary point?
 
     C6:
-        title: Differentiation and integration of known functions from first principles
+        title: Is there an operation that is inverse to differentiation, and if so is it useful?
         topics:
-            - sin(x) and cos(x) small values
-            - calculus of trig functions from first principles
-            - Stress that these are difficult to work out directly
+            - What do we mean by an antiderivative?
+            - Can we find an antiderivative for every polynomial?
+            - What do we mean by integration?
+            - What is the connection between differentiation and integration?
+            - What are the similarities and differences between definite and indefinite integration?
+            - What do we mean by the area under a curve, and when can we compute it?
+            - If we can't compute an integral precisely, how might we obtain a good approximation instead?
+            - How can we use integration to find the volume of a solid of revolution?
 
     C7:
-        title: Calculus on composites - differentials
+        title: Can we extend our ideas about differentation and integration to functions other than polynomials?
         topics:
-            - Calculus of sums, products, functions of functions
-            - Implicit differentiation differentiation
+            - How can we find the derivative of sin or cos at a point?
+            - How can we integrate sin or cos?
+            - What does this new knowledge tell us about the functions sin and cos?
+            - How do $\sin(x)$ and $\cos(x)$ behave for small values of $x$?
 
     C8:
-        title: Calculus on composites - integration
+        title: There are various ways to build new functions from old.  When can we differentiate these new functions?
         topics:
-            - Integration by parts
-            - Integration by substitution
+            - When and how can we differentiate the composition of two functions?
+            - When and how can we differentiate the reciprocal of a function?
+            - When and how can we differentiate the quotient of two functions?
+            - When and how can we differentiate the inverse of a function?
+            - What do we mean by _implicit differentiation_, and when is it useful?
+            
+    C9:
+        title: Which of the things in C8 can we undo via integration?
+        topics:
+            - When and how can we integrate the sum of two functions?
+            - What do we mean by _integration by parts_, and when is it useful?
+            - What do we mean by _integration by substitution_, and when is it useful?
+            
+    C10:
+        title: Can we differentiate and integrate some more of our favourite functions?
+        topics:
+             - What can we learn by incorporating inverse trigonometric functions into our repertoire?
+             - What can we learn by incorporating rational functions into our repertoire?
+    
+    C11:
+        title: Is there a function that equals its own derivative?
+        topics:
+            - Is there a function that equals its own derivative?
+            - If so, what properties does it have?
+    
+    C12:
+        title: Is there a function whose derivative is $1/x$?
+        topics:
+            - Is there a function whose derivative is $1/x$?
+            - What properties does it have?
+            - What is its relationship to the function in C10?
+    
+    C13:
+        title: What sort of objects are differentiation and integration?
+        topics:
+            - What can we learn by thinking of differentiation as a function of functions?
+            - What can we learn by thinking of integration as a function of functions?
+    
+    C14:
+        title: Can we write a function as an infinite series of the form $f(x) = \sum_{n=0}^{\infty} a_n x^n$?
+        topics:
+            - __Help!__
+    
+    C15:
+        title: What are the power series of our favourite functions?
+        topics:
+            - What is the power series for $\exp$?
+            - What are the power series for $\sin$ and $\cos$?
+            - What is the power series for $\log(1+x)$?
+            - Can we think of the binomial theorem as telling us about a power series?
+    
+    C16:
+        title: __Something about hyperbolics__?
+        topics:
+            - __How do we want to introduce hyperbolic functions__?
 
     F1:
         title: What and why of functions
@@ -430,7 +498,7 @@ stations:
             - How can we expand $(a+b)^n$ for positive integers $n$?
             
     A4:
-        title: Help!
+        title: __Help!__
         topics:
             - What is $x^a x^b$?
             - What is $(x^a)^b$?
@@ -438,7 +506,7 @@ stations:
             - What do we mean by $x^{-a}$ and $x^{1/a}$?
             
     A5:
-        title: Help!
+        title: __Help!__
         topics:
             - How do we define $\log_a b$, where $a$ is a positive integer?
             - What rules does $\log_a$ satisfy?
@@ -447,7 +515,7 @@ stations:
     A6:
         title: When and how can we write a rational function as a sum of rational functions where each denominator is linear?
         topics:
-            - Help!
+            - __Help!__
     
     A7: 
         title: When and how can we find the general term and sum of a finite sequence?
