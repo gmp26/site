@@ -408,56 +408,74 @@ stations:
     A1:
         title: Which numbers can be written as the ratio of two integers?
         topics:
-            - What do we mean by rational and irrational numbers?
+            - What do we mean by _rational_ and _irrational_ numbers?
             - What can we say about the decimal expansions of rational and irrational numbers?
             - How can we show that a number is rational?  How can we show that a number is irrational?
-            - What do we mean by proof by contradiction?
+            - What do we mean by _proof by contradiction_?
             - How do the numbers of rational and irrational numbers compare?
             - What are the similarities between numerical fractions and algebraic fractions, and how can we use them to work more effectively with each?
 
     A2:
         title: Help!
         topics: 
-            - How do we define square roots, cube roots, nth roots?
-            - What do we mean by the difference of two squares, and when is it useful?
+            - How do we define square roots, cube roots, $n^{\textrm{th}}$ roots?
+            - What do we mean by the _difference of two squares_, and when is it useful?
             - How can we generalise the difference of two squares?
             - How can we rationalise the denominator of an expression involving surds?
 
     A3: 
-        title: How can we expand (a+b)^n for positive integers n?
+        title: How can we expand $(a+b)^n$ for positive integers $n$?
         topics:
-            - How can we expand (1+x)^n for positive integers n?
-            - How can we expand (a+b)^n for positive integers n?
-
+            - How can we expand $(1+x)^n$ for positive integers $n$?
+            - How can we expand $(a+b)^n$ for positive integers $n$?
+            
     A4:
-        title: Exp and log
+        title: Help!
         topics:
-            - Natural bases
-            - Laws of logs
-            - power equations
-
-    A5: 
-        title: Finite sequences and series
+            - What is $x^a x^b$?
+            - What is $(x^a)^b$?
+            - What is $x^a y^a$?
+            - What do we mean by $x^{-a}$ and $x^{1/a}$?
+            
+    A5:
+        title: Help!
         topics:
-            - Concept of generating sequences by algebraic rule
-            - Adding and manipulating finite sequences and series
-
+            - How do we define $\log_a b$, where $a$ is a positive integer?
+            - What rules does $\log_a$ satisfy?
+            - Why are logarithms useful?
+    
     A6:
-        title:
-            Infinite sequences and series
+        title: When and how can we write a rational function as a sum of rational functions where each denominator is linear?
         topics:
-            - Concepts of convergence and divergence
-            - Awareness of 'allowable' operations
-            - Calculation of infinite sums (using intuitive notions of manipulation)
-
-    A7:
-        title:
-            Binomial theorem for any
+            - Help!
+    
+    A7: 
+        title: When and how can we find the general term and sum of a finite sequence?
         topics:
-            - Note that this is a significant milestone power
+            - What does it mean to specify the general term of a sequence?
+            - What properties does an arithmetic progression have?
+            - What properties does a geometric progression have?
+            - What is a recurrence relation?
+            - How can we find the general term of a sequence specified by a linear recurrence relation?
+            - How can we evaluate sums such as $\sum_{k=1}^n k$, $\sum_{k=1}^n k^2$, $\sum_{k=1}^n k^3$?
+            - What is proof by induction?
+        
+    
+    A8:
+        title: When and how can we sum an infinite series?
+        topics:
+            - What does it mean for a series to _converge_ or _diverge_?
+            - What techniques do we have for evaluating infinite series?
+            - What are good examples of series that converge and series that diverge?
+    
+    A9:
+        title: How can we expand $(a+b)^n$ when $n$ is any real number?
+        topics:
+            - When and how can we expand $(1+x)^n$?
+            - When and how can we expand $(a+b)^n$?
 
-    FA1:
-        title: Further algebra
+    A10:
+        title: Should there be any more algebra here?
         topics: null
 
     E1:
