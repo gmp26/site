@@ -37,13 +37,21 @@ lines:
         title: Algebra
         colour: puce
 
-    FC:
-        title: Functions and Calculus
-        colour: [darkGreen, yellow]
+    FA:
+        title: Further Algebra
+        colour: brown
 
-    AC:
-        title: Algebra and Calculus
-        colour: [darkGreen, yellow, puce]
+#
+#   Commented out as line colouring can be inferred from the new station names 
+#   
+#    FC:
+#        title: Functions and Calculus
+#        colour: [darkGreen, yellow]
+#
+#    AC:
+#        title: Algebra and Calculus
+#        colour: [darkGreen, yellow, puce]
+#
 
     CX:
         title: Complex Numbers
@@ -106,19 +114,19 @@ dependencies:
     A5: A4
     A6: A5
     A7: A6
-    A8: A7
+    FA1: A7
     AE1: [E6, A4]
     F1: null
     F2: F1
     F3: F2
     F4: F3
-    FC1: [AE1, F4, C8]
-    FC2: FC1
-    FC3: FC2
-    AC1: [FC3, A7]
-    AC2: [AC1]
-    AC3: [AC2]
-    AC4: [AC3]
+    C9_F5: [AE1, F4, C8]
+    C10_F6: C9_F5
+    C11_F7: C10_F6
+    A8_C12_F8: [C11_F7, A7]
+    A9_C13_F9: [A8_C12_F8]
+    A10_C14_F10: [A9_C13_F9]
+    A11_C15_F11: [A10_C14_F10]
     CX: [G8, E3]
     DE: [AE1]
     V: G8
@@ -134,9 +142,9 @@ parallel:
 # aliases
 #
 aliases:
-    FC1: [F5, C9]
-    FC2: [F6, C10]
-    FC3: [F7, C11]
+    C9_F5: [F5, C9]
+    C10_F6: [F6, C10]
+    C11_F7: [F7, C11]
 
 #
 # stations have content
@@ -358,39 +366,39 @@ stations:
             - Parallel lines and geodesics on spheres                       
             - Spherical triangles
 
-    FC1:
+    C9_F5:
         title: Discovery of exponential and logarithm
         topics:
             - Finding functions given a set of desired properties
             - Posing the questions 'is there a function which is its own derivative'
               and 'is there a function whose derivative is $\frac{1}{x}$'
 
-    FC2:
+    C10_F6:
         title: Calculus of functions
         topics:
             - Concepts of differentials and integrals as functions of a function
 
-    FC3:
+    C11_F7:
         title: More important functions
         topics: 
             - Inverse trig functions and rational functions
             - Mobius stuff?
 
-    AC1:
+    A8_C12_F8:
         title: The what and why of power series
         topics:
         
-    AC2:
+    A9_C13_F9:
         title: Power series of key functions
         topics:
             - Maclaurin
         
-    AC3:
+    A10_C14_F10:
         title: Finding power series from general functions
         topics:
             - sin, cos, exp, ln binomial theorem
         
-    AC4:
+    A11_C15_F11:
         title: Hyperbolic functions and inverses
         topics:
             - Taylors
@@ -440,7 +448,7 @@ stations:
         topics:
             - Note that this is a significant milestone power
 
-    A8:
+    FA1:
         title: Further algebra
         topics: null
 
