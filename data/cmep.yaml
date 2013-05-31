@@ -6,7 +6,7 @@
 # as of Snapshot of 24th May 2013. 
 # Now it's a version with drastic rewriting by Vicky.  But hopefully the original is still there somewhere so I haven't destroyed everything.
 #
-# I'll split it into individual files at some point. (That was Mike speaking.)
+# Use the Blame or History buttons on GitHub to explore who did what when!
 # 
 ---
 
@@ -38,23 +38,6 @@ lines:
         title: Algebra
         colour: purple
 
- #   FA:
-  #      title: Further Algebra
-   #     colour: brown
-   # Further Algebra commented out as I'm not sure that it'll exist.
-
-#
-#   Commented out as line colouring can be inferred from the new station names 
-#   
-#    FC:
-#        title: Functions and Calculus
-#        colour: [darkGreen, yellow]
-#
-#    AC:
-#        title: Algebra and Calculus
-#        colour: [darkGreen, yellow, puce]
-#
-
     CX:
         title: Complex Numbers
         colour: orange
@@ -71,9 +54,7 @@ lines:
 # stations have content
 #
 stations:
-    #
-    # do not list milestones like CG1, CG2, AE1 here
-    #
+
     NA1:
         title: Interesting number sequences
         topics:
