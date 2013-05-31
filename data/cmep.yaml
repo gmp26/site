@@ -68,88 +68,6 @@ lines:
         colour: pink
 
 #
-# Describe station dependencies on other stations and on milestones 
-# (from the Route Map v1.0)
-#
-# A milestone is a dependency that is not also a station
-# 
-# Please don't pay any attention to these dependencies, I haven't yet updated them to reflect new station numbers etc.
-dependencies:
-    NA1: null
-    NA2: NA1
-    NA3: NA2
-    NA4: NA3
-    NA5: NA4
-    NA6: NA5
-    G1: null
-    G2: G1
-    G3: G2
-    G4: G3
-    G5: G4
-    G6: G5
-    G7: G6
-    G8: G7
-    G9: G8
-    G10: G9
-    C1: null
-    C2: C1
-    C3: C2
-    C4: C3
-    C5: C4
-    C6: C5
-    C7: [C6, F3]
-    C8: C7
-    CG1: [G4, C3]
-    CG2: [G5, C5]
-    E1: null
-    E2: E1
-    E3: E2
-    E4: [E3, CG1]
-    E5: E4
-    E6: E5
-    E7: E6
-    E8: E7
-    E9: E8
-    A1: null
-    A2: A1
-    A3: A2
-    A4: A3
-    A5: A4
-    A6: A5
-    A7: A6
-    FA1: A7
-    AE1: [E6, A4]
-    F1: null
-    F2: F1
-    F3: F2
-    F4: F3
-    C9_F5: [AE1, F4, C8]
-    C10_F6: C9_F5
-    C11_F7: C10_F6
-    A8_C12_F8: [C11_F7, A7]
-    A9_C13_F9: [A8_C12_F8]
-    A10_C14_F10: [A9_C13_F9]
-    A11_C15_F11: [A10_C14_F10]
-    CX: [G8, E3]
-    DE: [AE1]
-    V: G8
-
-#
-# in parallel
-#
-parallel:
-    EG2: [E2, G2]
-    EG3: [E3, G3]
-
-#
-# aliases
-#
-aliases:
-    C9_F5: [F5, C9]
-    C10_F6: [F6, C10]
-    C11_F7: [F7, C11]
-
-#
 # stations have content
 #
 stations:
@@ -165,12 +83,16 @@ stations:
             - Triangle numbers
 
     NA2:
-        title: Primality testing,
+        title: Primality testing
+        dependencies: 
+            - NA1
         topics:
             - Notions of complexity for different tests
 
     NA3:
         title: Finding factors
+        dependencies: 
+            - NA2
         topics: 
             - Highest common factors
             - Prime factorisation - existence  and uniqueness
@@ -178,12 +100,16 @@ stations:
 
     NA4:
         title: Modular arithmetic
+        dependencies: 
+            - NA3
         topics:
             - Remainders and modular arithmetic
             - Inverses mod p
 
     NA5:
         title: Theorems about primes                    
+        dependencies: 
+            - NA4
         topics:
             - Fermat's little theorem
             - Fermat-Euler and other gems
@@ -191,6 +117,8 @@ stations:
 
     NA6:        
         title: Algorithms                   
+        dependencies: 
+            - NA5
         topics:
             - Multiplication algorithms
             - Sorting algorithms,
@@ -205,6 +133,8 @@ stations:
             
     C2:
         title: How can we find the gradient of a polynomial at a point?
+        dependencies: 
+            - C1
         topics:
             - What do we mean by the _derivative_ of a function at a point?
             - How can we find the derivative of $x^2$ at a point?
@@ -217,6 +147,8 @@ stations:
             
     C3:
         title: What are tangents and normals?
+        dependencies: 
+            - C2
         topics:
             - What do we mean by the tangent and normal of a function at a point?
             - What is the relationship between the tangent and normal of a function at a point?
@@ -225,6 +157,8 @@ stations:
 
     C4:
         title: What does it mean to find the derivative of a sum or product of two functions?
+        dependencies: 
+            - C3
         topics:
             - If we know the derivatives of two functions at a point, can we find the derivative of their sum at that point?
             - If we know the derivatives of two functions at a point, can we find the derivative of their product at that point?
@@ -233,6 +167,8 @@ stations:
 
     C5:
         title: When and how can we locate maxima and minima of polynomials?
+        dependencies: 
+            - C4
         topics:
             - What do we mean by a _local maximum_ and a _global maximum_?
             - What do we mean by a stationary point, and what types of stationary point are there?
@@ -241,6 +177,8 @@ stations:
 
     C6:
         title: Is there an operation that is inverse to differentiation, and if so is it useful?
+        dependencies: 
+            - C5
         topics:
             - What do we mean by an antiderivative?
             - Can we find an antiderivative for every polynomial?
@@ -253,6 +191,8 @@ stations:
 
     C7:
         title: Can we extend our ideas about differentation and integration to functions other than polynomials?
+        dependencies: 
+            - C6
         topics:
             - How can we find the derivative of sin or cos at a point?
             - How can we integrate sin or cos?
@@ -261,6 +201,8 @@ stations:
 
     C8:
         title: There are various ways to build new functions from old.  When can we differentiate these new functions?
+        dependencies: 
+            - C7
         topics:
             - When and how can we differentiate the composition of two functions?
             - When and how can we differentiate the reciprocal of a function?
@@ -270,6 +212,10 @@ stations:
             
     C9:
         title: Which of the things in C8 can we undo via integration?
+        dependencies: 
+            - C8
+            - F4
+            - AE1
         topics:
             - When and how can we integrate the sum of two functions?
             - What do we mean by _integration by parts_, and when is it useful?
@@ -277,18 +223,24 @@ stations:
             
     C10:
         title: Can we differentiate and integrate some more of our favourite functions?
+        dependencies: C9
         topics:
              - What can we learn by incorporating inverse trigonometric functions into our repertoire?
              - What can we learn by incorporating rational functions into our repertoire?
     
     C11:
         title: Is there a function that equals its own derivative?
+        dependencies: C10
         topics:
             - Is there a function that equals its own derivative?
             - If so, what properties does it have?
     
     C12:
         title: Is there a function whose derivative is $1/x$?
+        dependencies: 
+            - A7
+            - F7
+            - C11
         topics:
             - Is there a function whose derivative is $1/x$?
             - What properties does it have?
@@ -296,17 +248,23 @@ stations:
     
     C13:
         title: What sort of objects are differentiation and integration?
+        dependencies: 
+            - C12
         topics:
             - What can we learn by thinking of differentiation as a function of functions?
             - What can we learn by thinking of integration as a function of functions?
     
     C14:
         title: Can we write a function as an infinite series of the form $f(x) = \sum_{n=0}^{\infty} a_n x^n$?
+        dependencies: 
+            - C13
         topics:
             - __Help!__
     
     C15:
         title: What are the power series of our favourite functions?
+        dependencies: 
+            - C14
         topics:
             - What is the power series for $\exp$?
             - What are the power series for $\sin$ and $\cos$?
@@ -315,6 +273,8 @@ stations:
     
     C16:
         title: __Something about hyperbolics__?
+        dependencies: 
+            - C15
         topics:
             - __How do we want to introduce hyperbolic functions__?
 
@@ -328,6 +288,8 @@ stations:
 
     F2:
         title: Key properties and graphing
+        dependencies: 
+            - F1
         topics:
             - Appreciation of relationship between graphical and algebraic 
               relationships for continuous functions                      
@@ -339,6 +301,8 @@ stations:
 
     F3:
         title: Working with functions
+        dependencies: 
+            - F2
         topics:
             - Composition, transformation, inverses, iteration
             - Representing with functions                     
@@ -346,6 +310,8 @@ stations:
 
     F4:
         title: Important functions
+        dependencies: 
+            - F3
         topics:
             - Trig, polynomials, modulus                                   
             - Realisation that complicated functions are often compounds of
@@ -365,6 +331,8 @@ stations:
 
     G2:
         title: The link between algebra and geometry        
+        dependencies: 
+            - G1
         topics:
             - Understand that many known geometrical objects may be described as 
               regions of R2 or R3 bounded by lines and planes                   
@@ -376,17 +344,23 @@ stations:
 
     G3:
         title: Simultaneous equations and inequalities       
+        dependencies: 
+            - G2
         topics:
             - Both multiple linear and linear/quadratic
 
     G4:
         title: Differentiation
+        dependencies: 
+            - G3
         thread: Calculus and Geometry
         topics:
             - Finding tangents and normals at a point
 
     G5:
         title: Triangle geometry
+        dependencies: 
+            - G4
         thread: Calculus and Geometry
         topics: 
             - sin and cos as coordinates of point on unit circle
@@ -394,6 +368,8 @@ stations:
 
     G6:
         title: Circle geometry
+        dependencies: 
+            - G5
         thread: Calculus and Geometry
         topics:
             - conics(?), review of circle theorems             
@@ -404,6 +380,8 @@ stations:
 
     G7:
         title: Inverses of differentiation and applications       
+        dependencies: 
+            - G6
         thread: Calculus and Geometry
         topics:
             - Integration defined as inverse to differentiation         
@@ -418,6 +396,8 @@ stations:
 
     G8:
         title: Polar coordinates
+        dependencies: 
+            - G7
         thread: Further geometry   
         topics:
             - Understanding that coordinate system is a choice
@@ -425,52 +405,75 @@ stations:
 
     G9:
         title: 3D geometry
+        dependencies: 
+            - G8
         thread: Further geometry   
         topics:
             - Equations of planes, spheres, spheres in cartesian coordinates
 
     G10:
         title: Spherical geometry
+        dependencies: 
+            - G9
         thread: Further geometry   
         topics:
             - Spherical polar coordinates                                   
             - Parallel lines and geodesics on spheres                       
             - Spherical triangles
 
-    C9_F5:
+    F5:
         title: Discovery of exponential and logarithm
+        dependencies:
+            - A4
+            - C8
+            - E6
+            - F4
         topics:
             - Finding functions given a set of desired properties
             - Posing the questions 'is there a function which is its own derivative'
               and 'is there a function whose derivative is $\frac{1}{x}$'
 
-    C10_F6:
+    F6:
         title: Calculus of functions
+        dependencies: 
+            - F5
         topics:
             - Concepts of differentials and integrals as functions of a function
 
-    C11_F7:
+    F7:
         title: More important functions
+        dependencies: 
+            - F6
         topics: 
             - Inverse trig functions and rational functions
             - Mobius stuff?
 
-    A8_C12_F8:
+    F8:
         title: The what and why of power series
+        dependencies: 
+            - A7
+            - F7
+            - C11
         topics:
         
-    A9_C13_F9:
+    F9:
         title: Power series of key functions
+        dependencies: 
+            - F8
         topics:
             - Maclaurin
         
-    A10_C14_F10:
+    F10:
         title: Finding power series from general functions
+        dependencies: 
+            - F9
         topics:
             - sin, cos, exp, ln binomial theorem
         
-    A11_C15_F11:
+    F11:
         title: Hyperbolic functions and inverses
+        dependencies: 
+            - F10
         topics:
             - Taylors
 
@@ -486,6 +489,8 @@ stations:
 
     A2:
         title: Help!
+        dependencies: 
+            - A1
         topics: 
             - How do we define square roots, cube roots, $n^{\textrm{th}}$ roots?
             - What do we mean by the _difference of two squares_, and when is it useful?
@@ -494,12 +499,16 @@ stations:
 
     A3: 
         title: How can we expand $(a+b)^n$ for positive integers $n$?
+        dependencies: 
+            - A2
         topics:
             - How can we expand $(1+x)^n$ for positive integers $n$?
             - How can we expand $(a+b)^n$ for positive integers $n$?
             
     A4:
         title: __Help!__
+        dependencies: 
+            - A3
         topics:
             - What is $x^a x^b$?
             - What is $(x^a)^b$?
@@ -508,6 +517,8 @@ stations:
             
     A5:
         title: __Help!__
+        dependencies: 
+            - A4
         topics:
             - How do we define $\log_a b$, where $a$ is a positive integer?
             - What rules does $\log_a$ satisfy?
@@ -515,11 +526,15 @@ stations:
     
     A6:
         title: When and how can we write a rational function as a sum of rational functions where each denominator is linear?
+        dependencies: 
+            - A5
         topics:
             - __Help!__
     
     A7: 
         title: When and how can we find the general term and sum of a finite sequence?
+        dependencies: 
+            - A6
         topics:
             - What does it mean to specify the general term of a sequence?
             - What properties does an arithmetic progression have?
@@ -532,6 +547,10 @@ stations:
     
     A8:
         title: When and how can we sum an infinite series?
+        dependencies: 
+            - A7
+            - F7
+            - C11
         topics:
             - What does it mean for a series to _converge_ or _diverge_?
             - What techniques do we have for evaluating infinite series?
@@ -539,12 +558,16 @@ stations:
     
     A9:
         title: How can we expand $(a+b)^n$ when $n$ is any real number?
+        dependencies: 
+            - A8
         topics:
             - When and how can we expand $(1+x)^n$?
             - When and how can we expand $(a+b)^n$?
 
     A10:
         title: Should there be any more algebra here?
+        dependencies: 
+            - A9
         topics: null
 
     E1:
@@ -561,12 +584,16 @@ stations:
 
     E2:
         title: Linear equations, quadratics, and circles
+        dependencies: 
+            - E1
         topics:
             - Understanding these categories of equations
             - Links between algebraic and geometric manipulations
 
     E3:
         title: Polynomials with real variables
+        dependencies: 
+            - E2
         topics:
             - Expansion
             - Factor theorem
@@ -576,12 +603,18 @@ stations:
 
     E4:
         title: Solving trig equations
+        dependencies:
+            - C3
+            - G4
+            - E3
         thread: Equations and major functions
         topics:
             - Solving trig equations
 
     E5:
         title: The modulus function and compund functions
+        dependencies: 
+            - E4
         thread: Equations and major functions
         topics:
             - Examples include Step functions
@@ -589,6 +622,8 @@ stations:
 
     E6:
         title: Exp and log
+        dependencies: 
+            - E5
         thread: Equations and major functions
         topics:
             - Natural bases
@@ -597,6 +632,8 @@ stations:
 
     E7:
         title: Building  and transforming equations
+        dependencies: 
+            - E6
         thread: Further equations
         topics:
             - Focus is on constructing and not solving                    
@@ -608,6 +645,8 @@ stations:
 
     E8:
         title: Further polynomials
+        dependencies: 
+            - E7
         thread: Further equations
         topics:
             - Conditions on sum, products of roots etc
@@ -616,7 +655,19 @@ stations:
 
     E9:
         title: Functional equations
+        dependencies: 
+            - E8
         thread: Further equations
         topics:
             - Including recurrence relations 
 
+    DE:
+        title: Differential Equations
+        dependencies:
+            - E6
+            - A4
+
+    V:
+        title: Vectors
+        dependencies:
+            - G8
