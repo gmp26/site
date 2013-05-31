@@ -195,8 +195,6 @@ stations:
         title: Which of the things in C8 can we undo via integration?
         dependencies: 
             - C8
-            - F4
-            - AE1
         topics:
             - When and how can we integrate the sum of two functions?
             - What do we mean by _integration by parts_, and when is it useful?
@@ -211,7 +209,8 @@ stations:
     
     C11:
         title: Is there a function that equals its own derivative?
-        dependencies: C10
+        dependencies: 
+            - C10
         topics:
             - Is there a function that equals its own derivative?
             - If so, what properties does it have?
@@ -219,8 +218,6 @@ stations:
     C12:
         title: Is there a function whose derivative is $1/x$?
         dependencies: 
-            - A7
-            - F7
             - C11
         topics:
             - Is there a function whose derivative is $1/x$?
@@ -260,43 +257,70 @@ stations:
             - __How do we want to introduce hyperbolic functions__?
 
     F1:
-        title: What and why of functions
+        title: What are functions, and why are they useful?
         theme: Pre-calculus
         topics:
-            - Examples and non-examples
-            - Essential terminology
-            - Circles as f(x,y)=1
+            - What are some key examples of functions and things that aren't functions?
+            - What do we mean by the _domain_ and _range_ of a function, and why are they important?
+            - In what ways might we represent a function?
+            - Can we find multiple expressions for the same function?
 
     F2:
-        title: Key properties and graphing
+        title: How can we represent a function by a graph, and how are key properties of a function visible on a graph?
         dependencies: 
             - F1
         topics:
-            - Appreciation of relationship between graphical and algebraic 
-              relationships for continuous functions                      
-            - Trig functions                                              
-            - Polynomials                                                 
-            - Modulus
-            - Examples for physics such as speed-time
-            - Important questions (bounded, behaviour for large/small x etc)
+            - What are the connections between algebraic and graphical representations of a function?
+            - What are the graphs of key functions such as polynomials, trigonometric functions, and the modulus function?
+            - What do we mean by a _root_ of a function?
+            - What kinds of symmetry might a function have?
+            - What does it mean to say that a function is _odd_, _even_, or _periodic_, and what are some good examples of functions with some or all of those properties?
+            - What is an _asymptote_, and what are some good examples of functions that have one or more asymptotes?
+            - What types of behaviour might a function $f(x)$ display for large or small values of $x$?
+            - What does it mean for a function to be _convex_ or _linear_, and why are these properties interesting?
+            - How can we sketch a function given in parametric form?
 
     F3:
-        title: Working with functions
+        title: How can we build new functions from old?
         dependencies: 
             - F2
         topics:
-            - Composition, transformation, inverses, iteration
-            - Representing with functions                     
-            - Properties such as convex, linearity.
+            - What happens if we consider the sum or product of two functions?
+            - What do we mean by the _compositiion_ of two functions, and what are some interesting examples?
+            - What do we mean by the _inverse_ of a function, and when does a function have an inverse?
+            - In what ways might we transform a function, and what effects do these transformations have?
 
     F4:
-        title: Important functions
+        title: What are the properties of our key examples of functions?
         dependencies: 
             - F3
         topics:
-            - Trig, polynomials, modulus                                   
-            - Realisation that complicated functions are often compounds of
-              simpler functions                                            
+            - What properties do polynomials have?
+            - What properties do trigonometric functions have?
+            - What are the addition formulae for the sine and cosine functions?
+            - What properties does the modulus function have?
+            - What properties do functions such as $f(x) = x^{1/n}$ and $f(x) = 1/x$ have?
+            - What properties do rational functions have?
+            - What properties do inverse trigonometric functions have?
+            - How can we deduce properties of complicated functions by understanding the properties of their simpler component parts?
+            
+    F5:
+        title: How does calculus deepen our understanding of functions?
+        dependencies:
+            - F4
+        topics:
+            - How can we use ideas from calculus to help us understand the properties of a function?
+            - What additional properties of a function might we study with the help of calculus?
+            - How can calculus inform our sketches of graphs?
+            - What does calculus tell us about our key examples of functions?
+    
+    F6:
+        title: What are the properties of the exponential and logarithm functions?
+        dependencies:
+            - F5
+        topics:
+            - What properties does the exponential function have?
+            - What properties does the logarithm function have?
 
     G1:
         title: Motivation for geometry beyond KS4
@@ -402,63 +426,7 @@ stations:
             - Parallel lines and geodesics on spheres                       
             - Spherical triangles
 
-    F5:
-        title: Discovery of exponential and logarithm
-        dependencies:
-            - A4
-            - C8
-            - E6
-            - F4
-        topics:
-            - Finding functions given a set of desired properties
-            - Posing the questions 'is there a function which is its own derivative'
-              and 'is there a function whose derivative is $\frac{1}{x}$'
-
-    F6:
-        title: Calculus of functions
-        dependencies: 
-            - F5
-        topics:
-            - Concepts of differentials and integrals as functions of a function
-
-    F7:
-        title: More important functions
-        dependencies: 
-            - F6
-        topics: 
-            - Inverse trig functions and rational functions
-            - Mobius stuff?
-
-    F8:
-        title: The what and why of power series
-        dependencies: 
-            - A7
-            - F7
-            - C11
-        topics:
-        
-    F9:
-        title: Power series of key functions
-        dependencies: 
-            - F8
-        topics:
-            - Maclaurin
-        
-    F10:
-        title: Finding power series from general functions
-        dependencies: 
-            - F9
-        topics:
-            - sin, cos, exp, ln binomial theorem
-        
-    F11:
-        title: Hyperbolic functions and inverses
-        dependencies: 
-            - F10
-        topics:
-            - Taylors
-
-    A1:
+        A1:
         title: Which numbers can be written as the ratio of two integers?
         topics:
             - What do we mean by _rational_ and _irrational_ numbers?
