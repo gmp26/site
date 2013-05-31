@@ -38,7 +38,7 @@ lines:
         title: Algebra
         colour: purple
 
-    CX:
+    CN:
         title: Complex Numbers
         colour: orange
 
@@ -49,6 +49,14 @@ lines:
     V:
         title: Vectors
         colour: pink
+        
+    P:
+        title: Probability
+        colour: brown
+    
+    M:
+        title: Mechanics
+        colour: grey
 
 #
 # stations have content
@@ -108,6 +116,8 @@ stations:
 
     C1:
         title: What is calculus about, and what is it useful for?
+        dependencies:
+            - null
         topics:
             - Why might we want to find the gradient of a curve, and what might we mean by that?
             - Why might we want to find the area under a curve, and what might we mean by that?
@@ -130,6 +140,7 @@ stations:
         title: What are tangents and normals?
         dependencies: 
             - C2
+            - E2
         topics:
             - What do we mean by the tangent and normal of a function at a point?
             - What is the relationship between the tangent and normal of a function at a point?
@@ -174,6 +185,7 @@ stations:
         title: Can we extend our ideas about differentation and integration to functions other than polynomials?
         dependencies: 
             - C6
+            - F4
         topics:
             - How can we find the derivative of sin or cos at a point?
             - How can we integrate sin or cos?
@@ -202,7 +214,9 @@ stations:
             
     C10:
         title: Can we differentiate and integrate some more of our favourite functions?
-        dependencies: C9
+        dependencies: 
+            - C9
+            - A6
         topics:
              - What can we learn by incorporating inverse trigonometric functions into our repertoire?
              - What can we learn by incorporating rational functions into our repertoire?
@@ -211,6 +225,7 @@ stations:
         title: Is there a function that equals its own derivative?
         dependencies: 
             - C10
+            - A5
         topics:
             - Is there a function that equals its own derivative?
             - If so, what properties does it have?
@@ -228,6 +243,7 @@ stations:
         title: What sort of objects are differentiation and integration?
         dependencies: 
             - C12
+            - F6
         topics:
             - What can we learn by thinking of differentiation as a function of functions?
             - What can we learn by thinking of integration as a function of functions?
@@ -236,6 +252,7 @@ stations:
         title: Can we write a function as an infinite series of the form $f(x) = \sum_{n=0}^{\infty} a_n x^n$?
         dependencies: 
             - C13
+            - A8
         topics:
             - __Help!__
     
@@ -243,6 +260,7 @@ stations:
         title: What are the power series of our favourite functions?
         dependencies: 
             - C14
+            - A9
         topics:
             - What is the power series for $\exp$?
             - What are the power series for $\sin$ and $\cos$?
@@ -259,6 +277,8 @@ stations:
     F1:
         title: What are functions, and why are they useful?
         theme: Pre-calculus
+        dependencies:
+            - null
         topics:
             - What are some key examples of functions and things that aren't functions?
             - What do we mean by the _domain_ and _range_ of a function, and why are they important?
@@ -294,6 +314,7 @@ stations:
         title: What are the properties of our key examples of functions?
         dependencies: 
             - F3
+            - E3
         topics:
             - What properties do polynomials have?
             - What properties do trigonometric functions have?
@@ -308,6 +329,7 @@ stations:
         title: How does calculus deepen our understanding of functions?
         dependencies:
             - F4
+            - C7
         topics:
             - How can we use ideas from calculus to help us understand the properties of a function?
             - What additional properties of a function might we study with the help of calculus?
@@ -318,6 +340,7 @@ stations:
         title: What are the properties of the exponential and logarithm functions?
         dependencies:
             - F5
+            - C12
         topics:
             - What properties does the exponential function have?
             - What properties does the logarithm function have?
@@ -428,6 +451,8 @@ stations:
 
         A1:
         title: Which numbers can be written as the ratio of two integers?
+        dependencies:
+            - null
         topics:
             - What do we mean by _rational_ and _irrational_ numbers?
             - What can we say about the decimal expansions of rational and irrational numbers?
@@ -519,6 +544,8 @@ stations:
 
     E1:
         title: What does it mean to solve an equation or inequality, and why is this a useful thing to do?
+        dependencies:
+            - null
         topics:
             - How can we formulate an equation or an inequality?
             - What do the symbols $=$, $<$ and $\leq$ mean, and how should we use them correctly?
@@ -576,6 +603,7 @@ stations:
         title: How are logarithms useful for solving equations?
         dependencies: 
             - E5
+            - A5
         thread: Equations and major functions
         topics:
             - What sorts of equations can we solve using logarithms?
@@ -606,23 +634,25 @@ stations:
         title: What are functional equations, and what can we do with them?
         dependencies: 
             - E8
+            - A7
         thread: Further equations
         topics:
             - What is a functional equation?
             - What strategies do we have for solving functional equations?
             - What is a recurrence relation, and how can we solve it?
 
-    DE:
+    DE1:
         title: Differential Equations
         dependencies:
-            - null
+            - C10
+            - E6
 
-    V:
+    V1:
         title: Vectors
         dependencies:
             - null
     
-    CN:
+    CN1:
         title: Complex Numbers
         dependencies:
-            - null
+            - E3
