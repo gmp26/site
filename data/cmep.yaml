@@ -518,101 +518,111 @@ stations:
         topics: null
 
     E1:
-        title: The what and why of solving equations
+        title: What does it mean to solve an equation or inequality, and why is this a useful thing to do?
         topics:
-            - What is means to solve an equation
-            - Concepts of difference sets of solutions
-            - Concepts of multiple solutions, unique solutions, no solutions in a given set
-            - Understanding of = sign and inequalities
-            - Understanding of issues surrounding applying inverses to both sides of an equation                                                           |       |
-            - Concepts of different 'categories' of equations
-            - Concept of multiple variables
-            - Assumptions of continuity allowing inference from graphical methods - e.g counting solutions which cannot be found exactly 
+            - How can we formulate an equation or an inequality?
+            - What do the symbols $=$, $<$ and $\leq$ mean, and how should we use them correctly?
+            - What are we allowed to do to an equation or inequality?
+            - How many solutions might an equation have?
+            - What happens if our equation involves more than one unknown quantity?
+            - If we cannot solve an equation, are there still useful things that we can say about its solutions?
 
     E2:
-        title: Linear equations, quadratics, and circles
+        title: How is the solution of equations related to problems in geometry?
         dependencies: 
             - E1
         topics:
-            - Understanding these categories of equations
-            - Links between algebraic and geometric manipulations
+            - What is the equation of a straight line?
+            - What is the equation of a parabola?
+            - What is the equation of a circle?
+            - How is the process of solving simultaneous equations related to geometry?
+            - Can we find the points of intersection of geometrical objects by considering their equations?
 
     E3:
-        title: Polynomials with real variables
+        title: What can we say about solutions of polynomial equations?
         dependencies: 
             - E2
         topics:
-            - Expansion
-            - Factor theorem
-            - Concepts of number of solution and repeated solutions
-            - Sketching polynomials
-            - Simple (non-calculus) numerical methods to find roots to given accuracy
+            - How can we solve a quadratic equation?
+            - How can we solve a cubic equation?
+            - How many points do we need to determine a polynomial equation?
+            - In what ways can we represent a polynomial equation, and how are they related?
+            - What are the _factor theorem_ and the _remainder theorem_, and why are they useful?
+            - What does it mean to count a solution _with multiplicity_?
+            - How many solutions do we expect a polynomial equation to have?
+            - If we cannot solve a polynomial equation exactly, how can we obtain approximate values for its roots?
+        
 
     E4:
-        title: Solving trig equations
+        title: How can we solve trigonometric equations?
         dependencies:
             - E3
         thread: Equations and major functions
         topics:
-            - Solving trig equations
+            - How can we solve equations involving trigonometric functions?
+            - How many solutions do we expect trigonometric equations to have?
+            - What is the difference between solving a trigonometric equation and proving a trigonometric identity?
 
     E5:
-        title: The modulus function and compund functions
+        title: How can we use and solve equations built from step functions and the modulus function?
         dependencies: 
             - E4
         thread: Equations and major functions
         topics:
-            - Examples include Step functions
-            - Construction of equations from graphs
+            - What equations involving the modulus function can we solve?
+            - What interesting equations can we formulate using step functions?
 
     E6:
-        title: Exp and log
+        title: How are logarithms useful for solving equations?
         dependencies: 
             - E5
         thread: Equations and major functions
         topics:
-            - Natural bases
-            - Laws of logs
-            - power equations
+            - What sorts of equations can we solve using logarithms?
+            - What happens to a power law if we interpret it using logarithms?
 
     E7:
-        title: Building  and transforming equations
+        title: How can we build an equation or transform an equation into a more convenient form?
         dependencies: 
             - E6
         thread: Further equations
         topics:
-            - Focus is on constructing and not solving                    
-            - Constructing candidate equations from key points of a graph 
-            - Dimensional analysis                                        
-            - Transformation following a change of units or coordinates   
-            - Using auxilliary variables to simplify equations            
-            - Constructing parametric equations                           
+            - How can we identify possible candidate equations from data or a graph?
+            - How can dimensional analysis help us to form an equation?
+            - What effect does changing units or coordinates have on an equation?
+            - How can auxiliary variables make an equation more amenable to solution?
+            - What does it mean to give an equation in parametric form, and what are some good examples?
 
     E8:
-        title: Further polynomials
+        title: What additional things can we do with polynomial equations?
         dependencies: 
             - E7
         thread: Further equations
         topics:
-            - Conditions on sum, products of roots etc
-            - Newton-Raphson
-            - Solving equations involving rational functions
+            - How are the coefficients of a polynomial equation related to the roots of a polynomial, and how is this useful?
+            - How can we solve equations involving rational functions?
 
     E9:
-        title: Functional equations
+        title: What are functional equations, and what can we do with them?
         dependencies: 
             - E8
         thread: Further equations
         topics:
-            - Including recurrence relations 
+            - What is a functional equation?
+            - What strategies do we have for solving functional equations?
+            - What is a recurrence relation, and how can we solve it?
 
     DE:
         title: Differential Equations
         dependencies:
-            - E6
-            - A4
+            - null
 
     V:
         title: Vectors
         dependencies:
-            - G8
+            - null
+    
+    CN:
+        title: Complex Numbers
+        dependencies:
+            - null
