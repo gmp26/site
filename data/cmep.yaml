@@ -498,8 +498,6 @@ stations:
         title: When and how can we sum an infinite series?
         dependencies: 
             - A7
-            - F7
-            - C11
         topics:
             - What does it mean for a series to _converge_ or _diverge_?
             - What techniques do we have for evaluating infinite series?
@@ -553,8 +551,6 @@ stations:
     E4:
         title: Solving trig equations
         dependencies:
-            - C3
-            - G4
             - E3
         thread: Equations and major functions
         topics:
