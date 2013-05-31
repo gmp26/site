@@ -64,54 +64,64 @@ lines:
 stations:
 
     NA1:
-        title: Interesting number sequences
+        title: What are our key examples of interesting sequences of numbers?
+        dependencies:
+            - A2
         topics:
-            - Primes
-            - Square numbers
-            - Fibonacci
-            - Triangle numbers
+            - What are the square numbers, and what properties do they have?
+            - What are the triangle numbers, and what properties do they have?
+            - What are the Fibonacci numbers, and what properties do they have?
+            - What are the prime numbers, and what properties do they have?
+            - What do we mean by _Fermat primes_ and _Mersenne primes_?
 
     NA2:
-        title: Primality testing
+        title: How can we test whether a number is prime?
         dependencies: 
             - NA1
         topics:
-            - Notions of complexity for different tests
+            - What is the sieve of Eratosthenes?
+            - What is an _algorithm_?
+            - What do we mean by the _complexity_ of an algorithm, and why is it important?
+            - What techniques do we have for testing whether a number is prime, and how efficient are they?
 
     NA3:
-        title: Finding factors
+        title: What are highest common factors and why do they matter?
         dependencies: 
             - NA2
         topics: 
-            - Highest common factors
-            - Prime factorisation - existence  and uniqueness
-            - Euclid's algorithm
+            - What do we mean by _highest common factor_ and _lowest common multiple_, and how are they related?
+            - How can we find the highest common factor of two numbers?
+            - What is the _Fundamental theorem of arithmetic_, and why does it matter?
 
     NA4:
-        title: Modular arithmetic
+        title: What is modular arithmetic and why is it important?
         dependencies: 
             - NA3
+            - E1
         topics:
-            - Remainders and modular arithmetic
-            - Inverses mod p
+            - What is modular arithmetic?
+            - How can we solve congruences in modular arithmetic?
+            - When does $a$ have a multiplicative inverse modulo $n$, and if it has one then how can we find it?
 
     NA5:
-        title: Theorems about primes                    
+        title: What can we say about powers modulo $n$?                
         dependencies: 
             - NA4
         topics:
-            - Fermat's little theorem
-            - Fermat-Euler and other gems
-            - Links to RSA crypography
+            - What does Fermat's little theorem say, and why is it useful?
+            - What does Wilson's theorem say, and why is it useful?
+            - What does the Fermat-Euler theorem say, and why is it useful?
+            - What is the idea of public key-private key cryptography?
+            - How does the RSA cryptosystem work?
 
     NA6:        
-        title: Algorithms                   
+        title: What other interesting algorithms are there?    
         dependencies: 
             - NA5
         topics:
-            - Multiplication algorithms
-            - Sorting algorithms,
-            - Complexity and implementation
+            - How can we multiply large numbers efficiently?
+            - How can we sort data efficiently?
+            - What decisions and compromises might we have to consider when selecting an algorithm?
 
 
     C1:
@@ -509,6 +519,7 @@ stations:
         title: When and how can we find the general term and sum of a finite sequence?
         dependencies: 
             - A6
+            - NA1
         topics:
             - What does it mean to specify the general term of a sequence?
             - What properties does an arithmetic progression have?
