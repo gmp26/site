@@ -1,9 +1,6 @@
 digraph G {
   node [shape=plaintext;style=inviz;fillcolor="#EEF2FF";fontsize=16; fontname=arial;]
   edge [style=bold;color="#005500"]
-  AE1 [shape=plaintext;style=inviz;fontsize=10;width=0.2;height=0.2];
-  CG1 [shape=plaintext;style=inviz;fontsize=10;width=0.2;height=0.2];
-  CG2 [shape=plaintext;style=inviz;fontsize=10;width=0.2;height=0.2];
   NA1 -> NA2;
   NA2 -> NA3;
   NA3 -> NA4;
@@ -27,7 +24,14 @@ digraph G {
   C5 -> C6;
   C6 -> C7;
   C7 -> C8;
-  C8 -> C9_F5;
+  C8 -> C9;
+  C9 -> C10;
+  C10 -> C11;
+  C11 -> C12;
+  C12 -> C13;
+  C13 -> C14;
+  C14 -> C15;
+  C15 -> C16;
   edge [style=bold;color="#3366DD"]
   E1 -> E2;
   E2 -> E3;
@@ -38,7 +42,24 @@ digraph G {
   E7 -> E8;
   E8 -> E9;
   edge [style=bold;color="#CCCCCC"]
-  CG1 -> E4;
+  A2 -> NA1;
+  A5 -> C11;
+  A5 -> E6;
+  A6 -> C10;
+  A7 -> E9;
+  A8 -> C14;
+  A9 -> C15;
+  E1 -> NA3;
+  E2 -> C3;
+  E3 -> F4;
+  E3 -> CN1;
+  E6 -> DE1;
+  C7 -> F5;
+  C10 -> DE1;
+  C12 -> F6;
+  F4 -> C7;
+  F6 -> C13;
+  NA1 -> A7;
   edge [style=bold;color="#AA00AA"]
   A1 -> A2;
   A2 -> A3;
@@ -46,33 +67,14 @@ digraph G {
   A4 -> A5;
   A5 -> A6;
   A6 -> A7;
-  A7 -> A8_C12_F8;
-  edge [style=bold;color="#CCCCCC"]
-  E6 -> AE1;
-  A4 -> AE1;
+  A7 -> A8;
+  A8 -> A9;
+  A9 -> A10;
   edge [style=bold;color="#55AA22"]
   F1 -> F2;
   F2 -> F3;
   F3 -> F4;
-  F4 -> C9_F5;
-  edge [style=bold;color="#55AA22:#DDCC00"]
-  C9_F5 -> C10_F6;
-  C10_F6 -> C11_F7;
-  C11_F7 -> A8_C12_F8;
-  edge [style=bold;color="#55AA22:#DDCC00:#AA00AA"]
-  A8_C12_F8 -> A9_C13_F9;
-  A9_C13_F9 -> A10_C14_F10;
-  A10_C14_F10 -> A11_C15_F11;
-  edge [style=bold;color="#CCCCCC"]
-  G7 -> CG2;
-  C5 -> CG2;
-  C3 -> CG1;
-  G4 -> CG1;
-  AE1 -> C9_F5;
-  AE1 -> DE;
-  edge [style=bold;color="#444444"]
-  G8 -> CX1;
-  E3 -> CX1;
-  G8 -> V;
-  A7 -> FA1;
+  F4 -> F5;
+  F5 -> F6;
+
 }
