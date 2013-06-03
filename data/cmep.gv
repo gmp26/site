@@ -10,7 +10,8 @@ digraph G {
   G1 -> G2;
   G2 -> G3;
   G3 -> G4;
-  G4 -> G5;
+  G4 -> G4a;
+  G4a -> G5;
   G5 -> G6;
   G6 -> G7;
   G7 -> G8;
@@ -51,14 +52,24 @@ digraph G {
   A9 -> C15;
   E1 -> NA3;
   E2 -> C3;
+  E2 -> G2;
   E3 -> F4;
   E3 -> CN1;
   E6 -> DE1;
+  C3 -> G5;
+  C6 -> G6;
   C7 -> F5;
   C10 -> DE1;
   C12 -> F6;
   F4 -> C7;
   F6 -> C13;
+  G5 -> C3;
+  G2 -> E2;
+  G3 -> E4;
+  G3 -> C7;
+  G3 -> F2;
+  G7 -> V1;
+  G7 -> CN1;
   NA1 -> A7;
   edge [style=bold;color="#AA00AA"]
   A1 -> A2;
