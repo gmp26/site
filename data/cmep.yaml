@@ -151,6 +151,7 @@ stations:
         dependencies: 
             - C2
             - E2
+            - G5
         topics:
             - What do we mean by the tangent and normal of a function at a point?
             - What is the relationship between the tangent and normal of a function at a point?
@@ -196,6 +197,7 @@ stations:
         dependencies: 
             - C6
             - F4
+            - G3
         topics:
             - How can we find the derivative of sin or cos at a point?
             - How can we integrate sin or cos?
@@ -299,6 +301,7 @@ stations:
         title: How can we represent a function by a graph, and how are key properties of a function visible on a graph?
         dependencies: 
             - F1
+            - G3
         topics:
             - What are the connections between algebraic and graphical representations of a function?
             - What are the graphs of key functions such as polynomials, trigonometric functions, and the modulus function?
@@ -356,110 +359,108 @@ stations:
             - What properties does the logarithm function have?
 
     G1:
-        title: Motivation for geometry beyond KS4
-        thread: Geometry pre-calculus
+        title: What is geometry, why is it important, and what do we already know about geometry?
+        dependencies:
+            - null
         topics:
-            - Recap of known facts about geometry                                
-            - Note importance of geometry in engineering, math physics and other 
-              areas                                                              
-            - Stress that geometrical objects will now be described              
-              algebraically. 
-            - Understand the key geometrical properties of 2D shapes and solids                                                  
-            - Stress importance of Descartes 
+            - What do we mean by _geometry_?
+            - Why is geometry useful?
+            - How can we pass between geometry and algebra, and why is this a useful thing to be able to do?
+            - How can Pythagoras's theorem help us to find the distance between two points, and the distance from a point to a line?
+            - What are the key examples of geometrical objects in two and three dimensions?
 
     G2:
-        title: The link between algebra and geometry        
+        title: What is the connection between algebra and geometry, and how can we exploit it?
         dependencies: 
             - G1
+            - E2
         topics:
-            - Understand that many known geometrical objects may be described as 
-              regions of R2 or R3 bounded by lines and planes                   
-            - Cartesian coordinate grids and distances                          
-            - Algebraic descriptions of circles , ?planes, ?conics              
-            - Understand that solutions of linear simultaneous equations
-              correspond to intersections.                                      
-            - Understanding that certain shapes are much easier to describe than others.                                                           
+            - Which of our key examples of geometrical objects in two or three dimensions can we describe as regions of $\mathbb{R}^2$ or $\mathbb{R}^3$ bounded by lines or planes?
+            - What do we mean by _Cartesian coordinates_?
+            - How can we describe circles, conics, lines and planes algebraically?
+            - How can we consider parallel and perpendicular lines using algebra?
+            - How can we use algebra to find the intersections of geometric objects?
+            - Which shapes can easily be described algebraically, and which is it harder to express in this way?
 
     G3:
-        title: Simultaneous equations and inequalities       
+        title: What interesting geometry can we do with triangles?
         dependencies: 
             - G2
         topics:
-            - Both multiple linear and linear/quadratic
+            - What is the centre of a triangle?
+            - What can trigonometry tell us about right-angled triangles?
+            - What can trigonometry tell us about triangles that are not necessarily right-angled?
+            - How can we find the area of a triangle?
+            - How can we extend the definition of the trigonometric functions to all real numbers?
 
     G4:
-        title: Differentiation
+        title: What interesting geometry can we do with circles?
         dependencies: 
             - G3
-        thread: Calculus and Geometry
         topics:
-            - Finding tangents and normals at a point
+            - What are the circle theorems?
+            - How are the trigonometric functions related to circles?
+            - What measures could we use for angles?
+            - How can we find the arc length and area of a sector?
 
-    G5:
-        title: Triangle geometry
+    G4a:
+        title: What interesting geometry can we do with conic sections?
         dependencies: 
             - G4
-        thread: Calculus and Geometry
         topics: 
-            - sin and cos as coordinates of point on unit circle
-            - sine and cosine rules, areas                      
+            - What is a _conic section_, and what are the familiar of conics?
+            - In how many ways can we describe a conic, and what are the relationships between these ways?
+            - How are conics related to planetary motion?
+
+    G5:
+        title: How can differentiation help with geometry?
+        dependencies: 
+            - G4
+            - C3
+        topics:
+            - When and how can we find the equation of a tangent to a function or object at a point?
+            - When and how can we find the equation of a normal to a function or object at a point?
+            - What is the relationship between a tangent and a normal?
 
     G6:
-        title: Circle geometry
+        title: How can integration help with geometry?
         dependencies: 
             - G5
-        thread: Calculus and Geometry
+            - C6
         topics:
-            - conics(?), review of circle theorems             
-            - radians                                        
-            - Arc length and areas of circles, sectors       
-            - Finding normals and tangent lines to circles   
-            - Understanding of sin(x) and cos(x) for small x 
+            - How does integration relate to areas?
+            - How does integration relate to volumes?
+            - How are differentiation and integration related?
 
     G7:
-        title: Inverses of differentiation and applications       
+        title: What other coordinate systems are there?
         dependencies: 
-            - G6
-        thread: Calculus and Geometry
+            - G6 
         topics:
-            - Integration defined as inverse to differentiation         
-            - Fundamental theorem of calculus                           
-            - Integrals of polynomials                                  
-            - Definite and indefinite integration                       
-            - Area under a curve                                        
-            - Integration as method to find areas under curves          
-            - Geometrical understanding of the fund. theorem of calculus
-            - Trapezium methods and integration                         
-            - Volumes of solids with rotational symmetry 
+            - Why might Cartesian coordinates sometimes be inconvenient?
+            - What are _polar coordinates_, and when are they useful?
+            - What are good examples of curves that can be described conveniently in polar coordinates?
 
     G8:
-        title: Polar coordinates
+        title: What happens when we move to three dimensions?
         dependencies: 
-            - G7
-        thread: Further geometry   
+            - G7 
         topics:
-            - Understanding that coordinate system is a choice
-            - Geometry of cardioids, spirals etc              
+            - What are the equations of key objects such as planes or spheres?
+            - In how many ways can we describe key objects such as planes and spheres?
+            - Can we find distances between objects in three dimensions?
 
     G9:
-        title: 3D geometry
+        title: What is the same and what is different about geometry on a sphere?
         dependencies: 
             - G8
-        thread: Further geometry   
         topics:
-            - Equations of planes, spheres, spheres in cartesian coordinates
+            - What do we mean by a _line_ on a sphere?
+            - What interesting properties do spherical lines have?
+            - What interesting properties do spherical triangles have?
+            - What are _spherical polar coordinates_, and why are they useful?
 
-    G10:
-        title: Spherical geometry
-        dependencies: 
-            - G9
-        thread: Further geometry   
-        topics:
-            - Spherical polar coordinates                                   
-            - Parallel lines and geodesics on spheres                       
-            - Spherical triangles
-
-        A1:
+    A1:
         title: Which numbers can be written as the ratio of two integers?
         dependencies:
             - null
@@ -569,6 +570,7 @@ stations:
         title: How is the solution of equations related to problems in geometry?
         dependencies: 
             - E1
+            - G2
         topics:
             - What is the equation of a straight line?
             - What is the equation of a parabola?
@@ -595,6 +597,7 @@ stations:
         title: How can we solve trigonometric equations?
         dependencies:
             - E3
+            - G3
         thread: Equations and major functions
         topics:
             - How can we solve equations involving trigonometric functions?
@@ -661,9 +664,10 @@ stations:
     V1:
         title: Vectors
         dependencies:
-            - null
+            - G7
     
     CN1:
         title: Complex Numbers
         dependencies:
             - E3
+            - G7
