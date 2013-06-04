@@ -67,7 +67,7 @@ stations:
         title: What are our key examples of interesting sequences of numbers?
         dependencies:
             - A2
-        topics:
+        keyQuestions:
             - What are the square numbers, and what properties do they have?
             - What are the triangle numbers, and what properties do they have?
             - What are the Fibonacci numbers, and what properties do they have?
@@ -78,7 +78,7 @@ stations:
         title: How can we test whether a number is prime?
         dependencies: 
             - NA1
-        topics:
+        keyQuestions:
             - What is the sieve of Eratosthenes?
             - What is an _algorithm_?
             - What do we mean by the _complexity_ of an algorithm, and why is it important?
@@ -88,7 +88,7 @@ stations:
         title: What are highest common factors and why do they matter?
         dependencies: 
             - NA2
-        topics: 
+        keyQuestions: 
             - What do we mean by _highest common factor_ and _lowest common multiple_, and how are they related?
             - How can we find the highest common factor of two numbers?
             - What is the _Fundamental theorem of arithmetic_, and why does it matter?
@@ -98,7 +98,7 @@ stations:
         dependencies: 
             - NA3
             - E1
-        topics:
+        keyQuestions:
             - What is modular arithmetic?
             - How can we solve congruences in modular arithmetic?
             - When does $a$ have a multiplicative inverse modulo $n$, and if it has one then how can we find it?
@@ -107,7 +107,7 @@ stations:
         title: What can we say about powers modulo $n$?                
         dependencies: 
             - NA4
-        topics:
+        keyQuestions:
             - What does Fermat's little theorem say, and why is it useful?
             - What does Wilson's theorem say, and why is it useful?
             - What does the Fermat-Euler theorem say, and why is it useful?
@@ -118,7 +118,7 @@ stations:
         title: What other interesting algorithms are there?    
         dependencies: 
             - NA5
-        topics:
+        keyQuestions:
             - How can we multiply large numbers efficiently?
             - How can we sort data efficiently?
             - What decisions and compromises might we have to consider when selecting an algorithm?
@@ -128,7 +128,7 @@ stations:
         title: What is calculus about, and what is it useful for?
         dependencies:
             - null
-        topics:
+        keyQuestions:
             - Why might we want to find the gradient of a curve, and what might we mean by that?
             - Why might we want to find the area under a curve, and what might we mean by that?
             
@@ -136,7 +136,7 @@ stations:
         title: How can we find the gradient of a polynomial at a point?
         dependencies: 
             - C1
-        topics:
+        keyQuestions:
             - What do we mean by the _derivative_ of a function at a point?
             - How can we find the derivative of $x^2$ at a point?
             - How can we find the derivative of $x^3$ at a point?
@@ -152,7 +152,7 @@ stations:
             - C2
             - E2
             - G5
-        topics:
+        keyQuestions:
             - What do we mean by the tangent and normal of a function at a point?
             - What is the relationship between the tangent and normal of a function at a point?
             - How can we find the equation of a tangent to a polynomial at a point?
@@ -162,7 +162,7 @@ stations:
         title: What does it mean to find the derivative of a sum or product of two functions?
         dependencies: 
             - C3
-        topics:
+        keyQuestions:
             - If we know the derivatives of two functions at a point, can we find the derivative of their sum at that point?
             - If we know the derivatives of two functions at a point, can we find the derivative of their product at that point?
             - Can we find the derivative of $1/x$?
@@ -172,7 +172,7 @@ stations:
         title: When and how can we locate maxima and minima of polynomials?
         dependencies: 
             - C4
-        topics:
+        keyQuestions:
             - What do we mean by a _local maximum_ and a _global maximum_?
             - What do we mean by a stationary point, and what types of stationary point are there?
             - How can we locate the stationary points of a polynomial?
@@ -182,7 +182,7 @@ stations:
         title: Is there an operation that is inverse to differentiation, and if so is it useful?
         dependencies: 
             - C5
-        topics:
+        keyQuestions:
             - What do we mean by an antiderivative?
             - Can we find an antiderivative for every polynomial?
             - What do we mean by integration?
@@ -198,7 +198,7 @@ stations:
             - C6
             - F4
             - G3
-        topics:
+        keyQuestions:
             - How can we find the derivative of sin or cos at a point?
             - How can we integrate sin or cos?
             - What does this new knowledge tell us about the functions sin and cos?
@@ -208,7 +208,7 @@ stations:
         title: There are various ways to build new functions from old.  When can we differentiate these new functions?
         dependencies: 
             - C7
-        topics:
+        keyQuestions:
             - When and how can we differentiate the composition of two functions?
             - When and how can we differentiate the reciprocal of a function?
             - When and how can we differentiate the quotient of two functions?
@@ -219,7 +219,7 @@ stations:
         title: Which of the things in C8 can we undo via integration?
         dependencies: 
             - C8
-        topics:
+        keyQuestions:
             - When and how can we integrate the sum of two functions?
             - What do we mean by _integration by parts_, and when is it useful?
             - What do we mean by _integration by substitution_, and when is it useful?
@@ -229,7 +229,7 @@ stations:
         dependencies: 
             - C9
             - A6
-        topics:
+        keyQuestions:
              - What can we learn by incorporating inverse trigonometric functions into our repertoire?
              - What can we learn by incorporating rational functions into our repertoire?
     
@@ -238,7 +238,7 @@ stations:
         dependencies: 
             - C10
             - A5
-        topics:
+        keyQuestions:
             - Is there a function that equals its own derivative?
             - If so, what properties does it have?
     
@@ -246,7 +246,7 @@ stations:
         title: Is there a function whose derivative is $1/x$?
         dependencies: 
             - C11
-        topics:
+        keyQuestions:
             - Is there a function whose derivative is $1/x$?
             - What properties does it have?
             - What is its relationship to the function in C10?

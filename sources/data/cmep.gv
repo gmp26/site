@@ -11,7 +11,7 @@ digraph G {
   "E2-G2" -> G3 [weight=3];
   G3 -> G4 [weight=3];
   G4 -> G4a [weight=3];
-  G4a -> "C3-G5" [weight=3];
+  G4 -> "C3-G5" [weight=3];
   "C3-G5" -> G6 [weight=3];
   G6 -> G7 [weight=3];
   G7 -> G8 [weight=3];
