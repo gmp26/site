@@ -18,6 +18,7 @@ stations
 resource types
 --------------
 * title
+* id (for reference use by resources)
 * see the list!
 * link to generic teacher support
 
@@ -34,7 +35,7 @@ resources
 * pideas1: primary list of pervasive ideas
 * pideas2: secondary list of pervasive ideas
 
-family of persavive idea
+family of pervasive ideas
 ------------------------
 title: name
 
