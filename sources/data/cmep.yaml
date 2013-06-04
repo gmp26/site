@@ -408,7 +408,7 @@ stations:
         dependencies: 
             - G4
         topics: 
-            - What is a _conic section_, and what are the familiar of conics?
+            - What is a _conic section_, and what are the families of conics?
             - In how many ways can we describe a conic, and what are the relationships between these ways?
             - How are conics related to planetary motion?
 
