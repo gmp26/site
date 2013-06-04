@@ -9,11 +9,11 @@
         <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
         <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 
-        <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>  
+        <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
         <script>
             $$(document).ready(function(){
                 $$("#menu-$title$").addClass("active");
-            }); 
+            });
         </script>
     </head>
     <body>
