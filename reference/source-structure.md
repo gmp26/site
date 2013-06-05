@@ -7,7 +7,7 @@ stations
 * title
 * dependencies
 * key questions
-* teacher support
+* teacher support (implicitly named)
 
 ### generated
 * list of links resources which are tagged primarily with this idea 
