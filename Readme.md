@@ -44,18 +44,32 @@ Directory organisation
 
 ####`sources/layouts`
 
-	These are html page layouts used by pages within the site. The documents in `sources/pages` are compiled into html and then inserted into one of these layouts in order to make a final html page. 
+	These are html page layouts used by pages within the site. The documents in `sources/pages` are compiled into html and then inserted into one of these layouts in order to make a final html page. Pages indicate which layout to use by setting the 'layout' metadata field.
 
-####`sources/pages`
-	
-	`sources/pages/foo.md` will be compiled by `grunt` and can be previewed
-	at http://localhost:9000/pages/foo.html or at the URL specified in `foo.md`
-	metadata. 
-
-	Metadata 
 ####`sources/data`
 
-	A data model for the site, mostly written in yaml.
+	A data model for the site, mostly written in yaml. Not sure whether this will stay around.
+####`sources/files`
+
+	Contains precompiled files e.g. html, images, pdfs, videos to be published as is. Will appear at <serverRootUrl>/files.
+
+####`sources/pervasiveIdeas`
+	
+	Mardkdown files containing pervasive ideas. See template.md for format.
+
+####`sources/resources`
+	
+	Mardkdown files containing resources. See template.md for format.
+
+####`sources/resourceTypes`
+	
+	Mardkdown files containing resource types. See template.md for format.
+
+####`sources/stations`
+	
+	Mardkdown files containing stations. See template.md for format.
+
+
 
 Commands
 --------
