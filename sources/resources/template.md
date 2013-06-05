@@ -1,7 +1,6 @@
 ---
-id:
+id: (optional = can omit if same as filename and url)
 title: (optional) but may be identified by resource type
-url:
 layout: (optional - defaults to 'resource')
 author: (optional)
 date: (of first publication - maybe this should be automated)

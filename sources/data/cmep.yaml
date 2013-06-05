@@ -256,7 +256,7 @@ stations:
         dependencies: 
             - C12
             - F6
-        topics:
+        keyQuestions:
             - What can we learn by thinking of differentiation as a function of functions?
             - What can we learn by thinking of integration as a function of functions?
     
@@ -265,7 +265,7 @@ stations:
         dependencies: 
             - C13
             - A8
-        topics:
+        keyQuestions:
             - __Help!__
     
     C15:
@@ -273,7 +273,7 @@ stations:
         dependencies: 
             - C14
             - A9
-        topics:
+        keyQuestions:
             - What is the power series for $\exp$?
             - What are the power series for $\sin$ and $\cos$?
             - What is the power series for $\log(1+x)$?
@@ -283,7 +283,7 @@ stations:
         title: __Something about hyperbolics__?
         dependencies: 
             - C15
-        topics:
+        keyQuestions:
             - __How do we want to introduce hyperbolic functions__?
 
     F1:
@@ -291,7 +291,7 @@ stations:
         theme: Pre-calculus
         dependencies:
             - null
-        topics:
+        keyQuestions:
             - What are some key examples of functions and things that aren't functions?
             - What do we mean by the _domain_ and _range_ of a function, and why are they important?
             - In what ways might we represent a function?
@@ -302,7 +302,7 @@ stations:
         dependencies: 
             - F1
             - G3
-        topics:
+        keyQuestions:
             - What are the connections between algebraic and graphical representations of a function?
             - What are the graphs of key functions such as polynomials, trigonometric functions, and the modulus function?
             - What do we mean by a _root_ of a function?
@@ -317,7 +317,7 @@ stations:
         title: How can we build new functions from old?
         dependencies: 
             - F2
-        topics:
+        keyQuestions:
             - What happens if we consider the sum or product of two functions?
             - What do we mean by the _compositiion_ of two functions, and what are some interesting examples?
             - What do we mean by the _inverse_ of a function, and when does a function have an inverse?
@@ -328,7 +328,7 @@ stations:
         dependencies: 
             - F3
             - E3
-        topics:
+        keyQuestions:
             - What properties do polynomials have?
             - What properties do trigonometric functions have?
             - What are the addition formulae for the sine and cosine functions?
@@ -343,7 +343,7 @@ stations:
         dependencies:
             - F4
             - C7
-        topics:
+        keyQuestions:
             - How can we use ideas from calculus to help us understand the properties of a function?
             - What additional properties of a function might we study with the help of calculus?
             - How can calculus inform our sketches of graphs?
@@ -354,7 +354,7 @@ stations:
         dependencies:
             - F5
             - C12
-        topics:
+        keyQuestions:
             - What properties does the exponential function have?
             - What properties does the logarithm function have?
 
@@ -362,7 +362,7 @@ stations:
         title: What is geometry, why is it important, and what do we already know about geometry?
         dependencies:
             - null
-        topics:
+        keyQuestions:
             - What do we mean by _geometry_?
             - Why is geometry useful?
             - How can we pass between geometry and algebra, and why is this a useful thing to be able to do?
@@ -374,7 +374,7 @@ stations:
         dependencies: 
             - G1
             - E2
-        topics:
+        keyQuestions:
             - Which of our key examples of geometrical objects in two or three dimensions can we describe as regions of $\mathbb{R}^2$ or $\mathbb{R}^3$ bounded by lines or planes?
             - What do we mean by _Cartesian coordinates_?
             - How can we describe circles, conics, lines and planes algebraically?
@@ -386,7 +386,7 @@ stations:
         title: What interesting geometry can we do with triangles?
         dependencies: 
             - G2
-        topics:
+        keyQuestions:
             - What is the centre of a triangle?
             - What can trigonometry tell us about right-angled triangles?
             - What can trigonometry tell us about triangles that are not necessarily right-angled?
@@ -397,7 +397,7 @@ stations:
         title: What interesting geometry can we do with circles?
         dependencies: 
             - G3
-        topics:
+        keyQuestions:
             - What are the circle theorems?
             - How are the trigonometric functions related to circles?
             - What measures could we use for angles?
@@ -407,7 +407,7 @@ stations:
         title: What interesting geometry can we do with conic sections?
         dependencies: 
             - G4
-        topics: 
+        keyQuestions: 
             - What is a _conic section_, and what are the families of conics?
             - In how many ways can we describe a conic, and what are the relationships between these ways?
             - How are conics related to planetary motion?
@@ -417,7 +417,7 @@ stations:
         dependencies: 
             - G4
             - C3
-        topics:
+        keyQuestions:
             - When and how can we find the equation of a tangent to a function or object at a point?
             - When and how can we find the equation of a normal to a function or object at a point?
             - What is the relationship between a tangent and a normal?
@@ -427,7 +427,7 @@ stations:
         dependencies: 
             - G5
             - C6
-        topics:
+        keyQuestions:
             - How does integration relate to areas?
             - How does integration relate to volumes?
             - How are differentiation and integration related?
@@ -436,7 +436,7 @@ stations:
         title: What other coordinate systems are there?
         dependencies: 
             - G6 
-        topics:
+        keyQuestions:
             - Why might Cartesian coordinates sometimes be inconvenient?
             - What are _polar coordinates_, and when are they useful?
             - What are good examples of curves that can be described conveniently in polar coordinates?
@@ -445,7 +445,7 @@ stations:
         title: What happens when we move to three dimensions?
         dependencies: 
             - G7 
-        topics:
+        keyQuestions:
             - What are the equations of key objects such as planes or spheres?
             - In how many ways can we describe key objects such as planes and spheres?
             - Can we find distances between objects in three dimensions?
@@ -454,7 +454,7 @@ stations:
         title: What is the same and what is different about geometry on a sphere?
         dependencies: 
             - G8
-        topics:
+        keyQuestions:
             - What do we mean by a _line_ on a sphere?
             - What interesting properties do spherical lines have?
             - What interesting properties do spherical triangles have?
@@ -464,7 +464,7 @@ stations:
         title: Which numbers can be written as the ratio of two integers?
         dependencies:
             - null
-        topics:
+        keyQuestions:
             - What do we mean by _rational_ and _irrational_ numbers?
             - What can we say about the decimal expansions of rational and irrational numbers?
             - How can we show that a number is rational?  How can we show that a number is irrational?
@@ -476,7 +476,7 @@ stations:
         title: Help!
         dependencies: 
             - A1
-        topics: 
+        keyQuestions: 
             - How do we define square roots, cube roots, $n^{\textrm{th}}$ roots?
             - What do we mean by the _difference of two squares_, and when is it useful?
             - How can we generalise the difference of two squares?
@@ -486,7 +486,7 @@ stations:
         title: How can we expand $(a+b)^n$ for positive integers $n$?
         dependencies: 
             - A2
-        topics:
+        keyQuestions:
             - How can we expand $(1+x)^n$ for positive integers $n$?
             - How can we expand $(a+b)^n$ for positive integers $n$?
             
@@ -494,7 +494,7 @@ stations:
         title: __Help!__
         dependencies: 
             - A3
-        topics:
+        keyQuestions:
             - What is $x^a x^b$?
             - What is $(x^a)^b$?
             - What is $x^a y^a$?
@@ -504,7 +504,7 @@ stations:
         title: __Help!__
         dependencies: 
             - A4
-        topics:
+        keyQuestions:
             - How do we define $\log_a b$, where $a$ is a positive integer?
             - What rules does $\log_a$ satisfy?
             - Why are logarithms useful?
@@ -513,7 +513,7 @@ stations:
         title: When and how can we write a rational function as a sum of rational functions where each denominator is linear?
         dependencies: 
             - A5
-        topics:
+        keyQuestions:
             - __Help!__
     
     A7: 
@@ -521,7 +521,7 @@ stations:
         dependencies: 
             - A6
             - NA1
-        topics:
+        keyQuestions:
             - What does it mean to specify the general term of a sequence?
             - What properties does an arithmetic progression have?
             - What properties does a geometric progression have?
@@ -535,7 +535,7 @@ stations:
         title: When and how can we sum an infinite series?
         dependencies: 
             - A7
-        topics:
+        keyQuestions:
             - What does it mean for a series to _converge_ or _diverge_?
             - What techniques do we have for evaluating infinite series?
             - What are good examples of series that converge and series that diverge?
@@ -544,7 +544,7 @@ stations:
         title: How can we expand $(a+b)^n$ when $n$ is any real number?
         dependencies: 
             - A8
-        topics:
+        keyQuestions:
             - When and how can we expand $(1+x)^n$?
             - When and how can we expand $(a+b)^n$?
 
@@ -552,13 +552,13 @@ stations:
         title: Should there be any more algebra here?
         dependencies: 
             - A9
-        topics: null
+        keyQuestions: null
 
     E1:
         title: What does it mean to solve an equation or inequality, and why is this a useful thing to do?
         dependencies:
             - null
-        topics:
+        keyQuestions:
             - How can we formulate an equation or an inequality?
             - What do the symbols $=$, $<$ and $\leq$ mean, and how should we use them correctly?
             - What are we allowed to do to an equation or inequality?
@@ -571,7 +571,7 @@ stations:
         dependencies: 
             - E1
             - G2
-        topics:
+        keyQuestions:
             - What is the equation of a straight line?
             - What is the equation of a parabola?
             - What is the equation of a circle?
@@ -582,7 +582,7 @@ stations:
         title: What can we say about solutions of polynomial equations?
         dependencies: 
             - E2
-        topics:
+        keyQuestions:
             - How can we solve a quadratic equation?
             - How can we solve a cubic equation?
             - How many points do we need to determine a polynomial equation?
@@ -599,7 +599,7 @@ stations:
             - E3
             - G3
         thread: Equations and major functions
-        topics:
+        keyQuestions:
             - How can we solve equations involving trigonometric functions?
             - How many solutions do we expect trigonometric equations to have?
             - What is the difference between solving a trigonometric equation and proving a trigonometric identity?
@@ -609,7 +609,7 @@ stations:
         dependencies: 
             - E4
         thread: Equations and major functions
-        topics:
+        keyQuestions:
             - What equations involving the modulus function can we solve?
             - What interesting equations can we formulate using step functions?
 
@@ -619,7 +619,7 @@ stations:
             - E5
             - A5
         thread: Equations and major functions
-        topics:
+        keyQuestions:
             - What sorts of equations can we solve using logarithms?
             - What happens to a power law if we interpret it using logarithms?
 
@@ -628,7 +628,7 @@ stations:
         dependencies: 
             - E6
         thread: Further equations
-        topics:
+        keyQuestions:
             - How can we identify possible candidate equations from data or a graph?
             - How can dimensional analysis help us to form an equation?
             - What effect does changing units or coordinates have on an equation?
@@ -640,7 +640,7 @@ stations:
         dependencies: 
             - E7
         thread: Further equations
-        topics:
+        keyQuestions:
             - How are the coefficients of a polynomial equation related to the roots of a polynomial, and how is this useful?
             - How can we solve equations involving rational functions?
 
@@ -650,7 +650,7 @@ stations:
             - E8
             - A7
         thread: Further equations
-        topics:
+        keyQuestions:
             - What is a functional equation?
             - What strategies do we have for solving functional equations?
             - What is a recurrence relation, and how can we solve it?
