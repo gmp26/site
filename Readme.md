@@ -39,35 +39,27 @@ A library of javascript modules installed by the node package manager. The scrip
 Reference material used by authors and developers that should not appear on site.
 
 ###sources
-
 Files processed by the `grunt` and `grunt build` commands to generate the `app` preview image and the `dist` production image respectively.
 
 ####sources/layouts
-
 These are html page layouts used by pages within the site. The documents in `sources/pages` are compiled into html and then inserted into one of these layouts in order to make a final html page. Pages indicate which layout to use by setting the 'layout' metadata field.
 
 ####sources/data
-
 A data model for the site, mostly written in yaml. Not sure whether this will stay around.
 
 ####sources/files
-
 Contains precompiled files e.g. html, images, pdfs, videos to be published as is. Will appear at <serverRootUrl>/files.
 
 ####sources/pervasiveIdeas
-	
 Markdown files containing pervasive ideas. See template.md for format.
 
 ####sources/resources
-	
 Markdown files containing resources. See template.md for format.
 
 ####sources/resourceTypes
-	
 Markdown files containing resource types. See template.md for format.
 
 ####sources/stations
-	
 Markdown files containing stations. See template.md for format.
 
 
