@@ -89,7 +89,6 @@ git clone git@github.com:CMEPorg/CMEP-site.git
 Install the necessary node_modules used by the various grunt tasks.
 ```
 npm install
-npm install
 ```
 
 ### Run
@@ -103,6 +102,6 @@ grunt server
 ### Create
 
 Open a browser pointing at the app folder served ar http://localhost:9000. You can now edit files in the sources folder and preview the results in
-your browser
+your browser.
 
 
