@@ -74,7 +74,7 @@ Directory organisation
 Commands
 --------
 
-We use commands provided by the [`grunt`](http://gruntjs.com/) task runner for various site tasks. Run `grunt --help` in a terminal for the complete list. The main tasks are `grunt`, `grunt test`, `grunt server`, and `grunt build`. Othere tasks listed by `grunt --help` are run as needed by the main tasks.
+We use commands provided by the [`grunt`](http://gruntjs.com/) task runner for various site tasks. Run `grunt --help` in a terminal for the complete list. The main tasks are `grunt`, `grunt test`, `grunt server`, and `grunt build`. Other tasks listed by `grunt --help` are run as needed by the main tasks.
 
 Getting started
 ---------------

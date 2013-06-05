@@ -2,7 +2,7 @@
 id:
 title: (optional) but may be identified by resource type
 url:
-layout: (optional - defaults to 'resource', else name of a layout file)
+layout: (optional - defaults to 'resource')
 author: (optional)
 date: (of first publication - maybe this should be automated)
 publication status:
