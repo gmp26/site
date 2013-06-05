@@ -18,54 +18,54 @@ These are the files necessary to generate  [the CMEP curriculum map](http://camb
 Directory organisation
 ----------------------
 
-###`app`
+###app
 
 	The output folder used during development which allows the site to be previewed. When creating the site, use the command 'grunt server' to serve this directory on http://localhost:9000. Edits to the site will then (once this is all working) appear immediately in pages viewed there.
 
-###`dist`
+###dist
 
 	This is the production version of the site. Not currently in use.
 
-###`incoming`
+###incoming
 
 	A holding pen for received material that has yet to be used.
 
-###`node_modules`
+###node_modules
 
 	A library of javascript modules installed by the node package manager. The scripts which build `app` and `dist` depend on these.
 
-###`reference`
+###reference
 
 	Reference material used by authors and developers that should not appear on site.
 
-###`sources`
+###sources
 
 	Files processed by the `grunt` and `grunt build` commands to generate the `app` preview image and the `dist` production image respectively.
 
-####`sources/layouts`
+####sources/layouts
 
 	These are html page layouts used by pages within the site. The documents in `sources/pages` are compiled into html and then inserted into one of these layouts in order to make a final html page. Pages indicate which layout to use by setting the 'layout' metadata field.
 
-####`sources/data`
+####sources/data
 
 	A data model for the site, mostly written in yaml. Not sure whether this will stay around.
-####`sources/files`
+####sources/files
 
 	Contains precompiled files e.g. html, images, pdfs, videos to be published as is. Will appear at <serverRootUrl>/files.
 
-####`sources/pervasiveIdeas`
+####sources/pervasiveIdeas
 	
 	Mardkdown files containing pervasive ideas. See template.md for format.
 
-####`sources/resources`
+####sources/resources
 	
 	Mardkdown files containing resources. See template.md for format.
 
-####`sources/resourceTypes`
+####sources/resourceTypes
 	
 	Mardkdown files containing resource types. See template.md for format.
 
-####`sources/stations`
+####sources/stations
 	
 	Mardkdown files containing stations. See template.md for format.
 
