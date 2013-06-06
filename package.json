@@ -1,6 +1,7 @@
 {
   "name": "CMEP-site",
   "version": "0.1.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/gmp26/grunt-panda.git"
