@@ -1,7 +1,7 @@
----
+````
 id: (optional = can omit if same as filename and url)
 title: (optional) but may be identified by resource type
-layout: (optional - defaults to 'resource')
+layout: resource (but some resources will have special layouts)
 author: (optional)
 date: (of first publication - maybe this should be automated)
 publication status:
@@ -13,6 +13,6 @@ stids2: secondary list of station ids, or yaml list
 pvids1: primary list of pervasive idea ids as yaml list
 pvids2: secondary list of pervasive ideas ids as yaml list
 
----
+````
 
 content in markdown
