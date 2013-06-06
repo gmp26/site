@@ -1,4 +1,4 @@
----
+````
 id: NA4
 title: What is modular arithmetic and why is it important?
 dependencies: 
@@ -9,4 +9,4 @@ keyQuestions:
     - How can we solve congruences in modular arithmetic?
     - When does $a$ have a multiplicative inverse modulo $n$, and if it has one then how can we find it?
 
----
+````

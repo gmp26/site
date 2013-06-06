@@ -1,4 +1,4 @@
----
+````
 id: G4a
 title: What interesting geometry can we do with conic sections?
 dependencies: 
@@ -8,4 +8,4 @@ keyQuestions:
     - In how many ways can we describe a conic, and what are the relationships between these ways?
     - How are conics related to planetary motion?
 
----
+````

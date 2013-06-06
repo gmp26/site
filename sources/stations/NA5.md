@@ -1,4 +1,4 @@
----
+````
 id: NA5
 title: What can we say about powers modulo $n$?                
 dependencies: 
@@ -10,4 +10,4 @@ keyQuestions:
     - What is the idea of public key-private key cryptography?
     - How does the RSA cryptosystem work?
 
----
+````

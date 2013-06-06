@@ -1,4 +1,4 @@
----
+````
 id: NA2
 title: How can we test whether a number is prime?
 dependencies: 
@@ -9,4 +9,4 @@ keyQuestions:
     - What do we mean by the _complexity_ of an algorithm, and why is it important?
     - What techniques do we have for testing whether a number is prime, and how efficient are they?
 
----
+````
