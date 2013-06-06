@@ -3,7 +3,7 @@ How to create a resource for CMEP
 
 CMEP resource sources are stored in a folder alongside any assets (images, interactives, etc.) that the resource needs. The resource itself should be written in a text editor using [Pandoc flavour markdown](http://johnmacfarlane.net/pandoc/README.html), or LaTeX with a minimalist set of packages. In either case, delimit mathematics notation with `$` for inline maths or `$$` for display maths.
 
-If you submit a resource in LaTeX, we will use Pandoc to convert it to markdown, and thereafter maintain the markdown copy as authoritative. Authors may wish to install Pandoc themselves to check that the result is good.
+If you submit a resource in LaTeX, we will use Pandoc to convert it to markdown, and thereafter maintain the markdown copy as authoritative. Authors may wish to [install Pandoc](http://johnmacfarlane.net/pandoc/installing.html) themselves to check that the result is good.
 
 Check List
 ----------
