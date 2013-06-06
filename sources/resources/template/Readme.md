@@ -37,4 +37,5 @@ Resources will be published at
 Metadata
 --------
 
+Insert metadata in the (final) index.md file. [An example is here](index.md)
 
