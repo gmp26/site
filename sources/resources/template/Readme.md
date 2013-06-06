@@ -13,7 +13,7 @@ to address the resource on the web so avoid characters that require special trea
 
 - Make a folder for the resource, naming it with your chosen identifier.
 
-- Choose a markup language to use - either [Pandoc]() or [LaTeX](http://latex-project.org/guides/).
+- Choose a markup language to use - either [Pandoc](http://johnmacfarlane.net/pandoc/) or [LaTeX](http://latex-project.org/guides/).
 
 - Create the main file for the resource, naming it `index.md` or `index.tex`. 
 
