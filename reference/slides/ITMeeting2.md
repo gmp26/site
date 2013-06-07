@@ -1,7 +1,12 @@
-CMEP IT Summary
-===============
-Agenda
-------
+#CMEP IT Summary
+
+
+10 June 2013
+
+#Agenda
+
+- Development Process
+
 - Definitions
 
 - The CMEP curriculum site
@@ -10,21 +15,27 @@ Agenda
 
 - Discussion
 
-Some Definitions - 1
------------
+#The Development Process
+
+![The Development Process](Development_process_v1.png)
+
+#Definitions
+
 
 - __`Git`__ is a modern distributed version control system written by Linus Torvalds - the man who wrote the Linux kernel.
 - __`Git`__ is widely used for development and is beginning to be taken up in other spheres such as design.
   	- Each CMEP author and developer has a local copy of `Git` installed.
   	- `Git` makes it easy to merge local copies into final canonical versions.
+  	- Contributors do not need to use `Git`
 
 - A __repository__ is a collection of files managed by `Git`.
 	- The CMEP repository for the curriculum site is called [CMEP-site](https://github.com/CMEPorg/CMEP-site)
 	- Each author and developer has a local copy of [CMEP-site](https://github.com/CMEPorg/CMEP-site).
+	- Contributors do not have access 
 
 - __[`GitHub`](http://github.com)__ is a cloud service that makes use of `Git`. 
 	- It's an extremely useful service, but we are not in any way dependent on its continued existence. 
-	- We have a `GitHub` account, which allowing us to keep our copy of the [CMEP-site](https://github.com/CMEPorg/CMEP-site) repository private there.
+	- We have a `GitHub` account, enabling us to keep a copy of the [CMEP-site](https://github.com/CMEPorg/CMEP-site) repository private there.
 	- On top of version control, `GitHub` provides:
 		- Compilation of `Markdown` documents into viewable web pages
 		- An Issues tracker
@@ -33,31 +44,28 @@ Some Definitions - 1
 		- Activity tracking
 		- Change notifications.
 
-
-Some Definitions - 2
------
-
 - __`Markdown`__ is a wiki-like markup language.
-	- `GitHub` displays `Markdown` files nicely, which allowing us to preview resources there.
+	- `GitHub` displays `Markdown` files nicely so we can preview resources there.
 
 - __[`Pandoc`](http://johnmacfarlane.net/pandoc)__ is a document converter written in Haskell.
 	- It is an [open source Haskell program](https://code.google.com/p/pandoc/downloads/list).
-	- It can compile `Markdown`, HTML and _core_ `LaTeX` into HTML, `TeX`, pdf, e-book, and slides.
+	- It can compile `Markdown`, HTML and _core_ `LaTeX` into HTML, `TeX`, Word documents, pdf, e-book, and slides.
 	- It uses `LaTeX` for mathematics notation.
-	- It can embed html to cope with special requirements such as embedded interactives.
+	- It can embed HTML to cope with special requirements such as embedded interactives.
 
-- __YAML__ is Yet Another Markup Language, which we are using for to annotate documents with metadata.
+- __[`YAML`](http://www.yaml.org/)__ is Yet Another Markup Language. We are using it to annotate documents with metadata.
 
 - CMEP source documents contain:
-	- A metadata header in `YAML`
-	- Content in `Pandoc flavour Markdown`
-	- See the [resource template here](https://github.com/CMEPorg/CMEP-site/tree/master/sources/resources/template)
+	- a metadata header in `YAML`
+	- content in `Pandoc flavour Markdown`.
 
-- The unfortunately named __[`Grunt`](http://gruntjs.com/)__ is a task runner, which we will use to run the various tasks that convert the source material into web sites and other output forms.
-	- For example we have written a grunt task [grunt-panda](http://gruntjs.com/plugins/pandoc) to extract and compile directories of markdown sources.
+See the [resource template here](https://github.com/CMEPorg/CMEP-site/tree/master/sources/resources/template)
 
-Building the CMEP web site
--------
+- The unfortunately named __[`Grunt`](http://gruntjs.com/)__ is a task runner, which we will use to run the various tasks that convert source material into web sites and other output forms.
+	- For example we have written a grunt task [grunt-panda](http://gruntjs.com/plugins/pandoc) to run pandoc over directories of markdown sources.
+
+#The CMEP curriculum site
+
 
 - All source material for the site lives in [CMEP-site/sources](https://github.com/CMEPorg/CMEP-site/tree/master/sources).
 
@@ -72,8 +80,8 @@ Building the CMEP web site
 		- very fast
 		- and very secure.
 
-LinkedIn Discussion Site
------------
+#LinkedIn Discussion Site
+
 
 - Why LinkedIn?
 	- It's seen as the leading social networking site for professionals
@@ -82,8 +90,8 @@ LinkedIn Discussion Site
 
 - We need a name for the new group
 
-Q&A
-----
+#Q&A
+
 
 - Post Graduate help
 	- 2 candidates applied

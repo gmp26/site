@@ -42,3 +42,4 @@ Now look just at the versions that _do_ describe a unique straight line.
 4. Pick two of the descriptions.  Can you take a line given by one description and express it using the other?
 
 5. Why might one description be more useful than another?  Can you identify any advantages or disadvantages of any of these representations? 
+
