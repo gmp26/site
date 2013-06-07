@@ -4,7 +4,7 @@ Pervasive ideas
 Mathematical processes
 ----------------------
 
-familyID processes
+familyID process
 
 - Proof
 - Modelling
@@ -15,11 +15,12 @@ familyID processes
 - Visualising
 - Conjecturing
 - Actions on objects
+- Choosing the right point of view
 
 Pervasive mathematical concepts
 -------------------------------
 
-familyID concepts
+familyID concept
 
 - Infinity
 - Symmetry
@@ -31,11 +32,13 @@ familyID concepts
 - Periodicity
 - Logic
 - Linearity
+- Division by zero
+- Invariance and invariants
 
 Applications and more advanced mathematics
 ------------------------------------------
 
-familyID applications
+familyID application
 
 - Risk
 - Networks
