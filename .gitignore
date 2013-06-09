@@ -1,8 +1,10 @@
 node_modules
 dist
 .tmp
+tmp/*
 app/bower_components
 .DS_Store
+partials
 reference/slides/ITMeeting2.pdf
 reference/slides/ITMeeting2.html
 reference/slides/Development_process_v1.pdf

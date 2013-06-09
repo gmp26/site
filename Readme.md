@@ -91,6 +91,11 @@ Install the necessary node_modules used by the various grunt tasks.
 npm install
 ```
 
+Install the necessary libraries for client-side scripts.
+```
+bower install
+```
+
 ### Run
 
 Create the development folder `app`, and serve it by starting a 

@@ -55,7 +55,7 @@
 
 - __[`YAML`](http://www.yaml.org/)__ is Yet Another Markup Language. We are using it to annotate documents with metadata.
 
-- CMEP source documents contain:
+- CMEP source documents contain
 	- a metadata header in `YAML`
 	- content in `Pandoc flavour Markdown`.
 
@@ -101,4 +101,5 @@ See the [resource template here](https://github.com/CMEPorg/CMEP-site/tree/maste
 	- A UPS power supply for the new server
 	- A laptop for Steve when he returns
 	- UCS copies of Office for Vicky/Steve laptops
+	- Licences for 5 seats of [Sublime Text](https://www.sublimetext.com/buy)
 	 
