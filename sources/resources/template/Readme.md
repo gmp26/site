@@ -32,7 +32,7 @@ URL for publication
 -------------------
 
 Resources will be published at 
-`http://cambridge.maths.org/resources/<resourceId>`.
+`http://cambridge.maths.org/<resourceId>`.
 
 Metadata
 --------

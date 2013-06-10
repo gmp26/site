@@ -22,7 +22,7 @@ h2 {
 }
 
 /* home page list of recent blogs */
-ul.noindent {
+ul .noindent {
     margin-left:0;
 }
 
@@ -39,8 +39,8 @@ ul.noindent {
  
 /* This gets Facebook to fall into place */
 .social .fb-like {
-    font-size: 1px;
     display: inline-block;
+    font-size: 1px;
 }
  
 /* Set an optional width for your button wrappers */

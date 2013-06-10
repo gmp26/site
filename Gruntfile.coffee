@@ -22,7 +22,22 @@ module.exports = (grunt) ->
     dist: "dist"
 
   grunt.initConfig
+
     yeoman: yeomanConfig
+
+    panda:
+      dev:
+        options:
+          stripMeta: '````'
+
+        files: [
+          expand: true
+          cwd: "sources"
+          src: "**/*.md"
+          dest: "partials/"
+          ext: ".html"
+        ]
+        
     watch:
       recess:
         files: ["<%= yeoman.app %>/styles/{,*/}*.less"]
@@ -180,6 +195,7 @@ module.exports = (grunt) ->
 
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
+
 
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->

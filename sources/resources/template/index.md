@@ -4,7 +4,13 @@ title: (optional) but may be identified by resource type
 layout: resource (but some resources will have special layouts)
 author: (optional)
 date: (of first publication - maybe this should be automated)
-publication status: choose from 1,2,3,4,5
+clearance: 
+  0: not released
+  1: internal team
+  2: advisors and reviewers
+  3: schools
+  4: public pilot
+  5: public final
 keywords:
 resourceType: resourceTypeId
 highlight: boolean or a list of station Ids
