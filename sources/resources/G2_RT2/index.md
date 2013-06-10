@@ -1,6 +1,6 @@
 ````
 layout: resource
-publication status: 0
+clearance: 0
 keywords:
 resourceType: RT2
 highlight:
