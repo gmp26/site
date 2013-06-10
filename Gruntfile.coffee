@@ -12,14 +12,15 @@ mountFolder = (connect, dir) ->
 # use this if you want to match all subfolders:
 # 'test/spec/**/*.js'
 module.exports = (grunt) ->
-  
+
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-  
+
   # configurable paths
   yeomanConfig =
     app: "app"
     dist: "dist"
+    partials: "partials"
 
   grunt.initConfig
 
@@ -33,11 +34,11 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "sources"
-          src: "**/*.md"
-          dest: "partials/"
+          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          dest: "<%= yeoman.partials %>/"
           ext: ".html"
         ]
-        
+
     watch:
       recess:
         files: ["<%= yeoman.app %>/styles/{,*/}*.less"]
@@ -50,7 +51,7 @@ module.exports = (grunt) ->
     connect:
       options:
         port: 9000
-        
+
         # change this to '0.0.0.0' to access the server from outside
         hostname: "localhost"
 
@@ -82,6 +83,8 @@ module.exports = (grunt) ->
 
       server: ".tmp"
 
+      partials: "<%= yeoman.partials %>"
+
     jshint:
       options:
         jshintrc: ".jshintrc"
@@ -102,13 +105,13 @@ module.exports = (grunt) ->
         files:
           "<%= yeoman.app %>/styles/main.css": ["<%= yeoman.app %>/styles/main.less"]
 
-    
+
     # not used since Uglify task does concat,
     # but still available if needed
     #concat: {
     #      dist: {}
     #    },
-    
+
     # not enabled since usemin task does concat and uglify
     # check index.html to edit your build targets
     # enable this task if you prefer defining your build targets here
@@ -157,7 +160,7 @@ module.exports = (grunt) ->
     htmlmin:
       dist:
         options: {}
-        
+
         #removeCommentsFromCDATA: true,
         #          // https://github.com/yeoman/grunt-usemin/issues/44
         #          //collapseWhitespace: true,
@@ -205,3 +208,4 @@ module.exports = (grunt) ->
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
   grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "rev", "usemin"]
   grunt.registerTask "default", ["jshint", "test", "build"]
+  grunt.registerTask "dev", ["clean:partials", "panda"]
