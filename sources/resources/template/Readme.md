@@ -39,3 +39,29 @@ Metadata
 
 Insert metadata in the (final) index.md file. [An example is here](index.md)
 
+Styling for the web
+-------------------
+
+We have enabled the pandoc [`raw-html`](http://johnmacfarlane.net/pandoc/README.html#raw-html) option too to allow us to surround blocks of markdown with styling commands. We will be using a responsive layout whhich means that pages can reformat themselves to cope with different width devices.
+
+Overall, the web output will use [twitter bootstrap](http://twitter.github.io/bootstrap/) styling. Refer to the examples there for styles that may be applied with HTML wrappers. Fore responsive layouts, look at the [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem) and experiment by reducing the width of your browser window.
+
+###Bootstrap we might use in content
+
+* [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem)
+* [Typography](http://twitter.github.io/bootstrap/base-css.html#typography) e.g. for default header styling and 
+  - `<div class=".lead">`Lead content to an article.`</div>`
+* [Wells](http://twitter.github.io/bootstrap/components.html#misc)
+  - `<div class=".well">`Content in markdown to be styled in a box that stands out from the rest of the text.`</div>`
+* [Float left or right](http://twitter.github.io/bootstrap/components.html#misc). 
+* [Icons](http://twitter.github.io/bootstrap/base-css.html#icons)
+* [Labels and Badges](http://twitter.github.io/bootstrap/components.html#labels-badges)
+* [Hero Unit](http://twitter.github.io/bootstrap/components.html#typography) A very prominent box.
+* [Page header](http://twitter.github.io/bootstrap/components.html#typography)
+* [Thumbnails and Images](http://twitter.github.io/bootstrap/components.html#thumbnails)
+* [Alerts](http://twitter.github.io/bootstrap/components.html#alerts) Useful for warnings or attention grabbing notes.
+* [Media object](http://twitter.github.io/bootstrap/components.html#media) for icon, header, decsription. 
+
+###Other Bootstrap styles
+
+Many of the remaining bootstrap styles are not directly applicable to content, though they are applicable to the HTML template pages which which pull in content. They also apply to the interactive content.
