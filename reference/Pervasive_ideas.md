@@ -10,7 +10,7 @@ familyID process
 - Modelling
 - Generalising and specialising
 - Doing and undoing
-- Multiple representations
+- Multiple representations (PI1)
 - Using a computer
 - Visualising
 - Conjecturing
@@ -31,7 +31,7 @@ familyID concept
 - Axioms and axiomatic systems
 - Periodicity
 - Logic
-- Linearity
+- Linearity (PI2)
 - Division by zero
 - Invariance and invariants
 
