@@ -1,6 +1,5 @@
 ````
-id: (optional = omit if same as filename and url)
-url: 
+id: PI1
 title: Multiple representations
 family: process
 layout: pervasiveIdea

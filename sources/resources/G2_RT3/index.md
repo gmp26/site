@@ -3,9 +3,9 @@ layout: resource
 clearance: 0
 keywords: 
 resourceType: RT3
-highlight
+highlight:
 stids1:
-	- G2
+  - G2
 stids2:
 pvids1: 
 pvids2: 

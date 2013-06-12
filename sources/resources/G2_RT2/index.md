@@ -5,12 +5,12 @@ keywords:
 resourceType: RT2
 highlight:
 stids1:
-	- G2
+  - G2
 stids2:
 pvids1:
 pvids2:
-	- PI1
-	- PI2
+  - PI1
+  - PI2
 ````
 
 1. Which of the following describe a straight line?

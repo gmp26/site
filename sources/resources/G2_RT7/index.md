@@ -5,7 +5,7 @@ keywords:
 resourceType: RT7
 highlight:
 stids1:
-	- G2
+  - G2
 stids2:
 pvids1:
 pvids2:
@@ -18,7 +18,7 @@ pvids2:
 
 	- Centre $(a+1,b)$, radius $r$.
 	- Centre $(a-1,b)$, radius $r$.
-	-  Centre $(a,b+1)$, radius $r$.
+	- Centre $(a,b+1)$, radius $r$.
 	- Centre $(a,b-1)$, radius $r$.
 	- Centre $(-a,b)$, radius $r$.
 	- Centre $(b,a)$, radius $r$.

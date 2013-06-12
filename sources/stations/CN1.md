@@ -1,5 +1,5 @@
 ````
-id: CN1:
+id: CN1
 title: Complex Numbers
 dependencies:
     - E3
