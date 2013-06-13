@@ -208,6 +208,6 @@ module.exports = (grunt) ->
 
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
   grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "rev", "usemin"]
-  #grunt.registerTask "default", ["jshint", "test", "build"]
+  grunt.registerTask "layout", ["test", "build"]
   grunt.registerTask "dev", ["clean:partials", "panda:dev"]
   grunt.registerTask "default", ["clean:partials", "panda:dev"]
