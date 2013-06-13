@@ -44,7 +44,7 @@ Styling for the web
 
 We have enabled the pandoc [`raw-html`](http://johnmacfarlane.net/pandoc/README.html#raw-html) option too to allow us to surround blocks of markdown with styling commands. We will be using a responsive layout whhich means that pages can reformat themselves to cope with different width devices.
 
-Overall, the web output will use [twitter bootstrap](http://twitter.github.io/bootstrap/) styling. Refer to the examples there for styles that may be applied with HTML wrappers. Fore responsive layouts, look at the [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem) and experiment by reducing the width of your browser window.
+Overall, the web output will use [twitter bootstrap](http://twitter.github.io/bootstrap/) styling. Refer to the examples there for styles that may be applied with HTML wrappers. For responsive layouts, look at the [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem) and experiment by reducing the width of your browser window.
 
 ###Bootstrap we might use in content
 
