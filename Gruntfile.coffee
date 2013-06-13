@@ -30,7 +30,7 @@ module.exports = (grunt) ->
       dev:
         options:
           stripMeta: '````'
-          metaDataPath: "<%= yeoman.partials %>/cmep.yaml"
+          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
 
         files: [
           expand: true

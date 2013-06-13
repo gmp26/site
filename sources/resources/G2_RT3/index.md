@@ -32,13 +32,17 @@ ADD PICTURE SHOWING RIGHT-ANGLED TRIANGLE WITH SHORTER SIDE LENGTHS LABELLED
 
 If the point $(x,y)$ were placed differently relative to $(-1,2)$, then we might get different triangles.
 
-<div class=".well">####Exercise
+<div class="well">
 
-Find all the possible diagrams, and the side lengths of the resulting triangles.</div>
+####Exercise
+
+Find all the possible diagrams, and the side lengths of the resulting triangles.
+
+</div>
 
 Now Pythagoras's theorem helps us to find the distance between the points $(x,y)$ and $(-1,2)$: it's $$\sqrt{(x+1)^2 + (2-y)^2}$$.
 
-<div class=".well">####Exercise
+<div class="well">####Exercise
 
 Find the corresponding expressions for the distances in the other possible diagrams.</div>
 
@@ -48,11 +52,11 @@ This, in turn, is satisfied if, and only if, $$(x+1)^2 + (2-y)^2 = 9$$.  (In one
 
 So the equation of the circle of radius 3 with centre $(-1,2)$ is $$(x+1)^2 + (2-y)^2 = 9$$.
 
-<div class=".well">####Exercise
+<div class="well">####Exercise
 
 Expand out the brackets and experiment with different ways of writing this equation.  Which way(s) do you find most convenient, and why?</div>
 
-<div class=".well">####Exercise
+<div class="well">####Exercise
 
 Pick a radius and a centre, and find the equation of the corresponding circle, with an explanation.  Repeat until you find confident.</div>
 

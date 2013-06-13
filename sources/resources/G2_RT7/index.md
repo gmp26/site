@@ -38,7 +38,7 @@ pvids2:
 	- $x^2 + y^2 - 3x - y = -1.5$
 	- $x^2 + y^2 + 3x + y = -1.5$
 
-3. Find the equation of the circle of which the line segment from $(-5, 2)$ to $(3, -1)$ is a diameter.  
+3. Find the equation of the circle of which the line segment from $(-5, 2)$ to $(3, -1)$ is a diameter.
 
     How many other circles pass through both of these two points?  Can you find the equations of any of them?
 
