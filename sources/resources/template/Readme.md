@@ -50,9 +50,11 @@ Overall, the web output will use [twitter bootstrap](http://twitter.github.io/bo
 
 * [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem)
 * [Typography](http://twitter.github.io/bootstrap/base-css.html#typography) e.g. for default header styling and 
-  - `<div class=".lead">`Lead content to an article.`</div>`
+  - `<div class="lead">`Lead content to an article.`</div>`
 * [Wells](http://twitter.github.io/bootstrap/components.html#misc)
-  - `<div class=".well">`Content in markdown to be styled in a box that stands out from the rest of the text.`</div>`
+  - `<div class="well">`Content in markdown to be styled in a box that stands out from the rest of the text.`</div>`
+* [Collapse](http://twitter.github.io/bootstrap/javascript.html#collapse) is very useful for hide/reveal problems. It can be triggered by a button as in the Bootstrap link, or by a link as in
+this [jsFiddle example](http://jsfiddle.net/gmp26/gD3Vz/5/). 
 * [Float left or right](http://twitter.github.io/bootstrap/components.html#misc). 
 * [Icons](http://twitter.github.io/bootstrap/base-css.html#icons)
 * [Labels and Badges](http://twitter.github.io/bootstrap/components.html#labels-badges)
