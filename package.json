@@ -4,7 +4,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/gmp26/grunt-panda.git"
+    "url": "git@github.com:CMEPorg/CMEP-site.git"
   },
   "dependencies": {
     "grunt-panda": ">=0.1.3",
