@@ -31,6 +31,7 @@ module.exports = (grunt) ->
         options:
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          pipeToModule: "../../../lib/generator.js"
 
         files: [
           expand: true
@@ -39,6 +40,15 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.partials %>/"
           ext: ".html"
         ]
+
+    # Compile livescript
+    livescript:
+      compile:
+        options:
+          bare: false
+          prelude: true
+        files:
+          "./lib/generator.js": "./lib/generator.ls"
 
     watch:
       recess:
@@ -209,5 +219,5 @@ module.exports = (grunt) ->
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
   grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "rev", "usemin"]
   grunt.registerTask "layout", ["test", "build"]
-  grunt.registerTask "dev", ["clean:partials", "panda:dev"]
-  grunt.registerTask "default", ["clean:partials", "panda:dev"]
+  grunt.registerTask "dev", ["clean:partials", "livescript", "panda:dev"]
+  grunt.registerTask "default", ["dev"]
