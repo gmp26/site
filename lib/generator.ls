@@ -15,26 +15,27 @@ module.exports = (grunt) ->
 
     if !resourceLayout?
       grunt.log.debug "Compiling resource layout"
+
       # make common template from unchanging stuff
       _head = grunt.file.read "sources/layouts/_head.html"
       _nav = grunt.file.read "sources/layouts/_nav.html"
       _foot = grunt.file.read "sources/layouts/_foot.html"
       common = grunt.template.process grunt.file.read(layout), {
         data:
-          head: _head
-          nav: _nav
-          foot: _foot
-          view: '<%= view %>'
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          content: '<%= content %>'   # don't remove!
       }
 
       # then precompile it        
       resourceLayout := grunt.util._.template common #grunt.file.read(layout)
 
-    view = grunt.file.read "partials/resources/#{resourceName}/index.html"
+    content = grunt.file.read "partials/resources/#{resourceName}/index.html"
 
     html = resourceLayout {
       path: resourceName
-      view: view
+      content: content
     }
     grunt.file.write "app/#{resourceName}/index.html", html
 
