@@ -2,8 +2,8 @@
 
 module.exports = (grunt) ->
 
-
-  var resourceGenerator #a precompiled template
+  # precompiled page layouts
+  var resourceLayout
 
   #
   # Generate a resource
@@ -13,22 +13,29 @@ module.exports = (grunt) ->
     layout = getLayout sources, folder, meta
     grunt.log.debug "  layout = #layout"
 
-    template = grunt.file.read(layout)
+    if !resourceLayout?
+      grunt.log.debug "Compiling resource layout"
+      # make common template from unchanging stuff
+      _head = grunt.file.read "sources/layouts/_head.html"
+      _nav = grunt.file.read "sources/layouts/_nav.html"
+      _foot = grunt.file.read "sources/layouts/_foot.html"
+      common = grunt.template.process grunt.file.read(layout), {
+        data:
+          head: _head
+          nav: _nav
+          foot: _foot
+          view: '<%= view %>'
+      }
 
-    _head = grunt.file.read "sources/layouts/_head.html"
-    _nav = grunt.file.read "sources/layouts/_nav.html"
+      # then precompile it        
+      resourceLayout := grunt.util._.template common #grunt.file.read(layout)
+
     view = grunt.file.read "partials/resources/#{resourceName}/index.html"
-    _foot = grunt.file.read "sources/layouts/_foot.html"
 
-    html = grunt.template.process template, {
-      data:
-        path: resourceName
-        head: _head
-        nav: _nav
-        view: view
-        foot: _foot
+    html = resourceLayout {
+      path: resourceName
+      view: view
     }
- 
     grunt.file.write "app/#{resourceName}/index.html", html
 
   #
