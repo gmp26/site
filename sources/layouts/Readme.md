@@ -28,3 +28,13 @@ same name in this directory
 * `<%= _head %>` inserts the partial layout file '_head.html'
 * `<%= _nav %>` inserts the partial layout file '_nav.html'
 * `<%= _foot %>` inserts the partial layout file '_foot.html'
+
+LoDash Delimiters
+-----------------
+
+Variables can be delimited by one of these LoDash delimiters:
+
+* `<%= variable %>` Interpolate - replace variable with value.
+* `<%- variable %>` Escape any HTML in the value when replacing the variable.
+* `<% javascript %>` Evaluate the javascript. This can get messy so
+we'll hopefully avoid it.

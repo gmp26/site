@@ -37,7 +37,7 @@ module.exports = (grunt) ->
       path: resourceName
       content: content
     }
-    grunt.file.write "app/#{resourceName}/index.html", html
+    grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
 
   #
   # Generate a single html file
