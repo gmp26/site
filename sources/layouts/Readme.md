@@ -36,5 +36,4 @@ Variables can be delimited by one of these LoDash delimiters:
 
 * `<%= variable %>` Interpolate - replace variable with value.
 * `<%- variable %>` Escape any HTML in the value when replacing the variable.
-* `<% javascript %>` Evaluate the javascript. This can get messy so
-we'll hopefully avoid it.
+* `<% javascript %>` Evaluate the javascript. 

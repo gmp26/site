@@ -1,5 +1,5 @@
 digraph G {
-  node [shape=plaintext;style=inviz;fillcolor="#EEF2FF";fontsize=16; fontname=arial;]
+  node [shape=plaintext;fillcolor="#EEF2FF";fontsize=16; fontname=arial;]
   edge [style=bold;color="#005500"]
   NA1 -> NA2 [weight=3];
   NA2 -> NA3 [weight=3];

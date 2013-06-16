@@ -59,6 +59,10 @@ module.exports = (grunt) ->
         files: ["sources/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
         tasks: ["livereload"]
 
+      panda:
+        files: ["sources/resources/**/*.md"]
+        tasks: ["panda"]
+
     connect:
       options:
         port: 9000
