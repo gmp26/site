@@ -10,17 +10,25 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="./styles/main.css">
   <!-- build:js scripts/vendor/modernizr.js -->
-  <script src="/bower_components/modernizr/modernizr.js"></script>
+  <script src="./bower_components/modernizr/modernizr.js"></script>
   <!-- endbuild -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
   <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   </script>
 </head>
 <body> 
-
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
 
@@ -33,35 +41,39 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
       </a>
 
       <!-- Be sure to leave the brand out there if you want it shown -->
-      <a class="brand" href="#"><img src="/images/cmep-logo.png" style="height:30px;padding:0px 5px 0px 0px"/>CMEP Tube</a>
+      <a class="brand" href="./"><img src="./images/cmep-logo.png" style="height:30px;padding:0px 5px 0px 0px"/>CMEP Tube</a>
 
       <!-- Everything you want hidden at 940px or less, place within here -->
       <div class="nav-collapse collapse">
         <!-- .nav, .navbar-search, .navbar-form, etc -->
         <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
+          <!--
+          <li class="active"><a href="/">Home</a></li>
           <li><a href="#">Map</a></li>
           <li class="divider-vertical"></li>
+          -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="/resources/G2_RT2/index.html">G2_RT2</a></li>
-              <li><a href="/resources/G2_RT3/index.html">G2_RT3</a></li>
-              <li><a href="/resources/G2_RT7/index.html">G2_RT7</a></li>
+              <li><a href="./resources/G2_RT2/index.html">G2_RT2</a></li>
+              <li><a href="./resources/G2_RT3/index.html">G2_RT3</a></li>
+              <li><a href="./resources/G2_RT7/index.html">G2_RT7</a></li>
               <li class="divider"></li>
               <li class="nav-header">Nav header</li>
               <li><a href="#">Separated link</a></li>
               <li><a href="#">One more separated link</a></li>
             </ul>
           </li>
+          <!--
           <form class="navbar-search pull-left" action="">
             <input type="text" class="search-query span2" placeholder="Search">
           </form>
+          -->
           <li class="dropdown pull-right">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Introductions <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#">for Students</a></li>
-              <li><a href="#">for Teachers</a></li>
+              <li><a href="./guides/students.html">for Students</a></li>
+              <li><a href="./guides/teachers.html">for Teachers</a></li>
             </ul>
           </li>
         </ul>
@@ -73,27 +85,565 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div id="sidebar1" class="span4">
+    <div id="sidebar1" class="span5">
+      <h1>The Tube Map</h1>
       <div class="accordion" id="linesMenu">
-  A: Algebra
-C: Calculus
-CN: Complex Numbers
-DE: Differential Equations
-E: Equations and Inequalities
-F: Functions
-G: Geometry
-M: Mechanics
-NA: Numbers and Algorithms
-P: Probability
-V: Vectors
+
+  
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line1">
+        A: Algebra
+      </a>
+    </div>
+    <div id="line1" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/A1.html">
+              A1:Which numbers can be written as the ratio of two integers?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A10.html">
+              A10:Should there be any more algebra here?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A2.html">
+              A2:Help!
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A3.html">
+              A3:How can we expand $(a+b)^n$ for positive integers $n$?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A4.html">
+              A4:__Help!__
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A5.html">
+              A5:__Help!__
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A6.html">
+              A6:When and how can we write a rational function as a sum of rational functions where each denominator is linear?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A7.html">
+              A7:When and how can we find the general term and sum of a finite sequence?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A8.html">
+              A8:When and how can we sum an infinite series?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/A9.html">
+              A9:How can we expand $(a+b)^n$ when $n$ is any real number?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line2">
+        C: Calculus
+      </a>
+    </div>
+    <div id="line2" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/C1.html">
+              C1:What is calculus about, and what is it useful for?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C10.html">
+              C10:Can we differentiate and integrate some more of our favourite functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C11.html">
+              C11:Is there a function that equals its own derivative?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C12.html">
+              C12:Is there a function whose derivative is $1/x$?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C13.html">
+              C13:What sort of objects are differentiation and integration?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C14.html">
+              C14:Can we write a function as an infinite series of the form $f(x) = \sum_{n=0}^{\infty} a_n x^n$?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C15.html">
+              C15:What are the power series of our favourite functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C16.html">
+              C16:__Something about hyperbolics__?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C2.html">
+              C2:How can we find the gradient of a polynomial at a point?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C3.html">
+              C3:What are tangents and normals?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C4.html">
+              C4:What does it mean to find the derivative of a sum or product of two functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C5.html">
+              C5:When and how can we locate maxima and minima of polynomials?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C6.html">
+              C6:Is there an operation that is inverse to differentiation, and if so is it useful?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C7.html">
+              C7:Can we extend our ideas about differentation and integration to functions other than polynomials?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C8.html">
+              C8:There are various ways to build new functions from old.  When can we differentiate these new functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/C9.html">
+              C9:Which of the things in C8 can we undo via integration?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line3">
+        CN: Complex Numbers
+      </a>
+    </div>
+    <div id="line3" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/CN1.html">
+              CN1:Complex Numbers
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line4">
+        DE: Differential Equations
+      </a>
+    </div>
+    <div id="line4" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line5">
+        E: Equations and Inequalities
+      </a>
+    </div>
+    <div id="line5" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/E1.html">
+              E1:What does it mean to solve an equation or inequality, and why is this a useful thing to do?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E2.html">
+              E2:How is the solution of equations related to problems in geometry?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E3.html">
+              E3:What can we say about solutions of polynomial equations?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E4.html">
+              E4:How can we solve trigonometric equations?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E5.html">
+              E5:How can we use and solve equations built from step functions and the modulus function?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E6.html">
+              E6:How are logarithms useful for solving equations?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E7.html">
+              E7:How can we build an equation or transform an equation into a more convenient form?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E8.html">
+              E8:What additional things can we do with polynomial equations?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/E9.html">
+              E9:What are functional equations, and what can we do with them?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line6">
+        F: Functions
+      </a>
+    </div>
+    <div id="line6" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/F1.html">
+              F1:What are functions, and why are they useful?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/F2.html">
+              F2:How can we represent a function by a graph, and how are key properties of a function visible on a graph?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/F3.html">
+              F3:How can we build new functions from old?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/F4.html">
+              F4:What are the properties of our key examples of functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/F5.html">
+              F5:How does calculus deepen our understanding of functions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/F6.html">
+              F6:What are the properties of the exponential and logarithm functions?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line7">
+        G: Geometry
+      </a>
+    </div>
+    <div id="line7" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/G1.html">
+              G1:What is geometry, why is it important, and what do we already know about geometry?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G2.html">
+              G2:What is the connection between algebra and geometry, and how can we exploit it?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G3.html">
+              G3:What interesting geometry can we do with triangles?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G4.html">
+              G4:What interesting geometry can we do with circles?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G4a.html">
+              G4a:What interesting geometry can we do with conic sections?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G5.html">
+              G5:How can differentiation help with geometry?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G6.html">
+              G6:How can integration help with geometry?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G7.html">
+              G7:What other coordinate systems are there?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G8.html">
+              G8:What happens when we move to three dimensions?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/G9.html">
+              G9:What is the same and what is different about geometry on a sphere?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line8">
+        M: Mechanics
+      </a>
+    </div>
+    <div id="line8" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line9">
+        NA: Numbers and Algorithms
+      </a>
+    </div>
+    <div id="line9" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/NA1.html">
+              NA1:What are our key examples of interesting sequences of numbers?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/NA2.html">
+              NA2:How can we test whether a number is prime?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/NA3.html">
+              NA3:What are highest common factors and why do they matter?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/NA4.html">
+              NA4:What is modular arithmetic and why is it important?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/NA5.html">
+              NA5:What can we say about powers modulo $n$?
+            </a>
+          </li>
+  
+          <li>
+            <a href="/stations/NA6.html">
+              NA6:What other interesting algorithms are there?
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line10">
+        P: Probability
+      </a>
+    </div>
+    <div id="line10" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line11">
+        V: Vectors
+      </a>
+    </div>
+    <div id="line11" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+  
+          <li>
+            <a href="/stations/V1.html">
+              V1:Vectors
+            </a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </div>
+  
 </div>
     </div>
-    <div id="content" class="span6">
-      <h1 id="the-tube-map">The Tube Map</h1>
+    <div id="content" class="span5">
+      <figure>
+<img src="/images/tubeMap.png" />
+</figure>
 
     </div>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  // Handler for .ready() called.
+
+  $(".accordion-body").each(function(index, element) {
+    $(element).on('shown', function() {
+      console.log('showing'+index);
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
+    })
+  });
+});
+</script>
 
 
 <!--[if lt IE 7]>
@@ -109,25 +659,26 @@ V: Vectors
 </script>
 
 <!-- build:js scripts/main.js -->
-<script src="/bower_components/jquery/jquery.js"></script>
-<script src="/scripts/main.js"></script>
+<script src="./bower_components/jquery/jquery.js"></script>
+<script src="./scripts/main.js"></script>
 <!-- endbuild -->
 
 <!-- build:js scripts/vendor/bootstrap.js -->
-<script src="/bower_components/bootstrap/js/bootstrap-affix.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-alert.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-dropdown.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-tooltip.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-modal.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-transition.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-button.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-popover.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-typeahead.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-carousel.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-scrollspy.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-collapse.js"></script>
-<script src="/bower_components/bootstrap/js/bootstrap-tab.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-affix.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-alert.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-dropdown.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-tooltip.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-modal.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-transition.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-button.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-popover.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-typeahead.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-carousel.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-scrollspy.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-collapse.js"></script>
+<script src="./bower_components/bootstrap/js/bootstrap-tab.js"></script>
 <!-- endbuild -->
 
 </body>
 </html>
+
