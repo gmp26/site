@@ -86,7 +86,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span5">
-      <h1>The Tube Map</h1>
+      <h1></h1>
       <div class="accordion" id="linesMenu">
 
   
@@ -636,6 +636,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 $(document).ready(function() {
   // Handler for .ready() called.
 
+  /* kick MathJax to render the opened accordion element */
   $(".accordion-body").each(function(index, element) {
     $(element).on('shown', function() {
       console.log('showing'+index);

@@ -4,11 +4,20 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span5">
-      <h1><%= title %></h1>
+      <h1><%=meta.id%></h1>
+      <h2><%= meta.title %></h2>
       <%= _linesMenu %>
     </div>
     <div id="content" class="span5">
       <%= content %>
+      <!--
+      <h2>Key Questions</h2>
+      <ol>
+<% grunt.util._.each(meta.keyQuestions, function(question) {%>
+        <li><%=question%></li>
+<% })%>
+      </ol>
+      -->
     </div>
   </div>
 </div>
@@ -28,4 +37,3 @@ $(document).ready(function() {
 </script>
 
 <%= _foot %>
-

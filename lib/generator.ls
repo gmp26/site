@@ -34,8 +34,13 @@ module.exports = (grunt) ->
       postfix = '.html'
 
       layout = meta.layout
-      if !layout || layout.length == 0
-        layout = folder ? 'home'
+      if !layout
+        layout = if !folder
+          'home'
+        else
+          # layout names are singular
+          m = folder.match /(^.+)s$/
+          m?.1 ? folder
 
       layout = prefix + layout + postfix
 
@@ -83,6 +88,7 @@ module.exports = (grunt) ->
 
       layout = getLayout sources, folder, meta
       grunt.log.debug "folder=#folder file=#fileName layout = #layout"
+      _.each meta, (value, key)->grunt.log.debug "meta.key=#key"
 
       # make common template from unchanging stuff
       _head = grunt.file.read "sources/layouts/_head.html"
@@ -105,7 +111,7 @@ module.exports = (grunt) ->
           _nav: _nav
           _foot: _foot
           _linesMenu: _linesMenu
-          title: meta.title
+          meta: meta
           stationsByLine: stationsByLine
           content: content
           sources: sources
@@ -142,7 +148,7 @@ module.exports = (grunt) ->
           if fileName == 'meta'
             generateHTML sources, null, folder, meta
           else
-            generateHTML sources, folder, fileName, meta
+            generateHTML sources, folder, fileName, meta.meta
 
     # return success code to caller
     return 0

@@ -4,9 +4,11 @@ title: What is modular arithmetic and why is it important?
 dependencies: 
     - NA3
     - E1
-keyQuestions:
-    - What is modular arithmetic?
-    - How can we solve congruences in modular arithmetic?
-    - When does $a$ have a multiplicative inverse modulo $n$, and if it has one then how can we find it?
-
 ````
+##Key Questions:
+
+1. What is modular arithmetic?
+
+1. How can we solve congruences in modular arithmetic?
+
+1. When does $a$ have a multiplicative inverse modulo $n$, and if it has one then how can we find it?

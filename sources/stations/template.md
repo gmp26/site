@@ -4,9 +4,11 @@ title: A question
 dependencies:
 	- a dependency
 layout: station
-keyQuestions:
-	- text of the key question
-	- text of the key question
-	- text of the key question
 ````
+##Key Questions:
 
+1. text of the key question
+
+1. text of the key question
+
+1. text of the key question
