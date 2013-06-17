@@ -5,7 +5,7 @@
   <div class="row-fluid">
     <div id="sidebar1" class="span5">
       <h1><%=meta.id%></h1>
-      <h2><%= meta.title %></h2>
+      <h2><%=meta.title%></h2>
       <%= _linesMenu %>
     </div>
     <div id="content" class="span5">
@@ -52,10 +52,18 @@
       <%= content %>
 
       <!-- Resources that list station in stids1 -->
+<% if (meta.R1s || meta.R2s) {%>
       <h3>Resources</h3>
       <ul>
-<% grunt.util._.each(primaryResources(meta.id), function(resId) {%>
-<%  var resType = sources.resources[resId].index.meta.resourceType; %>
+<% grunt.util._.each(meta.R1s, function(resType, resId) {%>
+<%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
+        <li>
+          <a href="<%=resources%>/<%=resId%>/index.html">
+            <%=resId%>: <%=resTypeTitle%>
+          </a>
+        </li>
+<% }) %>
+<% grunt.util._.each(meta.R2s, function(resType, resId) {%>
 <%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
         <li>
           <a href="<%=resources%>/<%=resId%>/index.html">
@@ -64,6 +72,14 @@
         </li>
 <% }) %>
       </ul>
+<% }%>
+
+      <!-- TODO: (Menu) Pervasive ideas for this station -->
+
+      <!-- TODO: (Menu) Highlights: our favourite resources -->
+
+      <!-- TODO: (Menu) Teacher Support link -->
+
     </div>
   </div>
 </div>
