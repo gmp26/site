@@ -11,12 +11,15 @@ module.exports = (grunt) ->
   _ = grunt.util._
 
   #
-  # addStationDependents to incoming metadata as well as their dependencies
-  # so we have bidirectional links
+  # expandMetadata to include
+  #   station dependents as well as dependencies
+  #   station primaryResources
+  #   primaryPervasiveIdeas
   #
-  addStationDependents = (metadata) ->
+  expandMetadata = (metadata) ->
     stations = metadata.sources.stations
     _.each stations, (station, id) ->
+
       dependencies = station.meta.dependencies
       _.each dependencies, (dependencyId) ->
         if dependencyId
@@ -27,6 +30,26 @@ module.exports = (grunt) ->
           unless dependents.indexOf(id) >= 0
             grunt.log.debug "adding dependent #id to #dependencyId"
             dependents.push id
+      /*
+      resources = metadata.sources.resources
+      _.each resources, (resource, resourceId) ->
+        _.each resource.index.meta.stids1, (stid) ->
+          st = metadata.sources.station[id]
+          st.R1s ?= []
+          st.R1s.push resourceId
+        _.each resource.index.meta.stids2, (stid) ->
+          st = metadata.sources.station[id]
+          st.R2s ?= []
+          st.R2s.push resourceId
+        _.each resource.index.meta.pvids1, (pvid) ->
+          pv = metadata.sources.pervasiveIdea[pvid]
+          pv.R1s ?= []
+          pv.R1s.push resourceId
+        _.each resource.index.meta.pvids2, (pvid) ->
+          pv = metadata.sources.pervasiveIdea[pvid]
+          pv.R2s ?= []
+          pv.R2s.push resourceId
+      */
     #grunt.file.write "partials/doubleLinked.yaml", jsy.safeDump metadata
     metadata
 
@@ -41,7 +64,7 @@ module.exports = (grunt) ->
     #
     # Todo: This code should be generalised
     #
-    sources = (addStationDependents metadata).sources
+    sources = (expandMetadata metadata).sources
 
     #
     # addDependents as well as dependencies so we have bidirectional links
