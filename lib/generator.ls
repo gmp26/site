@@ -1,5 +1,7 @@
 "use strict"
 
+jsy = require('js-yaml')
+
 module.exports = (grunt) ->
 
   # precompiled page layouts
@@ -7,6 +9,26 @@ module.exports = (grunt) ->
 
   # simplify access to lodash
   _ = grunt.util._
+
+  #
+  # addStationDependents to incoming metadata as well as their dependencies
+  # so we have bidirectional links
+  #
+  addStationDependents = (metadata) ->
+    stations = metadata.sources.stations
+    _.each stations, (station, id) ->
+      dependencies = station.meta.dependencies
+      _.each dependencies, (dependencyId) ->
+        if dependencyId
+          dependency = stations[dependencyId] ? null
+          grunt.fatal "station #dependencyId not found" unless dependency
+          dependency.meta.dependents = [] unless dependency.meta.dependents
+          dependents = dependency.meta.dependents
+          unless dependents.indexOf(id) >= 0
+            grunt.log.debug "adding dependent #id to #dependencyId"
+            dependents.push id
+    #grunt.file.write "foo.yaml", jsy.safeDump metadata
+    metadata
 
 
   #
@@ -19,7 +41,12 @@ module.exports = (grunt) ->
     #
     # Todo: This code should be generalised
     #
-    sources = metadata.sources
+    sources = (addStationDependents metadata).sources
+
+    #
+    # addDependents as well as dependencies so we have bidirectional links
+    #
+    #addStationDependents sources
 
     # Group stations by line ahead of time
     stationsByLine = _.groupBy sources.stations, (station, stationId) ->
@@ -44,7 +71,7 @@ module.exports = (grunt) ->
 
       layout = prefix + layout + postfix
 
-      if grunt.file.exists layout then layout else (prefix+'default'+postfix) 
+      if grunt.file.exists layout then layout else (prefix+'default'+postfix)
 
     #
     # Generate a resource
@@ -71,7 +98,7 @@ module.exports = (grunt) ->
             resources: '..'
         }
 
-        # then precompile it        
+        # then precompile it
         resourceLayout := _.template common #grunt.file.read(layout)
 
       content = grunt.file.read "partials/resources/#{resourceName}/index.html"
