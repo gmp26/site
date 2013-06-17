@@ -2,11 +2,11 @@
 
   <% var i = 0; %>
   <% for(var line in sources.lines) { %>
-  <%   var meta=sources.lines[line].meta; %>
+  <%   var m=sources.lines[line].meta; %>
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line<%=++i%>">
-        <%=meta.id%>: <%=meta.title%>
+        <%=m.id%>: <%=m.title%>
       </a>
     </div>
     <div id="line<%=i%>" class="accordion-body collapse">
@@ -18,7 +18,7 @@
               <%=station.meta.id%>:<%=station.meta.title%>
             </a>
           </li>
-  <%    }) %>     
+  <%    }) %>
         </ul>
       </div>
     </div>

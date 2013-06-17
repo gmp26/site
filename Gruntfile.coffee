@@ -30,7 +30,7 @@ module.exports = (grunt) ->
       dev:
         options:
           stripMeta: '````'
-          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          #metaDataPath: "<%= yeoman.partials %>/sources.yaml"
           pipeToModule: "../../../lib/generator.js"
 
         files: [
