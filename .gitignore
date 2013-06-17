@@ -15,4 +15,5 @@ app/stations/
 app/lines/
 app/*/*.html
 app/!404.html
-app/!index.html
+app/*.html
+app/styles/main.css
