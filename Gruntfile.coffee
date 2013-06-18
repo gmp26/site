@@ -60,7 +60,7 @@ module.exports = (grunt) ->
         tasks: ["livereload"]
 
       panda:
-        files: ["sources/resources/**/*.md"]
+        files: ["sources/**/*.md"]
         tasks: ["panda"]
 
     connect:

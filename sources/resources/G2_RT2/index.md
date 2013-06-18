@@ -12,7 +12,6 @@ pvids2:
   - PI1
   - PI2
 ````
-
 1. Which of the following describe a straight line?
 
 	- $4x - 2y = 6$
