@@ -4,6 +4,14 @@ body {
   padding-top: 60px;
 }
 
+@media (max-width: 767px) {
+  #sidebar1 {
+    position: static;
+    width: auto;
+    top: 0;
+  }
+}
+
 @import "../bower_components/bootstrap/less/responsive.less"; // Don't forget to comment lines 22 to remove the second import call to **mixin.less**
 
 @import "../bower_components/font-awesome/less/font-awesome.less";
