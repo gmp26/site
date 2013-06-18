@@ -3,13 +3,83 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div id="sidebar1" class="span5">
+    <div id="sidebar1" class="span4">
       <h1><%=meta.id%></h1>
-      <h2><%= meta.title %></h2>
+      <h2><%=meta.title%></h2>
       <%= _linesMenu %>
     </div>
-    <div id="content" class="span5">
+    <div id="content" class="span8">
+
+      <!-- Dependencies dropdown -->
+      <div class="btn-group">
+        <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+          <span class="icon-arrow-up"></span>
+          Dependencies
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links -->
+<% grunt.util._.each(meta.dependencies, function(depId) {%>
+          <li>
+            <a href="<%=root%>/stations/<%=depId%>.html">
+              <%=depId%>
+            </a>
+          </li>
+<% })%>
+        </ul>
+      </div>
+
+      <!-- Dependents Dropdown -->
+      <div class="btn-group">
+        <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+          <span class="icon-arrow-down"></span>
+          Dependents
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links -->
+<% grunt.util._.each(meta.dependents, function(depId) {%>
+          <li>
+            <a href="<%=root%>/stations/<%=depId%>.html">
+              <%=depId%>
+            </a>
+          </li>
+<% })%>
+        </ul>
+      </div>
+
+      <!-- Markdown content contains Key Questions -->
       <%= content %>
+
+      <!-- Resources that list station in stids1 -->
+<% if (meta.R1s || meta.R2s) {%>
+      <h3>Resources</h3>
+      <ul>
+<% grunt.util._.each(meta.R1s, function(resType, resId) {%>
+<%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
+        <li>
+          <a href="<%=resources%>/<%=resId%>/index.html">
+            <%=resId%>: <%=resTypeTitle%>
+          </a>
+        </li>
+<% }) %>
+<% grunt.util._.each(meta.R2s, function(resType, resId) {%>
+<%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
+        <li>
+          <a href="<%=resources%>/<%=resId%>/index.html">
+            <%=resId%>: <%=resTypeTitle%>
+          </a>
+        </li>
+<% }) %>
+      </ul>
+<% }%>
+
+      <!-- TODO: (Menu) Pervasive ideas for this station -->
+
+      <!-- TODO: (Menu) Highlights: our favourite resources -->
+
+      <!-- TODO: (Menu) Teacher Support link -->
+
     </div>
   </div>
 </div>
