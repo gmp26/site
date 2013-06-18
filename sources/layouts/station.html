@@ -54,20 +54,22 @@
       <!-- Resources that list station in stids1 -->
 <% if (meta.R1s || meta.R2s) {%>
       <h3>Resources</h3>
-      <ul>
+      <ul class="unstyled">
 <% _.each(meta.R1s, function(resType, resId) {%>
-<%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
+<% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
         <li>
+          <span class="<%=resourceTypeMeta.icon%>"></span> 
           <a href="<%=resources%>/<%=resId%>/index.html">
-            <%=resId%>: <%=resTypeTitle%>
+            <%=resourceTypeMeta.title%>
           </a>
         </li>
 <% }) %>
 <% _.each(meta.R2s, function(resType, resId) {%>
-<%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
+<% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
         <li>
+          <span class="<%=resourceTypeMeta.icon%>"></span>
           <a href="<%=resources%>/<%=resId%>/index.html">
-            <%=resId%>: <%=resTypeTitle%>
+            <%=resourceTypeMeta.title%>
           </a>
         </li>
 <% }) %>

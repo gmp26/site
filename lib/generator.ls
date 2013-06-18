@@ -207,7 +207,6 @@ module.exports = (grunt) ->
           sources: sources
           root: root
           resources: resources
-          primaryResources: (stid) -> ['G2_RT2', 'G2_RT3', 'G2_RT7']
       }
 
       if folder

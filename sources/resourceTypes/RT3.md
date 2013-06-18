@@ -1,6 +1,7 @@
 ````
 title: Exposition
 id: RT3
+icon: icon-info-sign
 
 ````
 
