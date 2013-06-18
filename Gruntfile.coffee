@@ -26,6 +26,16 @@ module.exports = (grunt) ->
 
     yeoman: yeomanConfig
 
+    "regex-replace":
+      foofoo:
+        src: ['sources/stations/*.md']
+        actions:[
+          name: 'RemoveColons'
+          search: 'Questions:'
+          replace: 'Questions'
+          flags: 'gm'
+        ]
+
     panda:
       dev:
         options:

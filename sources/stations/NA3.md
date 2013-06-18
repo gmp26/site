@@ -4,7 +4,7 @@ title: What are highest common factors and why do they matter?
 dependencies: 
     - NA2
 ````
-##Key Questions: 
+##Key Questions 
 
 1. What do we mean by _highest common factor_ and _lowest common multiple_, and how are they related?
 

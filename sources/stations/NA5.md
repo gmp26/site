@@ -4,7 +4,7 @@ title: What can we say about powers modulo $n$?
 dependencies: 
     - NA4
 ````
-##Key Questions:
+##Key Questions
 
 1. What does Fermat's little theorem say, and why is it useful?
 

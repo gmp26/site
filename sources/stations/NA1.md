@@ -4,7 +4,7 @@ title: What are our key examples of interesting sequences of numbers?
 dependencies:
     - A2
 ````
-##Key Questions:
+##Key Questions
 
 1. What are the square numbers, and what properties do they have?
 

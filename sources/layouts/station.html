@@ -1,6 +1,6 @@
 <%= _head %>
 <%= _nav %>
-
+<% _ = grunt.util._ %>
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
@@ -19,7 +19,7 @@
         </a>
         <ul class="dropdown-menu">
           <!-- dropdown menu links -->
-<% grunt.util._.each(meta.dependencies, function(depId) {%>
+<% _.each(meta.dependencies, function(depId) {%>
           <li>
             <a href="<%=root%>/stations/<%=depId%>.html">
               <%=depId%>
@@ -38,7 +38,7 @@
         </a>
         <ul class="dropdown-menu">
           <!-- dropdown menu links -->
-<% grunt.util._.each(meta.dependents, function(depId) {%>
+<% _.each(meta.dependents, function(depId) {%>
           <li>
             <a href="<%=root%>/stations/<%=depId%>.html">
               <%=depId%>
@@ -55,7 +55,7 @@
 <% if (meta.R1s || meta.R2s) {%>
       <h3>Resources</h3>
       <ul>
-<% grunt.util._.each(meta.R1s, function(resType, resId) {%>
+<% _.each(meta.R1s, function(resType, resId) {%>
 <%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
         <li>
           <a href="<%=resources%>/<%=resId%>/index.html">
@@ -63,7 +63,7 @@
           </a>
         </li>
 <% }) %>
-<% grunt.util._.each(meta.R2s, function(resType, resId) {%>
+<% _.each(meta.R2s, function(resType, resId) {%>
 <%  var resTypeTitle = sources.resourceTypes[resType].meta.title; %>
         <li>
           <a href="<%=resources%>/<%=resId%>/index.html">

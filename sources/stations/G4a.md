@@ -4,7 +4,7 @@ title: What interesting geometry can we do with conic sections?
 dependencies: 
     - G4
 ````
-##Key Questions: 
+##Key Questions 
 
 1. What is a _conic section_, and what are the families of conics?
 

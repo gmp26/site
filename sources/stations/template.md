@@ -5,7 +5,7 @@ dependencies:
 	- a dependency
 layout: station
 ````
-##Key Questions:
+##Key Questions
 
 1. text of the key question
 
