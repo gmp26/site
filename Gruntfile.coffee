@@ -48,7 +48,7 @@ module.exports = (grunt) ->
           bare: false
           prelude: true
         files:
-          "./lib/generator.js": "./lib/generator.ls"
+          ["./lib/generator.js": "./lib/generator.ls","./lib/gvdata.js": "./lib/gvdata.ls"]
 
     watch:
       recess:

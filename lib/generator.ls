@@ -1,6 +1,7 @@
 "use strict"
 
 jsy = require('js-yaml')
+gvdata = require('gvdata.js')
 
 module.exports = (grunt) ->
 
