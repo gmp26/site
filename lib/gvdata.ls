@@ -17,9 +17,7 @@ module.exports = (grunt) ->
           if data.meta.dependencies[dep] == data.meta.dependents[dept]
             ordered = _.sortBy([stationname,data.meta.dependents[dept]])
             replacement = '"'+ordered[0]+'-'+ordered[1]+'"'
-            #output = output.replace(stationname+' ',replacement)
-            postreplace[i] = {"stationname": stationname, "replacement": replacement}
-            i++
+            postreplace[i++] = {"stationname": stationname, "replacement": replacement}
             stationname = replacement;
             data.meta.dependents[dept] = ''
 
@@ -38,5 +36,10 @@ module.exports = (grunt) ->
 
     output = 'digraph G { 
     node [shape=plaintext ,fillcolor="#EEF2FF", fontsize=16, fontname=arial]' + output + '}'
-    grunt.log.debug output
-    #grunt.log.debug JSON.stringify(metadata)
+    grunt.file.write('partials/tubemap.dot',output)
+    options = {cmd:'/opt/local/bin/dot',args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
+    #grunt.util.spawn options
+    grunt.util.spawn options, (error, result, code) ->
+       grunt.log.debug code
+       if code !== 0 
+        grunt.log.error(result.stderr) 
