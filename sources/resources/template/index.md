@@ -2,16 +2,10 @@
 id: (optional = can omit if same as filename and url)
 title: (optional) but may be identified by resource type
 layout: resource (but some resources will have special layouts)
-author: (optional)
+author: (optional. If more than one, make it a yaml list)
 date: (of first publication - maybe this should be automated)
-clearance: 
-  0: not released
-  1: internal team
-  2: advisors and reviewers
-  3: schools
-  4: public pilot
-  5: public final
-keywords:
+clearance: 0
+keywords: a yaml list of words or short phrases
 resourceType: resourceTypeId
 highlight: boolean or a list of station Ids
 stids1: primary list of stations ids as yaml list
@@ -21,4 +15,4 @@ pvids2: secondary list of pervasive ideas ids as yaml list
 
 ````
 
-content in markdown
+content in markdown (title will be inserted from )

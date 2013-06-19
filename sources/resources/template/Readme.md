@@ -39,14 +39,26 @@ Metadata
 
 Insert metadata in the (final) index.md file. [An example is here](index.md)
 
+Clearance levels are:
+
+*  0: not released
+*  1: internal team
+*  2: advisors and reviewers
+*  3: schools
+*  4: public pilot
+*  5: public final
+
 Styling for the web
 -------------------
 
-We have enabled the pandoc [`raw-html`](http://johnmacfarlane.net/pandoc/README.html#raw-html) option too to allow us to surround blocks of markdown with styling commands. We will be using a responsive layout whhich means that pages can reformat themselves to cope with different width devices.
+We have enabled the pandoc [`raw-html`](http://johnmacfarlane.net/pandoc/README.html#raw-html) option to allow us to surround blocks of markdown with styling commands. We will be using a responsive layout whhich means that pages can reformat themselves to cope with different width devices.
 
 Overall, the web output will use [twitter bootstrap](http://twitter.github.io/bootstrap/) styling. Refer to the examples there for styles that may be applied with HTML wrappers. For responsive layouts, look at the [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem) and experiment by reducing the width of your browser window.
 
 ###Bootstrap we might use in content
+
+Mostly the bootstrap styling appears in layout HTML templates (see sources/layouts). The list below
+is a selection of features that you may want to use _inside_ markdown content.
 
 * [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem)
 * [Typography](http://twitter.github.io/bootstrap/base-css.html#typography) e.g. for default header styling and 
@@ -66,4 +78,4 @@ this [jsFiddle example](http://jsfiddle.net/gmp26/gD3Vz/5/).
 
 ###Other Bootstrap styles
 
-Many of the remaining bootstrap styles are not directly applicable to content, though they are applicable to the HTML template pages which which pull in content. They also apply to the interactive content.
+The remaining bootstrap styles are not directly applicable to markdown content, though they are applicable to the HTML layouts which which pull in content. They can also apply to the interactive content.

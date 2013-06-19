@@ -4,7 +4,7 @@ title: What other interesting algorithms are there?
 dependencies: 
     - NA5
 ````
-##Key Questions:
+##Key Questions
 
 1. How can we multiply large numbers efficiently?
 

@@ -5,7 +5,7 @@ dependencies:
     - NA3
     - E1
 ````
-##Key Questions:
+##Key Questions
 
 1. What is modular arithmetic?
 

@@ -1,6 +1,7 @@
 ````
 title: Introductory investigation
 id: RT1
+icon: icon-search
 
 ````
 

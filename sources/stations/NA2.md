@@ -4,7 +4,7 @@ title: How can we test whether a number is prime?
 dependencies: 
     - NA1
 ````
-##Key Questions:
+##Key Questions
 
 1. What is the sieve of Eratosthenes?
 
