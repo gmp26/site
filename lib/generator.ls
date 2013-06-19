@@ -1,7 +1,7 @@
 "use strict"
 
 jsy = require('js-yaml')
-gvdata = require('gvdata.js')
+gvdata = require('./gvdata.js')
 
 module.exports = (grunt) ->
 
@@ -27,7 +27,7 @@ module.exports = (grunt) ->
     pervasiveIdeas = sources.pervasiveIdeas
     #
     # Go through all resources, making links back to the
-    # resource from their primary and secondary stations 
+    # resource from their primary and secondary stations
     # and pervasiveIdeas.
     #
     resources = sources.resources
@@ -65,7 +65,7 @@ module.exports = (grunt) ->
           dependency.meta.dependents = [] unless dependency.meta.dependents
           dependents = dependency.meta.dependents
           unless dependents.indexOf(id) >= 0
-            grunt.log.debug "adding dependent #id to #dependencyId"
+            #grunt.log.debug "adding dependent #id to #dependencyId"
             dependents.push id
       #
       # build station pervasive ideas lists by collecting pvids of
@@ -74,12 +74,12 @@ module.exports = (grunt) ->
       station.meta.pervasiveIdeas ?= {}
       stpvs = station.meta.pervasiveIdeas
       R1s = station.meta.R1s
-      _.each R1s, (resourceType, resourceId) -> 
+      _.each R1s, (resourceType, resourceId) ->
         pvids1 = sources.resources[resourceId].index.meta.pvids1
         _.each pvids1, (pvid) ->
           stpvs[pvid] = true
     #
-    # build pervasive ideas station lists by collecting primary stids of 
+    # build pervasive ideas station lists by collecting primary stids of
     # primary resources tagged with this pvid.
     #
     _.each pervasiveIdeas, (pervasiveIdea, id) ->
@@ -90,7 +90,7 @@ module.exports = (grunt) ->
         stids1 = sources.resources[resourceId].index.meta.stids1
         _.each stids1, (stid) ->
           pvstids[stid] = true
-      
+
     grunt.file.write "partials/doubleLinked.yaml", jsy.safeDump metadata
     metadata
 
@@ -106,6 +106,9 @@ module.exports = (grunt) ->
     # Todo: This code should be generalised
     #
     sources = (expandMetadata metadata).sources
+
+    grapher = gvdata(grunt)
+    grapher sources
 
     #
     # addDependents as well as dependencies so we have bidirectional links
@@ -143,10 +146,10 @@ module.exports = (grunt) ->
     generateResource = (sources, folder, resourceName, fileName, meta) ->
 
       layout = getLayout sources, folder, meta
-      grunt.log.debug "  layout = #layout"
+      #grunt.log.debug "  layout = #layout"
 
       if !resourceLayout?
-        grunt.log.debug "Compiling resource layout"
+        #grunt.log.debug "Compiling resource layout"
 
         # make common template from unchanging stuff
         _head = grunt.file.read "sources/layouts/_head.html"
@@ -178,8 +181,8 @@ module.exports = (grunt) ->
     generateHTML = (sources, folder, fileName, meta) ->
 
       layout = getLayout sources, folder, meta
-      grunt.log.debug "folder=#folder file=#fileName layout = #layout"
-      _.each meta, (value, key)->grunt.log.debug "meta.key=#key"
+      #grunt.log.debug "folder=#folder file=#fileName layout = #layout"
+      #_.each meta, (value, key)->grunt.log.debug "meta.key=#key"
 
       # make common template from unchanging stuff
       _head = grunt.file.read "sources/layouts/_head.html"
@@ -223,19 +226,19 @@ module.exports = (grunt) ->
 
     for folder, items of sources
 
-      grunt.log.debug "folder = <#folder>"
+      #grunt.log.debug "folder = <#folder>"
 
       if folder=='resources'
         resources = items
         for resourceName, files of resources
-          grunt.log.debug "  resource = <#resourceName>"
+          #grunt.log.debug "  resource = <#resourceName>"
           index = files.index
           fileName = 'index'
           meta = index.meta
           generateResource sources, folder, resourceName, fileName, meta
       else
         for fileName, meta of items
-          grunt.log.debug "  file = <#fileName>"
+          #grunt.log.debug "  file = <#fileName>"
 
           if fileName == 'meta'
             generateHTML sources, null, folder, meta
