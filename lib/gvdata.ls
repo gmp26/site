@@ -1,7 +1,5 @@
 "use strict"
 
-jsy = require('js-yaml')
-
 module.exports = (grunt) ->
   return (metadata) ->
     _ = grunt.util._
@@ -9,6 +7,7 @@ module.exports = (grunt) ->
     prevlinecolour = ''
     i = 0
     postreplace = new Array()
+    grunt.log.debug "Hello world"
     for stationname,data of metadata.stations
       linename = stationname.replace(/[0-9].*/g,'')
       linecolour = metadata.lines[linename].meta.colour
@@ -21,7 +20,6 @@ module.exports = (grunt) ->
             stationname = replacement;
             data.meta.dependents[dept] = ''
 
-       
       for dept of data.meta.dependents
         if data.meta.dependents[dept] != ''
           if linecolour != prevlinecolour
@@ -29,7 +27,6 @@ module.exports = (grunt) ->
             prevlinecolour = linecolour
           output = output + stationname + ' -> ' + data.meta.dependents[dept] + ' ;\n'
 
-    
     for next of postreplace
       reg = new RegExp(postreplace[next].stationname+' ','g')
       output = output.replace(reg,postreplace[next].replacement)
@@ -38,8 +35,8 @@ module.exports = (grunt) ->
     node [shape=plaintext ,fillcolor="#EEF2FF", fontsize=16, fontname=arial]' + output + '}'
     grunt.file.write('partials/tubemap.dot',output)
     options = {cmd:'/opt/local/bin/dot',args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
-    #grunt.util.spawn options
     grunt.util.spawn options, (error, result, code) ->
        grunt.log.debug code
        if code !== 0 
         grunt.log.error(result.stderr) 
+
