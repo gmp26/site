@@ -34,8 +34,10 @@ module.exports = (grunt) ->
     node [shape=plaintext ,fillcolor="#EEF2FF", fontsize=16, fontname=arial]' + output + '}'
     grunt.file.write('partials/tubemap.dot',output)
     options = {cmd:'/opt/local/bin/dot',args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
-    grunt.util.spawn options, (error, result, code) ->
-       grunt.log.debug code
-       if code !== 0
-        grunt.log.error(result.stderr)
+
+    /* disable this temporarily */
+    # grunt.util.spawn options, (error, result, code) ->
+    #    grunt.log.debug code
+    #    if code !== 0
+    #     grunt.log.error(result.stderr)
 
