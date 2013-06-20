@@ -1,6 +1,8 @@
 # Generated on 2013-05-31 using generator-bootstrap-less 2.0.3
 "use strict"
 
+generator = require './lib/generator.js'
+
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -41,7 +43,7 @@ module.exports = (grunt) ->
         options:
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
-          pipeToModule: "../../../lib/generator.js"
+          postProcess: generator
 
         files: [
           expand: true

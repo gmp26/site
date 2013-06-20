@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = (grunt) ->
+module.exports = (grunt, metadata) ->
   return (metadata) ->
     _ = grunt.util._
     output = ''
@@ -34,15 +34,14 @@ module.exports = (grunt) ->
     node [shape=plaintext ,fillcolor="#EEF2FF", fontsize=16, fontname=arial]' + output + '}'
     grunt.file.write('partials/tubemap.dot',output)
 
-/*
-    dot = '/opt/local/bin/dot'
-    if grunt.file.exists dot
-      options = {cmd:dot,args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
-      grunt.util.spawn options, (error, result, code) ->
-        grunt.log.debug code
-        if code != 0
-         grunt.log.error(result.stderr)
-    else
-      grunt.log.debug "no dot installed at "+dot+" not building map"
-*/
+    #dot = '/opt/local/bin/dot'
+    #if grunt.file.exists dot
+    options = {cmd:dot,args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
+    grunt.util.spawn options, (error, result, code) ->
+      grunt.log.debug code
+      if code != 0
+        grunt.log.error(result.stderr)
+    #else
+    #  grunt.log.debug "no dot installed at "+dot+" not building map"
+
 
