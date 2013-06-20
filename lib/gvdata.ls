@@ -33,11 +33,16 @@ module.exports = (grunt) ->
     output = 'digraph G {
     node [shape=plaintext ,fillcolor="#EEF2FF", fontsize=16, fontname=arial]' + output + '}'
     grunt.file.write('partials/tubemap.dot',output)
-    options = {cmd:'/opt/local/bin/dot',args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
 
-    /* disable this temporarily */
-    # grunt.util.spawn options, (error, result, code) ->
-    #    grunt.log.debug code
-    #    if code !== 0
-    #     grunt.log.error(result.stderr)
+/*
+    dot = '/opt/local/bin/dot'
+    if grunt.file.exists dot
+      options = {cmd:dot,args:['-Tsvg','-opartials/tubemap.svg','partials/tubemap.dot']}
+      grunt.util.spawn options, (error, result, code) ->
+        grunt.log.debug code
+        if code != 0
+         grunt.log.error(result.stderr)
+    else
+      grunt.log.debug "no dot installed at "+dot+" not building map"
+*/
 
