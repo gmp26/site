@@ -53,6 +53,11 @@ module.exports = (grunt) ->
           ext: ".html"
         ]
 
+    tubemap:
+      svg:
+        files:
+          "app/images/tubeMap.svg": "<%= yeoman.partials %>/sources.yaml"
+
     # Compile livescript
     livescript:
       compile:
