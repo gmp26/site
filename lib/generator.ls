@@ -183,6 +183,27 @@ module.exports = (grunt, metadata) ->
     resources = sources.resources
     _.each resources, (resource, resourceId) ->
       meta = resource.index.meta
+
+      #
+      # Add this resource to station highlights if necessary
+      #
+      highlight = []
+      if meta.highlight?
+        if _.isBoolean meta.highlight && meta.highlight
+          # highlight on all stations
+          highlight = sources.stations
+        else if _.isString meta.highlight
+          # highlight on one station
+          highlight = sources.stations[meta.highlight]
+        else if _.isArray meta.hightlight
+          # highlight on all stations in array
+          highlight = _.map meta.highlight, (stid) -> stations[stid]
+      _each highlight, (station, stid) ->
+        st = station.meta
+        st.highlights ?= {}
+        st.highlights[resourceId] = meta.resourceType
+
+
       _.each meta.stids1, (id) ->
         st = stations[id].meta
         st.R1s ?= {}
