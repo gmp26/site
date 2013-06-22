@@ -1,5 +1,6 @@
 node_modules
 dist
+*.tgz
 .tmp
 tmp/
 app/bower_components
