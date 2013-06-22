@@ -7,11 +7,7 @@ These are the files necessary to generate  [the CMEP curriculum map](http://camb
 >
 > Warning:
 >
-> This is the plan - you can run all the commands listed below, but it will
-> not yet generate a site from the edited source files. 
-> Instead it generates a default dummy site.
->
-> This will change shortly.
+> We currently generate only some of the intended site.
 >
 
 

@@ -6,7 +6,7 @@
     <div id="sidebar1" class="span4">
       <h1><%=meta.id%></h1>
       <h2><%=meta.title%></h2>
-      <%= _linesMenu %>
+      <!-- _linesMenu -->
     </div>
     <div id="content" class="span8">
 
@@ -58,7 +58,7 @@
 <% _.each(meta.R1s, function(resType, resId) {%>
 <% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
         <li>
-          <span class="<%=resourceTypeMeta.icon%>"></span> 
+          <span class="<%=resourceTypeMeta.icon%>"></span>
           <a href="<%=resources%>/<%=resId%>/index.html">
             <%=resourceTypeMeta.title%>
           </a>

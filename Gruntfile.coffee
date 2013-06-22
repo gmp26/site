@@ -140,31 +140,40 @@ module.exports = (grunt) ->
 
     # not used since Uglify task does concat,
     # but still available if needed
-    #concat: {
-    #      dist: {}
-    #    },
+    #concat:
+    #  dist:
 
     # not enabled since usemin task does concat and uglify
     # check index.html to edit your build targets
     # enable this task if you prefer defining your build targets here
-    #uglify: {
-    #      dist: {}
-    #    },
+    #uglify:
+    #  dist:
+
     rev:
       dist:
         files:
-          src: ["<%= yeoman.dist %>/scripts/{,*/}*.js", "<%= yeoman.dist %>/styles/{,*/}*.css", "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}", "<%= yeoman.dist %>/fonts/*"]
+          src: [
+            "<%= yeoman.dist %>/scripts/{,*/}*.js"
+            "<%= yeoman.dist %>/styles/{,*/}*.css"
+            "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
+            "<%= yeoman.dist %>/fonts/*"
+          ]
 
     useminPrepare:
-      html: "<%= yeoman.app %>/index.html"
+      html: "<%= yeoman.app %>/**/*.html"
       options:
         dest: "<%= yeoman.dist %>"
 
     usemin:
-      html: ["<%= yeoman.dist %>/{,*/}*.html"]
+      html: [
+        "<%= yeoman.dist %>/**/*.html"
+      ]
       css: ["<%= yeoman.dist %>/styles/{,*/}*.css"]
       options:
-        dirs: ["<%= yeoman.dist %>"]
+        basedir: "<%= yeoman.dist %>"
+        dirs: [
+          "<%= yeoman.dist %>"
+        ]
 
     imagemin:
       dist:
@@ -205,7 +214,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.app %>"
-          src: "*.html"
+          src: ["{,*/}*.html", "resources/*/*.html"]
           dest: "<%= yeoman.dist %>"
         ]
 

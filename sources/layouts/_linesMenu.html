@@ -15,7 +15,7 @@
         <ul>
 <%    grunt.util._.forEach(stationsByLine[line], function(station, id) { %>
           <li>
-            <a href="/stations/<%=station.meta.id%>.html">
+            <a href="<%=root%>/stations/<%=station.meta.id%>.html">
               <%=station.meta.id%>:<%=station.meta.title%>
             </a>
           </li>
