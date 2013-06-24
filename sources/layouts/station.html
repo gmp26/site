@@ -25,7 +25,7 @@
           <div id="pvids" class="accordion-body collapse">
             <div class="accordion-inner">
               <ul>
-      <%    _.each(meta.pervasiveIdeas, function(pvid) { %>
+      <%    _.each(meta.pervasiveIdeas, function(__, pvid) { %>
                 <li>
                   <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
                     <%=sources.pervasiveIdeas[pvid].meta.title%>

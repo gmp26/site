@@ -31,7 +31,6 @@ module.exports = (grunt, metadata) ->
     #
     # Add this resource to station highlights if necessary
     #
-    debugger
     highlights = []
     if meta.highlight?
       if _.isBoolean meta.highlight && meta.highlight
@@ -48,7 +47,7 @@ module.exports = (grunt, metadata) ->
       st.highlights ?= {}
       st.highlights[resourceId] = meta.resourceType
 
-
+    # list the primary and secondary resources at each station
     _.each meta.stids1, (id) ->
       st = stations[id].meta
       st.R1s ?= {}
@@ -57,6 +56,8 @@ module.exports = (grunt, metadata) ->
       st = stations[id].meta
       st.R2s ?= {}
       st.R2s[resourceId] = meta.resourceType
+
+    # list the primary and secondary resources at each pervasiveIdea
     _.each meta.pvids1, (id) ->
       pv = pervasiveIdeas[id].meta
       pv.R1s ?= {}
@@ -84,8 +85,8 @@ module.exports = (grunt, metadata) ->
           #grunt.log.debug "adding dependent #id to #dependencyId"
           dependents.push id
     #
-    # build station pervasive ideas lists by collecting pvids of
-    # primary resources only.
+    # build station pervasive ideas lists by collecting pvids1 and pvids2 of
+    # both primary station resources.
     #
     station.meta.pervasiveIdeas ?= {}
     stpvs = station.meta.pervasiveIdeas
@@ -93,6 +94,9 @@ module.exports = (grunt, metadata) ->
     _.each R1s, (resourceType, resourceId) ->
       pvids1 = sources.resources[resourceId].index.meta.pvids1
       _.each pvids1, (pvid) ->
+        stpvs[pvid] = true
+      pvids2 = sources.resources[resourceId].index.meta.pvids2
+      _.each pvids2, (pvid) ->
         stpvs[pvid] = true
   #
   # build pervasive ideas station lists by collecting primary stids of

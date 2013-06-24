@@ -25,7 +25,8 @@ Stations
 	* Links Pervasive ideas (do not repeat)
 	* Pervasive ideas in menu gleaned by:
 		1. find resources which have this station in stids1 (same as the set displayed)
-		2. form the union of pvids1 and pvids2 from these resources and list that	Link to Teacher Support
+		2. form the union of pvids1 and pvids2 from these resources and list
+	* Link to Teacher Support
 	* Links to highlighted resources, listed by icon and resourceType
 * Key Questions
 	- compiled from Markdown
