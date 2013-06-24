@@ -18,11 +18,11 @@
 
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#pvids">
               Pervasive Ideas
             </a>
           </div>
-          <div class="accordion-body collapse">
+          <div id="pvids" class="accordion-body collapse">
             <div class="accordion-inner">
               <ul>
       <%    _.each(meta.pervasiveIdeas, function(pvid) { %>
@@ -38,11 +38,11 @@
         </div>
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#highlights">
               Highlights
             </a>
           </div>
-          <div class="accordion-body collapse">
+          <div id="highlights" class="accordion-body collapse">
             <div class="accordion-inner">
               <ul>
 <%  _.each(meta.highlights, function(resourceType, resId) { %>
