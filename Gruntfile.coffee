@@ -64,8 +64,13 @@ module.exports = (grunt) ->
         options:
           bare: false
           prelude: true
-        files:
-          ["./lib/generator.js": "./lib/generator.ls"]
+        files: [
+          expand: true
+          cwd: "lib"
+          src: ["**/*.ls"]
+          dest: "./"
+          ext: ".js"
+        ]
 
     watch:
       recess:

@@ -3,7 +3,7 @@ layout: resource
 clearance: 0
 keywords: 
 resourceType: RT3
-highlight:
+highlight: false
 stids1:
   - G2
 stids2:

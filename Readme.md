@@ -92,6 +92,11 @@ Install the necessary libraries for client-side scripts.
 bower install
 ```
 
+From a shell, start a background watch and compile livescript task
+```
+./scripts/lswatch &
+``` 
+
 ### Run
 
 Create the development folder `app`, and serve it by starting a 
