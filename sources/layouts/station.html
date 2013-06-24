@@ -10,8 +10,48 @@
         <div class="accordion-group">
           <div class="accordion-heading">
             <div class="accordion-toggle" data-parent="#stationMenu">
+
+              <!-- Dependencies dropdown -->
+              <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+                  <span class="icon-arrow-up"></span>
+                  Before this
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- dropdown menu links -->
+        <% _.each(meta.dependencies, function(depId) {%>
+                  <li>
+                    <a href="<%=root%>/stations/<%=depId%>.html">
+                      <%=depId%>
+                    </a>
+                  </li>
+        <% })%>
+                </ul>
+              </div>
+
               <h1><%=meta.id%></h1>
               <h2><%=meta.title%></h2>
+      <!-- Dependents Dropdown -->
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+          <span class="icon-arrow-down"></span>
+          After this
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links -->
+<% _.each(meta.dependents, function(depId) {%>
+          <li>
+            <a href="<%=root%>/stations/<%=depId%>.html">
+              <%=depId%>
+            </a>
+          </li>
+<% })%>
+        </ul>
+      </div>
+      <br clear="both"/>
+
             </div>
           </div>
         </div>
@@ -44,12 +84,12 @@
           </div>
           <div id="highlights" class="accordion-body collapse">
             <div class="accordion-inner">
-              <ul>
+              <ul class="unstyled">
 <%  _.each(meta.highlights, function(resourceType, resId) { %>
 <%  var resourceTypeMeta = sources.resourceTypes[resourceType].meta %>
                 <li>
+                  <span class="<%=resourceTypeMeta.icon%>"> </span>
                   <a href="<%=resources%>/<%=resId%>/index.html">
-                  <span class="<%=resourceTypeMeta.icon%>"></span>
                     <%=resourceTypeMeta.title%>
                   </a>
                 </li>
@@ -70,15 +110,15 @@
     </div>
     <div id="content" class="span8">
 
-      <!-- Dependencies dropdown -->
+      <!-- Dependencies dropdown 
       <div class="btn-group">
         <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
           <span class="icon-arrow-up"></span>
-          Dependencies
+          Before this
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <!-- dropdown menu links -->
+          <!-- dropdown menu links ->
 <% _.each(meta.dependencies, function(depId) {%>
           <li>
             <a href="<%=root%>/stations/<%=depId%>.html">
@@ -89,15 +129,15 @@
         </ul>
       </div>
 
-      <!-- Dependents Dropdown -->
+      <!-- Dependents Dropdown ->
       <div class="btn-group">
         <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
           <span class="icon-arrow-down"></span>
-          Dependents
+          After this
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <!-- dropdown menu links -->
+          <!-- dropdown menu links ->
 <% _.each(meta.dependents, function(depId) {%>
           <li>
             <a href="<%=root%>/stations/<%=depId%>.html">
@@ -107,6 +147,7 @@
 <% })%>
         </ul>
       </div>
+    -->
 
       <!-- Markdown content contains Key Questions -->
       <%= content %>

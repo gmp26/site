@@ -33,15 +33,17 @@ module.exports = (grunt, metadata) ->
     #
     highlights = []
     if meta.highlight?
-      if _.isBoolean meta.highlight && meta.highlight
+      if _.isBoolean(meta.highlight) && meta.highlight
         # highlight on all stations
         highlights = sources.stations
-      else if _.isString meta.highlight
-        # highlight on one station
-        highlights = [sources.stations[meta.highlight]]
-      else if _.isArray meta.hightlight
-        # highlight on all stations in array
-        highlights = _.map meta.highlight, (stid) -> stations[stid]
+      else 
+        if _.isString meta.highlight
+          # highlight on one station
+          highlights = [sources.stations[meta.highlight]]
+        else 
+          if _.isArray meta.highlight
+            # highlight on all stations in array
+            highlights = _.map meta.highlight, (stid) -> stations[stid]
     _.each highlights, (station, stid) ->
       st = station.meta
       st.highlights ?= {}
