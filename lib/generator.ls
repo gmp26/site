@@ -59,6 +59,7 @@ module.exports = (grunt, metadata) ->
           generateHTML sources, folder, fileName, meta.meta
 
   # return the metadata
+  grunt.file.write "partials/expanded.yaml", jsy.safeDump metadata
   return metadata
 
 

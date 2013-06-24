@@ -4,9 +4,69 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
-      <h1><%=meta.id%></h1>
-      <h2><%=meta.title%></h2>
-      <!-- _linesMenu -->
+
+      <div class="accordion" id="stationMenu">
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <div class="accordion-toggle" data-parent="#stationMenu">
+              <h1><%=meta.id%></h1>
+              <h2><%=meta.title%></h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#">
+              Pervasive Ideas
+            </a>
+          </div>
+          <div class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul>
+      <%    _.each(meta.pervasiveIdeas, function(pvid) { %>
+                <li>
+                  <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
+                    <%=sources.pervasiveIdeas[pvid].meta.title%>
+                  </a>
+                </li>
+      <%    }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#">
+              Highlights
+            </a>
+          </div>
+          <div class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul>
+<%  _.each(meta.highlights, function(resourceType, resId) { %>
+<%  var resourceTypeMeta = sources.resourceTypes[resourceType].meta %>
+                <li>
+                  <a href="<%=resources%>/<%=resId%>/index.html">
+                  <span class="<%=resourceTypeMeta.icon%>"></span>
+                    <%=resourceTypeMeta.title%>
+                  </a>
+                </li>
+<%  }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-parent="#stationMenu" href="#">
+              Teacher Support
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div id="content" class="span8">
 
