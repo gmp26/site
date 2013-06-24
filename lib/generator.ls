@@ -1,6 +1,7 @@
 "use strict"
 
-jsy = require('js-yaml')
+jsy = require 'js-yaml'
+expandMetadata = require './expandMetadata.js'
 
 module.exports = (grunt, metadata) ->
 
@@ -15,12 +16,12 @@ module.exports = (grunt, metadata) ->
   # Run the site generator on grunt panda generated metadata
   #
 
-  grunt.log.debug "RUNNING GENERATOR"
+  grunt.verbose.writeln "Generating site"
 
   #
   # Todo: This code should be generalised
   #
-  metadata = expandMetadata metadata
+  metadata = expandMetadata grunt, metadata
   sources = metadata.sources
 
   #
@@ -58,6 +59,7 @@ module.exports = (grunt, metadata) ->
           generateHTML sources, folder, fileName, meta.meta
 
   # return the metadata
+  grunt.file.write "partials/expanded.yaml", jsy.safeDump metadata
   return metadata
 
 
@@ -108,7 +110,7 @@ module.exports = (grunt, metadata) ->
       }
 
       # then precompile it
-      resourceLayout := _.template common #grunt.file.read(layout)
+      resourceLayout := _.template common
 
     content = grunt.file.read "partials/resources/#{resourceName}/index.html"
 
@@ -161,86 +163,4 @@ module.exports = (grunt, metadata) ->
       grunt.file.write "app/#{fileName}.html", html
 
 
-  #
-  # expandMetadata to include
-  #   station dependents as well as dependencies
-  #   station primaryResources
-  #   primaryPervasiveIdeas
-  #
-  # This is a kind of batch db lookup and could I guess
-  # be replaced with some db implementation if we start
-  # hitting performance or memory limits.
-  #
-  function expandMetadata (metadata)
-    sources = metadata.sources
-    stations = sources.stations
-    pervasiveIdeas = sources.pervasiveIdeas
-    #
-    # Go through all resources, making links back to the
-    # resource from their primary and secondary stations
-    # and pervasiveIdeas.
-    #
-    resources = sources.resources
-    _.each resources, (resource, resourceId) ->
-      meta = resource.index.meta
-      _.each meta.stids1, (id) ->
-        st = stations[id].meta
-        st.R1s ?= {}
-        st.R1s[resourceId] = meta.resourceType
-      _.each meta.stids2, (id) ->
-        st = stations[id].meta
-        st.R2s ?= {}
-        st.R2s[resourceId] = meta.resourceType
-      _.each meta.pvids1, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R1s ?= {}
-        pv.R1s[resourceId] = meta.resourceType
-      _.each meta.pvids2, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R2s ?= {}
-        pv.R2s[resourceId] = meta.resourceType
-    #
-    # Go through all stations, doubling up dependency
-    # links and building pervasive ideas lists
-    #
-    _.each stations, (station, id) ->
-      #
-      # insert dependents by looking through dependencies
-      #
-      dependencies = station.meta.dependencies
-      _.each dependencies, (dependencyId) ->
-        if dependencyId
-          dependency = stations[dependencyId] ? null
-          grunt.fatal "station #dependencyId not found" unless dependency
-          dependency.meta.dependents = [] unless dependency.meta.dependents
-          dependents = dependency.meta.dependents
-          unless dependents.indexOf(id) >= 0
-            #grunt.log.debug "adding dependent #id to #dependencyId"
-            dependents.push id
-      #
-      # build station pervasive ideas lists by collecting pvids of
-      # primary resources only.
-      #
-      station.meta.pervasiveIdeas ?= {}
-      stpvs = station.meta.pervasiveIdeas
-      R1s = station.meta.R1s
-      _.each R1s, (resourceType, resourceId) ->
-        pvids1 = sources.resources[resourceId].index.meta.pvids1
-        _.each pvids1, (pvid) ->
-          stpvs[pvid] = true
-    #
-    # build pervasive ideas station lists by collecting primary stids of
-    # primary resources tagged with this pvid.
-    #
-    _.each pervasiveIdeas, (pervasiveIdea, id) ->
-      pervasiveIdea.meta.stids ?= {}
-      pvstids = pervasiveIdea.meta.stids
-      R1s = pervasiveIdea.meta.R1s
-      _.each R1s, (resourceType, resourceId) ->
-        stids1 = sources.resources[resourceId].index.meta.stids1
-        _.each stids1, (stid) ->
-          pvstids[stid] = true
-
-    #grunt.file.write "partials/doubleLinked.yaml", jsy.safeDump metadata
-    metadata
 

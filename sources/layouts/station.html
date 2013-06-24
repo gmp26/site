@@ -4,36 +4,39 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
-      <h1><%=meta.id%></h1>
-      <h2><%=meta.title%></h2>
-      <%= _linesMenu %>
-    </div>
-    <div id="content" class="span8">
 
-      <!-- Dependencies dropdown -->
-      <div class="btn-group">
-        <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
-          <span class="icon-arrow-up"></span>
-          Dependencies
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <!-- dropdown menu links -->
-<% _.each(meta.dependencies, function(depId) {%>
-          <li>
-            <a href="<%=root%>/stations/<%=depId%>.html">
-              <%=depId%>
-            </a>
-          </li>
-<% })%>
-        </ul>
-      </div>
+      <div class="accordion" id="stationMenu">
 
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <div class="accordion-toggle" data-parent="#stationMenu">
+
+              <!-- Dependencies dropdown -->
+              <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+                  <span class="icon-arrow-up"></span>
+                  Before this
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- dropdown menu links -->
+        <% _.each(meta.dependencies, function(depId) {%>
+                  <li>
+                    <a href="<%=root%>/stations/<%=depId%>.html">
+                      <%=depId%>
+                    </a>
+                  </li>
+        <% })%>
+                </ul>
+              </div>
+
+              <h1><%=meta.id%></h1>
+              <h2><%=meta.title%></h2>
       <!-- Dependents Dropdown -->
-      <div class="btn-group">
+      <div class="btn-group pull-right">
         <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
           <span class="icon-arrow-down"></span>
-          Dependents
+          After this
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
@@ -47,6 +50,104 @@
 <% })%>
         </ul>
       </div>
+      <br clear="both"/>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#pvids">
+              Pervasive Ideas
+            </a>
+          </div>
+          <div id="pvids" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul>
+      <%    _.each(meta.pervasiveIdeas, function(__, pvid) { %>
+                <li>
+                  <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
+                    <%=sources.pervasiveIdeas[pvid].meta.title%>
+                  </a>
+                </li>
+      <%    }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#highlights">
+              Highlights
+            </a>
+          </div>
+          <div id="highlights" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul class="unstyled">
+<%  _.each(meta.highlights, function(resourceType, resId) { %>
+<%  var resourceTypeMeta = sources.resourceTypes[resourceType].meta %>
+                <li>
+                  <span class="<%=resourceTypeMeta.icon%>"> </span>
+                  <a href="<%=resources%>/<%=resId%>/index.html">
+                    <%=resourceTypeMeta.title%>
+                  </a>
+                </li>
+<%  }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-parent="#stationMenu" href="#">
+              Teacher Support
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="content" class="span8">
+
+      <!-- Dependencies dropdown 
+      <div class="btn-group">
+        <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+          <span class="icon-arrow-up"></span>
+          Before this
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links ->
+<% _.each(meta.dependencies, function(depId) {%>
+          <li>
+            <a href="<%=root%>/stations/<%=depId%>.html">
+              <%=depId%>
+            </a>
+          </li>
+<% })%>
+        </ul>
+      </div>
+
+      <!-- Dependents Dropdown ->
+      <div class="btn-group">
+        <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
+          <span class="icon-arrow-down"></span>
+          After this
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links ->
+<% _.each(meta.dependents, function(depId) {%>
+          <li>
+            <a href="<%=root%>/stations/<%=depId%>.html">
+              <%=depId%>
+            </a>
+          </li>
+<% })%>
+        </ul>
+      </div>
+    -->
 
       <!-- Markdown content contains Key Questions -->
       <%= content %>
@@ -58,7 +159,7 @@
 <% _.each(meta.R1s, function(resType, resId) {%>
 <% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
         <li>
-          <span class="<%=resourceTypeMeta.icon%>"></span> 
+          <span class="<%=resourceTypeMeta.icon%>"></span>
           <a href="<%=resources%>/<%=resId%>/index.html">
             <%=resourceTypeMeta.title%>
           </a>

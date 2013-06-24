@@ -1,6 +1,9 @@
 /*global describe, it */
 'use strict';
+
 (function () {
+
+  var expect = require('chai').expect
 
   describe('Give it some context', function() {
     describe('maybe a bit more context here', function() {
