@@ -19,3 +19,4 @@ app/!404.html
 app/*.html
 app/styles/main.css
 test/actual
+test/unused
