@@ -1,7 +1,7 @@
 ````
 id: M
 title: Mechanics
-colour: grey
+colour: '#7f7f7f'
 ````
 
 The Mechanics Line

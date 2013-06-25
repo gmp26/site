@@ -7,6 +7,8 @@ lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
+tubemap = require './lib/tubemap.js'
+
 
 # # Globbing
 # for performance reasons we're only matching one level down:
@@ -18,10 +20,13 @@ module.exports = (grunt) ->
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
 
+  tubemap grunt
+
   # configurable paths
   yeomanConfig =
     app: "app"
     dist: "dist"
+    sources: "sources"
     partials: "partials"
 
   grunt.initConfig
@@ -30,7 +35,7 @@ module.exports = (grunt) ->
 
     "regex-replace":
       foofoo:
-        src: ['sources/stations/*.md']
+        src: ['<%= yeoman.sources %>/stations/*.md']
         actions:[
           name: 'RemoveColons'
           search: 'Questions:'
@@ -43,11 +48,13 @@ module.exports = (grunt) ->
         options:
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          metaReplace: "<%= yeoman.sources %>"
+          metaReplacement: "sources"
           postProcess: generator
 
         files: [
           expand: true
-          cwd: "sources"
+          cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*"]
           dest: "<%= yeoman.partials %>/"
           ext: ".html"
@@ -78,11 +85,11 @@ module.exports = (grunt) ->
         tasks: ["recess"]
 
       livereload:
-        files: ["sources/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+        files: ["<%= yeoman.sources %>/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
         tasks: ["livereload"]
 
       panda:
-        files: ["sources/**/*.md"]
+        files: ["<%= yeoman.sources %>/**/*.md"]
         tasks: ["panda"]
 
     connect:

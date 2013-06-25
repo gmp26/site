@@ -1,7 +1,7 @@
 ````
 id: F
 title: Functions
-colour: green
+colour: '#2ca02c'
 ````
 
 The Functions Line

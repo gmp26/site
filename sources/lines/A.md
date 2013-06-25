@@ -1,7 +1,7 @@
 ````
 id: A
 title: Algebra
-colour: purple
+colour: "#9467bd"
 ````
 
 The Algebra Line

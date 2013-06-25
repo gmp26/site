@@ -1,7 +1,7 @@
 ````
 id: G
 title: Geometry
-colour: red
+colour: '#d62728'
 ````
 
 The Geometry Line

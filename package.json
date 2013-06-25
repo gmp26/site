@@ -37,7 +37,7 @@
     "async": "~0.2.9",
     "chai": "~1.7.0",
     "grunt-regex-replace": "~0.2.5",
-    "grunt-panda": ">=0.2.1"
+    "grunt-panda": ">=0.2.2"
   },
   "engines": {
     "node": ">=0.8.0"
