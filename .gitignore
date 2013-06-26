@@ -20,3 +20,6 @@ app/*.html
 app/styles/main.css
 test/actual
 test/unused
+scripts/main.js
+scripts/vendor
+styles

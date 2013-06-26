@@ -1,7 +1,7 @@
 ````
 id: V
 title: Vectors
-colour: pink
+colour: '#e377c2'
 ````
 
 The Vectors Line

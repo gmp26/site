@@ -24,6 +24,9 @@ module.exports = (grunt, metadata) ->
   metadata = expandMetadata grunt, metadata
   sources = metadata.sources
 
+  sourcesDir = grunt.config.get "yeoman.sources"
+  partialsDir = grunt.config.get "yeoman.partials"
+
   #
   # addDependents as well as dependencies so we have bidirectional links
   #
@@ -59,7 +62,7 @@ module.exports = (grunt, metadata) ->
           generateHTML sources, folder, fileName, meta.meta
 
   # return the metadata
-  grunt.file.write "partials/expanded.yaml", jsy.safeDump metadata
+  grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
   return metadata
 
 
@@ -68,7 +71,7 @@ module.exports = (grunt, metadata) ->
   #
   function getLayout(sources, folder, meta)
 
-    prefix = 'sources/layouts/'
+    prefix = grunt.config.get('yeoman.sources') + '/layouts/'
     postfix = '.html'
 
     layout = meta.layout
@@ -90,33 +93,22 @@ module.exports = (grunt, metadata) ->
   function generateResource (sources, folder, resourceName, fileName, meta)
 
     layout = getLayout sources, folder, meta
-    #grunt.log.debug "  layout = #layout"
 
-    if !resourceLayout?
-      #grunt.log.debug "Compiling resource layout"
-
-      # make common template from unchanging stuff
-      _head = grunt.file.read "sources/layouts/_head.html"
-      _nav = grunt.file.read "sources/layouts/_nav.html"
-      _foot = grunt.file.read "sources/layouts/_foot.html"
-      common = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          content: '<%= content %>'   # don't remove!
-          root: '../..'
-          resources: '..'
-      }
-
-      # then precompile it
-      resourceLayout := _.template common
-
-    content = grunt.file.read "partials/resources/#{resourceName}/index.html"
-
-    html = resourceLayout {
-      content: content
+    # make html from resource layout and data
+    _head = grunt.file.read "#{sourcesDir}/layouts/_head.html"
+    _nav = grunt.file.read "#{sourcesDir}/layouts/_nav.html"
+    _foot = grunt.file.read "#{sourcesDir}/layouts/_foot.html"
+    html = grunt.template.process grunt.file.read(layout), {
+      data:
+        _head: _head
+        _nav: _nav
+        _foot: _foot
+        resourceTypeTitle: sources.resourceTypes[meta.resourceType].meta.title
+        content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
+        root: '../..'
+        resources: '..'
     }
+
     grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
 
   #
@@ -129,17 +121,17 @@ module.exports = (grunt, metadata) ->
     #_.each meta, (value, key)->grunt.log.debug "meta.key=#key"
 
     # make common template from unchanging stuff
-    _head = grunt.file.read "sources/layouts/_head.html"
-    _nav = grunt.file.read "sources/layouts/_nav.html"
-    _foot = grunt.file.read "sources/layouts/_foot.html"
-    _linesMenu = grunt.file.read "sources/layouts/_linesMenu.html"
+    _head = grunt.file.read "#{sourcesDir}/layouts/_head.html"
+    _nav = grunt.file.read "#{sourcesDir}/layouts/_nav.html"
+    _foot = grunt.file.read "#{sourcesDir}/layouts/_foot.html"
+    _linesMenu = grunt.file.read "#{sourcesDir}/layouts/_linesMenu.html"
 
     if folder && folder.length > 0
-      content = grunt.file.read "partials/#{folder}/#{fileName}.html"
+      content = grunt.file.read "#{partialsDir}/#{folder}/#{fileName}.html"
       root = ".."
       resources = '../resources'
     else
-      content = grunt.file.read "partials/#{fileName}.html"
+      content = grunt.file.read "#{partialsDir}/#{fileName}.html"
       root = "."
       resources = './resources'
 

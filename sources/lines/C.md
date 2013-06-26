@@ -1,7 +1,7 @@
 ````
 id: C
 title: Calculus
-colour: yellow
+colour: '#bcbd22'
 ````
 
 The Calculus Line

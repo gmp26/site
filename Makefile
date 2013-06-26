@@ -1,5 +1,5 @@
 #
-# This file runs Mocha tests in test over the lib sources.
+# This file runs Mocha tests over the lib sources.
 #
 # Using make instead of grunt because mocha throws uncaught exceptions which
 # cause grunt to bail out, and the published getarounds look a little unstable.

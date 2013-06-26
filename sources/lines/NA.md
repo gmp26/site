@@ -1,7 +1,7 @@
 ````
 id: NA
 title: Numbers and Algorithms
-colour: darkgreen
+colour: '#17becf'
 ````
 
 The Numbers and Algorithms Line

@@ -1,7 +1,7 @@
 ````
 id: CN
 title: Complex Numbers
-colour: orange
+colour: '#ff7f0e'
 ````
 
 The Complex Numbers Line

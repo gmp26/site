@@ -9,7 +9,7 @@ global describe, it
   grunt = require('grunt');
   describe("Metadata", function(_){
     var metadata, expanded, estations;
-    beforeEach(function(){
+    before(function(){
       metadata = grunt.file.readYAML('test/fixtures/input.yaml');
       expanded = expandMetadata(grunt, metadata);
       return estations = expanded.sources.stations;
@@ -33,7 +33,6 @@ global describe, it
     });
     describe("A1", function(_){
       return it("should have no dependencies", function(){
-        console.log(estations.A1.meta.dependencies);
         return should.not.exist(estations.A1.meta.dependencies);
       });
     });

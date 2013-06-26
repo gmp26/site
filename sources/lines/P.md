@@ -1,7 +1,7 @@
 ````
 id: P
 title: Probability
-colour: brown
+colour: '#8c564b'
 ````
 
 The Probability Line
