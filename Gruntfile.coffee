@@ -2,12 +2,12 @@
 "use strict"
 
 generator = require './lib/generator.js'
+tubemap = require './lib/tubemap.js'
 
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
-tubemap = require './lib/tubemap.js'
 
 
 # # Globbing
@@ -19,8 +19,6 @@ module.exports = (grunt) ->
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-
-  tubemap grunt
 
   # configurable paths
   yeomanConfig =
@@ -252,6 +250,8 @@ module.exports = (grunt) ->
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
+  # register tubemap task
+  tubemap grunt
 
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->
