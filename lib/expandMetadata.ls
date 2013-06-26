@@ -36,11 +36,11 @@ module.exports = (grunt, metadata) ->
       if _.isBoolean(meta.highlight) && meta.highlight
         # highlight on all stations
         highlights = sources.stations
-      else 
+      else
         if _.isString meta.highlight
           # highlight on one station
           highlights = [sources.stations[meta.highlight]]
-        else 
+        else
           if _.isArray meta.highlight
             # highlight on all stations in array
             highlights = _.map meta.highlight, (stid) -> stations[stid]
@@ -100,6 +100,18 @@ module.exports = (grunt, metadata) ->
       pvids2 = sources.resources[resourceId].index.meta.pvids2
       _.each pvids2, (pvid) ->
         stpvs[pvid] = true
+
+    #
+    # While we're at it, let's resolve the station line and colour and rank
+    #
+    station.meta.line = (id.split /\d+/).0
+    rank = id.substr station.meta.line.length
+    m = rank.match /^(.*)([a-z])$/
+    if m
+      rank = m.1 + ((m.2.charCodeAt(0) - 'a'.charCodeAt(0) + 1)/100).toFixed(2).substr(1)
+    station.meta.rank = +rank
+    station.meta.colour = sources.lines[station.meta.line].meta.colour
+
   #
   # build pervasive ideas station lists by collecting primary stids of
   # primary resources tagged with this pvid.

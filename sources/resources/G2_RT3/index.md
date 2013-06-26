@@ -24,11 +24,13 @@ When is the point $(x,y)$ at distance 3 from $(-1,2)$?
 
 Here's a useful picture.
 
-ADD PICTURE OF AXES WITH THESE TWO POINTS MARKED AND A LINE SHOWING THE DISTANCE BETWEEN THEM
+<!-- ADD PICTURE OF AXES WITH THESE TWO POINTS MARKED AND A LINE SHOWING THE DISTANCE BETWEEN THEM -->
+![When is $(x,y)$ at distance 3 from $(-1,2)$?](xy12-1.png)
 
 The coordinate system gives us a very natural way to get a helpful right-angled triangle from this.
 
-ADD PICTURE SHOWING RIGHT-ANGLED TRIANGLE WITH SHORTER SIDE LENGTHS LABELLED
+<!-- ADD PICTURE SHOWING RIGHT-ANGLED TRIANGLE WITH SHORTER SIDE LENGTHS LABELLED -->
+![When is $(x,y)$ at distance 3 from $(-1,2)$?](xy12-2.png)
 
 If the point $(x,y)$ were placed differently relative to $(-1,2)$, then we might get different triangles.
 
@@ -40,17 +42,17 @@ Find all the possible diagrams, and the side lengths of the resulting triangles.
 
 </div>
 
-Now Pythagoras's theorem helps us to find the distance between the points $(x,y)$ and $(-1,2)$: it's $$\sqrt{(x+1)^2 + (2-y)^2}$$.
+Now Pythagoras's theorem helps us to find the distance between the points $(x,y)$ and $(-1,2)$: it's $$\sqrt{(x+1)^2 + (2-y)^2}.$$
 
 <div class="well">####Exercise
 
 Find the corresponding expressions for the distances in the other possible diagrams.</div>
 
-So $(x,y)$ lies on the circle of radius 3 with centre $(-1,2)$ if, and only if, $$\sqrt{(x+1)^2 + (2-y)^2} = 3$$.
+So $(x,y)$ lies on the circle of radius 3 with centre $(-1,2)$ if, and only if, $$\sqrt{(x+1)^2 + (2-y)^2} = 3.$$
 
-This, in turn, is satisfied if, and only if, $$(x+1)^2 + (2-y)^2 = 9$$.  (In one direction this is clear: by squaring both sides of the first equation we obtain the second.  In the other direction, we can use the fact that $\sqrt{(x+1)^2 + (2-y)^2}$ must be positive to justify taking the positive root on both sides.)
+This, in turn, is satisfied if, and only if, $$(x+1)^2 + (2-y)^2 = 9.$$  (In one direction this is clear: by squaring both sides of the first equation we obtain the second.  In the other direction, we can use the fact that $\sqrt{(x+1)^2 + (2-y)^2}$ must be positive to justify taking the positive root on both sides.)
 
-So the equation of the circle of radius 3 with centre $(-1,2)$ is $$(x+1)^2 + (2-y)^2 = 9$$.
+So the equation of the circle of radius 3 with centre $(-1,2)$ is $$(x+1)^2 + (2-y)^2 = 9.$$
 
 <div class="well">####Exercise
 
@@ -60,4 +62,4 @@ Expand out the brackets and experiment with different ways of writing this equat
 
 Pick a radius and a centre, and find the equation of the corresponding circle, with an explanation.  Repeat until you find confident.</div>
 
-THEN SOME SORT OF [LINK TO G2_RT7](../G2_RT7/index.html)
+[<span class="icon-folder-open"></span> more here](../G2_RT7/index.html)

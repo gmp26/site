@@ -229,6 +229,15 @@ module.exports = (grunt) ->
         ]
 
     copy:
+
+      assets:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>/resources"
+          src: ["*/*.png", "*/*.jpg", "*/*.gif"]
+          dest: "<%= yeoman.app %>/resources"
+        ]
+
       dist:
         files: [
           expand: true
@@ -256,7 +265,7 @@ module.exports = (grunt) ->
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "recess", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
+    grunt.task.run ["clean:server", "recess", "copy:assets", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
 
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
   grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]
