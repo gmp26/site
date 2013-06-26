@@ -60,4 +60,4 @@ Expand out the brackets and experiment with different ways of writing this equat
 
 Pick a radius and a centre, and find the equation of the corresponding circle, with an explanation.  Repeat until you find confident.</div>
 
-THEN SOME SORT OF LINK TO G2_RT7
+THEN SOME SORT OF [LINK TO G2_RT7](../G2_RT7/index.html)

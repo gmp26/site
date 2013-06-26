@@ -18,7 +18,7 @@ describe "Metadata", (_)->
   var expanded
   var estations
 
-  beforeEach ->
+  before ->
     metadata := grunt.file.readYAML 'test/fixtures/input.yaml'
     expanded := expandMetadata grunt, metadata
     estations := expanded.sources.stations

@@ -161,15 +161,15 @@ module.exports = (grunt) ->
     #uglify:
     #  dist:
 
-    rev:
-      dist:
-        files:
-          src: [
-            "<%= yeoman.dist %>/scripts/{,*/}*.js"
-            "<%= yeoman.dist %>/styles/{,*/}*.css"
-            "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
-            "<%= yeoman.dist %>/fonts/*"
-          ]
+    # rev:
+    #   dist:
+    #     files:
+    #       src: [
+    #         "<%= yeoman.dist %>/scripts/{,*/}*.js"
+    #         "<%= yeoman.dist %>/styles/{,*/}*.css"
+    #         "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
+    #         "<%= yeoman.dist %>/fonts/*"
+    #       ]
 
     useminPrepare:
       html: "<%= yeoman.app %>/**/*.html"
@@ -259,7 +259,7 @@ module.exports = (grunt) ->
     grunt.task.run ["clean:server", "recess", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
 
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
-  grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "rev", "usemin"]
+  grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]
   grunt.registerTask "layout", ["test", "build"]
   grunt.registerTask "dev", ["clean:partials", "livescript", "panda:dev"]
   grunt.registerTask "default", ["dev"]
