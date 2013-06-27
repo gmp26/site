@@ -4,7 +4,12 @@
 
 
 <div class="container">
-<h1><%= resourceTypeTitle %></h1>
+<h1>
+<% if(mainStationMeta) { %>
+  <a class="mainStationMeta.line" href="../../stations/<%= mainStationMeta.id %>.html"><%= mainStationMeta.id %></a>
+<% }; %>
+  <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
+</h1>
 <%= content %>
 </div>
 

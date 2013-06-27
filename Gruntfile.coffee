@@ -2,12 +2,12 @@
 "use strict"
 
 generator = require './lib/generator.js'
+tubemap = require './lib/tubemap.js'
 
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
-tubemap = require './lib/tubemap.js'
 
 
 # # Globbing
@@ -19,8 +19,6 @@ module.exports = (grunt) ->
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-
-  tubemap grunt
 
   # configurable paths
   yeomanConfig =
@@ -231,6 +229,15 @@ module.exports = (grunt) ->
         ]
 
     copy:
+
+      assets:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>/resources"
+          src: ["*/*.png", "*/*.jpg", "*/*.gif"]
+          dest: "<%= yeoman.app %>/resources"
+        ]
+
       dist:
         files: [
           expand: true
@@ -252,11 +259,13 @@ module.exports = (grunt) ->
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
+  # register tubemap task
+  tubemap grunt
 
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "recess", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
+    grunt.task.run ["clean:server", "recess", "copy:assets", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
 
   grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
   grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]

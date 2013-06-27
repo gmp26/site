@@ -103,8 +103,9 @@ module.exports = (grunt, metadata) ->
         _head: _head
         _nav: _nav
         _foot: _foot
-        resourceTypeTitle: sources.resourceTypes[meta.resourceType].meta.title
+        resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
         content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
+        mainStationMeta: if (main = meta.stids1?[0]) then sources.stations[main].meta else null
         root: '../..'
         resources: '..'
     }
