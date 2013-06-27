@@ -5,56 +5,33 @@
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
 
-      <div class="accordion" id="stationMenu">
-
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <div class="accordion-toggle" data-parent="#stationMenu">
-
-              <!-- Dependencies dropdown -->
-              <div class="btn-group pull-right">
-                <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
-                  <span class="icon-arrow-up"></span>
-                  Before this
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- dropdown menu links -->
-        <% _.each(meta.dependencies, function(depId) {%>
-                  <li>
-                    <a href="<%=root%>/stations/<%=depId%>.html">
-                      <%=depId%>
-                    </a>
-                  </li>
-        <% })%>
-                </ul>
-              </div>
-
-              <h1><%=meta.id%></h1>
-              <h2><%=meta.title%></h2>
-      <!-- Dependents Dropdown -->
-      <div class="btn-group pull-right">
-        <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
-          <span class="icon-arrow-down"></span>
-          After this
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <!-- dropdown menu links -->
-<% _.each(meta.dependents, function(depId) {%>
-          <li>
-            <a href="<%=root%>/stations/<%=depId%>.html">
-              <%=depId%>
-            </a>
-          </li>
+      <!-- Dependencies -->
+      <ul class="inline">
+<% _.each(meta.dependencies, function(depId) {%>
+        <li class="stid <%=depId%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+          <a href="<%=root%>/stations/<%=depId%>.html">
+              <span style:"color:white"><%=depId%></span>
+          </a>
+        </li>
 <% })%>
-        </ul>
-      </div>
-      <br clear="both"/>
+      </ul>
 
-            </div>
-          </div>
-        </div>
+      <h1 class="main stid text-center" style="background-color:<%=meta.colour%>"><%=meta.id%></h1>
+
+      <!-- Dependents -->
+      <ul class="inline text-right">
+<% _.each(meta.dependents, function(depId) {%>
+        <li class="stid <%=depId%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+          <a href="<%=root%>/stations/<%=depId%>.html">
+            <%=depId%>
+          </a>
+        </li>
+<% })%>
+      </ul>
+
+      <h2><%=meta.title%></h2>
+
+      <div class="accordion" id="stationMenu">
 
         <div class="accordion-group">
           <div class="accordion-heading">
@@ -110,45 +87,6 @@
     </div>
     <div id="content" class="span8">
 
-      <!-- Dependencies dropdown 
-      <div class="btn-group">
-        <a class="btn dropdown-toggle <%= (meta.dependencies && meta.dependencies.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
-          <span class="icon-arrow-up"></span>
-          Before this
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <!-- dropdown menu links ->
-<% _.each(meta.dependencies, function(depId) {%>
-          <li>
-            <a href="<%=root%>/stations/<%=depId%>.html">
-              <%=depId%>
-            </a>
-          </li>
-<% })%>
-        </ul>
-      </div>
-
-      <!-- Dependents Dropdown ->
-      <div class="btn-group">
-        <a class="btn dropdown-toggle <%= (meta.dependents && meta.dependents.length > 0) ? '' : 'disabled' %>" data-toggle="dropdown" href="#">
-          <span class="icon-arrow-down"></span>
-          After this
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <!-- dropdown menu links ->
-<% _.each(meta.dependents, function(depId) {%>
-          <li>
-            <a href="<%=root%>/stations/<%=depId%>.html">
-              <%=depId%>
-            </a>
-          </li>
-<% })%>
-        </ul>
-      </div>
-    -->
-
       <!-- Markdown content contains Key Questions -->
       <%= content %>
 
@@ -176,13 +114,6 @@
 <% }) %>
       </ul>
 <% }%>
-
-      <!-- TODO: (Menu) Pervasive ideas for this station -->
-
-      <!-- TODO: (Menu) Highlights: our favourite resources -->
-
-      <!-- TODO: (Menu) Teacher Support link -->
-
     </div>
   </div>
 </div>
