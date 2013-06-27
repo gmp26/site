@@ -10,7 +10,7 @@
 <% _.each(meta.dependencies, function(depId) {%>
         <li class="stid <%=depId%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
-              <span style:"color:white"><%=depId%></span>
+              <span><%=depId%></span>
           </a>
         </li>
 <% })%>
