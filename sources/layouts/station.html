@@ -8,7 +8,7 @@
       <!-- Dependencies -->
       <ul class="inline">
 <% _.each(meta.dependencies, function(depId) {%>
-        <li class="stid <%=depId%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+        <li class="stid <%=depId%>" data-toggle="tooltip" data-placement="bottom" data-delay="500" title="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
               <span><%=depId%></span>
           </a>
@@ -21,7 +21,7 @@
       <!-- Dependents -->
       <ul class="inline text-right">
 <% _.each(meta.dependents, function(depId) {%>
-        <li class="stid <%=depId%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+        <li class="stid <%=depId%>" data-toggle="tooltip" data-placement="top" data-delay="500" title="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
             <%=depId%>
           </a>
@@ -120,7 +120,14 @@
 
 <script>
 $(document).ready(function() {
-  // Handler for .ready() called.
+
+// at compile time, generate a function for each dependency/dependent button
+// which at run time attaches click handlers
+<% _.each(_.union(meta.dependencies, meta.dependents), function(depId) {%>
+  $(".stid.<%=depId%>").click(function(event) {
+    window.location = "<%= root%>/stations/<%=depId%>.html";
+  }).tooltip();
+<% }); %>
 
   /* kick MathJax to render the opened accordion element */
   $(".accordion-body").each(function(index, element) {
