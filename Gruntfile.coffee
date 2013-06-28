@@ -270,6 +270,15 @@ module.exports = (grunt) ->
   # register tubemap task
   tubemap grunt
 
+  # register clearance task
+  grunt.registerTask "clearance", "set or get the clearance level", (target) ->
+    if !target?
+      target = grunt.file.read ".clearance"
+      grunt.log.ok ""+target
+    target = ~~target #convert to number - we want zero rather than NaN for non-numeric strings - otherwise '+' would do.
+    grunt.file.write ".clearance", ""+target
+    grunt.config.set "yeoman.clearance", target
+
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
