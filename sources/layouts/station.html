@@ -8,7 +8,7 @@
       <!-- Dependencies -->
       <ul class="inline">
 <% _.each(meta.dependencies, function(depId) {%>
-        <li class="stid <%=depId%>" data-toggle="tooltip" data-placement="bottom" data-delay="500" title="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+        <li class="stid <%=depId%>" data-content="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
               <span><%=depId%></span>
           </a>
@@ -21,14 +21,13 @@
       <!-- Dependents -->
       <ul class="inline text-right">
 <% _.each(meta.dependents, function(depId) {%>
-        <li class="stid <%=depId%>" data-toggle="tooltip" data-placement="top" data-delay="500" title="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
+        <li class="stid <%=depId%>" data-content="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
             <%=depId%>
           </a>
         </li>
 <% })%>
       </ul>
-
       <h2><%=meta.title%></h2>
 
       <div class="accordion" id="stationMenu">
@@ -121,12 +120,30 @@
 <script>
 $(document).ready(function() {
 
-// at compile time, generate a function for each dependency/dependent button
-// which at run time attaches click handlers
-<% _.each(_.union(meta.dependencies, meta.dependents), function(depId) {%>
+// At compile time, generate functions for each dependency/dependent button
+// which then attach click handlers to them at run time. If we don't do this
+// then only the linked text is active rather than the whole button.
+
+<% _.each(_.union(meta.dependencies), function(depId) {%>
   $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
-  }).tooltip();
+  }).popover({
+    trigger: "hover",
+    container: "body",
+    delay: "500",
+    placement: "right"
+  });
+<% }); %>
+
+<% _.each(_.union(meta.dependents), function(depId) {%>
+  $(".stid.<%=depId%>").click(function(event) {
+    window.location = "<%= root%>/stations/<%=depId%>.html";
+  }).popover({
+    trigger: "hover",
+    container: "body",
+    delay: "500",
+    placement: document.documentElement.clientWidth < 600 ? "left" : "right"
+  });
 <% }); %>
 
   /* kick MathJax to render the opened accordion element */
