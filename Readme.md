@@ -73,7 +73,7 @@ Make sure you have [`node`](http://nodejs.org/) and [`grunt`](http://gruntjs.com
 ### Installation
 
 In a terminal, `cd` to a suitable parent directory, and clone the repository. If your parent directory is called `~/cmep`, this creates
-~/cmep/CMEP_site.
+~/cmep/CMEP-site.
 
 ```
 cd ~/cmep
