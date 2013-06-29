@@ -3,13 +3,11 @@ CMEP-site
 
 These are the files necessary to generate  [the CMEP curriculum map](http://cambridge.maths.org) site.
 
-
 >
-> Warning:
+> Note:
 >
-> We currently generate only some of the intended site.
+> This directory contains sample content only.
 >
-
 
 Directory organisation
 ----------------------
@@ -92,12 +90,41 @@ Install the necessary libraries for client-side scripts.
 bower install
 ```
 
-From a shell, start a background watch and compile livescript task
+From a shell, start a background watch and compile livescript task. This is 
+only really necessary if doing code development.
 ```
 ./scripts/lswatch &
 ``` 
 
-### Run
+### Setting up for code development
+
+Run the following command to set the repository to its internal sample and test content.
+The variable `samples`
+in the file `.clearance` defines the location of clearance level -1 content. 
+`samples` is normally set up to point to the CMEP-site internal `sources` directory so it
+is only necessary to install CMEP-site to have a working test system. 
+
+```
+grunt clearance:-1
+```
+
+### Setting up for content creation
+
+Run one of these commands to set up the repository to use content cleared at the given level.
+These commands require that the content directory is installed at the location specified 
+by the `content` variable in the file `.clearance`. By default this is a directory named 
+`CMEP-sources` sitting alongside this `CMEP-site` directory.
+
+```
+grunt clearance:0   -- include work in progress not intended for review
+grunt clearance:1   -- prepare to build a site for internal team review 
+grunt clearance:2   -- prepare to build a site for advisors and reviewers
+grunt clearance:3   -- prepare to build a site for schools
+grunt clearance:4   -- prepare to build a site for public pilot
+grunt clearance:5   -- prepare to build a site for public release
+```
+
+### Run the site locally
 
 Create the development folder `app`, and serve it by starting a 
 local web browser.
@@ -109,5 +136,20 @@ grunt server
 
 Open a browser pointing at the app folder served ar http://localhost:9000. You can now edit files in the sources folder and preview the results in
 your browser.
+
+### Creating and installing a distribution copy
+
+Email Mike or Owen to run this part of the process as it requires server access rights.
+
+Ensure you have set the clearance level for the site you wish to create using
+a `grunt clearance:n` command. Then run
+
+```
+grunt server:dist
+```
+
+This will create an optimised version of the site, and open it locally in a browser for
+test. Once the copy has been checked the `dist` folder can be uploaded to the appropriate site.
+
 
 

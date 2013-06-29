@@ -3,6 +3,7 @@
 
 generator = require './lib/generator.js'
 tubemap = require './lib/tubemap.js'
+clearance = require './lib/clearance.js'
 
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
@@ -24,6 +25,8 @@ module.exports = (grunt) ->
   yeomanConfig =
     app: "app"
     dist: "dist"
+    content: "../CMEP-sources"
+    samples: "sources"
     sources: "sources"
     partials: "partials"
 
@@ -271,21 +274,15 @@ module.exports = (grunt) ->
   tubemap grunt
 
   # register clearance task
-  grunt.registerTask "clearance", "set or get the clearance level", (target) ->
-    if !target?
-      target = grunt.file.read ".clearance"
-      grunt.log.ok ""+target
-    target = ~~target #convert to number - we want zero rather than NaN for non-numeric strings - otherwise '+' would do.
-    grunt.file.write ".clearance", ""+target
-    grunt.config.set "yeoman.clearance", target
+  clearance grunt
 
   grunt.renameTask "regarde", "watch"
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "recess", "copy:assets", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
+    grunt.task.run ["clearance", "clean:server", "recess", "copy:assets", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
 
-  grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
-  grunt.registerTask "build", ["clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]
-  grunt.registerTask "layout", ["test", "build"]
+  #grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
+  grunt.registerTask "build", ["clearance", "clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]
+  #grunt.registerTask "layout", ["test", "build"]
   grunt.registerTask "dev", ["clean:partials", "livescript", "panda:dev"]
   grunt.registerTask "default", ["dev"]
