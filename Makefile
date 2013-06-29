@@ -1,6 +1,8 @@
 #
 # This file runs Mocha tests over the lib sources.
 #
+# Using mocha instead of jasmine because it groks async better
+#
 # Using make instead of grunt because mocha throws uncaught exceptions which
 # cause grunt to bail out, and the published getarounds look a little unstable.
 #

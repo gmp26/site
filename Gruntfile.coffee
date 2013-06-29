@@ -1,6 +1,7 @@
 # Generated on 2013-05-31 using generator-bootstrap-less 2.0.3
 "use strict"
 
+expandMetadata = require './lib/expandMetadata.js'
 generator = require './lib/generator.js'
 tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
@@ -51,7 +52,7 @@ module.exports = (grunt) ->
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-          postProcess: generator
+          #postProcess: generator
 
         files: [
           expand: true
@@ -60,6 +61,12 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.partials %>/"
           ext: ".html"
         ]
+
+    expandMetadata: 
+      options: null
+
+    generator: 
+      options: null
 
     tubemap:
       svg:
@@ -270,6 +277,12 @@ module.exports = (grunt) ->
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
+  # register expandMetadata task
+  expandMetadata grunt
+
+  # register generator task
+  generator grunt
+
   # register tubemap task
   tubemap grunt
 
@@ -277,12 +290,47 @@ module.exports = (grunt) ->
   clearance grunt
 
   grunt.renameTask "regarde", "watch"
-  grunt.registerTask "server", (target) ->
-    return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clearance", "clean:server", "recess", "copy:assets", "copy:server", "dev", "livereload-start", "connect:livereload", "open", "watch"]
 
-  #grunt.registerTask "test", ["clean:server", "recess", "copy:server", "connect:test", "mocha"]
-  grunt.registerTask "build", ["clearance", "clean:dist", "copy:server", "useminPrepare", "concurrent", "cssmin", "concat", "uglify", "copy", "usemin"]
-  #grunt.registerTask "layout", ["test", "build"]
-  grunt.registerTask "dev", ["clean:partials", "livescript", "panda:dev"]
+  grunt.registerTask "server", (target) ->
+    if target is "dist"
+      grunt.task.run([
+        "build"
+        "open"
+        "connect:dist:keepalive"
+      ])
+    else 
+      grunt.task.run ([
+        "clearance"
+        "clean:server"
+        "recess"
+        "copy:assets"
+        "copy:server"
+        "dev"
+        "livereload-start"
+        "connect:livereload"
+        "open"
+        "watch"
+      ])
+
+  grunt.registerTask "build", [
+    "clearance"
+    "clean:dist"
+    "copy:server"
+    "useminPrepare"
+    "concurrent"
+    "cssmin"
+    "concat"
+    "uglify"
+    "copy"
+    "usemin"
+  ]
+
+  grunt.registerTask "dev", [
+    "clean:partials"
+    "livescript"
+    "panda:dev"
+    "expandMetadata"
+    "generator"
+  ]
+  
   grunt.registerTask "default", ["dev"]
