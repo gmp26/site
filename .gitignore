@@ -2,6 +2,7 @@ node_modules
 dist
 *.tgz
 .tmp
+.clearance
 tmp/
 app/bower_components
 .DS_Store
