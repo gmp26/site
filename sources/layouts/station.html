@@ -120,39 +120,50 @@
 <script>
 $(document).ready(function() {
 
+  //
+  // Create a small jQuery plugin that binds bootstrap popovers to elements
+  // and renders any maths they may contain
+  //
+  $.fn.bindPopover = function (placement) {
+    this.on('show', function() {
+      // the timeout is necessary, but I'm not sure why.
+      $(this).mathTimer = window.setTimeout(function() {
+        console.log('showing');
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub], $('.popover-content').get());        
+      }, 0);
+    }).on('hide', function() {
+      // This is necessary to avoid MathJAX attempting to render a recently destroyed popover.
+      // Test on C15, alternating hover over C14 and A9.
+      var tid = $(this).mathTimer
+      if(tid !== null) window.clearTimeout(tid);
+    }).popover({
+      trigger: "hover",
+      container: "body",
+      delay: {show:600, hide:200},
+      placement: "right"
+    });
+  }
+
 // At compile time, generate functions for each dependency/dependent button
-// which then attach click handlers to them at run time. If we don't do this
+// which then attach click and hover handlers to them at run time. If we don't do this
 // then only the linked text is active rather than the whole button.
 
-<% _.each(_.union(meta.dependencies), function(depId) {%>
-  $(".stid.<%=depId%>").click(function(event) {
+<% _.each(meta.dependencies, function(depId) {%>
+
+  $el = $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
-  }).popover({
-    trigger: "hover",
-    container: "body",
-    delay: "500",
-    placement: "right"
-  });
+  }).bindPopover("right");
+  
 <% }); %>
 
-<% _.each(_.union(meta.dependents), function(depId) {%>
+<% _.each(meta.dependents, function(depId) {%>
+
   $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
-  }).popover({
-    trigger: "hover",
-    container: "body",
-    delay: "500",
-    placement: document.documentElement.clientWidth < 600 ? "left" : "right"
-  });
+  }).bindPopover(document.documentElement.clientWidth < 600 ? "left" : "right");
+
 <% }); %>
 
-  /* kick MathJax to render the opened accordion element */
-  $(".accordion-body").each(function(index, element) {
-    $(element).on('shown', function() {
-      console.log('showing'+index);
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
-    })
-  });
 });
 </script>
 

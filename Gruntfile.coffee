@@ -163,24 +163,48 @@ module.exports = (grunt) ->
     #concat:
     #  dist:
 
-    # not enabled since usemin task does concat and uglify
-    # check index.html to edit your build targets
-    # enable this task if you prefer defining your build targets here
-    #uglify:
+    # uglify:
     #  dist:
+    #   options:
+    #     compress: true
+    #   files:
+    #     "./dist/scripts/vendor/bootstrap.js": [
+    #       "./app/bower_components/bootstrap/js/bootstrap-affix.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-alert.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-dropdown.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-tooltip.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-modal.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-transition.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-button.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-popover.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-typeahead.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-carousel.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-scrollspy.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-collapse.js"
+    #       "./app/bower_components/bootstrap/js/bootstrap-tab.js"
+    #     ]
+    #     "./dist/scripts/vendor/modernizr.js": [
+    #       "./app/bower_components/jquery/jquery.js"
+    #       "./app/bower_components/modernizr/modernizr.js"
+    #     ]
+    #     "./dist/scripts/main.js": [
+    #       ".app/scripts/main.js"
+    #     ]
 
-    # rev:
-    #   dist:
-    #     files:
-    #       src: [
-    #         "<%= yeoman.dist %>/scripts/{,*/}*.js"
-    #         "<%= yeoman.dist %>/styles/{,*/}*.css"
-    #         "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
-    #         "<%= yeoman.dist %>/fonts/*"
-    #       ]
+    rev:
+      dist:
+        files:
+          src: [
+            "<%= yeoman.dist %>/scripts/{,*/}*.js"
+            "<%= yeoman.dist %>/styles/{,*/}*.css"
+            "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
+            "<%= yeoman.dist %>/fonts/*"
+          ]
 
     useminPrepare:
-      html: "<%= yeoman.app %>/**/*.html"
+      html: [
+        "<%= yeoman.app %>/index.html"
+      ]
       options:
         dest: "<%= yeoman.dist %>"
 
@@ -275,7 +299,8 @@ module.exports = (grunt) ->
         ]
 
     concurrent:
-      dist: ["recess", "imagemin", "svgmin", "htmlmin"]
+      dist: ["recess", "imagemin", "svgmin", "htmlmin", "rev"]
+
 
   # register expandMetadata task
   expandMetadata grunt
@@ -332,5 +357,5 @@ module.exports = (grunt) ->
     "expandMetadata"
     "generator"
   ]
-  
+
   grunt.registerTask "default", ["dev"]
