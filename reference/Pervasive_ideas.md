@@ -6,14 +6,14 @@ Mathematical processes
 
 familyID process
 
-- Proof
+- Proof (PI3)
 - Modelling
 - Generalising and specialising
 - Doing and undoing
 - Multiple representations (PI1)
 - Using a computer
-- Visualising
-- Conjecturing
+- Visualising (PI5)
+- Conjecturing (PI4)
 - Actions on objects
 - Choosing the right point of view
 
@@ -52,7 +52,6 @@ familyID application
 - Philosophy
 - Mathematical physics
 - Fluid dynamics
-- Number bases
 - Cryptography
 - Digital technology, computing
 - Virtual reality, CGI

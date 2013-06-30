@@ -2,6 +2,9 @@
 layout: resource
 clearance: 0
 keywords: 
+  - circle
+  - equation
+  - Pythagoras
 resourceType: RT3
 highlight: false
 stids1:

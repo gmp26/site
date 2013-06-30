@@ -2,6 +2,8 @@
 layout: resource
 clearance: 0
 keywords:
+  - straight line
+  - equation
 resourceType: RT2
 highlight: true
 stids1:
