@@ -5,6 +5,12 @@
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
 
+      <div class="signage">
+
+        <img src="../images/postmark.png" class="postmark"/>
+
+      </div>
+
       <!-- Dependencies -->
       <ul class="inline">
 <% _.each(meta.dependencies, function(depId) {%>
@@ -14,12 +20,18 @@
           </a>
         </li>
 <% })%>
+        <!-- dummy to center postmark when there are no dependencies -->
+        <li class="stid" style="opacity:0">A1</li>
       </ul>
 
       <h1 class="main stid text-center" style="background-color:<%=meta.colour%>"><%=meta.id%></h1>
 
       <!-- Dependents -->
+
       <ul class="inline text-right">
+        <!-- dummy to center postmark when there are no dependents -->
+        <li class="stid" style="opacity:0">A1</li>   
+
 <% _.each(meta.dependents, function(depId) {%>
         <li class="stid <%=depId%>" data-content="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
           <a href="<%=root%>/stations/<%=depId%>.html">
@@ -28,6 +40,8 @@
         </li>
 <% })%>
       </ul>
+
+
       <h2><%=meta.title%></h2>
 
       <div class="accordion" id="stationMenu">
@@ -82,7 +96,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div id="content" class="span8">
 

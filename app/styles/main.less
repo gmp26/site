@@ -4,11 +4,27 @@ body {
   padding-top: 80px;
 }
 
+.signage {
+  width: inherit;
+  position:absolute;
+  z-index:-1;
+  .postmark {
+    display:block; 
+    margin-left:auto; 
+    margin-right:auto;
+    zoom: 0.5;
+  }
+}
+
 @media (max-width: 767px) {
   #sidebar1 {
     position: static;
     width: auto;
     top: 0;
+    .signage {
+      width:100%;
+      margin-left:-18px;
+    }
   }
 }
 
@@ -36,7 +52,7 @@ body {
   a {
     color:white;
   }
-  // Focus state for keyboard and accessibility
+  /* Focus state for keyboard and accessibility */
   &:focus {
     .tab-focus();
   }
@@ -47,7 +63,16 @@ body {
   opacity: 1;
   cursor:auto;
   .box-shadow(none);
+  &:active {
+    .box-shadow(none);
+  }
   border: 3px solid orange;
+
+  /* Prevent text selection */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .stid:hover {
