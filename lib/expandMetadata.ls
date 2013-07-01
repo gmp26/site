@@ -1,4 +1,8 @@
 "use strict"
+
+jsy = require 'js-yaml'
+
+
 #
 #
 # expandMetadata to include
@@ -28,22 +32,22 @@ module.exports = (grunt) ->
     options = @options({
     })
 
+    partialsDir = grunt.config.get "yeoman.partials"
 
-
-    partials = grunt.config.get "yeoman.partials"
-    metadata = grunt.file.readYAML "#{partials}/sources.yaml"
+    metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
     grunt.config.set "metadata", metadata
 
     #metadata = grunt.config.get "metadata"
     sources = metadata.sources
     stations = sources.stations
     pervasiveIdeas = sources.pervasiveIdeas
+    resources = sources.resources
+
     #
     # Go through all resources, making links back to the
     # resource from their primary and secondary stations
     # and pervasiveIdeas.
     #
-    resources = sources.resources
     _.each resources, (resource, resourceId) ->
       meta = resource.index.meta
 
@@ -68,6 +72,9 @@ module.exports = (grunt) ->
         st.highlights ?= {}
         st.highlights[resourceId] = meta.resourceType
 
+      grunt.verbose.writeln "1"
+
+
       # list the primary and secondary resources at each station
       _.each meta.stids1, (id) ->
         st = stations[id].meta
@@ -78,19 +85,39 @@ module.exports = (grunt) ->
         st.R2s ?= {}
         st.R2s[resourceId] = meta.resourceType
 
+      grunt.verbose.writeln "2 - resourceId=#resourceId"
+
       # list the primary and secondary resources at each pervasiveIdea
-      _.each meta.pvids1, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R1s ?= {}
-        pv.R1s[resourceId] = meta.resourceType
-      _.each meta.pvids2, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R2s ?= {}
-        pv.R2s[resourceId] = meta.resourceType
+      _.each ["1","2"], (n) ->
+        bad = {}
+        _.each meta["pvids#n"], (id) ->
+          grunt.verbose.writeln "pvid#n = #id"
+          if pervasiveIdeas[id]?
+            pv = pervasiveIdeas[id].meta
+            pv["R#{n}s"] ?= {}
+            pv["R#{n}s"][resourceId] = meta.resourceType
+          else
+            grunt.log.error "#resourceId references a missing pvid#n #id"
+            debugger
+            bad[id] = true
+        # remove the missing pvid
+        if meta["pvids#n"]
+          resource.index.meta["pvids#n"] = meta["pvids#n"].filter (id)->!bad.id?
+
+      # _.each meta.pvids2, (id) ->
+      #   grunt.verbose.writeln "pvid2=#id"
+      #   if pervasiveIdeas[id]?
+      #     pv = pervasiveIdeas[id].meta
+      #     pv.R2s ?= {}
+      #     pv.R2s[resourceId] = meta.resourceType
+      #   else
+      #     grunt.log.error "#resourceId references missing pvid2 #id"
+
     #
     # Go through all stations, doubling up dependency
     # links and building pervasive ideas lists
     #
+
     _.each stations, (station, id) ->
       #
       # insert dependents by looking through dependencies
@@ -105,6 +132,7 @@ module.exports = (grunt) ->
           unless dependents.indexOf(id) >= 0
             #grunt.log.debug "adding dependent #id to #dependencyId"
             dependents.push id
+
       #
       # build station pervasive ideas lists by collecting pvids1 and pvids2 of
       # both primary station resources.
@@ -144,5 +172,5 @@ module.exports = (grunt) ->
         _.each stids1, (stid) ->
           pvstids[stid] = true
 
-    # put expanded metadata back in grunt config
-    # grunt.config.set "metadata", metadata
+    grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
+

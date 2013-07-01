@@ -1,7 +1,5 @@
 "use strict"
 
-jsy = require 'js-yaml'
-
 module.exports = (grunt) ->
 
   # precompiled page layouts
@@ -67,7 +65,6 @@ module.exports = (grunt) ->
             generateHTML sources, folder, fileName, meta.meta
 
     # return the metadata
-    grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
     return metadata
 
 
