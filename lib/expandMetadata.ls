@@ -28,10 +28,12 @@ module.exports = (grunt) ->
     options = @options({
     })
 
+    partialsDir = grunt.config.get "yeoman.partials"
+    metadata = grunt.config.get "metadata"
 
+    if !metadata
+      metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
 
-    partials = grunt.config.get "yeoman.partials"
-    metadata = grunt.file.readYAML "#{partials}/sources.yaml"
     grunt.config.set "metadata", metadata
 
     #metadata = grunt.config.get "metadata"

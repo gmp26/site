@@ -5,12 +5,10 @@ expandMetadata = require './lib/expandMetadata.js'
 generator = require './lib/generator.js'
 tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
-
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
+
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
-
-
 
 # # Globbing
 # for performance reasons we're only matching one level down:
@@ -21,6 +19,7 @@ module.exports = (grunt) ->
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
+  grunt.loadNpmTasks 'grunt-mocha-test'
 
   # configurable paths
   yeomanConfig =
@@ -85,7 +84,19 @@ module.exports = (grunt) ->
           src: ["**/*.ls"]
           dest: "./lib/"
           ext: ".js"
+        ,
+          expand: true
+          src: ["test/*.ls"]
+          dest: "."
+          ext: ".js"
         ]
+
+    # Configure a mochaTest task
+    mochaTest:
+      highlights:
+        options:
+          reporter: 'spec'
+        src: ['test/test_highlights.js']
 
     watch:
       recess:
@@ -112,10 +123,10 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [lrSnippet, mountFolder(connect, ".tmp"), mountFolder(connect, "app")]
 
-      test:
-        options:
-          middleware: (connect) ->
-            [mountFolder(connect, ".tmp"), mountFolder(connect, "test")]
+      # test:
+      #   options:
+      #     middleware: (connect) ->
+      #       [mountFolder(connect, ".tmp"), mountFolder(connect, "test")]
 
       dist:
         options:
@@ -127,6 +138,12 @@ module.exports = (grunt) ->
         path: "http://localhost:<%= connect.options.port %>"
 
     clean:
+      test:
+        files: [
+          dot: true
+          src: "test/actual/**/*"
+        ]
+
       dist:
         files: [
           dot: true
@@ -141,13 +158,7 @@ module.exports = (grunt) ->
       options:
         jshintrc: ".jshintrc"
 
-      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/spec/{,*/}*.js"]
-
-    mocha:
-      all:
-        options:
-          run: true
-          urls: ["http://localhost:<%= connect.options.port %>/index.html"]
+      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/{,*/}*.js"]
 
     recess:
       dist:
@@ -191,15 +202,15 @@ module.exports = (grunt) ->
     #       ".app/scripts/main.js"
     #     ]
 
-    rev:
-      dist:
-        files:
-          src: [
-            "<%= yeoman.dist %>/scripts/{,*/}*.js"
-            "<%= yeoman.dist %>/styles/{,*/}*.css"
-            "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
-            "<%= yeoman.dist %>/fonts/*"
-          ]
+    # rev:
+    #   dist:
+    #     files:
+    #       src: [
+    #         "<%= yeoman.dist %>/scripts/{,*/}*.js"
+    #         "<%= yeoman.dist %>/styles/{,*/}*.css"
+    #         "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}"
+    #         "<%= yeoman.dist %>/fonts/*"
+    #       ]
 
     useminPrepare:
       html: [
@@ -301,7 +312,6 @@ module.exports = (grunt) ->
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin", "rev"]
 
-
   # register expandMetadata task
   expandMetadata grunt
 
@@ -313,6 +323,7 @@ module.exports = (grunt) ->
 
   # register clearance task
   clearance grunt
+
 
   grunt.renameTask "regarde", "watch"
 
@@ -336,6 +347,13 @@ module.exports = (grunt) ->
         "open"
         "watch"
       ])
+
+  grunt.registerTask "test", [
+    "clean:test"
+    "livescript"
+    "expandMetadata"
+    "mochaTest"
+  ]
 
   grunt.registerTask "build", [
     "clearance"

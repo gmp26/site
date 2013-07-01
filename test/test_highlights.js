@@ -7,23 +7,16 @@ global describe, it
   should = require("chai").should();
   expandMetadata = require('../lib/expandMetadata.js');
   grunt = require('grunt');
-  describe("Metadata", function(_){
+  describe("Testing highlights expansion", function(_){
     var metadata, expanded, estations;
     before(function(){
-      metadata = grunt.file.readYAML('test/fixtures/input.yaml');
-      expanded = expandMetadata(grunt, metadata);
-      return estations = expanded.sources.stations;
+      metadata = grunt.config.get("metadata");
+      return estations = metadata.sources.stations;
     });
-    describe("reading inputs.yaml", function(_){
+    describe("checking metadata", function(_){
       return it("should yield sources and stations", function(){
         metadata.should.have.property('sources');
-        return grunt.util._.size(metadata.sources.stations).should.equal(6);
-      });
-    });
-    describe("expanded metadata", function(_){
-      return it("should have sources and stations", function(){
-        expanded.should.have.property('sources');
-        return grunt.util._.size(metadata.sources.stations).should.equal(6);
+        return grunt.util._.size(metadata.sources.stations).should.equal(59);
       });
     });
     describe("A1", function(_){
@@ -37,11 +30,8 @@ global describe, it
       });
     });
     return describe("A1", function(_){
-      it("should have highlight G2_RT2", function(){
+      return it("should have highlight G2_RT2", function(){
         return estations.A1.meta.highlights.G2_RT2.should.equal('RT2');
-      });
-      return it("should have highlight G2_RT3", function(){
-        return estations.A1.meta.highlights.G2_RT3.should.equal('RT3');
       });
     });
   });
