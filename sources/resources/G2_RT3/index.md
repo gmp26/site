@@ -12,7 +12,7 @@ stids1:
 stids2:
 pvids1: 
 pvids2: 
-  - PI4
+  - PI1
   - PI2
 
 ````

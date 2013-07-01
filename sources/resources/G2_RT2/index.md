@@ -17,5 +17,29 @@ pvids2:
 ````
 1. Here's a question.
 
-2. Here's the other question.
+2. Here's another question.
+
+<button type="button" class="btn btn-action" data-toggle="collapse" data-target="#question3">
+  3. Question
+</button>
+
+<div id="question3" class="collapse">
+  <p>
+    And here's a question that for some reason I wanted to keep hidden.
+  </p>
+</div>
+
+<div class="well">
+  4.  And here's the final question.
+
+  <button type="button" class="btn btn-action" data-toggle="collapse" data-target="#question4">
+    Hint
+  </button>
+
+  <div id="question4" class="collapse">
+    <p>
+      Here's a useful hint that I don't want to reveal too soon.
+    </p>
+  </div>
+</div>
 
