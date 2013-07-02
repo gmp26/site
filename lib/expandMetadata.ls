@@ -68,14 +68,17 @@ module.exports = (grunt) ->
     #
     # filter out any bad stations
     #
-    # badStations = {}
-    # _.each stations, (st, stid) ->
-    #   meta = st.meta
-    #   if !meta.title? || meta.title == null || meta.title == ""
-    #     badPVs[pvid] = true
-    #   if meta.id? && meta.id != stid
-    #     grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #stid, using '#stid'"
-    #     meta.id = stid
+    badStations = {}
+    _.each stations, (st, stid) ->
+      meta = st.meta
+      if !meta.title? || meta.title == null || meta.title == ""
+        badPVs[pvid] = true
+      if meta.id? && meta.id != stid
+        grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #stid, using '#stid'"
+        meta.id = stid
+    _.each badStations, (b, badId) ->
+      grunt.log.warn "*** Ignoring station #badId"
+      delete stations[badId]
 
 
     #
@@ -102,7 +105,6 @@ module.exports = (grunt) ->
         grunt.log.error("#resourceId has missing or bad resourceType")
         badResources[resourceId] = true
         return
-
 
       #
       # Add this resource to station highlights if necessary
@@ -158,26 +160,32 @@ module.exports = (grunt) ->
       grunt.log.warn "*** Ignoring resource #badId"
       delete resources[badId]
 
-    debugger
-
     #
     # Go through all stations, doubling up dependency
     # links and building pervasive ideas lists
     #
     _.each stations, (station, id) ->
+
+      # allow a single station dependency
+      dependencies = station.meta.dependencies
+      if _.isString(dependencies) && stations[dependencies]?
+        dependencies = [dependencies]
+
+      # otherwise we must have an array of dependencies
+      grunt.fatal "#id dependencies must be a list" if dependencies && !_.isArray dependencies
+
       #
       # insert dependents by looking through dependencies
-      #
-      dependencies = station.meta.dependencies
+      # 
       _.each dependencies, (dependencyId) ->
         if dependencyId
           dependency = stations[dependencyId] ? null
-          grunt.fatal "station #dependencyId not found" unless dependency
-          dependency.meta.dependents = [] unless dependency.meta.dependents
-          dependents = dependency.meta.dependents
-          unless dependents.indexOf(id) >= 0
-            #grunt.log.debug "adding dependent #id to #dependencyId"
-            dependents.push id
+          if dependency
+            depMeta = dependency.meta
+            depMeta.dependents = [] unless depMeta.dependents
+            depMeta.dependents.push id if depMeta.dependents.indexOf(id) < 0
+          else
+            grunt.log.error "*** Ignoring missing station #id reference to missing #dependencyId"
 
       #
       # build station pervasive ideas lists by collecting pvids1 and pvids2 of
