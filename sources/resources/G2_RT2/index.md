@@ -10,6 +10,7 @@ stids1:
   - G2
 stids2:
 pvids1:
+  - PI3
 pvids2:
   - PI1
   - PI2
