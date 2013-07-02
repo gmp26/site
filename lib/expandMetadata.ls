@@ -33,8 +33,11 @@ module.exports = (grunt) ->
     })
 
     partialsDir = grunt.config.get "yeoman.partials"
+    metadata = grunt.config.get "metadata"
 
-    metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
+    if !metadata
+      metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
+
     grunt.config.set "metadata", metadata
 
     #metadata = grunt.config.get "metadata"
@@ -72,9 +75,6 @@ module.exports = (grunt) ->
         st.highlights ?= {}
         st.highlights[resourceId] = meta.resourceType
 
-      grunt.verbose.writeln "1"
-
-
       # list the primary and secondary resources at each station
       _.each meta.stids1, (id) ->
         st = stations[id].meta
@@ -85,39 +85,19 @@ module.exports = (grunt) ->
         st.R2s ?= {}
         st.R2s[resourceId] = meta.resourceType
 
-      grunt.verbose.writeln "2 - resourceId=#resourceId"
-
       # list the primary and secondary resources at each pervasiveIdea
-      _.each ["1","2"], (n) ->
-        bad = {}
-        _.each meta["pvids#n"], (id) ->
-          grunt.verbose.writeln "pvid#n = #id"
-          if pervasiveIdeas[id]?
-            pv = pervasiveIdeas[id].meta
-            pv["R#{n}s"] ?= {}
-            pv["R#{n}s"][resourceId] = meta.resourceType
-          else
-            grunt.log.error "#resourceId references a missing pvid#n #id"
-            debugger
-            bad[id] = true
-        # remove the missing pvid
-        if meta["pvids#n"]
-          resource.index.meta["pvids#n"] = meta["pvids#n"].filter (id)->!bad.id?
-
-      # _.each meta.pvids2, (id) ->
-      #   grunt.verbose.writeln "pvid2=#id"
-      #   if pervasiveIdeas[id]?
-      #     pv = pervasiveIdeas[id].meta
-      #     pv.R2s ?= {}
-      #     pv.R2s[resourceId] = meta.resourceType
-      #   else
-      #     grunt.log.error "#resourceId references missing pvid2 #id"
-
+      _.each meta.pvids1, (id) ->
+        pv = pervasiveIdeas[id].meta
+        pv.R1s ?= {}
+        pv.R1s[resourceId] = meta.resourceType
+      _.each meta.pvids2, (id) ->
+        pv = pervasiveIdeas[id].meta
+        pv.R2s ?= {}
+        pv.R2s[resourceId] = meta.resourceType
     #
     # Go through all stations, doubling up dependency
     # links and building pervasive ideas lists
     #
-
     _.each stations, (station, id) ->
       #
       # insert dependents by looking through dependencies
