@@ -1,7 +1,5 @@
 "use strict"
 
-jsy = require 'js-yaml'
-
 module.exports = (grunt) ->
 
   # precompiled page layouts
@@ -67,7 +65,6 @@ module.exports = (grunt) ->
             generateHTML sources, folder, fileName, meta.meta
 
     # return the metadata
-    grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
     return metadata
 
 
@@ -90,7 +87,12 @@ module.exports = (grunt) ->
 
       layout = prefix + layout + postfix
 
-      if grunt.file.exists layout then layout else (prefix+'default'+postfix)
+      if grunt.file.exists layout
+        layout
+      else
+        using = (prefix+'default'+postfix)
+        grunt.verbose.writeln "#folder layout #layout does not exist, using #using"
+        using
 
     #
     # Generate a resource
