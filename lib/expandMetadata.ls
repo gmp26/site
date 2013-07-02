@@ -33,6 +33,7 @@ module.exports = (grunt) ->
     })
 
     partialsDir = grunt.config.get "yeoman.partials"
+    sourcesDir = grunt.config.get "yeoman.sources"
     metadata = grunt.config.get "metadata"
 
     if !metadata
@@ -46,6 +47,36 @@ module.exports = (grunt) ->
     pervasiveIdeas = sources.pervasiveIdeas
     resources = sources.resources
     resourceTypes = sources.resourceTypes
+
+    #
+    # filter out any bad pervasive ideas
+    #
+    badPVs = {}
+    _.each pervasiveIdeas, (pv, pvid)->
+      meta = pv.meta
+      if !meta.title? || meta.title == null || meta.title == ""
+        badPVs[pvid] = true
+      if !meta.family? || meta.family == null || meta.family == ""
+        grunt.log.error "pervasiveIdea #pvid has no family"
+      if meta.id? && meta.id != pvid
+        grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #pvid, using '#pvid'"
+        meta.id = pvid
+    _.each badPVs, (b, badId) ->
+      grunt.log.warn "*** Ignoring pervasiveIdea #badId"
+      delete pervasiveIdeas[badId]
+
+    #
+    # filter out any bad stations
+    #
+    # badStations = {}
+    # _.each stations, (st, stid) ->
+    #   meta = st.meta
+    #   if !meta.title? || meta.title == null || meta.title == ""
+    #     badPVs[pvid] = true
+    #   if meta.id? && meta.id != stid
+    #     grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #stid, using '#stid'"
+    #     meta.id = stid
+
 
     #
     # Go through all resources, making links back to the
@@ -124,7 +155,7 @@ module.exports = (grunt) ->
 
     # edit out bad resources
     _.each badResources, (b, badId) ->
-      grunt.log.warn "ignoring resource #badId"
+      grunt.log.warn "*** Ignoring resource #badId"
       delete resources[badId]
 
     debugger
