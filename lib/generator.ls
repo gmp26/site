@@ -87,7 +87,12 @@ module.exports = (grunt) ->
 
       layout = prefix + layout + postfix
 
-      if grunt.file.exists layout then layout else (prefix+'default'+postfix)
+      if grunt.file.exists layout
+        layout
+      else
+        using = (prefix+'default'+postfix)
+        grunt.verbose.writeln "#folder layout #layout does not exist, using #using"
+        using
 
     #
     # Generate a resource

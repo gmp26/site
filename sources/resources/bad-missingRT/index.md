@@ -4,10 +4,10 @@ clearance: 0
 keywords:
   - straight line
   - equation
-resourceType: RT2
+resourceType: RT99
 highlight: true
 stids1:
-  - G2
+  - G4
 stids2:
 pvids1:
 pvids2:

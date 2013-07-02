@@ -45,14 +45,33 @@ module.exports = (grunt) ->
     stations = sources.stations
     pervasiveIdeas = sources.pervasiveIdeas
     resources = sources.resources
+    resourceTypes = sources.resourceTypes
 
     #
     # Go through all resources, making links back to the
     # resource from their primary and secondary stations
     # and pervasiveIdeas.
     #
+    badResources = {}
     _.each resources, (resource, resourceId) ->
+
+      if !resource.index?
+        grunt.log.error("#resourceId should be a folder with an index file")
+        badResources[resourceId] = true
+        return
+
       meta = resource.index.meta
+
+      if !resource.index.meta?
+        grunt.log.error!error("#resourceId has no metadata")
+        badResources[resourceId] = true
+        return
+
+      if !meta.resourceType? || !resourceTypes[meta.resourceType]
+        grunt.log.error("#resourceId has missing or bad resourceType")
+        badResources[resourceId] = true
+        return
+
 
       #
       # Add this resource to station highlights if necessary
@@ -75,25 +94,41 @@ module.exports = (grunt) ->
         st.highlights ?= {}
         st.highlights[resourceId] = meta.resourceType
 
-      # list the primary and secondary resources at each station
-      _.each meta.stids1, (id) ->
-        st = stations[id].meta
-        st.R1s ?= {}
-        st.R1s[resourceId] = meta.resourceType
-      _.each meta.stids2, (id) ->
-        st = stations[id].meta
-        st.R2s ?= {}
-        st.R2s[resourceId] = meta.resourceType
+      # Expand the primary and secondary resources on objList (a station or a pervasiveIdea list)
+      # warning if any stids or pvids don't exist.
+      # If they don't exist then the reference to them is deleted in the expanded metadata
+      expandIds = (objList, idPrefix, idNumber) ->
+        bad = {}
+        srcList = meta[idPrefix+idNumber]
+        _.each srcList, (id) ->
+          item = objList[id]
+          if item && item.meta?
+            itemMeta = item.meta
+            resListId = "R"+idNumber+"s"
+            itemMeta[resListId] ?= {}
+            itemMeta[resListId][resourceId] = meta.resourceType
+          else
+            bad[id] = true
+        if srcList
+          meta[idPrefix+idNumber] = srcList.filter (id)->
+            if bad[id]
+              grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
+              false
+            else
+              true
 
-      # list the primary and secondary resources at each pervasiveIdea
-      _.each meta.pvids1, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R1s ?= {}
-        pv.R1s[resourceId] = meta.resourceType
-      _.each meta.pvids2, (id) ->
-        pv = pervasiveIdeas[id].meta
-        pv.R2s ?= {}
-        pv.R2s[resourceId] = meta.resourceType
+      expandIds stations, "stids", 1
+      expandIds stations, "stids", 2
+      expandIds pervasiveIdeas, "pvids", 1
+      expandIds pervasiveIdeas, "pvids", 2
+
+    # edit out bad resources
+    _.each badResources, (b, badId) ->
+      grunt.log.warn "ignoring resource #badId"
+      delete resources[badId]
+
+    debugger
+
     #
     # Go through all stations, doubling up dependency
     # links and building pervasive ideas lists
