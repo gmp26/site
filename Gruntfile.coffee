@@ -62,10 +62,10 @@ module.exports = (grunt) ->
           ext: ".html"
         ]
 
-    expandMetadata: 
+    expandMetadata:
       options: null
 
-    generator: 
+    generator:
       options: null
 
     tubemap:
@@ -299,7 +299,7 @@ module.exports = (grunt) ->
         ]
 
     concurrent:
-      dist: ["recess", "imagemin", "svgmin", "htmlmin", "rev"]
+      dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
 
   # register expandMetadata task
@@ -323,7 +323,7 @@ module.exports = (grunt) ->
         "open"
         "connect:dist:keepalive"
       ])
-    else 
+    else
       grunt.task.run ([
         "clearance"
         "clean:server"
