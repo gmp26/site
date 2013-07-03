@@ -36,8 +36,8 @@ module.exports = (grunt) ->
     sourcesDir = grunt.config.get "yeoman.sources"
     metadata = grunt.config.get "metadata"
 
-    if !metadata
-      metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
+    #if !metadata
+    metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
 
     grunt.config.set "metadata", metadata
 
@@ -155,18 +155,25 @@ module.exports = (grunt) ->
       highlights = []
       if meta.highlight?
         if _.isBoolean(meta.highlight) && meta.highlight
-          # highlight on all stations
-          highlights = sources.stations
+          # highlight on all stids1 stations
+          _.each meta.stids1, (stid) ->
+            debugger
+            grunt.log.ok "#resourceId adding highlight #stid"
+            highlights.push stations[stid]
         else
           if _.isString meta.highlight
             # highlight on one station
-            highlights = [sources.stations[meta.highlight]]
+            highlights = [stations[meta.highlight]]
           else
             if _.isArray meta.highlight
               # highlight on all stations in array
-              highlights = _.map meta.highlight, (stid) -> stations[stid]
+              highlights = _.map meta.highlight, (stid) ->
+                grunt.log.ok "#resourceId adding highlight #stid"
+                stations[stid]
       _.each highlights, (station, stid) ->
         st = station.meta
+        if !st
+          grunt.log.ok "undefined st at #resourceId, stid=#stid"
         st.highlights ?= {}
         st.highlights[resourceId] = meta.resourceType
 
