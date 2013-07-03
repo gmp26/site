@@ -373,6 +373,7 @@ module.exports = (grunt) ->
     "livescript"
     "panda:dev"
     "expandMetadata"
+    "tubemap"
     "generator"
   ]
 

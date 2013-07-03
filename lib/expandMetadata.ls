@@ -1,7 +1,7 @@
 "use strict"
 
 jsy = require 'js-yaml'
-
+colorString = require 'color-string'
 
 #
 #
@@ -49,6 +49,27 @@ module.exports = (grunt) ->
     resourceTypes = sources.resourceTypes
 
     #
+    # Make sure all lines have a valid id and colour
+    #
+    badLines = {}
+    _.each sources.lines, (line, lid)->
+      meta = line.meta
+      unless _.isString(lid) && lid.match /^\D{1,3}$/
+        grunt.log.error "Line #lid has a bad name"
+        badLines[lid] = true
+      if meta.id != lid
+        grunt.log.error "Line #lid has an invalid id #{meta.id}. Using '#lid'."
+      meta.id = lid
+      try
+        rgba = colorString.getRgba meta.colour
+      unless rgba
+        grunt.log.error "Line #lid has an invalid colour #{meta.colour}. Using grey"
+        meta.colour = '#CCCCCC'
+    _.each badLines, (b, badLineId) ->
+      delete sources.lines[badLineId]
+      grunt.log.error "*** Ignoring line #badLineId"
+
+    #
     # filter out any bad pervasive ideas
     #
     badPVs = {}
@@ -59,7 +80,7 @@ module.exports = (grunt) ->
       if !meta.family? || meta.family == null || meta.family == ""
         grunt.log.error "pervasiveIdea #pvid has no family"
       if meta.id? && meta.id != pvid
-        grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #pvid, using '#pvid'"
+        grunt.log.error "PervasiveIdea #pvid has incorrect id '#{meta.id}' in metadata"
         meta.id = pvid
     _.each badPVs, (b, badId) ->
       grunt.log.warn "*** Ignoring pervasiveIdea #badId"
@@ -68,14 +89,39 @@ module.exports = (grunt) ->
     #
     # filter out any bad stations
     #
-    # badStations = {}
-    # _.each stations, (st, stid) ->
-    #   meta = st.meta
-    #   if !meta.title? || meta.title == null || meta.title == ""
-    #     badPVs[pvid] = true
-    #   if meta.id? && meta.id != stid
-    #     grunt.log.error "*** Warning: incorrect id '#{meta.id}' in #stid, using '#stid'"
-    #     meta.id = stid
+    badStations = {}
+    _.each stations, (st, stid) ->
+      meta = st.meta
+      if !meta.title? || meta.title == null || meta.title == ""
+        badStations[stid] = true
+        grunt.log.error "Station #stid has no title"
+
+      # filename based stid always wins even if id is given in metadata
+      if meta.id? && meta.id != stid
+        grunt.log.error "Overriding '#{meta.id}' with #stid in station '#stid'"
+      meta.id = stid
+
+      #
+      # Check stid syntax and resolve the station line, colour and rank
+      #
+      m = stid.match /^(\D{1,3})(\d{1,2})([a-z])?$/
+      if m
+        meta.line = m[1]
+        if sources.lines[meta.line]?
+          meta.rank =
+            +(m[2] + if m[3] then ((m[3]charCodeAt(0) - 'a'.charCodeAt(0) + 1)/100).toFixed(2).substr(1) else '')
+          meta.colour = sources.lines[meta.line].meta.colour
+        else
+          badStations[stid] = true
+          grunt.log.error "Station #stid is on a missing line #{meta.line}"
+
+      else
+        grunt.log.error "Station #stid has an invalid id - should be in Xn to XXXnnx"
+        badStations[stid] = true unless m
+
+    _.each badStations, (b, badId) ->
+      grunt.log.warn "*** Ignoring station #badId"
+      delete stations[badId]
 
 
     #
@@ -102,7 +148,6 @@ module.exports = (grunt) ->
         grunt.log.error("#resourceId has missing or bad resourceType")
         badResources[resourceId] = true
         return
-
 
       #
       # Add this resource to station highlights if necessary
@@ -158,26 +203,38 @@ module.exports = (grunt) ->
       grunt.log.warn "*** Ignoring resource #badId"
       delete resources[badId]
 
-    debugger
-
     #
     # Go through all stations, doubling up dependency
     # links and building pervasive ideas lists
     #
     _.each stations, (station, id) ->
+
+      # allow a single station dependency
+      dependencies = station.meta.dependencies
+      if _.isString(dependencies) && stations[dependencies]?
+        dependencies = [dependencies]
+
+      # otherwise we must have an array of dependencies
+      grunt.fatal "#id dependencies must be a list" if dependencies && !_.isArray dependencies
+
       #
       # insert dependents by looking through dependencies
       #
-      dependencies = station.meta.dependencies
-      _.each dependencies, (dependencyId) ->
-        if dependencyId
+      _.each dependencies, (dependencyId, index) ->
+        if dependencyId && _.isString(dependencyId) && dependencyId.length > 0
+          if dependencyId == id
+            grunt.log.error "Station #id is listed in its own dependencies"
+            return
           dependency = stations[dependencyId] ? null
-          grunt.fatal "station #dependencyId not found" unless dependency
-          dependency.meta.dependents = [] unless dependency.meta.dependents
-          dependents = dependency.meta.dependents
-          unless dependents.indexOf(id) >= 0
-            #grunt.log.debug "adding dependent #id to #dependencyId"
-            dependents.push id
+          if dependency
+            depMeta = dependency.meta
+            depMeta.dependents = [] unless depMeta.dependents
+            depMeta.dependents.push id if depMeta.dependents.indexOf(id) < 0
+          else
+            grunt.log.error "Station #id references a missing dependency #dependencyId"
+        else
+          grunt.log.error "Station #id has an invalid dependency '#dependencyId', ignoring it"
+          dependencies.splice index, 1
 
       #
       # build station pervasive ideas lists by collecting pvids1 and pvids2 of
@@ -194,16 +251,7 @@ module.exports = (grunt) ->
         _.each pvids2, (pvid) ->
           stpvs[pvid] = true
 
-      #
-      # While we're at it, let's resolve the station line and colour and rank
-      #
-      station.meta.line = (id.split /\d+/).0
-      rank = id.substr station.meta.line.length
-      m = rank.match /^(.*)([a-z])$/
-      if m
-        rank = m.1 + ((m.2.charCodeAt(0) - 'a'.charCodeAt(0) + 1)/100).toFixed(2).substr(1)
-      station.meta.rank = +rank
-      station.meta.colour = sources.lines[station.meta.line].meta.colour
+
 
     #
     # build pervasive ideas station lists by collecting primary stids of

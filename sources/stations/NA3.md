@@ -1,8 +1,7 @@
 ````
 id: NA3
 title: What are highest common factors and why do they matter?
-dependencies: 
-    - NA2
+dependencies: [NA2]
 ````
 ##Key Questions 
 
