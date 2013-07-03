@@ -34,9 +34,20 @@ describe "Testing highlights expansion", (_)->
       should.not.exist(estations.A1.meta.dependencies)
 
   describe "A1", (_) ->
-    it "should not have highlight G2_RT7", ->
-      console.log estations.A1.meta.highlights?.G2_RT7
+    it "should not have highlighted G2_RT7", ->
       should.not.exist(estations.A1.meta.highlights?.G2_RT7)
+
+  describe "A1", (_) ->
+    it "should not have highlighted G2_RT2", ->
+      should.not.exist(estations.A1.meta.highlights?.G2_RT2)
+
+  describe "G2", (_) ->
+    it "should have highlighted G2_RT7", ->
+      should.exist(estations.G2.meta.highlights?.G2_RT7)
+
+  describe "NA3", (_) ->
+    it "should have highlighted G2_RT2", ->
+      should.exist(estations.NA3.meta.highlights?.G2_RT2)
 
 
 

@@ -28,11 +28,28 @@ global describe, it
         return should.not.exist(estations.A1.meta.dependencies);
       });
     });
-    return describe("A1", function(_){
-      return it("should not have highlight G2_RT7", function(){
+    describe("A1", function(_){
+      return it("should not have highlighted G2_RT7", function(){
         var ref$;
-        console.log((ref$ = estations.A1.meta.highlights) != null ? ref$.G2_RT7 : void 8);
         return should.not.exist((ref$ = estations.A1.meta.highlights) != null ? ref$.G2_RT7 : void 8);
+      });
+    });
+    describe("A1", function(_){
+      return it("should not have highlighted G2_RT2", function(){
+        var ref$;
+        return should.not.exist((ref$ = estations.A1.meta.highlights) != null ? ref$.G2_RT2 : void 8);
+      });
+    });
+    describe("G2", function(_){
+      return it("should have highlighted G2_RT7", function(){
+        var ref$;
+        return should.exist((ref$ = estations.G2.meta.highlights) != null ? ref$.G2_RT7 : void 8);
+      });
+    });
+    return describe("NA3", function(_){
+      return it("should have highlighted G2_RT2", function(){
+        var ref$;
+        return should.exist((ref$ = estations.NA3.meta.highlights) != null ? ref$.G2_RT2 : void 8);
       });
     });
   });

@@ -149,6 +149,47 @@ module.exports = (grunt) ->
         badResources[resourceId] = true
         return
 
+      # Expand the primary and secondary resources on objList (a station or a pervasiveIdea list)
+      # Warn if any stids or pvids don't exist.
+      # If they don't exist then the reference to them is deleted in the expanded metadata
+      expandIds = (objList, idPrefix, idNumber) ->
+        bad = {}
+        srcList = meta[idPrefix+idNumber]
+        _.each srcList, (id) ->
+          item = objList[id]
+          if item && item.meta?
+            itemMeta = item.meta
+            resListId = "R"+idNumber+"s"
+            itemMeta[resListId] ?= {}
+            itemMeta[resListId][resourceId] = meta.resourceType
+          else
+            bad[id] = true
+        if srcList
+          meta[idPrefix+idNumber] = srcList
+          .filter (id)->
+            if bad[id]
+              grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
+              false
+            else
+              true
+
+      expandIds stations, "stids", 1
+      expandIds stations, "stids", 2
+      expandIds pervasiveIdeas, "pvids", 1
+      expandIds pervasiveIdeas, "pvids", 2
+
+    # edit out bad resources
+    _.each badResources, (b, badId) ->
+      grunt.log.warn "*** Ignoring resource #badId"
+      delete resources[badId]
+
+
+    #
+    # Now stids and pvids are ok, expand highlights
+    #
+    _.each resources, (resource, resourceId) ->
+
+      meta = resource.index.meta
       #
       # Add this resource to station highlights if necessary
       #
@@ -157,9 +198,9 @@ module.exports = (grunt) ->
         if _.isBoolean(meta.highlight) && meta.highlight
           # highlight on all stids1 stations
           _.each meta.stids1, (stid) ->
-            debugger
             grunt.log.ok "#resourceId adding highlight #stid"
-            highlights.push stations[stid]
+            if stations[stid]
+              highlights.push stations[stid]
         else
           if _.isString meta.highlight
             # highlight on one station
@@ -177,38 +218,6 @@ module.exports = (grunt) ->
         st.highlights ?= {}
         st.highlights[resourceId] = meta.resourceType
 
-      # Expand the primary and secondary resources on objList (a station or a pervasiveIdea list)
-      # warning if any stids or pvids don't exist.
-      # If they don't exist then the reference to them is deleted in the expanded metadata
-      expandIds = (objList, idPrefix, idNumber) ->
-        bad = {}
-        srcList = meta[idPrefix+idNumber]
-        _.each srcList, (id) ->
-          item = objList[id]
-          if item && item.meta?
-            itemMeta = item.meta
-            resListId = "R"+idNumber+"s"
-            itemMeta[resListId] ?= {}
-            itemMeta[resListId][resourceId] = meta.resourceType
-          else
-            bad[id] = true
-        if srcList
-          meta[idPrefix+idNumber] = srcList.filter (id)->
-            if bad[id]
-              grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
-              false
-            else
-              true
-
-      expandIds stations, "stids", 1
-      expandIds stations, "stids", 2
-      expandIds pervasiveIdeas, "pvids", 1
-      expandIds pervasiveIdeas, "pvids", 2
-
-    # edit out bad resources
-    _.each badResources, (b, badId) ->
-      grunt.log.warn "*** Ignoring resource #badId"
-      delete resources[badId]
 
     #
     # Go through all stations, doubling up dependency
@@ -257,7 +266,6 @@ module.exports = (grunt) ->
         pvids2 = sources.resources[resourceId].index.meta.pvids2
         _.each pvids2, (pvid) ->
           stpvs[pvid] = true
-
 
 
     #

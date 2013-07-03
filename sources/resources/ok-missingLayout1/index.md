@@ -5,7 +5,8 @@ keywords:
   - straight line
   - equation
 resourceType: RT4
-highlight: true
+highlight:
+  - G3
 stids1:
   - G3
 stids2:

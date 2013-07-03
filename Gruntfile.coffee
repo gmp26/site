@@ -94,10 +94,12 @@ module.exports = (grunt) ->
 
     # Configure a mochaTest task
     mochaTest:
-      highlights:
+      highlights: 
         options:
           reporter: 'spec'
-        src: ['test/test_highlights.js']
+        files: [
+          src: "test/*.js"
+        ]
 
     watch:
       recess:
@@ -297,7 +299,6 @@ module.exports = (grunt) ->
             "resources/*/*.gif"
             "resources/*/*.jpg"
             "resources/*/*.png"
-            #"images/{,*/}*.{webp,gif}"
           ]
         ]
 
