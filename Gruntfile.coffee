@@ -49,6 +49,7 @@ module.exports = (grunt) ->
         options:
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
           #postProcess: generator
@@ -351,6 +352,7 @@ module.exports = (grunt) ->
   grunt.registerTask "test", [
     "clean:test"
     "livescript"
+    "panda"
     "expandMetadata"
     "mochaTest"
   ]

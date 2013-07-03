@@ -5,7 +5,7 @@ keywords:
   - banana
   - elephant
 resourceType: RT7
-highlight: false
+highlight: true
 stids1:
   - G2
 stids2:

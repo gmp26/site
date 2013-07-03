@@ -8,7 +8,7 @@ resourceType: RT2
 highlight:
   - NA3
 stids1:
-  - NA3
+  - G2
 stids2:
 pvids1:
 pvids2:

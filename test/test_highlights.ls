@@ -4,7 +4,6 @@ global describe, it
 "use strict"
 
 should = require("chai").should()
-expandMetadata = require '../lib/expandMetadata.js'
 grunt = require 'grunt'
 
 #
@@ -24,7 +23,7 @@ describe "Testing highlights expansion", (_)->
   describe "checking metadata", (_) ->
     it "should yield sources and stations", ->
       metadata.should.have.property('sources')
-      (grunt.util._.size metadata.sources.stations).should.equal(59)
+      (grunt.util._.size metadata.sources.stations).should.equal 60
 
   describe "A1", (_) ->
     it "should have dependent A2", ->
@@ -35,10 +34,9 @@ describe "Testing highlights expansion", (_)->
       should.not.exist(estations.A1.meta.dependencies)
 
   describe "A1", (_) ->
-
-    it "should have highlight G2_RT2", ->
-      estations.A1.meta.highlights?.G2_RT2?.should.equal 'RT2'
-
+    it "should not have highlight G2_RT7", ->
+      console.log estations.A1.meta.highlights?.G2_RT7
+      should.not.exist(estations.A1.meta.highlights?.G2_RT7)
 
 
 
