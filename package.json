@@ -11,7 +11,8 @@
     "mocha": "~1.11.0",
     "chai": "~1.7.0",
     "should": "~1.2.2",
-    "grunt-usemin": "~0.1.12"
+    "grunt-usemin": "~0.1.12",
+    "color-string": "~0.1.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
