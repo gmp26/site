@@ -94,7 +94,7 @@ module.exports = (grunt) ->
 
     # Configure a mochaTest task
     mochaTest:
-      highlights: 
+      highlights:
         options:
           reporter: 'spec'
         files: [
@@ -107,12 +107,12 @@ module.exports = (grunt) ->
         tasks: ["recess"]
 
       livereload:
-        files: ["<%= yeoman.sources %>/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+        files: ["<%= yeoman.app %>/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
         tasks: ["livereload"]
 
       panda:
         files: ["<%= yeoman.sources %>/**/*.md"]
-        tasks: ["panda"]
+        tasks: ["dev"]
 
     connect:
       options:
