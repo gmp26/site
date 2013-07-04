@@ -30,7 +30,7 @@
 
       <ul class="inline text-right">
         <!-- dummy to center postmark when there are no dependents -->
-        <li class="stid" style="opacity:0">A1</li>   
+        <li class="stid" style="opacity:0">A1</li>
 
 <% _.each(meta.dependents, function(depId) {%>
         <li class="stid <%=depId%>" data-content="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
@@ -142,7 +142,7 @@ $(document).ready(function() {
       // the timeout is necessary, but I'm not sure why.
       $(this).mathTimer = window.setTimeout(function() {
         console.log('showing');
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub], $('.popover-content').get());        
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub], $('.popover-content').get());
       }, 0);
     }).on('hide', function() {
       // This is necessary to avoid MathJAX attempting to render a recently destroyed popover.
@@ -153,7 +153,7 @@ $(document).ready(function() {
       trigger: "hover",
       container: "body",
       delay: {show:600, hide:200},
-      placement: "right"
+      placement: placement
     });
   }
 
@@ -161,19 +161,21 @@ $(document).ready(function() {
 // which then attach click and hover handlers to them at run time. If we don't do this
 // then only the linked text is active rather than the whole button.
 
+  var mainWidth = $(".main").outerWidth();
+
 <% _.each(meta.dependencies, function(depId) {%>
 
-  $el = $(".stid.<%=depId%>").click(function(event) {
+  $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
   }).bindPopover("right");
-  
+
 <% }); %>
 
 <% _.each(meta.dependents, function(depId) {%>
 
   $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
-  }).bindPopover(document.documentElement.clientWidth < 600 ? "left" : "right");
+  }).bindPopover(document.documentElement.clientWidth < 765 ? "left" : "right");
 
 <% }); %>
 
