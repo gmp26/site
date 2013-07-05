@@ -162,11 +162,14 @@ module.exports = (grunt) ->
             objMeta = obj.meta
             resListId = "R"+idNumber+"s"
             objMeta[resListId] ?= []
-            objMeta[resListId].push {
+            oml = objMeta[resListId]
+            oml.push {
               id: resourceId
               rt: meta.resourceType
             }
-            objMeta[resListId] = _.sortBy objMeta[resListId], (.rt.substr(2))
+
+            # sort generated resource list by resource type number
+            objMeta[resListId] = _.sortBy oml, (obj)-> +obj.rt.substr(2)
           else
             bad[id] = true
 
@@ -177,28 +180,6 @@ module.exports = (grunt) ->
               false
             else
               true
-
-
-      # expandIds = (objList, idPrefix, idNumber) ->
-      #   bad = {}
-      #   srcList = meta[idPrefix+idNumber]
-      #   _.each srcList, (id) ->
-      #     item = objList[id]
-      #     if item && item.meta?
-      #       itemMeta = item.meta
-      #       resListId = "R"+idNumber+"s"
-      #       itemMeta[resListId] ?= {}
-      #       itemMeta[resListId][resourceId] = meta.resourceType
-      #     else
-      #       bad[id] = true
-      #   if srcList
-      #     meta[idPrefix+idNumber] = srcList
-      #     .filter (id)->
-      #       if bad[id]
-      #         grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
-      #         false
-      #       else
-      #         true
 
       expandIds stations, "stids", 1
       expandIds stations, "stids", 2

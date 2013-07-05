@@ -1,0 +1,33 @@
+<div class="accordion" id="linesMenu">
+
+<% var i = 0; %>
+<% for(var line in sources.lines) { %>
+<%   var m=sources.lines[line].meta; %>
+
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#linesMenu" href="#line<%=++i%>">
+        <%=m.id%>: <%=m.title%>
+      </a>
+    </div>
+    <div id="line<%=i%>" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+<%    var sortedStations = grunt.util._.sortBy(stationsByLine[line], function(station) {%>
+<%        var compare = station.meta.id.substr(line.length); %>
+<%        compare = compare.replace("a", ".1").replace("b",".2"); %>
+<%        return ~~compare; %>
+<%    }) %>
+<%    grunt.util._.forEach(sortedStations, function(station, id) { %>
+          <li>
+            <a href="<%=root%>/stations/<%=station.meta.id%>.html">
+              <%=station.meta.id%>: <%=station.meta.title%>
+            </a>
+          </li>
+<%    }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% } %>
+</div>
