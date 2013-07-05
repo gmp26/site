@@ -166,17 +166,18 @@ module.exports = (grunt) ->
               id: resourceId
               rt: meta.resourceType
             }
+            objMeta[resListId] = _.sortBy objMeta[resListId], (.rt.substr(2))
           else
             bad[id] = true
 
         if srcList
-          meta[idPrefix+idNumber] = srcList
-          .filter (id)->
+          meta[idPrefix+idNumber] = _.sortBy _.filter srcList, (id)->
             if bad[id]
               grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
               false
             else
               true
+
 
       # expandIds = (objList, idPrefix, idNumber) ->
       #   bad = {}
