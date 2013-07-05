@@ -138,6 +138,7 @@ module.exports = (grunt) ->
         return
 
       meta = resource.index.meta
+      meta.id = resourceId
 
       if !resource.index.meta?
         grunt.log.error!error("#resourceId has no metadata")
@@ -161,9 +162,10 @@ module.exports = (grunt) ->
             objMeta = obj.meta
             resListId = "R"+idNumber+"s"
             objMeta[resListId] ?= []
-            objMeta[resListId] =
+            objMeta[resListId].push {
               id: resourceId
               rt: meta.resourceType
+            }
           else
             bad[id] = true
 
@@ -285,12 +287,17 @@ module.exports = (grunt) ->
       stpvs = station.meta.pervasiveIdeas
       R1s = station.meta.R1s
       _.each R1s, (resObj) ->
-        pvids1 = sources.resources[resObj.id].index.meta.pvids1
-        _.each pvids1, (pvid) ->
-          stpvs[pvid] = true
-        pvids2 = sources.resources[resObj.d].index.meta.pvids2
-        _.each pvids2, (pvid) ->
-          stpvs[pvid] = true
+        resIndex = sources.resources[resObj.id].index
+        if resIndex
+          pvids1 = resIndex.meta.pvids1
+          _.each pvids1, (pvid) ->
+            stpvs[pvid] = true
+          pvids2 = resIndex.meta.pvids2
+          _.each pvids2, (pvid) ->
+            stpvs[pvid] = true
+        else
+          grunt.log.error "Station #{station.meta.id} has missing R1: #{resObj.id}"
+
 
 
     #
