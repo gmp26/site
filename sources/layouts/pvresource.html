@@ -1,5 +1,5 @@
-<% if(parents.type === "st") { %>
-<%   grunt.log.write("  resource layout "+meta.id+"... "); %>
+<% if(parents.type === "pv") { %>
+<%   grunt.log.write("  pvresource layout "+meta.id+"... ") %>
 
 <%= _head %>
 <%= _nav %>
@@ -7,7 +7,7 @@
 <div class="container span4">
 <h1>
 <% _.each(parents, function(parentMeta) { %>
-  <a  href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
+  <a  href="../../pervasiveIdeas/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
 <% }); %>
   <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
 </h1>

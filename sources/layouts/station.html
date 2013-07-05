@@ -1,6 +1,10 @@
 <%= _head %>
 <%= _nav %>
 <% _ = grunt.util._ %>
+<% grunt.log.write("  station layout "+meta.id+"... ") %>
+<% if(meta.id==="G2") {%>
+<%   debugger %>
+<% } %>
 <div class="container-fluid">
   <div class="row-fluid">
     <div id="sidebar1" class="span4">
@@ -30,7 +34,7 @@
 
       <ul class="inline text-right">
         <!-- dummy to center postmark when there are no dependents -->
-        <li class="stid" style="opacity:0">A1</li>   
+        <li class="stid" style="opacity:0">A1</li>
 
 <% _.each(meta.dependents, function(depId) {%>
         <li class="stid <%=depId%>" data-content="<%=sources.stations[depId].meta.title%>" style="background-color:<%=sources.stations[depId].meta.colour%>">
@@ -106,20 +110,20 @@
 <% if (meta.R1s || meta.R2s) {%>
       <h3>Resources</h3>
       <ul class="unstyled">
-<% _.each(meta.R1s, function(resType, resId) {%>
-<% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
+<% _.each(meta.R1s, function(res) {%>
+<% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
         <li>
           <span class="<%=resourceTypeMeta.icon%>"></span>
-          <a href="<%=resources%>/<%=resId%>/index.html">
+          <a href="<%=resources%>/<%=res.id%>/index.html">
             <%=resourceTypeMeta.title%>
           </a>
         </li>
 <% }) %>
-<% _.each(meta.R2s, function(resType, resId) {%>
-<% var resourceTypeMeta = sources.resourceTypes[resType].meta; %>
+<% _.each(meta.R2s, function(res) {%>
+<% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
         <li>
           <span class="<%=resourceTypeMeta.icon%>"></span>
-          <a href="<%=resources%>/<%=resId%>/index.html">
+          <a href="<%=resources%>/<%=res.id%>/index.html">
             <%=resourceTypeMeta.title%>
           </a>
         </li>
@@ -142,7 +146,7 @@ $(document).ready(function() {
       // the timeout is necessary, but I'm not sure why.
       $(this).mathTimer = window.setTimeout(function() {
         console.log('showing');
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub], $('.popover-content').get());        
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub], $('.popover-content').get());
       }, 0);
     }).on('hide', function() {
       // This is necessary to avoid MathJAX attempting to render a recently destroyed popover.
@@ -153,7 +157,7 @@ $(document).ready(function() {
       trigger: "hover",
       container: "body",
       delay: {show:600, hide:200},
-      placement: "right"
+      placement: placement
     });
   }
 
@@ -161,23 +165,25 @@ $(document).ready(function() {
 // which then attach click and hover handlers to them at run time. If we don't do this
 // then only the linked text is active rather than the whole button.
 
+  var mainWidth = $(".main").outerWidth();
+
 <% _.each(meta.dependencies, function(depId) {%>
 
-  $el = $(".stid.<%=depId%>").click(function(event) {
+  $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
   }).bindPopover("right");
-  
+
 <% }); %>
 
 <% _.each(meta.dependents, function(depId) {%>
 
   $(".stid.<%=depId%>").click(function(event) {
     window.location = "<%= root%>/stations/<%=depId%>.html";
-  }).bindPopover(document.documentElement.clientWidth < 600 ? "left" : "right");
+  }).bindPopover(document.documentElement.clientWidth < 765 ? "left" : "right");
 
 <% }); %>
 
 });
 </script>
-
+<% grunt.log.ok("done"); %>
 <%= _foot %>

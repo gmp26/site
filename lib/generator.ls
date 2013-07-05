@@ -26,6 +26,11 @@ module.exports = (grunt) ->
     #expandMetadata grunt
     metadata = grunt.config.get "metadata"
     sources = metadata.sources
+    stations = sources.stations
+    pervasiveIdeas = sources.pervasiveIdeas
+    resources = sources.resources
+    resourceTypes = sources.resourceTypes
+    lines = sources.lines
 
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
@@ -36,16 +41,19 @@ module.exports = (grunt) ->
     #addStationDependents sources
 
     # Group stations by line ahead of time
-    stationsByLine = _.groupBy sources.stations, (station, stationId) ->
+    stationsByLine = _.groupBy stations, (station, stationId) ->
       (stationId.split /\d/).0 # lineId is the leading non-numeric bit
 
     #
     # Call the generators
     #
 
+    lastFolder = null
     for folder, items of sources
 
-      #grunt.log.debug "folder = <#folder>"
+      if folder != lastFolder
+        grunt.log.writeln "Generating #folder"
+        lastFolder = folder
 
       if folder=='resources'
         resources = items
@@ -101,21 +109,41 @@ module.exports = (grunt) ->
 
       layout = getLayout sources, folder, meta
 
+      mainParents = (meta) ->
+        stids1 = meta.stids1
+        if stids1 && _.isArray(stids1) && stids1.length > 0
+          return {
+            type: "st"
+            metas: _.sortBy(_.map stids1, (id)->stations[id].meta), (.rank)
+          }
+        pvids1 = meta.pvids1
+        if pvids1 && _.isArray(pvids1) && pvids1.length > 0
+          return {
+            type: "pv"
+            metas: _.map pvids1, (id)->pervasiveIdeas[id].meta
+          }
+        return null
+
       # make html from resource layout and data
       _head = grunt.file.read "#{sourcesDir}/layouts/_head.html"
       _nav = grunt.file.read "#{sourcesDir}/layouts/_nav.html"
       _foot = grunt.file.read "#{sourcesDir}/layouts/_foot.html"
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
-          content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
-          mainStationMeta: if (main = meta.stids1?[0]) then sources.stations[main].meta else null
-          root: '../..'
-          resources: '..'
-      }
+      parents = mainParents meta
+      if parents
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
+            content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
+            meta: meta
+            parents: parents
+            root: '../..'
+            resources: '..'
+        }
+      else
+        grunt.log.error "*** Ignoring orphan resource #{folder}/#{resourceName} with no stids1 or pvids1"
 
       grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
 

@@ -138,6 +138,7 @@ module.exports = (grunt) ->
         return
 
       meta = resource.index.meta
+      meta.id = resourceId
 
       if !resource.index.meta?
         grunt.log.error!error("#resourceId has no metadata")
@@ -156,14 +157,18 @@ module.exports = (grunt) ->
         bad = {}
         srcList = meta[idPrefix+idNumber]
         _.each srcList, (id) ->
-          item = objList[id]
-          if item && item.meta?
-            itemMeta = item.meta
+          obj = objList[id]
+          if obj && obj.meta?
+            objMeta = obj.meta
             resListId = "R"+idNumber+"s"
-            itemMeta[resListId] ?= {}
-            itemMeta[resListId][resourceId] = meta.resourceType
+            objMeta[resListId] ?= []
+            objMeta[resListId].push {
+              id: resourceId
+              rt: meta.resourceType
+            }
           else
             bad[id] = true
+
         if srcList
           meta[idPrefix+idNumber] = srcList
           .filter (id)->
@@ -172,6 +177,27 @@ module.exports = (grunt) ->
               false
             else
               true
+
+      # expandIds = (objList, idPrefix, idNumber) ->
+      #   bad = {}
+      #   srcList = meta[idPrefix+idNumber]
+      #   _.each srcList, (id) ->
+      #     item = objList[id]
+      #     if item && item.meta?
+      #       itemMeta = item.meta
+      #       resListId = "R"+idNumber+"s"
+      #       itemMeta[resListId] ?= {}
+      #       itemMeta[resListId][resourceId] = meta.resourceType
+      #     else
+      #       bad[id] = true
+      #   if srcList
+      #     meta[idPrefix+idNumber] = srcList
+      #     .filter (id)->
+      #       if bad[id]
+      #         grunt.log.error "#resourceId #idPrefix#idNumber refers to missing #id"
+      #         false
+      #       else
+      #         true
 
       expandIds stations, "stids", 1
       expandIds stations, "stids", 2
@@ -252,20 +278,26 @@ module.exports = (grunt) ->
           grunt.log.error "Station #id has an invalid dependency '#dependencyId', ignoring it"
           dependencies.splice index, 1
 
+
       #
       # build station pervasive ideas lists by collecting pvids1 and pvids2 of
-      # both primary station resources.
+      # primary station resources.
       #
       station.meta.pervasiveIdeas ?= {}
       stpvs = station.meta.pervasiveIdeas
       R1s = station.meta.R1s
-      _.each R1s, (resourceType, resourceId) ->
-        pvids1 = sources.resources[resourceId].index.meta.pvids1
-        _.each pvids1, (pvid) ->
-          stpvs[pvid] = true
-        pvids2 = sources.resources[resourceId].index.meta.pvids2
-        _.each pvids2, (pvid) ->
-          stpvs[pvid] = true
+      _.each R1s, (resObj) ->
+        resIndex = sources.resources[resObj.id].index
+        if resIndex
+          pvids1 = resIndex.meta.pvids1
+          _.each pvids1, (pvid) ->
+            stpvs[pvid] = true
+          pvids2 = resIndex.meta.pvids2
+          _.each pvids2, (pvid) ->
+            stpvs[pvid] = true
+        else
+          grunt.log.error "Station #{station.meta.id} has missing R1: #{resObj.id}"
+
 
 
     #
@@ -276,8 +308,8 @@ module.exports = (grunt) ->
       pervasiveIdea.meta.stids ?= {}
       pvstids = pervasiveIdea.meta.stids
       R1s = pervasiveIdea.meta.R1s
-      _.each R1s, (resourceType, resourceId) ->
-        stids1 = sources.resources[resourceId].index.meta.stids1
+      _.each R1s, (resObj) ->
+        stids1 = sources.resources[resObj.id].index.meta.stids1
         _.each stids1, (stid) ->
           pvstids[stid] = true
 
