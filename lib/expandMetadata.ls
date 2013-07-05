@@ -222,9 +222,12 @@ module.exports = (grunt) ->
       _.each highlights, (station, stid) ->
         st = station.meta
         if !st
-          grunt.log.ok "undefined st at #resourceId, stid=#stid"
-        st.highlights ?= {}
-        st.highlights[resourceId] = meta.resourceType
+          grunt.log.error "Ignoring undefined station at #resourceId, stid=#stid"
+        else
+          # for each resource in R1s list, determine whether it should be highlighted
+          _.each st.R1s, (obj) ->
+            if obj.id==resourceId
+              obj.highlight = true
 
 
     #
