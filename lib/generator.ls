@@ -81,7 +81,7 @@ module.exports = (grunt) ->
     #
     function getLayout(sources, folder, meta)
 
-      prefix = grunt.config.get('yeoman.sources') + '/layouts/'
+      prefix = 'layouts/'
       postfix = '.html'
 
       layout = meta.layout
@@ -125,9 +125,9 @@ module.exports = (grunt) ->
         return null
 
       # make html from resource layout and data
-      _head = grunt.file.read "#{sourcesDir}/layouts/_head.html"
-      _nav = grunt.file.read "#{sourcesDir}/layouts/_nav.html"
-      _foot = grunt.file.read "#{sourcesDir}/layouts/_foot.html"
+      _head = grunt.file.read "layouts/_head.html"
+      _nav = grunt.file.read "layouts/_nav.html"
+      _foot = grunt.file.read "layouts/_foot.html"
       parents = mainParents meta
       if parents
         html = grunt.template.process grunt.file.read(layout), {
@@ -157,10 +157,10 @@ module.exports = (grunt) ->
       #_.each meta, (value, key)->grunt.log.debug "meta.key=#key"
 
       # make common template from unchanging stuff
-      _head = grunt.file.read "#{sourcesDir}/layouts/_head.html"
-      _nav = grunt.file.read "#{sourcesDir}/layouts/_nav.html"
-      _foot = grunt.file.read "#{sourcesDir}/layouts/_foot.html"
-      _linesMenu = grunt.file.read "#{sourcesDir}/layouts/_linesMenu.html"
+      _head = grunt.file.read "layouts/_head.html"
+      _nav = grunt.file.read "layouts/_nav.html"
+      _foot = grunt.file.read "layouts/_foot.html"
+      _linesMenu = grunt.file.read "layouts/_linesMenu.html"
 
       if folder && folder.length > 0
         content = grunt.file.read "#{partialsDir}/#{folder}/#{fileName}.html"

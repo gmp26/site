@@ -72,28 +72,6 @@
         </div>
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#highlights">
-              Highlights
-            </a>
-          </div>
-          <div id="highlights" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <ul class="unstyled">
-<%  _.each(meta.highlights, function(resourceType, resId) { %>
-<%  var resourceTypeMeta = sources.resourceTypes[resourceType].meta %>
-                <li>
-                  <span class="<%=resourceTypeMeta.icon%>"> </span>
-                  <a href="<%=resources%>/<%=resId%>/index.html">
-                    <%=resourceTypeMeta.title%>
-                  </a>
-                </li>
-<%  }) %>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-group">
-          <div class="accordion-heading">
             <a class="accordion-toggle" data-parent="#stationMenu" href="#">
               Teacher Support
             </a>
@@ -113,8 +91,9 @@
 <% _.each(meta.R1s, function(res) {%>
 <% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
         <li>
+          <span class="icon-heart <%=res.highlight ? 'highlight' : ''%>"></span>
           <span class="<%=resourceTypeMeta.icon%>"></span>
-          <a href="<%=resources%>/<%=res.id%>/index.html">
+          <a href="<%=resources%>/<%=res.id%>/index.html" class="<%=res.highlight ? 'highlight' : ''%>">
             <%=resourceTypeMeta.title%>
           </a>
         </li>
