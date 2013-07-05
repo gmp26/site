@@ -28,7 +28,7 @@ familyID concept
 - Inverses
 - Growth
 - Dimensions and dimensionality
-- Axioms and axiomatic systems
+- Axioms and axiomatic systems (PI6)
 - Periodicity
 - Logic
 - Linearity (PI2)
@@ -62,7 +62,6 @@ familyID application
 - Maths and art
 - Climate change
 - Relativity, curvature of space-time
-- Four colour theorem
 - Chaos
 - Fractals
 - Sailing
