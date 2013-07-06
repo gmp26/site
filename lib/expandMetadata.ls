@@ -41,12 +41,13 @@ module.exports = (grunt) ->
 
     grunt.config.set "metadata", metadata
 
-    #metadata = grunt.config.get "metadata"
+
     sources = metadata.sources
-    stations = sources.stations
+    stations = sources.stations 
     pervasiveIdeas = sources.pervasiveIdeas
     resources = sources.resources
     resourceTypes = sources.resourceTypes
+    lines = sources.lines
 
     #
     # Make sure all lines have a valid id and colour
@@ -122,6 +123,14 @@ module.exports = (grunt) ->
     _.each badStations, (b, badId) ->
       grunt.log.warn "*** Ignoring station #badId"
       delete stations[badId]
+
+    #
+    # expand lines to include sorted list of station ids they contain
+    #
+    stationsByLine = _.groupBy stations, (.meta.line)
+    _.each _.keys(stationsByLine), (lid) ->
+      stationsByLine[lid] = _.sortBy stationsByLine[lid], (.meta.rank)
+      lines[lid].meta.stids = _.map stationsByLine[lid], (obj)->(obj.meta.id)
 
 
     #
