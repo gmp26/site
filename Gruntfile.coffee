@@ -23,17 +23,18 @@ module.exports = (grunt) ->
 
   # configurable paths
   yeomanConfig =
-    app: "app"
-    dist: "dist"
-    content: "../CMEP-sources"
-    samples: "sources"
-    sources: "sources"
-    partials: "partials"
+    app: "app"  # document root of development site 
+    dist: "dist" # document root of production site
+    content: "../CMEP-sources"  # the real sources
+    samples: "sources"          # sample and test case sources
+    sources: "sources"    # the active source path which can switch between content and samples.
+    partials: "partials"  # where we put compiled HTML and metadata
 
   grunt.initConfig
 
     yeoman: yeomanConfig
 
+    # use as needed to fix stuff
     "regex-replace":
       foofoo:
         src: ['<%= yeoman.sources %>/stations/*.md']
@@ -44,6 +45,7 @@ module.exports = (grunt) ->
           flags: 'gm'
         ]
 
+    # compile HTML and aggregate metadata
     panda:
       dev:
         options:
@@ -62,12 +64,15 @@ module.exports = (grunt) ->
           ext: ".html"
         ]
 
+    # Validate, weed, and expand metadata
     expandMetadata:
       options: null
 
+    # Generate pages using layouts and partial HTML, guided by expanded metadata
     generator:
       options: null
 
+    # Create a tubemap from metadata
     tubemap:
       svg:
         files:
@@ -101,6 +106,7 @@ module.exports = (grunt) ->
           src: "test/*.js"
         ]
 
+    # Watch 
     watch:
       recess:
         files: ["<%= yeoman.app %>/styles/{,*/}*.less"]
@@ -110,8 +116,17 @@ module.exports = (grunt) ->
         files: ["<%= yeoman.app %>/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
         tasks: ["livereload"]
 
-      panda:
-        files: ["<%= yeoman.sources %>/**/*.md"]
+      dev:
+        files: [
+          "layouts/*.html"
+          "<%= yeoman.sources %>/index.md"
+          "<%= yeoman.sources %>/guides/*.md"
+          "<%= yeoman.sources %>/lines/*.md"
+          "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/resources/*/*"
+          "<%= yeoman.sources %>/resourceTypes/*.md"
+          "<%= yeoman.sources %>/stations/*.md"
+        ]
         tasks: ["dev"]
 
     connect:
