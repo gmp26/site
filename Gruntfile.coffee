@@ -118,6 +118,7 @@ module.exports = (grunt) ->
 
       dev:
         files: [
+          "lib/*.ls"
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
           "<%= yeoman.sources %>/guides/*.md"
@@ -219,7 +220,6 @@ module.exports = (grunt) ->
     #     "./dist/scripts/main.js": [
     #       ".app/scripts/main.js"
     #     ]
-
     # rev:
     #   dist:
     #     files:
@@ -230,6 +230,11 @@ module.exports = (grunt) ->
     #         "<%= yeoman.dist %>/fonts/*"
     #       ]
 
+
+    #
+    # UseminPrepare and usemin work, but are hardly optimal
+    # Need to do this with dist specific layouts & templates 
+    #
     useminPrepare:
       html: [
         "<%= yeoman.app %>/index.html"
@@ -269,7 +274,9 @@ module.exports = (grunt) ->
     cssmin:
       dist:
         files:
-          "<%= yeoman.dist %>/styles/main.css": [".tmp/styles/{,*/}*.css", "<%= yeoman.app %>/styles/{,*/}*.css"]
+          "<%= yeoman.dist %>/styles/main.css": [
+             "<%= yeoman.app %>/styles/{,*/}*.css"
+          ]
 
     htmlmin:
       dist:

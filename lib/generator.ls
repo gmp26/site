@@ -21,9 +21,8 @@ module.exports = (grunt) ->
     })
 
     #
-    # Todo: This code should be generalised
-    #
-    #expandMetadata grunt
+    # set up some short cut references
+    # 
     metadata = grunt.config.get "metadata"
     sources = metadata.sources
     stations = sources.stations
@@ -40,9 +39,6 @@ module.exports = (grunt) ->
     #
     #addStationDependents sources
 
-    # Group stations by line ahead of time
-    stationsByLine = _.groupBy stations, (station, stationId) ->
-      (stationId.split /\d/).0 # lineId is the leading non-numeric bit
 
     #
     # Call the generators
@@ -178,7 +174,6 @@ module.exports = (grunt) ->
           _foot: _foot
           _linesMenu: _linesMenu
           meta: meta
-          stationsByLine: stationsByLine
           content: content
           sources: sources
           root: root
