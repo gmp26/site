@@ -68,7 +68,11 @@ Getting started
 
 ### Prerequisites
 
-Make sure you have [`node`](http://nodejs.org/) and [`grunt`](http://gruntjs.com/) and [`pandoc`](http://johnmacfarlane.net/pandoc/) installed.
+Make sure you have [`node`](http://nodejs.org/),  
+[`grunt`](http://gruntjs.com/), 
+[`pandoc`](http://johnmacfarlane.net/pandoc/), and
+[`graphviz`](http://www.graphviz.org/Download.php) installed.
+
 
 ### Installation
 
