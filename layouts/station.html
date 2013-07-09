@@ -52,26 +52,6 @@
 
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#stationMenu" href="#pvids">
-              Pervasive Ideas
-            </a>
-          </div>
-          <div id="pvids" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <ul>
-      <%    _.each(meta.pervasiveIdeas, function(__, pvid) { %>
-                <li>
-                  <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
-                    <%=sources.pervasiveIdeas[pvid].meta.title%>
-                  </a>
-                </li>
-      <%    }) %>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-group">
-          <div class="accordion-heading">
             <a class="accordion-toggle" data-parent="#stationMenu" href="#">
               Teacher Support
             </a>
@@ -118,6 +98,22 @@
 <% }) %>
       </ul>
 <% }%>
+
+
+      <!-- Pervasive Ideas -->
+<% if(_.size(meta.pervasiveIdeas)>0) { %>
+      <h3>Pervasive Ideas</h3>
+      <ul>
+<%   _.each(meta.pervasiveIdeas, function(__, pvid) { %>
+        <li>
+          <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
+            <%=sources.pervasiveIdeas[pvid].meta.title%>
+          </a>
+        </li>
+<%   }) %>
+      </ul>
+<% } %>
+
     </div>
   </div>
 </div>
