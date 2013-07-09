@@ -172,10 +172,14 @@ module.exports = (grunt) ->
             resListId = "R"+idNumber+"s"
             objMeta[resListId] ?= []
             oml = objMeta[resListId]
-            oml.push {
+            res = {
               id: resourceId
               rt: meta.resourceType
             }
+            if meta.title
+              res.title = meta.title
+              grunt.log.ok "***** writing #{meta.title} to res *****"
+            oml.push res
 
             # sort generated resource list by resource type number
             objMeta[resListId] = _.sortBy oml, (obj)-> +obj.rt.substr(2)
