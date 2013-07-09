@@ -96,6 +96,11 @@
           <a href="<%=resources%>/<%=res.id%>/index.html" class="<%=res.highlight ? 'highlight' : ''%>">
             <%=resourceTypeMeta.title%>
           </a>
+
+<% if(_.isString(res.title)) { %>
+          - <%= res.title %>
+<% } %>
+
         </li>
 <% }) %>
 <% _.each(meta.R2s, function(res) {%>
@@ -106,6 +111,10 @@
             <%=resourceTypeMeta.title%>
           </a>
         </li>
+<% if(_.isString(res.title)) { %>
+          - <%= res.title %>
+<% } %>
+
 <% }) %>
       </ul>
 <% }%>
