@@ -4,14 +4,36 @@
 <%= _head %>
 <%= _nav %>
 
-<div class="container">
-<h1>
-<% _.each(parents, function(parentMeta) { %>
-  <a  href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
-<% }); %>
-  <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
-</h1>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="container span7 offset1">
+
+      <h1>
+        <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
+      </h1>
+
 <%= content %>
+
+    </div>
+
+    <div id="sidebar1" class="offset1 span3">
+
+<% if(parents.metas && parents.metas.length > 0) { %>
+      <h3>Referenced by</h3>
+      <div class="station lineG">
+  <% _.each(parents.metas, function(parentMeta) { %>
+        <a class="stid lineG" href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
+      </div>
+  <% }); %>
+<% } %>
+
+<% if(solution) { %>
+      <h3><a href="solution.html" class="solution">Solution</a></h3>
+<% } %>
+    </div>
+
+
+  </div>
 </div>
 
 <%= _foot %>

@@ -33,6 +33,7 @@ module.exports = (grunt) ->
 
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
+    appDir = grunt.config.get "yeoman.app"
 
     #
     # addDependents as well as dependencies so we have bidirectional links
@@ -55,10 +56,8 @@ module.exports = (grunt) ->
         resources = items
         for resourceName, files of resources
           #grunt.log.debug "  resource = <#resourceName>"
-          index = files.index
-          fileName = 'index'
-          meta = index.meta
-          generateResource sources, folder, resourceName, fileName, meta
+          meta = files.index.meta
+          generateResource sources, folder, resourceName, files, meta
       else
         for fileName, meta of items
           #grunt.log.debug "  file = <#fileName>"
@@ -67,6 +66,8 @@ module.exports = (grunt) ->
             generateHTML sources, null, folder, meta
           else
             generateHTML sources, folder, fileName, meta.meta
+
+    generateLineVars sources
 
     # return the metadata
     return metadata
@@ -101,19 +102,19 @@ module.exports = (grunt) ->
     #
     # Generate a resource
     #
-    function generateResource (sources, folder, resourceName, fileName, meta)
+    function generateResource (sources, folder, resourceName, files, meta)
 
       layout = getLayout sources, folder, meta
 
       mainParents = (meta) ->
         stids1 = meta.stids1
-        if stids1 && _.isArray(stids1) && stids1.length > 0
+        if _.isArray(stids1) && stids1.length > 0
           return {
             type: "st"
             metas: _.sortBy(_.map stids1, (id)->stations[id].meta), (.rank)
           }
         pvids1 = meta.pvids1
-        if pvids1 && _.isArray(pvids1) && pvids1.length > 0
+        if _.isArray(pvids1) && pvids1.length > 0
           return {
             type: "pv"
             metas: _.map pvids1, (id)->pervasiveIdeas[id].meta
@@ -134,6 +135,7 @@ module.exports = (grunt) ->
             resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
             content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
             meta: meta
+            solution: files.solution
             parents: parents
             root: '../..'
             resources: '..'
@@ -181,9 +183,19 @@ module.exports = (grunt) ->
       }
 
       if folder
-        grunt.file.write "app/#{folder}/#{fileName}.html", html
+        grunt.file.write "#{appDir}/#{folder}/#{fileName}.html", html
       else
-        grunt.file.write "app/#{fileName}.html", html
+        grunt.file.write "#{appDir}/#{fileName}.html", html
 
+    #
+    # Generate line colours for less
+    #
+    function generateLineVars(sources)
+
+      css = ''
+      _.each sources.lines, (line, lineId)->
+        colour = line.meta.colour
+        css += "@linecolor#{lineId}: #colour;\n"
+      grunt.file.write "#{appDir}/styles/lineVars.less", css
 
 

@@ -173,6 +173,19 @@ module.exports = (grunt) ->
 
       partials: "<%= yeoman.partials %>"
 
+      app: 
+        files: [
+          src: [
+            "<%= yeoman.app %>/guides/*"
+            "<%= yeoman.app %>/lines/*"
+            "<%= yeoman.app %>/pervasiveIdeas/*"
+            "<%= yeoman.app %>/resources/**/*"
+            "<%= yeoman.app %>/resourceTypes/*"
+            "<%= yeoman.app %>/stations/*"
+            "<%= yeoman.app %>/resourceTypes/*"
+          ]
+        ]
+
     jshint:
       options:
         jshintrc: ".jshintrc"
@@ -373,6 +386,7 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
+    "clean:app"
     "clean:test"
     "livescript"
     "panda"
