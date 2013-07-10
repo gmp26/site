@@ -48,11 +48,11 @@ describe "Testing validator", (_)->
     it "should delete bad resources, but not ones with missing refs", ->
       should.not.exist(resources["bad-NotInFolder"])
       should.not.exist(resources["bad-missingRT"])
-      should.exist(resources["bad-missingRefs"])
+      should.exist(resources["ok-missingRefs"])
 
   describe "resource missing refs should be deleted", (_) ->
     it "should delete missing refs from resources", ->
-      mr = resources["bad-missingRefs"].index.meta
+      mr = resources["ok-missingRefs"].index.meta
       mr.stids1.indexOf("G99").should.equal -1
       mr.stids2.indexOf("G100").should.equal -1
       mr.pvids1.indexOf("PI99").should.equal -1
