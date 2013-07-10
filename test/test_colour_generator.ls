@@ -3,8 +3,6 @@ global describe, it
 */
 "use strict"
 
-cssParser = require 'css-parse'
-
 should = require("chai").should()
 grunt = require 'grunt'
 _ = grunt.util._
@@ -23,16 +21,6 @@ describe "Testing line colour generation", (_it)->
     metadata := grunt.config.get "metadata"
     lines := metadata.sources.lines
 
-    debugger
-    foo = cssParser('''
-.lineA {
-  color: #9467bd
-}
-
-.lineC {
-  color: #bcbd22
-}
-''')
 
   describe "line metadata", (_it) ->
     it "should provide colours for each line", ->
@@ -44,24 +32,23 @@ describe "Testing line colour generation", (_it)->
     it "should generate app/styles/lineVars.less", ->
       grunt.file.exists('app/styles/lineVars.less').should.be.true
 
-    it "app/styles/lineVars.less should contain valid css", ->
+    it "should contain a as many lines as there are tube lines", ->
       css = grunt.file.read "app/styles/lineVars.less"
-      (->cssParser(css)).should.not.throw()
-
-    it "should contain a class for each line", ->
-      css = grunt.file.read "app/styles/lineVars.less"
-      tree = cssParser(css)
-      (_.size tree.stylesheet.rules).should.equal _.size(lines)
+      lineCount = (css.split /\S\n\S/).length
+      (lineCount).should.equal _.size(lines)
 
     it "should contain correct line colours", ->
       css = grunt.file.read "app/styles/lineVars.less"
-      tree = cssParser(css)
-      _.each tree.stylesheet.rules, (rule) ->
-        lineId = rule.selectors.0
-        colour = rule.declarations.0.value
-        lineCode =  lineId.substr ".line".length
-        grunt.log.ok "line #lineId, colour #colour"
-        colour.should.equal lines[lineCode]?.meta.colour
+      cssLines = css.split /\n/
+      _.each cssLines, (s)->
+        # @lineA: #9467bd;
+        m = s.match /@line([A-Z]{1,2}): (#[0-9a-fA-F]+);/
+        if m != null
+          m.length.should.equal 3
+          lid = m.1
+          col = m.2
+          col.should.equal lines[lid]?.meta.colour
+
 
 
    
