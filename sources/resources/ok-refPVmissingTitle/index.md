@@ -7,10 +7,10 @@ keywords:
 resourceType: RT2
 highlight: true
 stids1:
-  - G2
+  - G2*
 stids2:
 pvids1:
-  - bad-pvMissingTitle
+  - bad-pvMissingTitle*
 pvids2:
   - PI1
   - PI2

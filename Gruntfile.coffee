@@ -391,6 +391,7 @@ module.exports = (grunt) ->
     "livescript"
     "panda"
     "expandMetadata"
+    "generator"
     "mochaTest"
   ]
 

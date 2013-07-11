@@ -67,6 +67,8 @@ module.exports = (grunt) ->
           else
             generateHTML sources, folder, fileName, meta.meta
 
+    debugger
+    
     generateLineVars sources
 
     # return the metadata
