@@ -36,12 +36,6 @@ module.exports = (grunt) ->
     appDir = grunt.config.get "yeoman.app"
 
     #
-    # addDependents as well as dependencies so we have bidirectional links
-    #
-    #addStationDependents sources
-
-
-    #
     # Call the generators
     #
 
@@ -123,21 +117,41 @@ module.exports = (grunt) ->
           }
         return null
 
+      # return weight of a file in a resource. Heavier files appear later.
+      weightOf = (fileName, fileMeta) ->
+        if fileName == "index"
+          return 0
+
+        unless fileMeta? && fileMeta.weight
+          return fileName
+
+        return fileMeta.weight
+
+
       # make html from resource layout and data
       _head = grunt.file.read "layouts/_head.html"
       _nav = grunt.file.read "layouts/_nav.html"
       _foot = grunt.file.read "layouts/_foot.html"
       parents = mainParents meta
       if parents
+
+        content = []
+        for fileName, fileMeta of files
+          content[*] = {
+            weight: weightOf fileName, fileMeta
+            id: if fileMeta?.id? then fileMeta.id else fileName
+            html: grunt.file.read "#{partialsDir}/resources/#{resourceName}/#{fileName}.html"
+          }
+        _.sortBy content, (.weight)
+
         html = grunt.template.process grunt.file.read(layout), {
           data:
             _head: _head
             _nav: _nav
             _foot: _foot
             resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
-            content: grunt.file.read "#{partialsDir}/resources/#{resourceName}/index.html"
+            content: content
             meta: meta
-            solution: files.solution
             parents: parents
             root: '../..'
             resources: '..'
