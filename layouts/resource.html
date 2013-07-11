@@ -22,7 +22,7 @@
       <h3>Referenced by</h3>
       <div class="station lineG">
   <% _.each(parents.metas, function(parentMeta) { %>
-        <a class="stid lineG" href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
+        <a class="button<%=parentMeta.line%>" href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
       </div>
   <% }); %>
 <% } %>

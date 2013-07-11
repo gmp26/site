@@ -17,8 +17,8 @@ pvids2:
 
 2. Here's another question.
 
-<button type="button" class="btn btn-action" data-toggle="collapse" data-target="#question3">
-  3. Question
+3. <button type="button" class="btn btn-action" data-toggle="collapse" data-target="#question3">
+Question
 </button>
 
 <div id="question3" class="collapse">

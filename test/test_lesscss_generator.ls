@@ -49,6 +49,16 @@ describe "Testing lesscss generation", (_it)->
           col = m.2
           col.should.equal lines[lid]?.meta.colour
 
+    it "should generate app/styles/lines.less", ->
+      grunt.file.exists("app/styles/lines.less").should.be.true
+
+    it "should make .button-line for each line", ->
+      css = grunt.file.read "app/styles/lines.less"
+      _.each lines, (lines) ->
+        meta = lines.meta
+        re = new RegExp "\\.button#{meta.id}\\s*\\{\\n\\s*\\.button-line\\(@linecolor#{meta.id}\\)", "m"
+        #re = new RegExp "\.button#{meta.id}", "m"
+        css.should.match re
 
 
    

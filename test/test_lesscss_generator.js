@@ -30,7 +30,7 @@ global describe, it
         lineCount = css.split(/\S\n\S/).length;
         return lineCount.should.equal(_.size(lines));
       });
-      return it("should contain correct line colours", function(){
+      it("should contain correct line colours", function(){
         var css, cssLines;
         css = grunt.file.read("app/styles/lineVars.less");
         cssLines = css.split(/\n/);
@@ -43,6 +43,19 @@ global describe, it
             col = m[2];
             return col.should.equal((ref$ = lines[lid]) != null ? ref$.meta.colour : void 8);
           }
+        });
+      });
+      it("should generate app/styles/lines.less", function(){
+        return grunt.file.exists("app/styles/lines.less").should.be['true'];
+      });
+      return it("should make .button-line for each line", function(){
+        var css;
+        css = grunt.file.read("app/styles/lines.less");
+        return _.each(lines, function(lines){
+          var meta, re;
+          meta = lines.meta;
+          re = new RegExp("\\.button" + meta.id + "\\s*\\{\\n\\s*\\.button-line\\(@linecolor" + meta.id + "\\)", "m");
+          return css.should.match(re);
         });
       });
     });

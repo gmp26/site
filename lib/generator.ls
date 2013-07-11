@@ -69,7 +69,7 @@ module.exports = (grunt) ->
 
     debugger
     
-    generateLineVars sources
+    generateLess sources
 
     # return the metadata
     return metadata
@@ -192,12 +192,17 @@ module.exports = (grunt) ->
     #
     # Generate line colours for less
     #
-    function generateLineVars(sources)
+    function generateLess(sources)
 
       css = ''
       _.each sources.lines, (line, lineId)->
         colour = line.meta.colour
         css += "@linecolor#{lineId}: #colour;\n"
       grunt.file.write "#{appDir}/styles/lineVars.less", css
+
+      css = ''
+      _.each sources.lines, (line, lineId)->
+        css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
+      grunt.file.write "#{appDir}/styles/lines.less", css
 
 
