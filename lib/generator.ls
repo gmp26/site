@@ -127,6 +127,13 @@ module.exports = (grunt) ->
 
         return fileMeta.weight
 
+      getPart = (fileName, fileMeta) ->
+        debugger
+        if fileMeta?.tab? 
+          return fileMeta.tab
+        else if fileMeta?.id?
+          return fileMeta.id
+        else return fileName
 
       # make html from resource layout and data
       _head = grunt.file.read "layouts/_head.html"
@@ -136,13 +143,15 @@ module.exports = (grunt) ->
       if parents
 
         content = []
-        for fileName, fileMeta of files
+        for fileName, file of files
+          grunt.log.ok "fileName = #fileName, tab = #{file.meta.tab} part = #{getPart fileName, file.meta}"
           content[*] = {
-            weight: weightOf fileName, fileMeta
-            id: if fileMeta?.id? then fileMeta.id else fileName
+            fileName: fileName
+            fileMeta: file.meta
+            part: getPart fileName, file.meta
             html: grunt.file.read "#{partialsDir}/resources/#{resourceName}/#{fileName}.html"
           }
-        _.sortBy content, (.weight)
+        _.sortBy content, (cdata) -> weightOf cdata.fileName, cdata.fileMeta
 
         html = grunt.template.process grunt.file.read(layout), {
           data:
