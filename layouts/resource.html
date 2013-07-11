@@ -12,8 +12,28 @@
         <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
       </h1>
 
-<%= content %>
+      <div class="tabbable">
 
+<% if(content.length > 1) {%>
+        <ul class="nav nav-pills">
+<%   _.each(content, function(cdata, index) { %>
+          <li <%=index==0?'class="active"':''%>>
+            <a href="#tab<%=index%>" data-toggle="tab">
+              <%= cdata.part %>
+            </a>
+          </li>
+<%   }); %>
+        </ul>
+<% } %>
+      
+        <div class="tab-content">
+<%   _.each(content, function(cdata, index) { %>
+          <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=index%>">
+            <%= cdata.html%>
+          </div>
+<%   }); %>
+        </div>
+      </div>
     </div>
 
     <div id="sidebar1" class="offset1 span3">
@@ -27,9 +47,8 @@
   <% }); %>
 <% } %>
 
-<% if(solution) { %>
-      <h3><a href="solution.html" class="solution">Solution</a></h3>
-<% } %>
+
+
     </div>
 
 
