@@ -165,7 +165,17 @@ module.exports = (grunt) ->
       expandIds = (objList, idPrefix, idNumber) ->
         bad = {}
         srcList = meta[idPrefix+idNumber]
-        _.each srcList, (id) ->
+        _.each srcList, (id, index) ->
+
+          # a star postfix implies the resource is to be highlighted
+          grunt.log.ok "testing id #id"
+          highlight = (idNumber == 1) && id.match /\s*(\w+)\*/ 
+          if highlight
+            debugger
+            grunt.log.ok "highlight"
+            id = highlight.1
+            srcList[index] = id
+
           obj = objList[id]
           if obj && obj.meta?
             objMeta = obj.meta
@@ -175,6 +185,7 @@ module.exports = (grunt) ->
             res = {
               id: resourceId
               rt: meta.resourceType
+              highlight: highlight != null
             }
             if meta.title
               res.title = meta.title
@@ -208,39 +219,39 @@ module.exports = (grunt) ->
     #
     # Now stids and pvids are ok, expand highlights
     #
-    _.each resources, (resource, resourceId) ->
+    # _.each resources, (resource, resourceId) ->
 
-      meta = resource.index.meta
-      #
-      # Add this resource to station highlights if necessary
-      #
-      highlights = []
-      if meta.highlight?
-        if _.isBoolean(meta.highlight) && meta.highlight
-          # highlight on all stids1 stations
-          _.each meta.stids1, (stid) ->
-            grunt.log.ok "#resourceId adding highlight #stid"
-            if stations[stid]
-              highlights.push stations[stid]
-        else
-          if _.isString meta.highlight
-            # highlight on one station
-            highlights = [stations[meta.highlight]]
-          else
-            if _.isArray meta.highlight
-              # highlight on all stations in array
-              highlights = _.map meta.highlight, (stid) ->
-                grunt.log.ok "#resourceId adding highlight #stid"
-                stations[stid]
-      _.each highlights, (station, stid) ->
-        st = station.meta
-        if !st
-          grunt.log.error "Ignoring undefined station at #resourceId, stid=#stid"
-        else
-          # for each resource in R1s list, determine whether it should be highlighted
-          _.each st.R1s, (obj) ->
-            if obj.id==resourceId
-              obj.highlight = true
+    #   meta = resource.index.meta
+    #   #
+    #   # Add this resource to station highlights if necessary
+    #   #
+    #   highlights = []
+    #   if meta.highlight?
+    #     if _.isBoolean(meta.highlight) && meta.highlight
+    #       # highlight on all stids1 stations
+    #       _.each meta.stids1, (stid) ->
+    #         grunt.log.ok "#resourceId adding highlight #stid"
+    #         if stations[stid]
+    #           highlights.push stations[stid]
+    #     else
+    #       if _.isString meta.highlight
+    #         # highlight on one station
+    #         highlights = [stations[meta.highlight]]
+    #       else
+    #         if _.isArray meta.highlight
+    #           # highlight on all stations in array
+    #           highlights = _.map meta.highlight, (stid) ->
+    #             grunt.log.ok "#resourceId adding highlight #stid"
+    #             stations[stid]
+    #   _.each highlights, (station, stid) ->
+    #     st = station.meta
+    #     if !st
+    #       grunt.log.error "Ignoring undefined station at #resourceId, stid=#stid"
+    #     else
+    #       # for each resource in R1s list, determine whether it should be highlighted
+    #       _.each st.R1s, (obj) ->
+    #         if obj.id==resourceId
+    #           obj.highlight = true
 
 
     #

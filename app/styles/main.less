@@ -1,18 +1,8 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
+@import "lineVars.less";
 
 body {
   padding-top: 80px;
-}
-
-.signage {
-  width: inherit;
-  position:absolute;
-  z-index:-1;
-  .postmark {
-    display:block; 
-    margin-left:auto; 
-    margin-right:auto;
-  }
 }
 
 @media (max-width: 767px) {
@@ -35,48 +25,76 @@ body {
   margin: 50px auto 0 auto;
 }
 
-/* station id lozenges */
-.stid {
-  padding:5px 0px 4px 0px;
+/*
+ station sidebar nav
+ */
+.station {
+  .inline li {
+    padding:0;
+  }
+  .bar {
+    margin-top: 15px;
+    padding:5px 0px 4px 0px;
+    border-radius:(30px);
+    color: #fff;
+    min-width:20px;
+    text-align: center;
+    opacity: 1;
+    cursor:auto;
+    border: 3px solid orange;
+
+    /* Prevent text selection */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .signage {
+    width: inherit;
+    position:absolute;
+    z-index:-1;
+    .postmark {
+      display:block; 
+      margin-left:auto; 
+      margin-right:auto;
+    }
+    .li {
+      padding:0;
+    }
+  }
+}
+
+/*
+ A link button to a station
+ */
+.button-line (@color: #888) {
+  background-color: @color;
+  padding: 2px 5px;
   border-radius:(30px);
   color: #fff;
-  min-width:20px;
+  min-width:30px;
   text-align: center;
   opacity: 0.8;
   cursor: pointer;
   .box-shadow( ~"1px 1px 2px rgba(0,0,0,.5)");
+  &:hover {
+    color:white;
+  }
   &:active {
     .box-shadow(~"inset 1px 1px 2px rgba(0,0,0,.5), 0px 0px 0px rgba(0,0,0,.5)");
-  }
-  a {
     color:white;
   }
   /* Focus state for keyboard and accessibility */
   &:focus {
     .tab-focus();
+    color:white;
   }
 }
+/*
+ import buttons for each station - which use .button-line
+ */
+@import "lines.less";
 
-.main.stid {
-  .stid;
-  opacity: 1;
-  cursor:auto;
-  .box-shadow(none);
-  &:active {
-    .box-shadow(none);
-  }
-  border: 3px solid orange;
-
-  /* Prevent text selection */
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.stid:hover {
-  opacity:1.0;
-}
 
 .icon-heart {
   opacity: 0;

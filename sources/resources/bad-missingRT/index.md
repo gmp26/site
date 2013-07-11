@@ -5,14 +5,13 @@ keywords:
   - straight line
   - equation
 resourceType: RT99
-highlight: true
 stids1:
-  - G4
+  - G4*
 stids2:
 pvids1:
 pvids2:
-  - PI1
-  - PI2
+  - PI1*
+  - PI2*
 ````
 1. Which of the following describe a straight line?
 
