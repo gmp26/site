@@ -1,4 +1,6 @@
 ````
+alias: The part alias name that appears in a tab in a multipart resource. e.g. 'Problem', 'Solution'
+weight: The weight determines the order of this part in a multipart tab bar. Heavier parts come later.
 id: (optional = can omit if same as filename and url)
 title: (optional) but may be identified by resource type
 layout: resource (but some resources will have special layouts)

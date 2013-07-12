@@ -171,7 +171,6 @@ module.exports = (grunt) ->
           grunt.log.ok "testing id #id"
           highlight = (idNumber == 1) && id.match /\s*(\w+)\*/ 
           if highlight
-            debugger
             grunt.log.ok "highlight"
             id = highlight.1
             srcList[index] = id

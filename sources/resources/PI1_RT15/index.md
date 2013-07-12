@@ -1,5 +1,5 @@
 ````
-layout: pvresource
+layout: resource
 clearance: 0
 keywords:
   - hippopotamus

@@ -1,4 +1,5 @@
 ````
+alias: Problem
 layout: resource
 clearance: 0
 keywords:
@@ -9,6 +10,8 @@ stids1:
   - G2
 stids2:
 pvids1:
+  - PI3
+  - PI4
 pvids2:
   - PI1
   - PI2

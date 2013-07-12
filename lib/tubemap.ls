@@ -16,8 +16,6 @@ module.exports = (grunt) ->
 
     done = @async!
 
-    debugger
-
     partials = grunt.config.get "yeoman.partials"
 
     gvFile = "#{partials}/tubemap/tubemap.dot"

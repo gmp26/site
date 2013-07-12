@@ -2,8 +2,7 @@
 
 module.exports = (grunt) ->
 
-  # precompiled page layouts
-  var resourceLayout
+  getLayout = (require './getLayout.js') grunt
 
   # simplify access to lodash
   _ = grunt.util._
@@ -17,23 +16,21 @@ module.exports = (grunt) ->
     #
     grunt.verbose.writeln "Generating site"
 
-    options = @options({
-    })
-
     #
     # set up some short cut references
     # 
     metadata = grunt.config.get "metadata"
     sources = metadata.sources
-    stations = sources.stations
-    pervasiveIdeas = sources.pervasiveIdeas
-    resources = sources.resources
-    resourceTypes = sources.resourceTypes
-    lines = sources.lines
-
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
     appDir = grunt.config.get "yeoman.app"
+
+    # make html from resource layout and data
+    _head = grunt.file.read "layouts/_head.html"
+    _nav = grunt.file.read "layouts/_nav.html"
+    _foot = grunt.file.read "layouts/_foot.html"
+
+    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir, _head, _nav, _foot
 
     #
     # Call the generators
@@ -47,11 +44,25 @@ module.exports = (grunt) ->
         lastFolder = folder
 
       if folder=='resources'
+
         resources = items
         for resourceName, files of resources
-          #grunt.log.debug "  resource = <#resourceName>"
-          meta = files.index.meta
-          generateResource sources, folder, resourceName, files, meta
+          indexMeta = files.index.meta
+          layout = getLayout sources, folder, indexMeta
+          content = getResourceData layout, resourceName, files, indexMeta
+          html = grunt.template.process grunt.file.read(layout), {
+            data:
+              _head: _head
+              _nav: _nav
+              _foot: _foot
+              resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
+              content: content
+              meta: indexMeta
+              root: '../..'
+              resources: '..'
+          }
+          grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
+
       else
         for fileName, meta of items
           #grunt.log.debug "  file = <#fileName>"
@@ -60,115 +71,11 @@ module.exports = (grunt) ->
             generateHTML sources, null, folder, meta
           else
             generateHTML sources, folder, fileName, meta.meta
-
-    debugger
     
     generateLess sources
 
     # return the metadata
     return metadata
-
-
-    #
-    # Get layout for a given file
-    #
-    function getLayout(sources, folder, meta)
-
-      prefix = 'layouts/'
-      postfix = '.html'
-
-      layout = meta.layout
-      if !layout
-        layout = if !folder
-          'home'
-        else
-          # layout names are singular
-          m = folder.match /(^.+)s$/
-          m?.1 ? folder
-
-      layout = prefix + layout + postfix
-
-      if grunt.file.exists layout
-        layout
-      else
-        using = (prefix+'default'+postfix)
-        grunt.verbose.writeln "#folder layout #layout does not exist, using #using"
-        using
-
-    #
-    # Generate a resource
-    #
-    function generateResource (sources, folder, resourceName, files, meta)
-
-      layout = getLayout sources, folder, meta
-
-      mainParents = (meta) ->
-        stids1 = meta.stids1
-        if _.isArray(stids1) && stids1.length > 0
-          return {
-            type: "st"
-            metas: _.sortBy(_.map stids1, (id)->stations[id].meta), (.rank)
-          }
-        pvids1 = meta.pvids1
-        if _.isArray(pvids1) && pvids1.length > 0
-          return {
-            type: "pv"
-            metas: _.map pvids1, (id)->pervasiveIdeas[id].meta
-          }
-        return null
-
-      # return weight of a file in a resource. Heavier files appear later.
-      weightOf = (fileName, fileMeta) ->
-        if fileName == "index"
-          return 0
-
-        unless fileMeta? && fileMeta.weight
-          return fileName
-
-        return fileMeta.weight
-
-      getPart = (fileName, fileMeta) ->
-        debugger
-        if fileMeta?.tab? 
-          return fileMeta.tab
-        else if fileMeta?.id?
-          return fileMeta.id
-        else return fileName
-
-      # make html from resource layout and data
-      _head = grunt.file.read "layouts/_head.html"
-      _nav = grunt.file.read "layouts/_nav.html"
-      _foot = grunt.file.read "layouts/_foot.html"
-      parents = mainParents meta
-      if parents
-
-        content = []
-        for fileName, file of files
-          grunt.log.ok "fileName = #fileName, tab = #{file.meta.tab} part = #{getPart fileName, file.meta}"
-          content[*] = {
-            fileName: fileName
-            fileMeta: file.meta
-            part: getPart fileName, file.meta
-            html: grunt.file.read "#{partialsDir}/resources/#{resourceName}/#{fileName}.html"
-          }
-        _.sortBy content, (cdata) -> weightOf cdata.fileName, cdata.fileMeta
-
-        html = grunt.template.process grunt.file.read(layout), {
-          data:
-            _head: _head
-            _nav: _nav
-            _foot: _foot
-            resourceTypeMeta: sources.resourceTypes[meta.resourceType].meta
-            content: content
-            meta: meta
-            parents: parents
-            root: '../..'
-            resources: '..'
-        }
-      else
-        grunt.log.error "*** Ignoring orphan resource #{folder}/#{resourceName} with no stids1 or pvids1"
-
-      grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
 
     #
     # Generate a single html file

@@ -1,4 +1,3 @@
-<% if(parents.type === "st") { %>
 <%   grunt.log.write("  resource layout "+meta.id+"... "); %>
 
 <%= _head %>
@@ -14,9 +13,9 @@
 
       <div class="tabbable">
 
-<% if(content.length > 1) {%>
+<% if(content.parts.length > 1) {%>
         <ul class="nav nav-pills">
-<%   _.each(content, function(cdata, index) { %>
+<%   _.each(content.parts, function(cdata, index) { %>
           <li <%=index==0?'class="active"':''%>>
             <a href="#tab<%=index%>" data-toggle="tab">
               <%= cdata.part %>
@@ -27,7 +26,7 @@
 <% } %>
       
         <div class="tab-content">
-<%   _.each(content, function(cdata, index) { %>
+<%   _.each(content.parts, function(cdata, index) { %>
           <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=index%>">
             <%= cdata.html%>
           </div>
@@ -37,20 +36,25 @@
     </div>
 
     <div id="sidebar1" class="offset1 span3">
+<% if(content.sidebar) { %>
+      <h3>Relevance</h3>
 
-<% if(parents.metas && parents.metas.length > 0) { %>
-      <h3>Referenced by</h3>
       <div class="station lineG">
-  <% _.each(parents.metas, function(parentMeta) { %>
-        <a class="button<%=parentMeta.line%>" href="../../stations/<%= parentMeta.id %>.html"><%= parentMeta.id %></a>
+<%   _.each(content.sidebar.stMetas, function(stMeta) { %>
+        <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+<%   }); %>
       </div>
-  <% }); %>
+
+      <ul class="pvi">
+<%   _.each(content.sidebar.pvMetas, function(pvMeta) { %>
+        <li>
+          <a href="../../pervasiveIdeas/<%= pvMeta.id %>.html"><%= pvMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+
 <% } %>
-
-
-
     </div>
-
 
   </div>
 </div>
@@ -58,4 +62,4 @@
 <%= _foot %>
 
 <% grunt.log.ok("done"); %>
-<% } %>
+

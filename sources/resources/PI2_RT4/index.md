@@ -1,5 +1,6 @@
 ````
-layout: pvresource
+alias: Example
+layout: resource
 clearance: 0
 keywords:
   - giraffe
