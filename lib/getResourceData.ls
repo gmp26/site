@@ -6,7 +6,7 @@ module.exports = (grunt, sources, partialsDir) ->
   #
   # Generate template data for a site resource
   #
-  return (layout, resourceName, files, indexMeta) ->
+  return (resourceName, files, indexMeta) ->
 
 
     _ = grunt.util._
@@ -22,7 +22,6 @@ module.exports = (grunt, sources, partialsDir) ->
         rv.stMetas = _.sortBy (_.map stids1, (id)->sources.stations[id].meta), (.rank)
 
       pvids1 = indexMeta.pvids1
-      debugger
       if _.isArray(pvids1) && pvids1.length > 0
         rv ?= {}
         rv.pvMetas = _.map pvids1, (id)->sources.pervasiveIdeas[id].meta
@@ -41,7 +40,7 @@ module.exports = (grunt, sources, partialsDir) ->
       return fileMeta.weight
 
     # Tab label for a file part
-    tabOf = (fileName, fileMeta) ->
+    aliasOf = (fileName, fileMeta) ->
       if fileMeta?.alias? 
         return fileMeta.alias
       else if fileMeta?.id?
@@ -56,13 +55,12 @@ module.exports = (grunt, sources, partialsDir) ->
         content[*] = {
           fileName: fileName
           fileMeta: file.meta
-          part: tabOf fileName, file.meta
+          alias: aliasOf fileName, file.meta
           html: grunt.file.read "#{pDir}/resources/#{rName}/#{fileName}.html"
         }
       _.sortBy content, (cdata) -> weightOf cdata.fileName, cdata.fileMeta
 
     # return content
-    debugger
     return {
       sidebar: sidebarOf indexMeta
       parts: contentOf files

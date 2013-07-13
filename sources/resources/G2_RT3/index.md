@@ -1,4 +1,5 @@
 ````
+alias: Problem
 layout: resource
 clearance: 0
 keywords: 
@@ -6,15 +7,19 @@ keywords:
   - toast
   - daffodil
 resourceType: RT3
-highlight: false
 stids1:
   - G2
 stids2:
-pvids1: 
+pvids1:
+  - PI3
+  - PI4
 pvids2: 
   - PI1
   - PI2
-
+priors:
+  - missing
+  - G2_RT7
+  - G2_RT7
 ````
 
 Here's some text.

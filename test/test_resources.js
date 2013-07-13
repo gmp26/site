@@ -8,11 +8,13 @@ global describe, it
   grunt = require('grunt');
   _ = grunt.util._;
   describe("Testing resources expansion", function(_it){
-    var metadata, expanded, resources, res;
+    var metadata, expanded, resources, res, meta, pmeta;
     before(function(){
       metadata = grunt.config.get("metadata");
       resources = metadata.sources.resources;
-      return res = resources.G2_RT2;
+      res = resources.G2_RT2;
+      meta = resources.G2_RT3.index.meta;
+      return pmeta = resources.G2_RT7.index.meta;
     });
     describe("good resources should exist", function(_it){
       it("G2_RT2 should exist", function(){
@@ -51,12 +53,32 @@ global describe, it
         return should.not.exist(resources["bad-NotInFolder"]);
       });
     });
-    return describe("G2_RT2 resource", function(_it){
+    describe("G2_RT2 resource", function(_it){
       it("index metadata should exist", function(){
         return should.exist(res.index.meta);
       });
       return it("solution should exist", function(){
         return should.exist(res.solution);
+      });
+    });
+    return describe('priors', function(_it){
+      it("should delete bad prior references", function(){
+        return meta.priors.should.not.include('missing');
+      });
+      it("should not delete good prior references", function(){
+        return meta.priors.should.include('G2_RT7');
+      });
+      it("should generate laters in prior", function(){
+        return should.exist(pmeta.laters);
+      });
+      it("should generate a later pointing back", function(){
+        return pmeta.laters.should.include('G2_RT3');
+      });
+      it("should not repeat priors", function(){
+        return (meta.priors.lastIndexOf('G2_RT7') - meta.priors.indexOf('G2_RT7')).should.equal(0);
+      });
+      return it("should not repeat laters", function(){
+        return (pmeta.laters.lastIndexOf('G2_RT3') - pmeta.laters.indexOf('G2_RT3')).should.equal(0);
       });
     });
   });

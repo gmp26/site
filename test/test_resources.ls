@@ -17,11 +17,15 @@ describe "Testing resources expansion", (_it)->
   var expanded
   var resources
   var res
+  var meta
+  var pmeta
 
   before ->
     metadata := grunt.config.get "metadata"
     resources := metadata.sources.resources
     res := resources.G2_RT2
+    meta := resources.G2_RT3.index.meta
+    pmeta := resources.G2_RT7.index.meta
 
   describe "good resources should exist", (_it) ->
     it "G2_RT2 should exist", ->
@@ -57,6 +61,24 @@ describe "Testing resources expansion", (_it)->
     # solution exists, but solution.meta may be null
     it "solution should exist",  ->
       should.exist res.solution
+
+  describe 'priors', (_it) ->
+    it "should delete bad prior references", ->
+      meta.priors.should.not.include 'missing' 
+    it "should not delete good prior references", ->
+      meta.priors.should.include 'G2_RT7' 
+    it "should generate laters in prior", ->
+      should.exist pmeta.laters
+    it "should generate a later pointing back", ->
+      pmeta.laters.should.include 'G2_RT3'
+    it "should not repeat priors", ->
+      (meta.priors.lastIndexOf('G2_RT7') - meta.priors.indexOf('G2_RT7'))
+      .should.equal 0
+    it "should not repeat laters", ->
+      (pmeta.laters.lastIndexOf('G2_RT3') - pmeta.laters.indexOf('G2_RT3'))
+      .should.equal 0
+
+
 
 
  

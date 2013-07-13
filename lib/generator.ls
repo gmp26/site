@@ -49,7 +49,7 @@ module.exports = (grunt) ->
         for resourceName, files of resources
           indexMeta = files.index.meta
           layout = getLayout sources, folder, indexMeta
-          content = getResourceData layout, resourceName, files, indexMeta
+          content = getResourceData resourceName, files, indexMeta
           html = grunt.template.process grunt.file.read(layout), {
             data:
               _head: _head

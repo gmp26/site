@@ -214,6 +214,22 @@ module.exports = (grunt) ->
       grunt.log.warn "*** Ignoring resource #badId"
       delete resources[badId]
 
+    # expand prior links to generate later links
+    _.each resources, (resource, resourceId) ->
+        meta = resource.index.meta
+        if meta.priors?
+          bad = {} 
+          _.each meta.priors, (priorId, index) ->
+            unless (priorMeta = resources[priorId]?.index?.meta)
+            && meta.priors.lastIndexOf(priorId) == index
+              grunt.log.error "***Deleting prior to missing #priorMeta"
+              bad[priorId] = index
+            else
+              priorMeta.laters ?= []
+              priorMeta.laters.push resourceId
+
+          _.each bad, (id) ->
+            meta.priors.splice bad[id],1
 
     #
     # Now stids and pvids are ok, expand highlights

@@ -18,7 +18,7 @@
 <%   _.each(content.parts, function(cdata, index) { %>
           <li <%=index==0?'class="active"':''%>>
             <a href="#tab<%=index%>" data-toggle="tab">
-              <%= cdata.part %>
+              <%= cdata.alias %>
             </a>
           </li>
 <%   }); %>
