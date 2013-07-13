@@ -18,6 +18,7 @@ pvids2:
   - PI2
 priors:
   - missing
+  - PI1_RT15
   - G2_RT7
   - G2_RT7
 ````

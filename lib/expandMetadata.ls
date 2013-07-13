@@ -71,6 +71,12 @@ module.exports = (grunt) ->
       grunt.log.error "*** Ignoring line #badLineId"
 
     #
+    # Give all resourceTypes a weight
+    #
+    _.each resourceTypes, (rt, id) ->
+      rt.meta.weight = +id.substr(2)
+
+    #
     # filter out any bad pervasive ideas
     #
     badPVs = {}
@@ -103,13 +109,13 @@ module.exports = (grunt) ->
       meta.id = stid
 
       #
-      # Check stid syntax and resolve the station line, colour and rank
+      # Check stid syntax and resolve the station line, colour and weight
       #
       m = stid.match /^(\D{1,3})(\d{1,2})([a-z])?$/
       if m
         meta.line = m[1]
         if sources.lines[meta.line]?
-          meta.rank =
+          meta.weight =
             +(m[2] + if m[3] then ((m[3]charCodeAt(0) - 'a'.charCodeAt(0) + 1)/100).toFixed(2).substr(1) else '')
           meta.colour = sources.lines[meta.line].meta.colour
         else
@@ -129,9 +135,8 @@ module.exports = (grunt) ->
     #
     stationsByLine = _.groupBy stations, (.meta.line)
     _.each _.keys(stationsByLine), (lid) ->
-      stationsByLine[lid] = _.sortBy stationsByLine[lid], (.meta.rank)
+      stationsByLine[lid] = _.sortBy stationsByLine[lid], (.meta.weight)
       lines[lid].meta.stids = _.map stationsByLine[lid], (obj)->(obj.meta.id)
-
 
     #
     # Go through all resources, making links back to the
@@ -218,55 +223,19 @@ module.exports = (grunt) ->
     _.each resources, (resource, resourceId) ->
         meta = resource.index.meta
         if meta.priors?
-          bad = {} 
           _.each meta.priors, (priorId, index) ->
             unless (priorMeta = resources[priorId]?.index?.meta)
             && meta.priors.lastIndexOf(priorId) == index
               grunt.log.error "***Deleting prior to missing #priorMeta"
-              bad[priorId] = index
+              meta.priors[index] = '!BAD!'
             else
               priorMeta.laters ?= []
               priorMeta.laters.push resourceId
 
-          _.each bad, (id) ->
-            meta.priors.splice bad[id],1
+          meta.priors = _.sortBy (_.filter meta.priors, -> (it != '!BAD!')), (id)->
+            rtid = resources[id].index.meta.resourceType
+            resourceTypes[rtid].meta.weight
 
-    #
-    # Now stids and pvids are ok, expand highlights
-    #
-    # _.each resources, (resource, resourceId) ->
-
-    #   meta = resource.index.meta
-    #   #
-    #   # Add this resource to station highlights if necessary
-    #   #
-    #   highlights = []
-    #   if meta.highlight?
-    #     if _.isBoolean(meta.highlight) && meta.highlight
-    #       # highlight on all stids1 stations
-    #       _.each meta.stids1, (stid) ->
-    #         grunt.log.ok "#resourceId adding highlight #stid"
-    #         if stations[stid]
-    #           highlights.push stations[stid]
-    #     else
-    #       if _.isString meta.highlight
-    #         # highlight on one station
-    #         highlights = [stations[meta.highlight]]
-    #       else
-    #         if _.isArray meta.highlight
-    #           # highlight on all stations in array
-    #           highlights = _.map meta.highlight, (stid) ->
-    #             grunt.log.ok "#resourceId adding highlight #stid"
-    #             stations[stid]
-    #   _.each highlights, (station, stid) ->
-    #     st = station.meta
-    #     if !st
-    #       grunt.log.error "Ignoring undefined station at #resourceId, stid=#stid"
-    #     else
-    #       # for each resource in R1s list, determine whether it should be highlighted
-    #       _.each st.R1s, (obj) ->
-    #         if obj.id==resourceId
-    #           obj.highlight = true
 
 
     #

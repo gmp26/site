@@ -19,12 +19,32 @@ module.exports = (grunt, sources, partialsDir) ->
       stids1 = indexMeta.stids1
       if _.isArray(stids1) && stids1.length > 0
         rv ?= {}
-        rv.stMetas = _.sortBy (_.map stids1, (id)->sources.stations[id].meta), (.rank)
+        rv.stMetas = _.sortBy (_.map stids1, (id)->sources.stations[id].meta), (.weight)
 
       pvids1 = indexMeta.pvids1
       if _.isArray(pvids1) && pvids1.length > 0
         rv ?= {}
         rv.pvMetas = _.map pvids1, (id)->sources.pervasiveIdeas[id].meta
+
+      priors = indexMeta.priors
+      if _.isArray(priors) && priors.length > 0
+        rv ?= {}
+        rv.priorMetas = _.sortBy (_.map priors, (priorId) ->
+          prMeta = sources.resources[priorId].index.meta
+          return {
+            id: priorId
+            rtMeta: sources.resourceTypes[prMeta.resourceType].meta
+          }), (pMeta) -> pMeta.rtMeta.weight
+
+      laters = indexMeta.laters
+      if _.isArray(laters) && laters.length > 0
+        rv ?= {}
+        rv.laterMetas = _.sortBy (_.map laters, (laterId) ->
+          lrMeta = sources.resources[laterId].index.meta
+          return {
+            id: laterId
+            rtMeta: sources.resourceTypes[lrMeta.resourceType].meta
+          }), (lMeta) -> lMeta.rtMeta.weight
 
       return rv
 

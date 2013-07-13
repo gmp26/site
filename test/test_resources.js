@@ -7,6 +7,22 @@ global describe, it
   should = require("chai").should();
   grunt = require('grunt');
   _ = grunt.util._;
+  describe("Testing resourceType expansion", function(_it){
+    var metadata, resourceTypes;
+    before(function(){
+      metadata = grunt.config.get("metadata");
+      return resourceTypes = metadata.sources.resourceTypes;
+    });
+    return describe("resourceTypes", function(_it){
+      return it("should carry weights", function(){
+        return _.each(resourceTypes, function(rt, id){
+          rt.should.have.property('meta');
+          rt.meta.should.have.property('weight');
+          return rt.meta.weight.should.be.a('number');
+        });
+      });
+    });
+  });
   describe("Testing resources expansion", function(_it){
     var metadata, expanded, resources, res, meta, pmeta;
     before(function(){

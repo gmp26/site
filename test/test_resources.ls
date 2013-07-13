@@ -11,6 +11,22 @@ _ = grunt.util._
 # NB 'it' is a reserved word in livescript, meaning an unspecified parameter,
 # so passing (_it) from describe to allow 'it' to be overridden.
 #
+describe "Testing resourceType expansion", (_it)->
+
+  var metadata
+  var resourceTypes
+
+  before ->
+    metadata := grunt.config.get "metadata"
+    resourceTypes := metadata.sources.resourceTypes
+
+  describe "resourceTypes", (_it) ->
+    it "should carry weights", ->
+      _.each resourceTypes, (rt, id) ->
+        rt.should.have.property 'meta'
+        rt.meta.should.have.property 'weight'
+        rt.meta.weight.should.be.a 'number'
+
 describe "Testing resources expansion", (_it)->
 
   var metadata
