@@ -6,20 +6,22 @@
 <div class="container-fluid">
   <div class="row-fluid">
 
-    <div id="main" class="pervasive-idea main <%=meta.articles? 'span4' : 'span8'%>">
+
+    <div id="sidebar" class="span4">
+      <%= _piMenu %>   
+    </div>
+
+    <div id="main" class="pervasive-idea main <%=meta.articles? 'offset1 span4' : 'offset1 span7'%>">
       <h1>
-        <%= meta.title %>
+        <%= content.title %>
       </h1>
-      <%= content %>
+      <%= content.html %>
     </div>
 
 <% if(meta.articles) { %>
-    <div id="articles" class="pervasive-idea articles span4">
+    <div id="articles" class="pervasive-idea articles offset1 span3">
     </div>
 <% } %>
-
-    <div id="sidebar" class="offset1 span3">
-    </div>
 
   </div>
 </div>

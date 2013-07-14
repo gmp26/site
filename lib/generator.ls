@@ -29,8 +29,12 @@ module.exports = (grunt) ->
     _head = grunt.file.read "layouts/_head.html"
     _nav = grunt.file.read "layouts/_nav.html"
     _foot = grunt.file.read "layouts/_foot.html"
+    _linesMenu = grunt.file.read "layouts/_linesMenu.html"
+    _piMenu = grunt.file.read "layouts/_piMenu.html"
+          
 
-    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir, _head, _nav, _foot
+    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
+    getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
 
     #
     # Call the generators
@@ -62,17 +66,39 @@ module.exports = (grunt) ->
               rootUrl: '../..'
               resourcesUrl: '..'
           }
-          grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
+          grunt.file.write "app/resources/#{resourceName}/index.html", html
 
       case 'pervasiveIdeas'
         pervasiveIdeas = items
-        for fileName, meta of items
-          if fileName == 'meta'
-            grunt.log.ok "PVID1  file = <#fileName>"
-            generateHTML sources, null, folder, meta
-          else
-            grunt.log.ok "PVID2  file = <#fileName>"
-            generateHTML sources, folder, fileName, meta.meta
+        for pvid, data of items
+
+          meta = data.meta
+ 
+          layout = getLayout sources, folder, meta
+
+          debugger
+
+          content = getPervasiveIdeaData pvid, meta
+
+          root = ".."
+          resources = '../resources'
+
+          html = grunt.template.process grunt.file.read(layout), {
+            data:
+              _piMenu: _piMenu
+              _head: _head
+              _nav: _nav
+              _foot: _foot
+              meta: meta
+              content: content
+              sources: sources
+              families: metadata.families
+              rootUrl: '..'
+              resourcesUrl: '../resources'
+          }
+
+          grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
+
     
       default
         for fileName, meta of items
@@ -97,11 +123,6 @@ module.exports = (grunt) ->
       #grunt.log.debug "folder=#folder file=#fileName layout = #layout"
       #_.each meta, (value, key)->grunt.log.debug "meta.key=#key"
 
-      # make common template from unchanging stuff
-      _head = grunt.file.read "layouts/_head.html"
-      _nav = grunt.file.read "layouts/_nav.html"
-      _foot = grunt.file.read "layouts/_foot.html"
-      _linesMenu = grunt.file.read "layouts/_linesMenu.html"
 
       if folder && folder.length > 0
         content = grunt.file.read "#{partialsDir}/#{folder}/#{fileName}.html"
@@ -115,7 +136,6 @@ module.exports = (grunt) ->
       html = grunt.template.process grunt.file.read(layout), {
         data:
           _head: _head
-          bodyAttrs: 'class="foo"'
           _nav: _nav
           _foot: _foot
           _linesMenu: _linesMenu

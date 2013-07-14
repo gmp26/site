@@ -86,9 +86,14 @@ module.exports = (grunt) ->
         badPVs[pvid] = true
       if !meta.family? || meta.family == null || meta.family == ""
         grunt.log.error "pervasiveIdea #pvid has no family"
-      if meta.id? && meta.id != pvid
-        grunt.log.error "PervasiveIdea #pvid has incorrect id '#{meta.id}' in metadata"
+        badPVs[pvid] = true
+      if !meta.id?
         meta.id = pvid
+        grunt.log.error "Replacing missing pervasiveIdea id #pvid"
+      if meta.id != pvid
+        grunt.log.error "PervasiveIdea #pvid has incorrect id '#{meta.id}' in metadata"
+        badPVs[meta.id] = true
+        badPVs[pvid] = true
     _.each badPVs, (b, badId) ->
       grunt.log.warn "*** Ignoring pervasiveIdea #badId"
       delete pervasiveIdeas[badId]
@@ -305,6 +310,27 @@ module.exports = (grunt) ->
         stids1 = sources.resources[resObj.id].index.meta.stids1
         _.each stids1, (stid) ->
           pvstids[stid] = true
+
+    metadata.families = []
+    fams = {}
+    _.each pervasiveIdeas, (data, id) ->
+      meta = data.meta
+      f = meta.family
+      if f && (_.isString f) && f.length > 0
+        if fams[f]?
+          fams[f] ++= id
+        else
+          fams[f] = [id]
+    _.each fams, (pvids, f) ->
+      metadata.families ++= {
+        family: f
+        pvids: _.sortBy pvids, (pvid) -> +pvid.substr 2
+      }
+    metadata.families = _.sortBy metadata.families, (.family)
+
+
+
+
 
     grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
 

@@ -1,1 +1,11 @@
-<h3>PI menu</h3>
+<h3>Pervasive Ideas</h3>
+
+<ul class="nav nav-list">
+<% _.each(families, function(f) {%>
+  <li class="nav-header"><%=f.family%></li>
+<%   _.each(f.pvids, function(pvid) {%>
+<%     var pvMeta = sources.pervasiveIdeas[pvid].meta; %>
+  <li class="<%=pvid==meta.id?'active':''%>"><a href="<%=rootUrl%>/pervasiveIdeas/<%=pvid%>.html"><%=pvMeta.title%></a></li>
+<%   }); %> 
+<% }); %> 
+</ul> 
