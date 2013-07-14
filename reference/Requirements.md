@@ -41,7 +41,7 @@ Pervasive Idea page
 
 * Title (from markdown)
 * Paragraph describing idea (from markdown)
-* List of Articles (from markdown)
+* List of Articles (from metadata `articles`)
 * Link to the Pervasive Idea Family
 * A List of Resources containing this PI
 	* Resources which have this pv listed on pvids1

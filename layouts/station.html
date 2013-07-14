@@ -16,7 +16,7 @@
       <ul class="inline">
 <% _.each(meta.dependencies, function(depId) {%>
         <li class="dependency" data-content="<%=sources.stations[depId].meta.title%>">
-          <a class="button<%=sources.stations[depId].meta.line%>" href="<%=root%>/stations/<%=depId%>.html">
+          <a class="button<%=sources.stations[depId].meta.line%>" href="<%=rootUrl%>/stations/<%=depId%>.html">
               <span><%=depId%></span>
           </a>
         </li>
@@ -35,7 +35,7 @@
 
 <% _.each(meta.dependents, function(depId) {%>
         <li class="dependent" data-content="<%=sources.stations[depId].meta.title%>">
-          <a class="button<%=sources.stations[depId].meta.line%>" href="<%=root%>/stations/<%=depId%>.html">
+          <a class="button<%=sources.stations[depId].meta.line%>" href="<%=rootUrl%>/stations/<%=depId%>.html">
             <%=depId%>
           </a>
         </li>
@@ -70,7 +70,7 @@
         <li>
           <span class="icon-heart <%=res.highlight ? 'highlight' : ''%>"></span>
           <span class="<%=resourceTypeMeta.icon%>"></span>
-          <a href="<%=resources%>/<%=res.id%>/index.html" class="<%=res.highlight ? 'highlight' : ''%>">
+          <a href="<%=resourcesUrl%>/<%=res.id%>/index.html" class="<%=res.highlight ? 'highlight' : ''%>">
             <%=resourceTypeMeta.title%>
           </a>
 
@@ -84,7 +84,7 @@
 <% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
         <li>
           <span class="<%=resourceTypeMeta.icon%>"></span>
-          <a href="<%=resources%>/<%=res.id%>/index.html">
+          <a href="<%=resourcesUrl%>/<%=res.id%>/index.html">
             <%=resourceTypeMeta.title%>
           </a>
         </li>
@@ -103,7 +103,7 @@
       <ul>
 <%   _.each(meta.pervasiveIdeas, function(__, pvid) { %>
         <li>
-          <a href="<%=root%>/pervasiveIdeas/<%=pvid%>.html">
+          <a href="<%=rootUrl%>/pervasiveIdeas/<%=pvid%>.html">
             <%=sources.pervasiveIdeas[pvid].meta.title%>
           </a>
         </li>

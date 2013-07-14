@@ -1,0 +1,28 @@
+<%= _head %>
+<%= _nav %>
+<% _ = grunt.util._ %>
+<% grunt.log.write("  pervasiveIdea layout "+meta.id+"... ") %>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div id="main" class="pervasive-idea main <%=meta.articles? 'span4' : 'span8'%>">
+      <h1>
+        <%= meta.title %>
+      </h1>
+      <%= content %>
+    </div>
+
+<% if(meta.articles) { %>
+    <div id="articles" class="pervasive-idea articles span4">
+    </div>
+<% } %>
+
+    <div id="sidebar" class="offset1 span3">
+    </div>
+
+  </div>
+</div>
+
+<% grunt.log.ok("done"); %>
+<%= _foot %>

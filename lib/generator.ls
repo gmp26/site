@@ -43,8 +43,9 @@ module.exports = (grunt) ->
         grunt.log.writeln "Generating #folder"
         lastFolder = folder
 
-      if folder=='resources'
+      switch folder
 
+      case 'resources'
         resources = items
         for resourceName, files of resources
           indexMeta = files.index.meta
@@ -58,12 +59,22 @@ module.exports = (grunt) ->
               resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
               content: content
               meta: indexMeta
-              root: '../..'
-              resources: '..'
+              rootUrl: '../..'
+              resourcesUrl: '..'
           }
           grunt.file.write "app/#{folder}/#{resourceName}/index.html", html
 
-      else
+      case 'pervasiveIdeas'
+        pervasiveIdeas = items
+        for fileName, meta of items
+          if fileName == 'meta'
+            grunt.log.ok "PVID1  file = <#fileName>"
+            generateHTML sources, null, folder, meta
+          else
+            grunt.log.ok "PVID2  file = <#fileName>"
+            generateHTML sources, folder, fileName, meta.meta
+    
+      default
         for fileName, meta of items
           #grunt.log.debug "  file = <#fileName>"
 
@@ -104,14 +115,15 @@ module.exports = (grunt) ->
       html = grunt.template.process grunt.file.read(layout), {
         data:
           _head: _head
+          bodyAttrs: 'class="foo"'
           _nav: _nav
           _foot: _foot
           _linesMenu: _linesMenu
           meta: meta
           content: content
           sources: sources
-          root: root
-          resources: resources
+          rootUrl: root
+          resourcesUrl: resources
       }
 
       if folder
