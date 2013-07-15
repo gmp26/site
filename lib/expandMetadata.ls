@@ -179,7 +179,7 @@ module.exports = (grunt) ->
 
           # a star postfix implies the resource is to be highlighted
           grunt.log.ok "testing id #id"
-          highlight = (idNumber == 1) && id.match /\s*(\w+)\*/ 
+          highlight = (idNumber == 1) && id.match /\s*(\w+)\*/
           if highlight
             grunt.log.ok "highlight"
             id = highlight.1
@@ -194,8 +194,9 @@ module.exports = (grunt) ->
             res = {
               id: resourceId
               rt: meta.resourceType
-              highlight: highlight != null
+              highlight: highlight
             }
+
             if meta.title
               res.title = meta.title
               grunt.log.ok "***** writing #{meta.title} to res *****"
@@ -216,6 +217,8 @@ module.exports = (grunt) ->
 
       expandIds stations, "stids", 1
       expandIds stations, "stids", 2
+      if resourceId=='G2_RT2'
+        debugger
       expandIds pervasiveIdeas, "pvids", 1
       expandIds pervasiveIdeas, "pvids", 2
 
@@ -310,6 +313,12 @@ module.exports = (grunt) ->
         stids1 = sources.resources[resObj.id].index.meta.stids1
         _.each stids1, (stid) ->
           pvstids[stid] = true
+      R2s = pervasiveIdea.meta.R2s
+      _.each R2s, (resObj) ->
+        stids1 = sources.resources[resObj.id].index.meta.stids1
+        _.each stids1, (stid) ->
+          pvstids[stid] = true
+      pervasiveIdea.meta.stids = _.sortBy (_.keys pvstids), (stid)->stations[stid].weight
 
     metadata.families = []
     fams = {}

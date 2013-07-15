@@ -20,6 +20,7 @@ module.exports = (grunt) ->
     # set up some short cut references
     # 
     metadata = grunt.config.get "metadata"
+
     sources = metadata.sources
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
@@ -78,10 +79,11 @@ module.exports = (grunt) ->
 
           debugger
 
+          resources = sources.resources
+          resourceTypes = sources.resourceTypes
+          stations = sources.stations
           content = getPervasiveIdeaData pvid, meta
-
-          root = ".."
-          resources = '../resources'
+          html = "foo"
 
           html = grunt.template.process grunt.file.read(layout), {
             data:
@@ -92,6 +94,9 @@ module.exports = (grunt) ->
               meta: meta
               content: content
               sources: sources
+              stations: stations
+              resources: resources
+              resourceTypes: resourceTypes
               families: metadata.families
               rootUrl: '..'
               resourcesUrl: '../resources'

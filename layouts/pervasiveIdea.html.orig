@@ -12,7 +12,11 @@
       <%= _piMenu %>   
     </div>
 
+<<<<<<< HEAD
+    <div id="main" class="pervasive-idea main <%=meta.articles? 'span4' : 'span7'%>">
+=======
     <div id="main" class="pervasive-idea main offset1 span7">
+>>>>>>> devel
       <h1>
         <%= content.title %>
       </h1>
