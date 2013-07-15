@@ -42,7 +42,7 @@ describe "Testing validator", (_)->
   describe "checking pervasiveIdeas", (_) -> 
     it "should delete bad pervasiveIdeas", ->
       should.not.exist(pervasiveIdeas["bad-pvMissingTitle"])
-      should.exist(pervasiveIdeas["bad-pvMissingFamily"])
+      should.not.exist(pervasiveIdeas["bad-pvMissingFamily"])
 
   describe "checking resources", (_) -> 
     it "should delete bad resources, but not ones with missing refs", ->
