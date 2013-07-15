@@ -11,7 +11,7 @@ stids1:
   - G2
 stids2:
 pvids1:
-  - PI3
+  - PI3*
   - PI4
 pvids2: 
   - PI1

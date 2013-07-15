@@ -1,7 +1,6 @@
-<!--
 <%= _head %>
 <%= _nav %>
-<% var _ = grunt.util._; %>
+<% _ = grunt.util._; %>
 
 <% grunt.log.write("  pervasiveIdea layout "+meta.id+"... ") %>
 
@@ -18,22 +17,35 @@
         <%= content.title %>
       </h1>
       <%= content.html %>
-    </div>
+
+<% if((meta.stids && meta.stids.length > 0) || (meta.R1s && meta.R1s.length > 0)) {%>
+      <div class="row-fluid">
+        <div class="span9">
+      <h3>Appearances</h3>
+
+<% if(meta.stids) { %>
+      <ul class="unstyled">
+<%   _.each(meta.stids, function(stid) { %>
+<%     stMeta = stations[stid].meta %>
+        <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+<%   }); %>
+      </ul>
+<% } %>
 
 <% if(meta.R1s) { %>
-    <div id="articles" class="pervasive-idea articles offset1 span3">
-      <h3>articles</h3>
       <ul class="unstyled">
-<%   .each(meta.R1s, function(resObj) { %>
-<%     var res = resources[resObj.id]; %>
+<%   _.each(meta.R1s, function(resObj) { %>
+<%     rType = resourceTypes[resObj.rt].meta; %>
         <li>
-          <span class="icon-heart <%= res.highlight? 'highlight' : ''%>"></span>
-          <span class="<%= resourceTypes[res.rt].meta.icon %>"></span> 
-          <a href="<%= resourcesUrl %>/resources/<%= res.id %>/index.html"><%= res.title %></a>
+          <span class="icon-heart <%= resObj.highlight? 'highlight' : ''%>"></span>
+          <span class="<%= rType.icon %>"></span> 
+          <a href="<%= resourcesUrl %>/resources/<%= resObj.id %>/index.html"><%= rType.title %></a>
         </li>
 <%   }); %>
       </ul>
-    </div>
+<% } %>
+        </div>
+      </div>
 <% } %>
 
   </div>
@@ -42,4 +54,3 @@
 <% grunt.log.ok("done"); %>
 
 <%= _foot %>
--->

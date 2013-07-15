@@ -81,9 +81,10 @@ module.exports = (grunt) ->
 
           resources = sources.resources
           resourceTypes = sources.resourceTypes
+          stations = sources.stations
           content = getPervasiveIdeaData pvid, meta
           html = "foo"
-          /*
+
           html = grunt.template.process grunt.file.read(layout), {
             data:
               _piMenu: _piMenu
@@ -93,13 +94,14 @@ module.exports = (grunt) ->
               meta: meta
               content: content
               sources: sources
+              stations: stations
               resources: resources
               resourceTypes: resourceTypes
               families: metadata.families
               rootUrl: '..'
               resourcesUrl: '../resources'
           }
-          */
+
           grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
 
     
