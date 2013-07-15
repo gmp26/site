@@ -1,6 +1,8 @@
+<!--
 <%= _head %>
 <%= _nav %>
-<% _ = grunt.util._ %>
+<% var _ = grunt.util._; %>
+
 <% grunt.log.write("  pervasiveIdea layout "+meta.id+"... ") %>
 
 <div class="container-fluid">
@@ -11,15 +13,26 @@
       <%= _piMenu %>   
     </div>
 
-    <div id="main" class="pervasive-idea main <%=meta.articles? 'offset1 span4' : 'offset1 span7'%>">
+    <div id="main" class="pervasive-idea main offset1 span7">
       <h1>
         <%= content.title %>
       </h1>
       <%= content.html %>
     </div>
 
-<% if(meta.articles) { %>
+<% if(meta.R1s) { %>
     <div id="articles" class="pervasive-idea articles offset1 span3">
+      <h3>articles</h3>
+      <ul class="unstyled">
+<%   .each(meta.R1s, function(resObj) { %>
+<%     var res = resources[resObj.id]; %>
+        <li>
+          <span class="icon-heart <%= res.highlight? 'highlight' : ''%>"></span>
+          <span class="<%= resourceTypes[res.rt].meta.icon %>"></span> 
+          <a href="<%= resourcesUrl %>/resources/<%= res.id %>/index.html"><%= res.title %></a>
+        </li>
+<%   }); %>
+      </ul>
     </div>
 <% } %>
 
@@ -27,4 +40,6 @@
 </div>
 
 <% grunt.log.ok("done"); %>
+
 <%= _foot %>
+-->
