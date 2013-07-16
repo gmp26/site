@@ -23,7 +23,7 @@ Pervasive mathematical concepts
 familyID concept
 
 - Infinity
-- Symmetry
+- Symmetry (PI7)
 - Averages
 - Inverses
 - Growth
