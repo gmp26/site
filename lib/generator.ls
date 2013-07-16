@@ -77,8 +77,6 @@ module.exports = (grunt) ->
  
           layout = getLayout sources, folder, meta
 
-          debugger
-
           resources = sources.resources
           resourceTypes = sources.resourceTypes
           stations = sources.stations
