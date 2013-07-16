@@ -21,29 +21,29 @@
 <% if((meta.stids && meta.stids.length > 0) || (meta.R1s && meta.R1s.length > 0)) {%>
       <div class="row-fluid">
         <div class="span9">
-      <h3>Appearances</h3>
+          <h3>Appearances</h3>
 
-<% if(meta.stids) { %>
-      <ul class="unstyled">
+<%   if(meta.stids) { %>
+          <ul class="unstyled">
 <%   _.each(meta.stids, function(stid) { %>
 <%     stMeta = stations[stid].meta %>
-        <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
-<%   }); %>
-      </ul>
-<% } %>
+            <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+<%     }); %>
+          </ul>
+<%   } %>
 
-<% if(meta.R1s) { %>
-      <ul class="unstyled">
-<%   _.each(meta.R1s, function(resObj) { %>
-<%     rType = resourceTypes[resObj.rt].meta; %>
-        <li>
-          <span class="icon-heart <%= resObj.highlight? 'highlight' : ''%>"></span>
-          <span class="<%= rType.icon %>"></span> 
-          <a href="<%= resourcesUrl %>/resources/<%= resObj.id %>/index.html"><%= rType.title %></a>
-        </li>
-<%   }); %>
-      </ul>
-<% } %>
+<%   if(meta.R1s) { %>
+          <ul class="unstyled">
+<%     _.each(meta.R1s, function(resObj) { %>
+<%       rType = resourceTypes[resObj.rt].meta; %>
+            <li>
+              <span class="icon-heart <%= resObj.highlight? 'highlight' : ''%>"></span>
+              <span class="<%= rType.icon %>"></span> 
+              <a href="<%= resourcesUrl %>/resources/<%= resObj.id %>/index.html"><%= rType.title %></a>
+            </li>
+<%     }); %>
+          </ul>
+<%   } %>
         </div>
       </div>
 <% } %>
