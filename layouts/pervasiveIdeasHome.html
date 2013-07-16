@@ -1,0 +1,54 @@
+<%= _head %>
+<%= _nav %>
+<% _ = grunt.util._; %>
+
+<% grunt.log.write("  pervasiveIdeaHome layout... ") %>
+
+<div class="container">
+  <div class="row">
+
+
+    <div id="sidebar" class="span4">
+      <h3>Pervasive Idea Families</h3>
+
+      <div class="accordion" id="piMenu">
+<% _.each(families, function(f) { %>
+        <div class="accordion-group">
+
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#piMenu" href="#fam<%=f.family%>">
+              <%=f.family%>
+            </a>
+          </div>
+
+          <div id="fam<%=f.family%>" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul>
+
+<%    _.each(f.pvids, function(id) { %>
+                <li>
+                  <a href="<%=rootUrl%>/pervasiveIdeas/<%=id%>.html">
+                    <%=pervasiveIdeas[id].meta.title%>
+                  </a>
+                </li>
+<%    }); %>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+<% }); %> 
+     
+      </div>
+    </div>  
+
+    <div id="main" class="offset1 span6">
+      <%= content %>
+    </div>
+
+  </div>
+</div>
+
+<% grunt.log.ok("done"); %>
+
+<%= _foot %>
