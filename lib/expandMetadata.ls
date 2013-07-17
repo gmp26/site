@@ -20,6 +20,9 @@ module.exports = (grunt) ->
 
   _ = grunt.util._
 
+  capitalise = (s) ->
+    s.substr(0,1).toUpperCase() + s.substr(1)
+
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
   grunt.registerTask "expandMetadata", "Expand metadata for efficiency.", ->
@@ -217,8 +220,6 @@ module.exports = (grunt) ->
 
       expandIds stations, "stids", 1
       expandIds stations, "stids", 2
-      if resourceId=='G2_RT2'
-        debugger
       expandIds pervasiveIdeas, "pvids", 1
       expandIds pervasiveIdeas, "pvids", 2
 
@@ -323,7 +324,9 @@ module.exports = (grunt) ->
     metadata.families = []
     fams = {}
     _.each pervasiveIdeas, (data, id) ->
+      debugger
       meta = data.meta
+      meta.family = capitalise meta.family
       f = meta.family
       if f && (_.isString f) && f.length > 0
         if fams[f]?

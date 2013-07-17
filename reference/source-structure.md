@@ -35,6 +35,28 @@ resources
 * pideas1: primary list of pervasive ideas
 * pideas2: secondary list of pervasive ideas
 
+examQuestions
+-------------
+* source: sourceId
+* publication status:
+* year
+* paper
+* qno
+* highlight: boolean or a list of stations
+* stids1: primary list of stations, comma separated
+* stids2: secondary list of stations, comma separated
+* pideas1: primary list of pervasive ideas
+* pideas2: secondary list of pervasive ideas
+
+These work very much like resources except that they are not listed directly in station and pervasive ideas lists. Instead, the collection of exam questions that
+appear (at a station) is assembled into a page, and that single page is listed with resource type 13 (review questions).
+
+Sources
+-------
+* id
+* acknowledgement
+
+
 family of pervasive ideas
 ------------------------
 title: name
