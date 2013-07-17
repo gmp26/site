@@ -4,11 +4,11 @@ How to contribute to CMEP
 What is a CMEP Resource?
 ------------------------
 
-CMEP resources are maintained in the Pandoc flavour of markdown. This isn't as scary as it might appear, since markdown is a wiki-like markup language that you've probably already used.
+CMEP resources are maintained in the Pandoc flavour of Markdown. This isn't as scary as it might appear, since Markdown is a wiki-like markup language that you've probably already used.
 
-Each resource lives in its own folder. The main file is called `index.md` -- carrying a `.md` extension since it's expected to be in markdown. That file can refer to others in the same folder - e.g. images, or other linked content. The `index.md` usually does not contain an index, though it might.
+Each resource lives in its own folder. The main file is called `index.md` -- carrying a `.md` extension since it's expected to be in Markdown. That file can refer to others in the same folder - e.g. images, or other linked content. The `index.md` usually does not contain an index, though it might.
 
-`Pandoc` is a compiler that can convert markdown to a large number of other document formats. You'll need a copy of `pandoc` installed, together with a good text editor -- we recommend using `Sublime Text 2`.
+`Pandoc` is a compiler that can convert Markdown to a large number of other document formats. You'll need a copy of `pandoc` installed, together with a good text editor -- we recommend using `Sublime Text 2`.
 
 Preliminary Installations
 -------------
@@ -22,21 +22,21 @@ the resulting pandoc executable in your PATH. When this is right, executing the 
 In addition, it's very useful to configure your editor so you can use pandoc to compile HTML previews.
 Here's how to do it in sublime text.
 
-* Install the [Package Controller for sublime](http://wbond.net/sublime_packages/package_control/installation). The console is available on the `View > Show Console` menu in sublime. This plugin adds a number of package installation commands to sublime. which show up in the command palette when you start typing 'package control'. Find them in the `Tools > Command Palette` menu.
+* Install the [Package Controller for Sublime](http://wbond.net/sublime_packages/package_control/installation). The console is available on the `View > Show Console` menu in Sublime. This plugin adds a number of package installation commands to sublime. which show up in the command palette when you start typing 'Package Control'. Find them in the `Tools > Command Palette` menu.
 
-* Use your new package installer to install the package `Pandoc (Markdown)`. This will install  commands in the Tools menu of sublime which compile and preview markdown. Provided pandoc is in your PATH, these should work.
+* Use your new package installer to install the package `Pandoc (Markdown)`. This will install  commands in the Tools menu of sublime which compile and preview Markdown. Provided pandoc is in your PATH, these should work.
 
 Writing Mathematics
 -------------------
 
-To write mathematics use LaTeX notation. Actually, I mean that part of LaTeX which is supported by the [MathJAX](http://www.mathjax.org) service -- which is more than enough to support school mathematics. Assume the AMSLaTeX package is installed, but little else.
+To write mathematics use LaTeX notation. Actually, I mean that part of LaTeX which is supported by the [MathJax](http://www.mathjax.org) service -- which is more than enough to support school mathematics. Assume the AMSLaTeX package is installed, but little else.
 
 Delimit inline mathematics with single dollar signs as in `$y=x^2$`, which will display as $y=x^2$. Delimit display mathematics with double dollars as in `$$y=x^2$$`, which will display on a separate centred line as $$ y=x^2.$$ Note that the pandoc preview may not centre display mathematics correctly unless you tweak the associated CSS. But you can probably imagine how it will look.
 
 Writing everything else
 -----------------------
 
-Your guide is the [Pandoc User Guide](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown).
+Your guide is the [Pandoc User Guide](http://johnmacfarlane.net/pandoc/README.html#pandocs-Markdown).
 
 Creating metadata
 -----------------
@@ -65,7 +65,7 @@ The markup language for metadata is YAML. Look it up if you must, but it's simpl
 Making hyperlinks
 -----------------
 
-Use the markdown syntax -- square brackets wrapping the linked text, and parentheses wrapping the URL. When referring to other resources on CMEP, use relative URLs. To refer to other files in your resource folder, simply use the filename. The site home is at `../..`. The G2 station will be at `../../stations/G2.html, and so on. Non local resources should be given their full URL.
+Use the Markdown syntax -- square brackets wrapping the linked text, and parentheses wrapping the URL. When referring to other resources on CMEP, use relative URLs. To refer to other files in your resource folder, simply use the filename. The site home is at `../..`. The G2 station will be at `../../stations/G2.html, and so on. Non local resources should be given their full URL.
 
 Including images
 ----------------
@@ -77,14 +77,14 @@ However, many mathematical diagrams are best provided in a vector graphics forma
 Including specials
 ------------------
 
-`Pandoc` allows us to insert raw HTML codes in the markdown source to cope with special needs. These must be styled with CSS (cascading style sheets). The site provides a [Twitter Bootstrap](http://twitter.github.io/bootstrap) stylesheet and javascript environment -- you'll find some excellent docs and examples under the link. However be sparing, and do ask what the house style is if unsure. Here's a list of the features that may find a place in your resource. 
+`Pandoc` allows us to insert raw HTML codes in the Markdown source to cope with special needs. These must be styled with CSS (cascading style sheets). The site provides a [Twitter Bootstrap](http://twitter.github.io/bootstrap) stylesheet and JavaScript environment -- you'll find some excellent docs and examples under the link. However be sparing, and do ask what the house style is if unsure. Here's a list of the features that may find a place in your resource. 
 
 * [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem)
 * [Typography](http://twitter.github.io/bootstrap/base-css.html#typography) e.g. for default header styling and 
   - `<div class="lead">`Lead content to an article.`</div>`
 * [Wells](http://twitter.github.io/bootstrap/components.html#misc)
-  - `<div class="well">`Content in markdown to be styled in a box that stands out from the rest of the text.`</div>`
-* [Collapse](http://twitter.github.io/bootstrap/javascript.html#collapse) is very useful for hide/reveal problems. It can be triggered by a button or by a link as in
+  - `<div class="well">`Content in Markdown to be styled in a box that stands out from the rest of the text.`</div>`
+* [Collapse](http://twitter.github.io/bootstrap/JavaScript.html#collapse) is very useful for hide/reveal problems. It can be triggered by a button or by a link as in
 this [jsFiddle example](http://jsfiddle.net/gmp26/gD3Vz/5/). 
 * [Float left or right](http://twitter.github.io/bootstrap/components.html#misc). 
 * [Icons](http://twitter.github.io/bootstrap/base-css.html#icons)
