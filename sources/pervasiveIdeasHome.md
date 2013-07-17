@@ -1,7 +1,7 @@
 ````
-layout: default
+layout: pervasiveIdeasHome
 ````
-PervasiveIdeas
---------------
+Pervasive Ideas
+===============
 
-Add pervasive idea accordion.
+Some discussion of pervasive ideas?
