@@ -68,7 +68,7 @@
 <% _.each(meta.R1s, function(res) {%>
 <% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
         <li>
-          <span class="icon-heart <%=res.highlight ? 'highlight' : ''%>"></span>
+          <span class="maybe icon-star <%=res.highlight ? 'highlight' : ''%>"></span>
           <span class="<%=resourceTypeMeta.icon%>"></span>
           <a href="<%=resourcesUrl%>/<%=res.id%>/index.html" class="<%=res.highlight ? 'highlight' : ''%>">
             <%=resourceTypeMeta.title%>
