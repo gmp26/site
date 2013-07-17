@@ -20,6 +20,9 @@ module.exports = (grunt) ->
 
   _ = grunt.util._
 
+  capitalise = (s) ->
+    s.substr(0,1).toUpperCase() + s.substr(1)
+
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
   grunt.registerTask "expandMetadata", "Expand metadata for efficiency.", ->
@@ -179,7 +182,7 @@ module.exports = (grunt) ->
 
           # a star postfix implies the resource is to be highlighted
           grunt.log.ok "testing id #id"
-          highlight = (idNumber == 1) && id.match /\s*(\w+)\*/ 
+          highlight = (idNumber == 1) && id.match /\s*(\w+)\*/
           if highlight
             grunt.log.ok "highlight"
             id = highlight.1
@@ -194,8 +197,9 @@ module.exports = (grunt) ->
             res = {
               id: resourceId
               rt: meta.resourceType
-              highlight: highlight != null
+              highlight: highlight
             }
+
             if meta.title
               res.title = meta.title
               grunt.log.ok "***** writing #{meta.title} to res *****"
@@ -310,11 +314,19 @@ module.exports = (grunt) ->
         stids1 = sources.resources[resObj.id].index.meta.stids1
         _.each stids1, (stid) ->
           pvstids[stid] = true
+      R2s = pervasiveIdea.meta.R2s
+      _.each R2s, (resObj) ->
+        stids1 = sources.resources[resObj.id].index.meta.stids1
+        _.each stids1, (stid) ->
+          pvstids[stid] = true
+      pervasiveIdea.meta.stids = _.sortBy (_.keys pvstids), (stid)->stations[stid].weight
 
     metadata.families = []
     fams = {}
     _.each pervasiveIdeas, (data, id) ->
+      debugger
       meta = data.meta
+      meta.family = capitalise meta.family
       f = meta.family
       if f && (_.isString f) && f.length > 0
         if fams[f]?

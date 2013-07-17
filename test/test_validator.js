@@ -32,7 +32,7 @@ global describe, it
     describe("checking pervasiveIdeas", function(_){
       return it("should delete bad pervasiveIdeas", function(){
         should.not.exist(pervasiveIdeas["bad-pvMissingTitle"]);
-        return should.exist(pervasiveIdeas["bad-pvMissingFamily"]);
+        return should.not.exist(pervasiveIdeas["bad-pvMissingFamily"]);
       });
     });
     describe("checking resources", function(_){

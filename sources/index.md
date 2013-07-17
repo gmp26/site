@@ -1,5 +1,17 @@
 ````
-title: The Tube Map 
 layout: home
+title: Philosophy
 ````
-![](./images/tubeMap.svg)
+
+Philosophy
+==========
+
+Why tube maps and pervasive ideas?
+
+Why resource types?
+
+Reference list of resource types with icons?
+
+###Feedback
+
+LinkedIn group link

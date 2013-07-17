@@ -1,0 +1,34 @@
+<% grunt.log.write("  home layout "+meta.id+"... ") %>
+<%= _head %>
+<%= _nav %>
+
+<div class="container">
+  <div class="row">
+    <div id="sidebar1" class="span4">
+      <h1><%= meta.title %></h1>
+      <%= _linesMenu %>
+    </div>
+    <div id="content" class="span8">
+      <%= content %>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  // Handler for .ready() called.
+
+  /* kick MathJax to render the opened accordion element */
+  $(".accordion-body").each(function(index, element) {
+    $(element).on('shown', function() {
+      console.log('showing'+index);
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
+    })
+  });
+
+});
+</script>
+
+<%= _foot %>
+<% grunt.log.ok("done"); %>
+

@@ -20,6 +20,7 @@ module.exports = (grunt) ->
     # set up some short cut references
     # 
     metadata = grunt.config.get "metadata"
+
     sources = metadata.sources
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
@@ -49,6 +50,28 @@ module.exports = (grunt) ->
 
       switch folder
 
+      case 'pervasiveIdeasHome'
+        meta = items.meta
+        layout = getLayout sources, folder, meta
+        families = metadata.families
+        pervasiveIdeas = sources.pervasiveIdeas
+
+        content = grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
+        html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          content: content
+          meta: meta
+          families: families
+          pervasiveIdeas: pervasiveIdeas
+          rootUrl: '.'
+          resourcesUrl: './resources'
+        }
+
+        grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
+
       case 'resources'
         resources = items
         for resourceName, files of resources
@@ -68,6 +91,7 @@ module.exports = (grunt) ->
           }
           grunt.file.write "app/resources/#{resourceName}/index.html", html
 
+
       case 'pervasiveIdeas'
         pervasiveIdeas = items
         for pvid, data of items
@@ -76,12 +100,10 @@ module.exports = (grunt) ->
  
           layout = getLayout sources, folder, meta
 
-          debugger
-
+          resources = sources.resources
+          resourceTypes = sources.resourceTypes
+          stations = sources.stations
           content = getPervasiveIdeaData pvid, meta
-
-          root = ".."
-          resources = '../resources'
 
           html = grunt.template.process grunt.file.read(layout), {
             data:
@@ -92,6 +114,9 @@ module.exports = (grunt) ->
               meta: meta
               content: content
               sources: sources
+              stations: stations
+              resources: resources
+              resourceTypes: resourceTypes
               families: metadata.families
               rootUrl: '..'
               resourcesUrl: '../resources'

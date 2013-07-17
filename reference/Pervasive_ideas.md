@@ -23,7 +23,7 @@ Pervasive mathematical concepts
 familyID concept
 
 - Infinity
-- Symmetry
+- Symmetry (PI7)
 - Averages
 - Inverses
 - Growth
@@ -66,3 +66,4 @@ familyID application
 - Fractals
 - Sailing
 - Aviation
+- History of maths (PI8)
