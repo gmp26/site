@@ -104,7 +104,6 @@ module.exports = (grunt) ->
           resourceTypes = sources.resourceTypes
           stations = sources.stations
           content = getPervasiveIdeaData pvid, meta
-          html = "foo"
 
           html = grunt.template.process grunt.file.read(layout), {
             data:
