@@ -1,6 +1,6 @@
 ````
 alias: Problems
-layout: resource
+layout: examQuestion
 clearance: 0
 keywords:
   - porcupine
@@ -14,10 +14,3 @@ pvids2:
   - PI1
 
 ````
-
-<div source="CambAss" paper="UCLES Maths" year="1951" question="6">
-(i) Prove that
-$$ \cos(A+B) = \cos A \cos B - \sin A \sin B,$$
-where the angles $A$, $B$ and $A+B$ are all acute.
-(ii) Second part of the question.
-</div>
