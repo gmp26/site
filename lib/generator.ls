@@ -91,6 +91,8 @@ module.exports = (grunt) ->
           }
           grunt.file.write "app/resources/#{resourceName}/index.html", html
 
+      case 'examQuestions'
+        break
 
       case 'pervasiveIdeas'
         pervasiveIdeas = items
