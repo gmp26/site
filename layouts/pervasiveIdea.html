@@ -27,7 +27,7 @@
           <ul class="unstyled">
 <%   _.each(meta.stids, function(stid) { %>
 <%     stMeta = stations[stid].meta %>
-            <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+            <p><a class="button<%=stMeta.line%>" href="<%=rootUrl%>/stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
 <%     }); %>
           </ul>
 <%   } %>

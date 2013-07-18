@@ -41,14 +41,14 @@
 
       <div class="station lineG">
 <%   _.each(content.sidebar.stMetas, function(stMeta) { %>
-        <p><a class="button<%=stMeta.line%>" href="../../stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+        <p><a class="button<%=stMeta.line%>" href="<%= rootUrl %>/stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
 <%   }); %>
       </div>
 
       <ul class="pvi">
 <%   _.each(content.sidebar.pvMetas, function(pvMeta) { %>
         <li>
-          <a href="../../pervasiveIdeas/<%= pvMeta.id %>.html"><%= pvMeta.title%></a>
+          <a href="<%= rootUrl %>/pervasiveIdeas/<%= pvMeta.id %>.html"><%= pvMeta.title%></a>
         </li>
 <%   }); %>
       </ul>

@@ -14,6 +14,7 @@ stids1: primary list of stations ids as yaml list
 stids2: secondary list of station ids as yaml list
 pvids1: primary list of pervasive idea ids as yaml list
 pvids2: secondary list of pervasive ideas ids as yaml list
+priors: links back to previous resources (laters get generated)
 
 ````
 
