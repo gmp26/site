@@ -1,6 +1,6 @@
 ````
 alias: Problems
-layout: examQuestion
+layout: resource
 clearance: 0
 keywords:
   - porcupine
