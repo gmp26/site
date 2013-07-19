@@ -17,6 +17,8 @@ mountFolder = (connect, dir) ->
 # 'test/spec/**/*.js'
 module.exports = (grunt) ->
 
+  examQuestions = require './lib/examQuestions.js', grunt
+
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
   grunt.loadNpmTasks 'grunt-mocha-test'
@@ -49,6 +51,10 @@ module.exports = (grunt) ->
     panda:
       dev:
         options:
+          process:
+            data: {
+              examQuestions: (s) -> examQuestions(s)
+            }
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
           metaDataVar: "metadata"

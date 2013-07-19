@@ -1,5 +1,4 @@
 ````
-alias: Problems
 layout: resource
 clearance: 0
 keywords:
@@ -14,3 +13,5 @@ pvids2:
   - PI1
 
 ````
+
+<%= examQuestions('G2') %>
