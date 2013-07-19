@@ -93,12 +93,14 @@ Creating metadata
 At the top of the index.md file in your resource folder there is space for some metadata. It begins with 4 backticks at the start of the first line, and ends with 4 more backticks. Between the two sets of backticks you can add data about the resource. The following template may be handy:
 
 ````
+alias: The part alias name that appears in a tab in a multipart resource. e.g. 'Problem', 'Solution'
+weight: The weight determines the order of this part in a multipart tab bar. Heavier parts come later.
 id: (optional = can omit if same as filename and url)
 title: (optional) but may be identified by resource type
 layout: resource (but some resources will have special layouts)
 author: (optional. If more than one, make it a yaml list)
 date: (of first publication - maybe this should be automated)
-clearance: set to 0 initially.
+clearance: 0
 keywords: a yaml list of words or short phrases
 resourceType: resourceTypeId
 highlight: boolean or a list of station Ids
@@ -106,6 +108,7 @@ stids1: primary list of stations ids as yaml list
 stids2: secondary list of station ids as yaml list
 pvids1: primary list of pervasive idea ids as yaml list
 pvids2: secondary list of pervasive ideas ids as yaml list
+priors: links back to previous resources (laters get generated)
 
 ````
 
@@ -143,6 +146,39 @@ this [jsFiddle example](http://jsfiddle.net/gmp26/gD3Vz/5/).
 * [Thumbnails and Images](http://twitter.github.io/bootstrap/components.html#thumbnails)
 * [Alerts](http://twitter.github.io/bootstrap/components.html#alerts) Useful for warnings or attention grabbing notes.
 * [Media object](http://twitter.github.io/bootstrap/components.html#media) for icon, header, description. 
+
+Desperate Snippets
+------------------
+
+This is a collection of markup that works, that will get around certain problems, but which is in some sense a kludge. Do not use unless you are desperate. Many of these will in time be generated from simpler markup in a preprocessing step.
+
+###Overriding the styling of an element 
+
+e.g. to override the 50% max-width of a figure:
+
+```
+<style>
+  #figure-8 {display: none;}
+  #figure-8 + figure {max-width:100%;}
+</style>
+#####Figure 8
+![Figure 8](cartesiancoordinatesdiagram8.png)
+```
+
+In explanation, `#####Figure 8` defines an `<h5>` with id `figure-8` which is selected by the CSS and hidden. Its sibling element (the figure) is given the new max-width.
+
+###Linking to another resource
+
+The golden rule is to use a relative link. From resource to resource G2_RT4 goes like this:
+```
+[Link Text](../G2_RT4/index.html)
+```
+
+From resource to station G2 would be:
+```
+[Link Text](../../stations/G2.html)
+```
+
 
 Making paper copy
 -----------------
