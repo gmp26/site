@@ -70,28 +70,6 @@ where pandoc
 
 The pandoc commands should then work.
 
-Extra instructions for MacOSX machines
----------------------------------------
-
-1. In a command prompt, get the path to `pandoc` using
-```
-which pandoc
-```
-
-2. Open sublime, open a markdown file, and check that sublime thinks it is editing markdown by checking the indicator at bottom right of the window.
-
-3. In the menu, go to `Preferences > Package Setting > Pandoc > Settings - User`
-
-4. Type this:
-
-```
-{
-  "pandoc_bin": "path_to_pandoc_from_step_1 --mathjax"
-}
-
-```
-
-6. Save.
 
 The pandoc maths commands should then work after a pandoc restart.
 
