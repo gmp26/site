@@ -26,12 +26,83 @@ Here's how to do it in sublime text.
 
 * Use your new package installer to install the package `Pandoc (Markdown)`. This will install  commands in the Tools menu of sublime which compile and preview Markdown. Provided pandoc is in your PATH, these should work.
 
+Enabling Maths rendering in preview
+-----------------------------------
+
+1. On the menu go to `Sublime Text 2 > Preferences > Browse Packages`. This
+will open a window on a folder containing all your sublime packages.
+
+2. Find the folder called Pandoc (Markdown) and open it.
+
+3. Edit the python file 'PandocRender.py' *carefully*.
+
+  - Locate a line that says `cmd.append('--standalone')`
+  - Insert after it a line that says `cmd.append('--mathjax')`
+
+4. Save, Quit Sublime, and restart. Maths should now render in pandoc html preview.
+
+
+Extra instructions for Windows machines
+---------------------------------------
+
+1. In a command prompt, get the path to `pandoc` using
+```
+where pandoc
+```
+
+2. Open sublime, open a markdown file, and check that sublime thinks it is editing markdown by checking the indicator at bottom right of the window.
+
+3. In the menu, go to `Preferences > Package Setting > Pandoc > Settings - User`
+
+4. Type this:
+
+```
+{
+  "pandoc_path": null,
+  "pandoc_bin": "path_to_pandoc_from_step_1 --mathjax"
+}
+
+```
+
+5. Adjust the path to `pandoc` by replacing all backslashes `\` with doubled backslashes `\\`.
+
+6. Save.
+
+The pandoc commands should then work.
+
+Extra instructions for MacOSX machines
+---------------------------------------
+
+1. In a command prompt, get the path to `pandoc` using
+```
+which pandoc
+```
+
+2. Open sublime, open a markdown file, and check that sublime thinks it is editing markdown by checking the indicator at bottom right of the window.
+
+3. In the menu, go to `Preferences > Package Setting > Pandoc > Settings - User`
+
+4. Type this:
+
+```
+{
+  "pandoc_bin": "path_to_pandoc_from_step_1 --mathjax"
+}
+
+```
+
+6. Save.
+
+The pandoc maths commands should then work after a pandoc restart.
+
 Writing Mathematics
 -------------------
 
 To write mathematics use LaTeX notation. Actually, I mean that part of LaTeX which is supported by the [MathJax](http://www.mathjax.org) service -- which is more than enough to support school mathematics. Assume the AMSLaTeX package is installed, but little else.
 
-Delimit inline mathematics with single dollar signs as in `$y=x^2$`, which will display as $y=x^2$. Delimit display mathematics with double dollars as in `$$y=x^2$$`, which will display on a separate centred line as $$ y=x^2.$$ Note that the pandoc preview may not centre display mathematics correctly unless you tweak the associated CSS. But you can probably imagine how it will look.
+Delimit inline mathematics with single dollar signs as in `$y=x^2$`, which will display as $y=x^2$. Delimit display mathematics with double dollars as in `$$y=\frac{1}{x^2}$$`, which will display on a separate centred line as $$y=\frac{1}{x^2}.$$
+
+Note that the pandoc preview may not centre display mathematics correctly unless you tweak the associated CSS. But you can probably imagine how it will look.
 
 Writing everything else
 -----------------------
