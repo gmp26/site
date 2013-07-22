@@ -16,8 +16,6 @@ module.exports = (grunt) ->
   lflf = lf + lf
   yamlre = /^````$\n^([^`]*)````/m
 
-  task = ->
-
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
   grunt.registerMultiTask "stripMeta", "Extract yaml from yaml+content files", ->
@@ -40,15 +38,15 @@ module.exports = (grunt) ->
 
     writeYAML = ->
       metadata = jsy.safeDump store.root
-      if _.isString options.metaDataObj
-        grunt[options.metaDataObj] = metadata
+      if _.isString options.meteDataVar
+        grunt[options.meteDataVar] = metadata
       if _.isString options.metaDataPath
         grunt.file.write options.metaDataPath, metadata
 
     # Merge task-specific and/or target-specific options with these defaults.
     options = @options({
       metaDataPath: "#{partialsDir}/sources.yaml"
-      metaDataObj: "metadata"
+      meteDataVar: "metadata"
       stripMeta: '````'
       spawnLimit: 1
     })
