@@ -9,21 +9,20 @@
 async = require 'async'
 pathUtils = require 'path'
 jsy = require('js-yaml')
-makeStore = require('../lib/store.js')
+metaStore = require('../lib/metaStore.js')
 
 module.exports = (grunt) ->
   lf = grunt.util.linefeed
   lflf = lf + lf
   yamlre = /^````$\n^([^`]*)````/m
 
+  task = ->
+
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
   grunt.registerMultiTask "stripMeta", "Extract yaml from yaml+content files", ->
 
-    # tell grunt this is an asynchronous task
-    done = @async!
-
-    meta = makeStore(grunt)
+    store = metaStore(grunt)
     partialsDir = grunt.config.get "yeoman.partials"
     isolateToken = grunt.file.read ".isolate"
     unless isolateToken.length > 0 && isolateToken != ".*"
@@ -39,6 +38,12 @@ module.exports = (grunt) ->
         return true if pvid.matches isolateRe
       false
 
+    writeYAML = ->
+      metadata = jsy.safeDump store.root
+      if _.isString options.metaDataObj
+        grunt[options.metaDataObj] = metadata
+      if _.isString options.metaDataPath
+        grunt.file.write options.metaDataPath, metadata
 
     # Merge task-specific and/or target-specific options with these defaults.
     options = @options({
@@ -48,59 +53,110 @@ module.exports = (grunt) ->
       spawnLimit: 1
     })
 
-    # Iterate over all specified file groups.
-    if options.spawnLimit == 1
-      async.eachSeries @files, reader, writeYAML
-    else
-      async.eachLimit @files, options.spawnLimit, reader, writeYAML
+    appendStation = (stpath, stid) ->
+      grunt.log.write "  #append station #stid"
 
-    function writeYAML
-      metadata = jsy.safeDump meta.root!
-      if _.isString options.metaDataObj
-        grunt[options.metaDataObj] = metadata
-      if _.isString options.metaDataPath
-        grunt.file.write options.metaDataPath, metadata
+      src = grunt.file.read(stpath)
+      yaml = if(src.match yamlre) then matches[1] else ""
 
-      done!
+      if yaml.length > 0
 
-    function reader(f, callback)
+        # create object reference from the path
+        p = pathUtils.normalize stpath
+        basename = pathUtils.basename p, '.md'
+        dirname = pathUtils.dirname p
+        pathname = (dirname + "/" + basename)
 
-      fpaths = f.src.filter (path) ->
-        unless grunt.file.exists(path)
-          grunt.verbose.warn "Input file \"" + path + "\" not found."
-          false
-        else
-          true
+        # this will throw any syntax error. Let it.
+        data = {meta: jsy.safeLoad yaml}
 
-      # build a list of files for further processing in the manifest
-      grunt.manifest = []
+        # append this resource to site metadata store
+        store.setPathData pathname, data
 
-      for path in fPaths
-        grunt.log.write "#{path}"
+        # and continue to dependencies
+        deps = data.meta.dependencies
+        if _.isArray(deps) && deps.length > 0
+          for depid in deps
+            depPath = "#{sourceDir}/stations/#{depid}.md"
+            if !store.root.sources.stations[depid]? && grunt.file.exists depPath
+              appendStation depPath, depid
 
-        src = grunt.file.read(path)
-        yaml = if(src.match yamlre) then matches[1] else ""
+    appendPervasiveIdea = (pvpath, pvid) ->
+      grunt.log.write "  #append pervasiveIdea #pvid"
 
-        # if options.metaDataPath? && yaml.length > 0
-        if yaml.length > 0
+      src = grunt.file.read(pvpath)
+      yaml = if(src.match yamlre) then matches[1] else ""
 
-          # create object reference from the path
-          p = pathUtils.normalize path
-          basename = pathUtils.basename p, '.md'
-          dirname = pathUtils.dirname p
+      if yaml.length > 0
 
-          # this will throw any syntax error. Let it.
-          metadata = {meta: jsy.safeLoad yaml}
+        # create object reference from the path
+        p = pathUtils.normalize pvpath
+        basename = pathUtils.basename p, '.md'
+        dirname = pathUtils.dirname p
+        pathname = (dirname + "/" + basename)
 
-          if (dirname == "resources" || dirname == "examQuestions")
-            if grunt.clearance > metadata.meta.clearance
-              grunt.log.error "excluding #{path}:#{metadata.meta.clearance}"
-              return ""
-            unless isolate metadata.meta
-              return ""
+        # this will throw any syntax error. Let it.
+        data = {meta: jsy.safeLoad yaml}
 
-          pathname = (dirname + "/" + basename)
-          meta.setPathData pathname, metadata
+        # append this resource to site metadata store
+        store.setPathData pathname, data
+
+    readResources = ->
+      for f in @files
+
+        fpaths = f.src.filter (path) ->
+          unless grunt.file.exists(path)
+            grunt.verbose.warn "Input file \"" + path + "\" not found."
+            false
+          else
+            grunt.log.write "#{path}"
+
+            src = grunt.file.read(path)
+            yaml = if(src.match yamlre) then matches[1] else ""
+
+            # if options.metaDataPath? && yaml.length > 0
+            if yaml.length > 0
+
+              # create object reference from the path
+              p = pathUtils.normalize path
+              basename = pathUtils.basename p, '.md'
+              dirname = pathUtils.dirname p
+              pathname = (dirname + "/" + basename)
+
+              try
+                data = {meta: jsy.safeLoad yaml}
+              catch e
+                grunt.log.error "#e parsing metadata in #pathname"
+                return false
+
+              # append this resource to site metadata store
+              store.setPathData pathname, data
+
+              # Hopefully, we have only been given resources and examQuestions
+              # but, just in case...
+              if (dirname == "resources" || dirname == "examQuestions")
+                if grunt.clearance > data.meta.clearance
+                  grunt.log.error "excluding #{path}:#{data.meta.clearance}"
+                  return false
+                unless isolate data.meta
+                  return false
+
+              # Include dependency chain too
+              for stid in data.meta.stids1 ++ data.meta.stids2
+                stpath = "#{sourceDir}/stations/#{stid}.md"
+                if !store.root.sources.stations[stid]? && grunt.file.exists stpath
+                  appendStation stpath, stid
+
+              for pvid in data.meta.pvids1 ++ data.meta.pvids2
+                pvpath = "#{sourceDir}/pervasiveIdeas/#{pvid}.md"
+                if !store.root.sources.pervasiveIdeas[pvid]? && grunt.file.exists pvpath
+                  appendPervasiveIdea pvpath, pvid
+
+    
+
+
+
+
 
 
 

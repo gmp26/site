@@ -13,7 +13,7 @@ module.exports = (grunt) ->
   #
   root = {}
 
-  store = -> # we might make this function persist the data?
+  store = root
 
   store.root = (data) ->
     return root unless data?

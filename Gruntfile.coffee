@@ -10,11 +10,7 @@ lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
-# # Globbing
-# for performance reasons we're only matching one level down:
-# 'test/spec/{,*/}*.js'
-# use this if you want to match all subfolders:
-# 'test/spec/**/*.js'
+
 module.exports = (grunt) ->
 
   examQuestions = require './lib/examQuestions.js', grunt
@@ -47,6 +43,28 @@ module.exports = (grunt) ->
           flags: 'gm'
         ]
 
+    stripMeta:
+      dev:
+        options:
+          process:
+            data: {
+              examQuestions: (s) -> examQuestions(s)
+            }
+          stripMeta: '````'
+          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          metaDataVar: "metadata"
+          metaReplace: "<%= yeoman.sources %>"
+          metaReplacement: "sources"
+
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          dest: "<%= yeoman.partials %>/"
+          ext: ".html"
+        ]
+
+
     # compile HTML and aggregate metadata
     panda:
       dev:
@@ -60,7 +78,7 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-          #postProcess: generator
+
 
         files: [
           expand: true
