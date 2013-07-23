@@ -21,9 +21,9 @@ global describe, it
         return metadata.families.length.should.equal(2);
       });
       return it("should contain a concept and a process in order", function(){
-        metadata.families[0].family.should.equal('concept');
+        metadata.families[0].family.should.equal('Concept');
         metadata.families[0].pvids.length.should.equal(2);
-        metadata.families[1].family.should.equal('process');
+        metadata.families[1].family.should.equal('Process');
         return metadata.families[1].pvids.length.should.equal(4);
       });
     });

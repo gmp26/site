@@ -5,6 +5,9 @@ expandMetadata = require './lib/expandMetadata.js'
 generator = require './lib/generator.js'
 tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
+isolate = require './lib/isolate.js'
+integrate = require './lib/integrate.js'
+stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 
 mountFolder = (connect, dir) ->
@@ -48,10 +51,11 @@ module.exports = (grunt) ->
         options:
           process:
             data: {
-              examQuestions: (s) -> examQuestions(s)
+              #examQuestions: (s) -> examQuestions(s)
             }
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          strippedPath: "<%= yeoman.partials %>/stripped.yaml"
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -60,8 +64,6 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*"]
-          dest: "<%= yeoman.partials %>/"
-          ext: ".html"
         ]
 
 
@@ -71,7 +73,7 @@ module.exports = (grunt) ->
         options:
           process:
             data: {
-              examQuestions: (s) -> examQuestions(s)
+              #examQuestions: (s) -> examQuestions(s)
             }
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
@@ -119,15 +121,6 @@ module.exports = (grunt) ->
           src: ["test/*.ls"]
           dest: "."
           ext: ".js"
-        ]
-
-    # Configure a mochaTest task
-    mochaTest:
-      highlights:
-        options:
-          reporter: 'spec'
-        files: [
-          src: "test/*.js"
         ]
 
     # Watch 
@@ -375,6 +368,30 @@ module.exports = (grunt) ->
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
+    mochaTest:
+      sources:
+        options:
+          reporter: 'spec'
+        files: [
+          src: "test/*.js"
+        ]
+      integrate:
+        options:
+          reporter: 'spec'
+        files: [
+          src: "test/test_integrate.js"
+        ]
+      stripMeta:
+        options:
+          reporter: 'spec'
+        files: [
+          src: [
+            "test/test_isolate.js"
+            "test/test_stripMeta.js"
+          ]
+        ]
+
+
   # register expandMetadata task
   expandMetadata grunt
 
@@ -386,6 +403,15 @@ module.exports = (grunt) ->
 
   # register clearance task
   clearance grunt
+
+  # register isolate task
+  isolate grunt
+
+  # register integrate task
+  integrate grunt
+
+  # register stripMeta task
+  stripMeta grunt
 
 
   grunt.renameTask "regarde", "watch"
@@ -417,7 +443,18 @@ module.exports = (grunt) ->
     "panda"
     "expandMetadata"
     "generator"
-    "mochaTest"
+    "mochaTest:sources"
+  ]
+
+  grunt.registerTask "units", [
+    "clean:app"
+    "clean:test"
+    "livescript"
+    "integrate"
+    "mochaTest:integrate"
+    "isolate:EQ1,G2"
+    "stripMeta"
+    "mochaTest:stripMeta"
   ]
 
   grunt.registerTask "build", [

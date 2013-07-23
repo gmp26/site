@@ -39,9 +39,9 @@ describe "Testing pervasive ideas expansion", (_it)->
     it "should list R2s", ->
       pi = pervasiveIdeas.PI1.meta
       pi.should.have.property 'R2s'
-      pi.R2s.length.should.equal 5
+      pi.R2s.length.should.equal 6
       pi.R2s.0.id.should.equal 'G2_RT2'
-      pi.R2s.[*-1].id.should.equal 'G2_RT7'
+      pi.R2s.[*-1].id.should.equal 'G2_RT13'
     it "should list stations from R1s and R2s", ->
       pi = pervasiveIdeas.PI1.meta
       pi.should.have.property 'stids'

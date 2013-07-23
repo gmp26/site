@@ -14,18 +14,35 @@ module.exports = (grunt) ->
   root = {}
 
   store = root
+  var replaceCount
+  var metaReplacement
 
-  store.root = (data) ->
+  store.root = (data, options) ->
     return root unless data?
     if typeof data != 'object'
       throw new Error 'store root must be object'
     root := data
+
+    if options?.metaReplace?
+      replaceCount := options.metaReplace.length
+      metaReplacement := options.metaReplacement ? ""
+    else
+      replaceCount := false
+
     return store
 
+
+ 
   store.setPathData = (path, data) ->
 
-    #grunt.log.debug "path=#path"
+    grunt.log.debug "before: path=#path"
     #grunt.log.debug "data=#data"
+
+    # replace root of path if necessary
+    if replaceCount
+      path = metaReplacement + path.substr replaceCount
+
+    grunt.log.debug "after: path=#path"
 
     accPaths = (names, data, acc) ->
 

@@ -14,4 +14,4 @@ pvids2:
 
 ````
 
-<%= examQuestions('G2') %>
+<!--<= examQuestions('G2') %>-->

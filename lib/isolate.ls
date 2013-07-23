@@ -11,13 +11,21 @@ module.exports = (grunt) ->
 
   # register isolate task
   grunt.registerTask "isolate", "set or get the isolate token", (token) ->
+
     isolateFile = ".isolate"
     if !token?
       token = if grunt.file.exists isolateFile
         grunt.file.read isolateFile
-      else
-        ".*"
+      else 
+        grunt.log.ok "Integrated, not isolated"
 
     # save the (new) isolate token
-    grunt.log.ok "Isolate token "+token
-    grunt.file.write isolateFile, ""+token
+    if token?
+
+      # convert comma separated list to a regexp or list
+      if token.indexOf(',') > 0
+        csl = token.split ','
+        token = '(' + csl.join(')|(') + ')'
+
+      grunt.log.ok "Isolate token "+token
+      grunt.file.write isolateFile, ""+token

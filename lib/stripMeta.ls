@@ -6,24 +6,33 @@
 #
 "use strict"
 
-async = require 'async'
 pathUtils = require 'path'
 jsy = require('js-yaml')
-metaStore = require('../lib/metaStore.js')
+metaStore = require('../lib/metaStore.js') 
 
 module.exports = (grunt) ->
-  lf = grunt.util.linefeed
-  lflf = lf + lf
-  yamlre = /^````$\n^([^`]*)````/m
 
-  # Please see the Grunt documentation for more information regarding task
-  # creation: http://gruntjs.com/creating-tasks
+  yamlre = /^````$\n^([^`]*)````/m
+  _ = grunt.util._
+
   grunt.registerMultiTask "stripMeta", "Extract yaml from yaml+content files", ->
 
-    store = metaStore(grunt)
+    # Merge task-specific and/or target-specific options with these defaults.
+    options = @options({
+      metaDataPath: "#{partialsDir}/sources.yaml"
+      metaDataVar: "metadata"
+      stripMeta: '````'
+      metaReplace: grunt.config.get "yeoman.sources"
+      metaReplacement: "sources"
+    })
+
+    isolateFile = ".isolate"
+    store = metaStore(grunt, options)
     partialsDir = grunt.config.get "yeoman.partials"
-    isolateToken = grunt.file.read ".isolate"
-    unless isolateToken.length > 0 && isolateToken != ".*"
+    sourceDir = grunt.config.get "yeoman.sources"
+    if grunt.file.exists isolateFile
+      isolateToken = grunt.file.read isolateFile
+    unless isolateToken.length > 0
       isolateRe = new RegExp isolateToken
     else
       isolateRe = null
@@ -38,26 +47,20 @@ module.exports = (grunt) ->
 
     writeYAML = ->
       metadata = jsy.safeDump store.root
-      if _.isString options.meteDataVar
-        grunt[options.meteDataVar] = metadata
+      if _.isString options.metaDataVar
+        grunt.config.set options.metaDataVar, metadata
       if _.isString options.metaDataPath
         grunt.file.write options.metaDataPath, metadata
 
-    # Merge task-specific and/or target-specific options with these defaults.
-    options = @options({
-      metaDataPath: "#{partialsDir}/sources.yaml"
-      meteDataVar: "metadata"
-      stripMeta: '````'
-      spawnLimit: 1
-    })
-
     appendStation = (stpath, stid) ->
-      grunt.log.write "  #append station #stid"
+      grunt.log.write "  append station #stid"
+
+      debugger
 
       src = grunt.file.read(stpath)
-      yaml = if(src.match yamlre) then matches[1] else ""
-
-      if yaml.length > 0
+      matches = src.match yamlre
+      if matches != null
+        yaml = matches[1]
 
         # create object reference from the path
         p = pathUtils.normalize stpath
@@ -76,16 +79,19 @@ module.exports = (grunt) ->
         if _.isArray(deps) && deps.length > 0
           for depid in deps
             depPath = "#{sourceDir}/stations/#{depid}.md"
-            if !store.root.sources.stations[depid]? && grunt.file.exists depPath
+            sources = store.root[options.metaReplacement]
+            sources ?= {}
+            sources.stations ?= {} 
+            if !sources.stations[depid]? && grunt.file.exists depPath
               appendStation depPath, depid
 
     appendPervasiveIdea = (pvpath, pvid) ->
-      grunt.log.write "  #append pervasiveIdea #pvid"
+      grunt.log.write "  append pervasiveIdea #pvid"
 
       src = grunt.file.read(pvpath)
-      yaml = if(src.match yamlre) then matches[1] else ""
-
-      if yaml.length > 0
+      matches = src.match yamlre
+      if matches != null
+        yaml = matches[1]
 
         # create object reference from the path
         p = pathUtils.normalize pvpath
@@ -99,8 +105,8 @@ module.exports = (grunt) ->
         # append this resource to site metadata store
         store.setPathData pathname, data
 
-    readResources = ->
-      for f in @files
+    readResources = (files) ->
+      for f in files
 
         fpaths = f.src.filter (path) ->
           unless grunt.file.exists(path)
@@ -110,10 +116,12 @@ module.exports = (grunt) ->
             grunt.log.write "#{path}"
 
             src = grunt.file.read(path)
-            yaml = if(src.match yamlre) then matches[1] else ""
 
             # if options.metaDataPath? && yaml.length > 0
-            if yaml.length > 0
+            matches = src.match yamlre
+            if matches != null
+
+              yaml = matches[1]
 
               # create object reference from the path
               p = pathUtils.normalize path
@@ -142,15 +150,16 @@ module.exports = (grunt) ->
               # Include dependency chain too
               for stid in data.meta.stids1 ++ data.meta.stids2
                 stpath = "#{sourceDir}/stations/#{stid}.md"
-                if !store.root.sources.stations[stid]? && grunt.file.exists stpath
+                if !store.root[options.metaReplacement]?.stations?[stid]? && grunt.file.exists stpath
                   appendStation stpath, stid
 
               for pvid in data.meta.pvids1 ++ data.meta.pvids2
                 pvpath = "#{sourceDir}/pervasiveIdeas/#{pvid}.md"
-                if !store.root.sources.pervasiveIdeas[pvid]? && grunt.file.exists pvpath
+                if !store.root[options.metaReplacement]?.pervasiveIdeas?[pvid]? && grunt.file.exists pvpath
                   appendPervasiveIdea pvpath, pvid
 
-    
+    readResources(@files)
+    grunt.file.write "#{partialsDir}/stripped.html", jsy.safeDump store.root
 
 
 

@@ -91,8 +91,8 @@ describe "Testing resource data generation", (_it)->
       data1.sidebar.stMetas.0.id.should.eql 'G2'
     it "should not contain pvMetas", ->
       data1.sidebar.should.not.have.property 'pvMetas'
-    it "should have 1 part", ->
-      data1.parts.length.should.equal 1
+    it "should have 2 parts", ->
+      data1.parts.length.should.equal 2
     it "should contain laterMetas in the sidebar", ->
       should.exist data1.sidebar.laterMetas
       data1.sidebar.laterMetas.should.be.instanceof Array
