@@ -34,6 +34,20 @@ module.exports = (grunt) ->
   grunt.initConfig
 
     yeoman: yeomanConfig
+    pass1Files: [
+      expand: true
+      cwd: "<%= yeoman.sources %>"
+      src: ["**/*.md", "!**/template.md", "!**/template/*"]
+      dest: "<%= yeoman.partials %>/"
+      ext: ".html"
+    ]
+    pass2Files: [
+      expand: true
+      cwd: "<%= yeoman.sources %>"
+      src: ["**/*.md", "!**/template.md", "!**/template/*"]
+      dest: "<%= yeoman.partials %>/"
+      ext: ".html"
+    ]
 
     # use as needed to fix stuff
     "regex-replace":
@@ -59,16 +73,34 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-
-        files: [
-          expand: true
-          cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*"]
-        ]
+        files: <%= pandaFiles %>
 
 
     # compile HTML and aggregate metadata
     panda:
+      pass1:
+        options:
+          process: false
+          stripMeta: '````'
+          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          metaDataVar: "metadata"
+          metaReplace: "<%= yeoman.sources %>"
+          metaReplacement: "sources"
+          metaOnly: true
+        files: <%= pass1Files %>
+      pass2:
+        options:
+          process:
+            data: {
+              #examQuestions: (s) -> examQuestions(s)
+            }
+          stripMeta: '````'
+          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+          metaDataVar: "metadata"
+          metaReplace: "<%= yeoman.sources %>"
+          metaReplacement: "sources"
+          pandocOnly: true
+
       dev:
         options:
           process:
@@ -440,7 +472,7 @@ module.exports = (grunt) ->
     "clean:app"
     "clean:test"
     "livescript"
-    "panda"
+    "panda:dev"
     "expandMetadata"
     "generator"
     "mochaTest:sources"
