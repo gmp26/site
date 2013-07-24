@@ -1,0 +1,7 @@
+#/bin/bash
+cd ~/CMEP/CMEP-site
+<<<<<<< HEAD
+rsync -av dist/ gmp26@pan.maths.org:/usr/local/www/cmep/html/swanage
+=======
+rsync -av dist/ gmp26@pan.maths.org:/usr/local/www/cmep/html/swanage
+>>>>>>> master

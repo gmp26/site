@@ -24,7 +24,7 @@ familyID concept
 
 - Infinity
 - Symmetry (PI7)
-- Averages
+- Averages (PI11)
 - Inverses
 - Growth
 - Dimensions and dimensionality
@@ -34,6 +34,7 @@ familyID concept
 - Linearity (PI2)
 - Division by zero
 - Invariance and invariants
+- Iteration (PI9)
 
 Applications and more advanced mathematics
 ------------------------------------------
@@ -67,3 +68,4 @@ familyID application
 - Sailing
 - Aviation
 - History of maths (PI8)
+- Group theory (PI10)
