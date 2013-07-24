@@ -126,10 +126,26 @@ module.exports = (grunt) ->
 
           grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
 
+      case 'index'
+        generateHTML sources, null, folder, items.meta
     
-      default
+      case 'map'
+        generateHTML sources, null, folder, items.meta
+    
+      case 'lines'
+        noop = true
+
+      case 'resourceTypes'
+        noop = true
+
+      case 'stations'
         for fileName, meta of items
-          #grunt.log.debug "  file = <#fileName>"
+          generateHTML sources, folder, fileName, meta.meta
+
+      default
+        grunt.log.error "***** UNKNOWN FOLDER #folder *****"
+        for fileName, meta of items
+          grunt.log.ok "  folder = #folder file = #fileName"
 
           if fileName == 'meta'
             generateHTML sources, null, folder, meta
