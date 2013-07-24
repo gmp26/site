@@ -34,20 +34,6 @@ module.exports = (grunt) ->
   grunt.initConfig
 
     yeoman: yeomanConfig
-    pass1Files: [
-      expand: true
-      cwd: "<%= yeoman.sources %>"
-      src: ["**/*.md", "!**/template.md", "!**/template/*"]
-      dest: "<%= yeoman.partials %>/"
-      ext: ".html"
-    ]
-    pass2Files: [
-      expand: true
-      cwd: "<%= yeoman.sources %>"
-      src: ["**/*.md", "!**/template.md", "!**/template/*"]
-      dest: "<%= yeoman.partials %>/"
-      ext: ".html"
-    ]
 
     # use as needed to fix stuff
     "regex-replace":
@@ -73,7 +59,7 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-        files: <%= pandaFiles %>
+        files: "<%= pass1Files %>"
 
 
     # compile HTML and aggregate metadata
@@ -87,7 +73,13 @@ module.exports = (grunt) ->
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
           metaOnly: true
-        files: <%= pass1Files %>
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          dest: "<%= yeoman.partials %>/"
+          ext: ".html"
+        ]
       pass2:
         options:
           process:
@@ -99,7 +91,13 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-          pandocOnly: true
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          dest: "<%= yeoman.partials %>/"
+          ext: ".html"
+        ]
 
       dev:
         options:
@@ -114,13 +112,8 @@ module.exports = (grunt) ->
           metaReplacement: "sources"
 
 
-        files: [
-          expand: true
-          cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*"]
-          dest: "<%= yeoman.partials %>/"
-          ext: ".html"
-        ]
+        files: "<%=pass1Files%>"
+
 
     # Validate, weed, and expand metadata
     expandMetadata:
@@ -472,7 +465,8 @@ module.exports = (grunt) ->
     "clean:app"
     "clean:test"
     "livescript"
-    "panda:dev"
+    "panda:pass1"
+    "panda:pass2"
     "expandMetadata"
     "generator"
     "mochaTest:sources"
@@ -505,7 +499,8 @@ module.exports = (grunt) ->
   grunt.registerTask "dev", [
     "clean:partials"
     "livescript"
-    "panda:dev"
+    "panda:pass1"
+    "panda:pass2"
     "copy:assets"
     "expandMetadata"
     "tubemap"
