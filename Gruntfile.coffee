@@ -13,10 +13,9 @@ lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
-
 module.exports = (grunt) ->
 
-  examQuestions = require './lib/examQuestions.js', grunt
+  examQuestions = (require './lib/examQuestions.js')(grunt)
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
@@ -77,14 +76,12 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*"]
-          dest: "<%= yeoman.partials %>/"
-          ext: ".html"
         ]
       pass2:
         options:
           process:
             data: {
-              #examQuestions: (s) -> examQuestions(s)
+              examQuestions: (s) -> examQuestions(s)
             }
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"

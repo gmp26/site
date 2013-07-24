@@ -5,18 +5,20 @@
 
 module.exports = (grunt) ->
 
-  metadata = grunt.metadata
-  sources = metadata.sources
-  stations = metadata.stations
-  examQuestions = metadata.examQuestions
+  _ = grunt.util._
 
-  return (id) ->
+  (id) -> 
+
+    metadata = grunt.config.get "metadata"
+    sources = metadata.sources
+    stations = sources.stations
+    examQuestions = sources.examQuestions
 
     html = ""
 
     for folder in ["stations"]
       switch folder
-      case 'station'
+      case 'stations'
         _.each examQuestions, (data, qId) ->
           if(data.index?)
             meta = data.index.meta
