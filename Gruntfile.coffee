@@ -87,8 +87,6 @@ module.exports = (grunt) ->
               #examQuestions: (s) -> examQuestions(s)
             }
           stripMeta: '````'
-          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
-          metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
         files: [
@@ -398,7 +396,11 @@ module.exports = (grunt) ->
         options:
           reporter: 'spec'
         files: [
-          src: "test/*.js"
+          src: [
+            "test/*.js" 
+            "!test/test_integrate.js"
+            "!test/test_stripMeta.js"
+          ]
         ]
       integrate:
         options:
@@ -466,8 +468,8 @@ module.exports = (grunt) ->
     "clean:test"
     "livescript"
     "panda:pass1"
-    "panda:pass2"
     "expandMetadata"
+    "panda:pass2"
     "generator"
     "mochaTest:sources"
   ]
@@ -500,10 +502,10 @@ module.exports = (grunt) ->
     "clean:partials"
     "livescript"
     "panda:pass1"
-    "panda:pass2"
-    "copy:assets"
     "expandMetadata"
     "tubemap"
+    "panda:pass2"
+    "copy:assets"
     "generator"
   ]
 
