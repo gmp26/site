@@ -3,25 +3,30 @@
 
 <%= _nav %>
 
-<div class="container fluid-row">
+<div class="container">
 
-  <div class="span4">
+  <div class="row">
+
+    <div class="span3">
 <% var samp = grunt.config.get("yeoman.samples") %>
 <% var sour = grunt.config.get("yeoman.sources") %>
 <% if(sour === samp) { %>
-      <!-- add samples alert -->
-      <div class="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h2>Sample content</h2>
-        <span class="icon-info-sign"></span> See the <a href="https://github.com/CMEPorg/CMEP-site">Site readme</a> and the <a href="https://github.com/CMEPorg/CMEP-sources">Sources readme</a>.
-      </div>
+        <!-- add samples alert -->
+        <div class="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h2>Sample content</h2>
+          <span class="icon-info-sign"></span> See the <a href="https://github.com/CMEPorg/CMEP-site">Site readme</a> and the <a href="https://github.com/CMEPorg/CMEP-sources">Sources readme</a>.
+        </div>
 <% } %>
-    <a href="./map.html" >
-      <img src="./images/tubeMap.svg" alt="Link to tube map" title="The tube map">
-    </a>
-  </div>
-  <div class="offset1 span6">
+      <a href="./map.html" >
+        <img src="./images/tubeThumb.png" alt="Link to tube map" title="The tube map">
+      </a>
+    </div>
+
+    <div class="offset1 span8">
 <%= content %>
+    </div>
+
   </div>
 </div>
 
