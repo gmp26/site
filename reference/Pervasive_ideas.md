@@ -8,7 +8,7 @@ familyID process
 
 - Proof (PI3)
 - Modelling
-- Generalising and specialising
+- Generalising and specialising (PI12)
 - Doing and undoing
 - Multiple representations (PI1)
 - Using a computer
