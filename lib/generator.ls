@@ -152,6 +152,30 @@ module.exports = (grunt) ->
       }
       grunt.file.write "app/resources/#{resourceName}/index.html", html
 
+      #
+      # stations
+      #
+      for stid, data of stations
+        #generateHTML sources, folder, stid, meta.meta
+
+        meta = data.meta
+        layout = getLayout sources, 'stations', meta
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            _linesMenu: _linesMenu
+            meta: meta
+            content: grunt.file.read "#{partialsDir}/stations/#{stid}.html"
+            sources: sources
+            rootUrl: ".."
+            resourcesUrl: '../resources'
+
+        }
+
+        grunt.file.write "#{appDir}/stations/#{stid}.html", html
+
     #
     # Call the generators
     #
@@ -165,41 +189,15 @@ module.exports = (grunt) ->
 
       switch folder
 
-      case 'lines', 'resourceTypes', 'index', 'map', 'pervasiveIdeasHome', 'pervasiveIdeas', 'resources'
+      case 'lines', 'resourceTypes', 'index', 'map', 'pervasiveIdeasHome', 'pervasiveIdeas', 'resources', 'stations'
         noop = true
 
 
 
       case 'examQuestions'
+        grunt.log.debug '**********EXAMS ARE HERE'
         break
 
-
-
-      case 'stations'
-        for stid, meta of items
-          #generateHTML sources, folder, stid, meta.meta
-
-          meta = meta.meta
-          layout = getLayout sources, folder, meta
-
-          content = grunt.file.read "#{partialsDir}/#{folder}/#{stid}.html"
-          root = ".."
-          resources = '../resources'
-
-          html = grunt.template.process grunt.file.read(layout), {
-            data:
-              _head: _head
-              _nav: _nav
-              _foot: _foot
-              _linesMenu: _linesMenu
-              meta: meta
-              content: content
-              sources: sources
-              rootUrl: root
-              resourcesUrl: resources
-          }
-
-          grunt.file.write "#{appDir}/stations/#{stid}.html", html
 
       default
         grunt.fail.fatal "***** UNKNOWN FOLDER #folder *****"
