@@ -142,7 +142,7 @@ This is a problem that we think that all students should experience.  This might
 
 ***
 
-Mathmo exercises
+Fluency exercises
 ----------------
 
 RT11
@@ -154,8 +154,8 @@ A bank of routine exercises (perhaps randomly generated) that students can use t
 
 ***
 
-Lucky dip (or pot pourri)
--------------------------
+Lucky dip
+---------
 
 RT12
 
