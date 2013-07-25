@@ -131,6 +131,49 @@ module.exports = (grunt) ->
 
       grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
 
+    #
+    # examQuestions
+    #
+    # examQuestions: 
+    #   Q1: 
+    #     index: 
+    #       meta: 
+    #         source: CamAss
+    #         layout: resource
+    #         clearance: 0
+    #         keywords: null
+    #         year: June 1953
+    #         paper: "Mathematics A level paper 2, 185"
+    #         qno: 2
+    #         stids1: 
+    #           - G2
+    #           - E2
+    #         stids2: null
+    #         pvids1: null
+    #         pvids2: null
+    #     solution: 
+    #       meta: 
+    #         alias: Solution
+
+    /*
+    for eqid, data of examQuestions
+      indexMeta = data.index?.meta
+      solutionMeta = data.solution?.meta
+      layout = getLayout sources, 'examQuestion', indexMeta
+      content = getExamQuestionData eqid, data, indexMeta
+      html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          content: content
+          meta: indexMeta
+          solutionMeta: solutionMeta
+          rootUrl: '../..'
+          resourcesUrl: '..'
+      }
+      grunt.file.write "app/examQuestions/#{eqid}/index.html", html
+    */
 
     #
     # resources
@@ -152,55 +195,31 @@ module.exports = (grunt) ->
       }
       grunt.file.write "app/resources/#{resourceName}/index.html", html
 
-      #
-      # stations
-      #
-      for stid, data of stations
-        #generateHTML sources, folder, stid, meta.meta
 
-        meta = data.meta
-        layout = getLayout sources, 'stations', meta
-        html = grunt.template.process grunt.file.read(layout), {
-          data:
-            _head: _head
-            _nav: _nav
-            _foot: _foot
-            _linesMenu: _linesMenu
-            meta: meta
-            content: grunt.file.read "#{partialsDir}/stations/#{stid}.html"
-            sources: sources
-            rootUrl: ".."
-            resourcesUrl: '../resources'
-
-        }
-
-        grunt.file.write "#{appDir}/stations/#{stid}.html", html
 
     #
-    # Call the generators
+    # stations
     #
+    for stid, data of stations
+      #generateHTML sources, folder, stid, meta.meta
 
-    lastFolder = null
-    for folder, items of sources
+      meta = data.meta
+      layout = getLayout sources, 'stations', meta
+      html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          _linesMenu: _linesMenu
+          meta: meta
+          content: grunt.file.read "#{partialsDir}/stations/#{stid}.html"
+          sources: sources
+          rootUrl: ".."
+          resourcesUrl: '../resources'
 
-      if folder != lastFolder
-        grunt.log.writeln "Generating #folder"
-        lastFolder = folder
+      }
 
-      switch folder
-
-      case 'lines', 'resourceTypes', 'index', 'map', 'pervasiveIdeasHome', 'pervasiveIdeas', 'resources', 'stations'
-        noop = true
-
-
-
-      case 'examQuestions'
-        grunt.log.debug '**********EXAMS ARE HERE'
-        break
-
-
-      default
-        grunt.fail.fatal "***** UNKNOWN FOLDER #folder *****"
+      grunt.file.write "#{appDir}/stations/#{stid}.html", html
 
     
     generateLess sources
