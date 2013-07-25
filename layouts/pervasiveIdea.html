@@ -18,6 +18,20 @@
       </h1>
       <%= content.html %>
 
+<%   if(meta.R1s) { %>
+          <h3>Resources</h3>
+          <ul class="unstyled">
+<%     _.each(meta.R1s, function(resObj) { %>
+<%       rType = resourceTypes[resObj.rt].meta; %>
+            <li>
+              <span class="maybe icon-star<%= resObj.highlight? 'highlight' : ''%>"></span>
+              <span class="<%= rType.icon %>"></span> 
+              <a href="<%= resourcesUrl %>/<%= resObj.id %>/index.html"><%= rType.title %></a>
+            </li>
+<%     }); %>
+          </ul>
+<%   } %>
+
 <% if((meta.stids && meta.stids.length > 0) || (meta.R1s && meta.R1s.length > 0)) {%>
       <div class="row-fluid">
         <div class="span9">
@@ -32,18 +46,6 @@
           </ul>
 <%   } %>
 
-<%   if(meta.R1s) { %>
-          <ul class="unstyled">
-<%     _.each(meta.R1s, function(resObj) { %>
-<%       rType = resourceTypes[resObj.rt].meta; %>
-            <li>
-              <span class="maybe icon-star<%= resObj.highlight? 'highlight' : ''%>"></span>
-              <span class="<%= rType.icon %>"></span> 
-              <a href="<%= resourcesUrl %>/<%= resObj.id %>/index.html"><%= rType.title %></a>
-            </li>
-<%     }); %>
-          </ul>
-<%   } %>
         </div>
       </div>
 <% } %>
