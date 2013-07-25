@@ -324,7 +324,6 @@ module.exports = (grunt) ->
     metadata.families = []
     fams = {}
     _.each pervasiveIdeas, (data, id) ->
-      debugger
       meta = data.meta
       meta.family = capitalise meta.family
       f = meta.family

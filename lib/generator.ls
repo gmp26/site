@@ -22,6 +22,13 @@ module.exports = (grunt) ->
     metadata = grunt.config.get "metadata"
 
     sources = metadata.sources
+    families = metadata.families
+    pervasiveIdeas = sources.pervasiveIdeas
+    pervasiveIdeasHome = sources.pervasiveIdeasHome
+    resources = sources.resources
+    resourceTypes = sources.resourceTypes
+    stations = sources.stations
+
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
     appDir = grunt.config.get "yeoman.app"
@@ -32,10 +39,118 @@ module.exports = (grunt) ->
     _foot = grunt.file.read "layouts/_foot.html"
     _linesMenu = grunt.file.read "layouts/_linesMenu.html"
     _piMenu = grunt.file.read "layouts/_piMenu.html"
-          
-
+    
     getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
     getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
+
+    #
+    # Call the html generators
+    #
+
+    #
+    # index (home)
+    #
+    meta = sources.index.meta
+    layout = getLayout sources, null, meta
+    html = grunt.template.process grunt.file.read(layout), {
+      data:
+        _head: _head
+        _nav: _nav
+        _foot: _foot
+        meta: meta
+        content: grunt.file.read "#{partialsDir}/index.html"
+        sources: sources
+        rootUrl: '.'
+        resourcesUrl: './resources'
+    }
+    grunt.file.write "#{appDir}/index.html", html 
+
+    #
+    # map
+    #
+    meta = sources['map'].meta
+    layout = getLayout sources, null, meta
+    content = grunt.file.read "#{partialsDir}/map.html"
+
+    html = grunt.template.process grunt.file.read(layout), {
+      data:
+        _head: _head
+        _nav: _nav
+        _foot: _foot
+        _linesMenu: _linesMenu
+        meta: meta
+        content: content
+        sources: sources
+        rootUrl: '.'
+        resourcesUrl: './resources'
+    }
+    grunt.file.write "#{appDir}/map.html", html
+
+    #
+    # pervasiveIdeasHome
+    #
+    meta = pervasiveIdeasHome.meta
+    layout = getLayout sources, null, meta
+    html = grunt.template.process grunt.file.read(layout), {
+    data:
+      _head: _head
+      _nav: _nav
+      _foot: _foot
+      content: grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
+      meta: meta
+      families: families
+      pervasiveIdeas: pervasiveIdeas
+      rootUrl: '.'
+      resourcesUrl: './resources'
+    }
+    grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
+
+    #
+    # pervasiveIdeas
+    #
+    for pvid, data of pervasiveIdeas
+
+      meta = data.meta
+      layout = getLayout sources, 'pervasiveIdeas', meta
+      html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _piMenu: _piMenu
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          meta: meta
+          content: getPervasiveIdeaData pvid, meta
+          sources: sources
+          stations: stations
+          resources: resources
+          resourceTypes: resourceTypes
+          families: metadata.families
+          rootUrl: '..'
+          resourcesUrl: '../resources'
+      }
+
+      grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
+
+
+    #
+    # resources
+    #
+    for resourceName, files of resources
+      indexMeta = files.index.meta
+      layout = getLayout sources, 'resources', indexMeta
+      content = getResourceData resourceName, files, indexMeta
+      html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
+          content: content
+          meta: indexMeta
+          rootUrl: '../..'
+          resourcesUrl: '..'
+      }
+      grunt.file.write "app/resources/#{resourceName}/index.html", html
 
     #
     # Call the generators
@@ -50,105 +165,15 @@ module.exports = (grunt) ->
 
       switch folder
 
-      case 'index', 'map'
-        #generateHTML sources, null, folder, items.meta
-        fileName = folder
-        meta = items.meta
-        layout = getLayout sources, null, meta
-        content = grunt.file.read "#{partialsDir}/#{fileName}.html"
+      case 'lines', 'resourceTypes', 'index', 'map', 'pervasiveIdeasHome', 'pervasiveIdeas', 'resources'
+        noop = true
 
-        html = grunt.template.process grunt.file.read(layout), {
-          data:
-            _head: _head
-            _nav: _nav
-            _foot: _foot
-            _linesMenu: _linesMenu
-            meta: meta
-            content: content
-            sources: sources
-            rootUrl: '.'
-            resourcesUrl: './resources'
-        }
-        grunt.file.write "#{appDir}/#{fileName}.html", html    
 
-      case 'pervasiveIdeasHome'
-        meta = items.meta
-        layout = getLayout sources, folder, meta
-        families = metadata.families
-        pervasiveIdeas = sources.pervasiveIdeas
-
-        content = grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
-        html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          content: content
-          meta: meta
-          families: families
-          pervasiveIdeas: pervasiveIdeas
-          rootUrl: '.'
-          resourcesUrl: './resources'
-        }
-
-        grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
-
-      case 'resources'
-        resources = items
-        for resourceName, files of resources
-          indexMeta = files.index.meta
-          layout = getLayout sources, folder, indexMeta
-          content = getResourceData resourceName, files, indexMeta
-          html = grunt.template.process grunt.file.read(layout), {
-            data:
-              _head: _head
-              _nav: _nav
-              _foot: _foot
-              resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
-              content: content
-              meta: indexMeta
-              rootUrl: '../..'
-              resourcesUrl: '..'
-          }
-          grunt.file.write "app/resources/#{resourceName}/index.html", html
 
       case 'examQuestions'
         break
 
-      case 'pervasiveIdeas'
-        pervasiveIdeas = items
-        for pvid, data of items
 
-          meta = data.meta
- 
-          layout = getLayout sources, folder, meta
-
-          resources = sources.resources
-          resourceTypes = sources.resourceTypes
-          stations = sources.stations
-          content = getPervasiveIdeaData pvid, meta
-
-          html = grunt.template.process grunt.file.read(layout), {
-            data:
-              _piMenu: _piMenu
-              _head: _head
-              _nav: _nav
-              _foot: _foot
-              meta: meta
-              content: content
-              sources: sources
-              stations: stations
-              resources: resources
-              resourceTypes: resourceTypes
-              families: metadata.families
-              rootUrl: '..'
-              resourcesUrl: '../resources'
-          }
-
-          grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
-
-      case 'lines', 'resourceTypes'
-        noop = true
 
       case 'stations'
         for stid, meta of items
@@ -185,42 +210,6 @@ module.exports = (grunt) ->
     # return the metadata
     return metadata
 
-    #
-    # Generate a single html file
-    #
-    # function generateHTML(sources, folder, fileName, meta)
-
-    #   layout = getLayout sources, folder, meta
-    #   #grunt.log.debug "folder=#folder file=#fileName layout = #layout"
-    #   #_.each meta, (value, key)->grunt.log.debug "meta.key=#key"
-
-
-    #   if folder && folder.length > 0
-    #     content = grunt.file.read "#{partialsDir}/#{folder}/#{fileName}.html"
-    #     root = ".."
-    #     resources = '../resources'
-    #   else
-    #     content = grunt.file.read "#{partialsDir}/#{fileName}.html"
-    #     root = "."
-    #     resources = './resources'
-
-    #   html = grunt.template.process grunt.file.read(layout), {
-    #     data:
-    #       _head: _head
-    #       _nav: _nav
-    #       _foot: _foot
-    #       _linesMenu: _linesMenu
-    #       meta: meta
-    #       content: content
-    #       sources: sources
-    #       rootUrl: root
-    #       resourcesUrl: resources
-    #   }
-
-    #   if folder
-    #     grunt.file.write "#{appDir}/#{folder}/#{fileName}.html", html
-    #   else
-    #     grunt.file.write "#{appDir}/#{fileName}.html", html
 
     #
     # Generate line colours for less

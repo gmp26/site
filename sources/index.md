@@ -12,4 +12,4 @@ Reference list of resource types with icons?
 
 ###Feedback
 
-LinkedIn group link
+<a href="http://www.linkedin.com/groups?homeNewMember=&gid=5117369">LinkedIn discussion group</a>
