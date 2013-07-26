@@ -194,9 +194,10 @@ module.exports = (grunt) ->
     #
     for stid, rt13 of st13s
       rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
+      debugger
       rt13html = (rt13Sorted.map (eqid) ->
         grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
-      .join '<hr />'
+      .join "<hr />\n"
       resid = "#{stid}_RT13"
       grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
 
@@ -205,12 +206,11 @@ module.exports = (grunt) ->
         index:
           meta:
             id: resid
-            layout: 'resource'
+            layout: 'eqresource'
             resourceType: 'RT13'
       }
 
       # and into the station metadata
-      debugger
       R1s = stations[stid].meta?.R1s ? []
       R1s[*] = {
         id: resid
