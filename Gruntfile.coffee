@@ -487,6 +487,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "clearance"
+    "livescript"
+    "panda:pass1"
+    "expandMetadata"
+    "tubemap:png"
+    "panda:pass2"
+    "copy:assets"
+    "generator"
     "clean:dist"
     "copy:server"
     "useminPrepare"
@@ -499,7 +506,6 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", [
-    "clean:partials"
     "livescript"
     "panda:pass1"
     "expandMetadata"
