@@ -166,6 +166,7 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/guides/*.md"
           "<%= yeoman.sources %>/lines/*.md"
           "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/examQuestions/*/*"
           "<%= yeoman.sources %>/resources/*/*"
           "<%= yeoman.sources %>/resourceTypes/*.md"
           "<%= yeoman.sources %>/stations/*.md"
