@@ -193,13 +193,25 @@ module.exports = (grunt) ->
     # Create partial html for each station and pi RT13
     #
     for stid, rt13 of st13s
+
       rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
-      debugger
+
+      #
+      # TODO: Add in code here to limit number of questions per page to 10
+      #
+
       rt13html = (rt13Sorted.map (eqid) ->
         grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
       .join "<hr />\n"
+
+      # find next available RT13 slot
       resid = "#{stid}_RT13"
       grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
+
+      # 
+      # locate images to copy
+      #
+
 
       # add the new RT13 resource into the resource metadata
       resources[resid] = {
