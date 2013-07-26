@@ -39,7 +39,7 @@
 <% if(content.sidebar) { %>
       <h3>Relevance</h3>
 
-      <div class="station lineG">
+      <div class="station">
 <%   _.each(content.sidebar.stMetas, function(stMeta) { %>
         <p><a class="button<%=stMeta.line%>" href="<%= rootUrl %>/stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
 <%   }); %>

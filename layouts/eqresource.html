@@ -1,4 +1,4 @@
-<%   grunt.log.write("  exam question layout "+meta.id+"... "); %>
+<%   grunt.log.write("  resource layout "+meta.id+"... "); %>
 
 <%= _head %>
 <%= _nav %>
@@ -11,31 +11,10 @@
         <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
       </h1>
 
-      <div class="tabbable">
+<%= content.parts[0].html%>
 
-<% if(content.parts.length > 1) {%>
-        <ul class="nav nav-pills">
-<%   _.each(content.parts, function(cdata, index) { %>
-          <li <%=index==0?'class="active"':''%>>
-            <a href="#tab<%=index%>" data-toggle="tab">
-              <%= cdata.alias %>
-            </a>
-          </li>
-<%   }); %>
-        </ul>
-<% } %>
-      
-        <div class="tab-content">
-<%   _.each(content.parts, function(cdata, index) { %>
-          <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=index%>">
-            <%= cdata.html%>
-          </div>
-<%   }); %>
-        </div>
-      </div>
     </div>
-
-
+    
     <div id="sidebar" class="offset1 span3">
 <% if(content.sidebar) { %>
       <h3>Relevance</h3>
@@ -53,6 +32,28 @@
         </li>
 <%   }); %>
       </ul>
+
+<% if(content.sidebar.priorMetas) { %>
+      <h3>Look back</h3>
+      <ul class="unstyled priors">
+<%   _.each(content.sidebar.priorMetas, function(priorMeta) { %>
+        <li>
+          <span class="<%= priorMeta.rtMeta.icon%>"></span> <a href="../<%= priorMeta.id %>/index.html"><%= priorMeta.rtMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+<% }%>
+
+<% if(content.sidebar.laterMetas) { %>
+      <h3>Look forwards</h3>
+      <ul class="unstyled laters">
+<%   _.each(content.sidebar.laterMetas, function(laterMeta) { %>
+        <li>
+          <span class="<%= laterMeta.rtMeta.icon%>"></span> <a href="../<%= laterMeta.id %>/index.html"><%= laterMeta.rtMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+<% }%>
 
 <% } %>
     </div>

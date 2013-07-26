@@ -11,13 +11,12 @@ _ = grunt.util._
 # NB 'it' is a reserved word in livescript, meaning an unspecified parameter,
 # so passing (_it) from describe to allow 'it' to be overridden.
 #
-describe "Testing exam questions", (_it)->
-
-  var metadata
+describe "Testing isolate task", (_it) ->
 
   before ->
-    metadata := grunt.config.get "metadata"
+    grunt.log.ok "isolate test"
 
-  describe "dummy passing test", (_it) ->
-    it "should be false", ->
-      true.should.equal true
+  describe "token", (_it) ->
+    it "should be saved", ->
+      token = grunt.file.read ".isolate"
+      token.should.equal "(EQ1)|(G2)"

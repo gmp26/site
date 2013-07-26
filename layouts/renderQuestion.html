@@ -1,0 +1,22 @@
+      <div class="tabbable">
+
+<% if(content.length > 1) {%>
+        <ul class="nav nav-pills">
+<%   _.each(content, function(cdata, index) { %>
+          <li <%=index==0?'class="active"':''%>>
+            <a href="#tab<%=cdata.fileMeta.id%>_<%=index%>" data-toggle="tab">
+              <%= cdata.alias %>
+            </a>
+          </li>
+<%   }); %>
+        </ul>
+<% } %>
+      
+        <div class="tab-content">
+<%   _.each(content, function(cdata, index) { %>
+          <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=cdata.fileMeta.id%>_<%=index%>">
+              <%= cdata.html%>
+          </div>
+<%   }); %>
+        </div>
+      </div>

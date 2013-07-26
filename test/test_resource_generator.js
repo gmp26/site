@@ -96,8 +96,8 @@ global describe, it
       it("should not contain pvMetas", function(){
         return data1.sidebar.should.not.have.property('pvMetas');
       });
-      it("should have 1 part", function(){
-        return data1.parts.length.should.equal(1);
+      it("should have 2 parts", function(){
+        return data1.parts.length.should.equal(2);
       });
       it("should contain laterMetas in the sidebar", function(){
         should.exist(data1.sidebar.laterMetas);

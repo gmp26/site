@@ -35,9 +35,9 @@ global describe, it
         var pi, ref$;
         pi = pervasiveIdeas.PI1.meta;
         pi.should.have.property('R2s');
-        pi.R2s.length.should.equal(5);
+        pi.R2s.length.should.equal(6);
         pi.R2s[0].id.should.equal('G2_RT2');
-        return (ref$ = pi.R2s)[ref$.length - 1].id.should.equal('G2_RT7');
+        return (ref$ = pi.R2s)[ref$.length - 1].id.should.equal('G2_RT13');
       });
       return it("should list stations from R1s and R2s", function(){
         var pi;
