@@ -209,14 +209,14 @@ module.exports = (grunt) ->
             resourceType: 'RT13'
       }
 
-    # and into the station metadata
-    debugger
-    R1s = stations[stid].meta?.R1s ? []
-    R1s[*] = {
-      id: resid
-      rt: 'RT13'
-      highlight: null
-    }
+      # and into the station metadata
+      debugger
+      R1s = stations[stid].meta?.R1s ? []
+      R1s[*] = {
+        id: resid
+        rt: 'RT13'
+        highlight: null
+      }
 
     #
     # resources
