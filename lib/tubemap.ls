@@ -75,7 +75,7 @@ module.exports = (grunt) ->
       #dot = '/opt/local/bin/dot'
       #if grunt.file.exists dot
 
-      options = {cmd:'dot',args:['-Tsvg', "-o#{f.dest}", gvFile]}
+      options = {cmd:'dot',args:['-Tpng', "-o#{f.dest}", gvFile]}
       grunt.util.spawn options, (error, result, code) ->
         grunt.log.debug code
         if code != 0

@@ -123,6 +123,9 @@ module.exports = (grunt) ->
       svg:
         files:
           "app/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+      png:
+        files:
+          "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
 
     # Compile livescript
     livescript:
@@ -484,6 +487,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "clearance"
+    "livescript"
+    "panda:pass1"
+    "expandMetadata"
+    "tubemap:png"
+    "panda:pass2"
+    "copy:assets"
+    "generator"
     "clean:dist"
     "copy:server"
     "useminPrepare"
@@ -496,11 +506,10 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", [
-    "clean:partials"
     "livescript"
     "panda:pass1"
     "expandMetadata"
-    "tubemap"
+    "tubemap:png"
     "panda:pass2"
     "copy:assets"
     "generator"

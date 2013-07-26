@@ -3,6 +3,7 @@
 module.exports = (grunt) ->
 
   getLayout = (require './getLayout.js') grunt
+  fs = require 'fs'
 
   # simplify access to lodash
   _ = grunt.util._
@@ -199,19 +200,26 @@ module.exports = (grunt) ->
       #
       # TODO: Add in code here to limit number of questions per page to 10
       #
-
       rt13html = (rt13Sorted.map (eqid) ->
         grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
       .join "<hr />\n"
 
-      # find next available RT13 slot
-      resid = "#{stid}_RT13"
+      # TODO: page these
+      resid = "#{stid}_RT13_EQ"
       grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
 
       # 
       # locate images to copy
       #
-
+      for eqid in rt13Sorted
+        dirFiles = fs.readdirSync "#{sourcesDir}/examQuestions/#{eqid}"
+        for f in dirFiles
+          ext = f.substr(-4)
+          if ('.png.gif.jpg.jpeg.PNG.GIF.JPG.JPEG').indexOf(ext) >= 0
+            # copy it to the resource directory
+            grunt.log.ok "#eqid -> #f"
+            grunt.file.copy "#{sourcesDir}/examQuestions/#{eqid}/#f", 
+            "#{appDir}/resources/#{resid}/#f"
 
       # add the new RT13 resource into the resource metadata
       resources[resid] = {
