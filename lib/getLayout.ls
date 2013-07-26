@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     prefix = 'layouts/'
     postfix = '.html'
 
-    layout = meta.layout
+    layout = meta?.layout
     if !layout
       layout = if !folder
         'home'

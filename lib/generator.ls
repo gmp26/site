@@ -25,6 +25,7 @@ module.exports = (grunt) ->
     families = metadata.families
     pervasiveIdeas = sources.pervasiveIdeas
     pervasiveIdeasHome = sources.pervasiveIdeasHome
+    examQuestions = sources.examQuestions
     resources = sources.resources
     resourceTypes = sources.resourceTypes
     stations = sources.stations
@@ -40,6 +41,7 @@ module.exports = (grunt) ->
     _linesMenu = grunt.file.read "layouts/_linesMenu.html"
     _piMenu = grunt.file.read "layouts/_piMenu.html"
     
+    getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir, 'examQuestions'
     getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
     getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
 
@@ -155,25 +157,66 @@ module.exports = (grunt) ->
     #       meta: 
     #         alias: Solution
 
-    /*
+    #
+    # Render individual questions to partialsDir
+    #
+    st13s = {}
+    pi13s = {}
     for eqid, data of examQuestions
       indexMeta = data.index?.meta
-      solutionMeta = data.solution?.meta
-      layout = getLayout sources, 'examQuestion', indexMeta
-      content = getExamQuestionData eqid, data, indexMeta
+      layout = getLayout sources, 'renderQuestion', null
+      content = getExamQuestionPartData eqid, data, indexMeta
       html = grunt.template.process grunt.file.read(layout), {
         data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
           content: content
-          meta: indexMeta
-          solutionMeta: solutionMeta
           rootUrl: '../..'
           resourcesUrl: '..'
       }
-      grunt.file.write "app/examQuestions/#{eqid}/index.html", html
-    */
+      grunt.file.write "#{partialsDir}/renderedQuestions/#{eqid}/index.html", html
+
+      #
+      # Collect eqids by station and pervasiveIdea
+      #
+      if indexMeta.stids1?
+        for id in (indexMeta.stids1)
+          st13s[id] ?= {}
+          rt13 = st13s[id]
+          rt13[eqid] = true
+
+      if indexMeta.pvids1?
+        for id in (indexMeta.pvids1)
+          pi13s[id] ?= {}
+          rt13 = pi13s[id]
+          rt13[eqid] = true
+
+    #
+    # Create partial html for each station and pi RT13
+    #
+    for stid, rt13 of st13s
+      rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
+      rt13html = (rt13Sorted.map (eqid) ->
+        grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
+      .join '<hr />'
+      resid = "#{stid}_RT13"
+      grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
+
+      # add the new RT13 resource into the resource metadata
+      resources[resid] = {
+        index:
+          meta:
+            id: resid
+            layout: 'resource'
+            resourceType: 'RT13'
+      }
+
+    # and into the station metadata
+    debugger
+    R1s = stations[stid].meta?.R1s ? []
+    R1s[*] = {
+      id: resid
+      rt: 'RT13'
+      highlight: null
+    }
 
     #
     # resources
@@ -193,7 +236,7 @@ module.exports = (grunt) ->
           rootUrl: '../..'
           resourcesUrl: '..'
       }
-      grunt.file.write "app/resources/#{resourceName}/index.html", html
+      grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
 
 
 
@@ -221,7 +264,6 @@ module.exports = (grunt) ->
 
       grunt.file.write "#{appDir}/stations/#{stid}.html", html
 
-    
     generateLess sources
 
     # return the metadata
