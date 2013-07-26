@@ -123,6 +123,9 @@ module.exports = (grunt) ->
       svg:
         files:
           "app/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+      png:
+        files:
+          "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
 
     # Compile livescript
     livescript:
@@ -500,7 +503,7 @@ module.exports = (grunt) ->
     "livescript"
     "panda:pass1"
     "expandMetadata"
-    "tubemap"
+    "tubemap:png"
     "panda:pass2"
     "copy:assets"
     "generator"

@@ -199,13 +199,12 @@ module.exports = (grunt) ->
       #
       # TODO: Add in code here to limit number of questions per page to 10
       #
-
       rt13html = (rt13Sorted.map (eqid) ->
         grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
       .join "<hr />\n"
 
-      # find next available RT13 slot
-      resid = "#{stid}_RT13"
+      # TODO: page these
+      resid = "#{stid}_RT13_EQ"
       grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
 
       # 
