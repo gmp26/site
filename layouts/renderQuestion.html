@@ -5,7 +5,7 @@
 <%   _.each(content, function(cdata, index) { %>
           <li <%=index==0?'class="active"':''%>>
             <a href="#tab<%=cdata.fileMeta.id%>_<%=index%>" data-toggle="tab">
-              <%= cdata.alias %>
+              <%= index==0? '!!Problem!!' : cdata.alias %>
             </a>
           </li>
 <%   }); %>
@@ -15,6 +15,13 @@
         <div class="tab-content">
 <%   _.each(content, function(cdata, index) { %>
           <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=cdata.fileMeta.id%>_<%=index%>">
+
+<% if(reference && reference.ref && reference.ack) { %>
+              <div class="alert alert-info">
+                CMEP <%= eqid %>, <%= reference.ref %>, <br /><%= reference.ack %>
+              </div>
+<% } %>
+
               <%= cdata.html%>
           </div>
 <%   }); %>
