@@ -183,6 +183,8 @@ module.exports = (grunt) ->
       #
       # TODO: Add in code here to limit number of questions per page to 10 (or 5?)
       #
+      grunt.log.debug "createStationRT13s: #stid #resid"
+
       rt13html = ""
       i = 0
       for eqid in rt13Sorted
@@ -200,7 +202,7 @@ module.exports = (grunt) ->
           ext = f.substr(-4)
           if ('.png.gif.jpg.jpeg.PNG.GIF.JPG.JPEG').indexOf(ext) >= 0
             # copy it to the resource directory
-            grunt.log.ok "#eqid -> #f"
+            grunt.log.debug "#eqid -> #f"
             grunt.file.copy "#{sourcesDir}/examQuestions/#{eqid}/#f", 
             "#{appDir}/resources/#{resid}/#f"
 
@@ -224,7 +226,7 @@ module.exports = (grunt) ->
         highlight: null
       }
       insertAt = _.sortedIndex R1s, resMeta, (meta) -> +meta.rt.substr(2)+meta.id[*-1]/10
-      stations[stid].meta.R1s.splice insertAt, 0, resMeta
+      stations[stid].meta.R1s = R1s.splice insertAt, 0, resMeta
 
 
     #
@@ -237,6 +239,7 @@ module.exports = (grunt) ->
     for eqid, data of examQuestions
       indexMeta = data.index?.meta
       layout = getLayout sources, 'renderQuestion', null
+      grunt.log.debug "Calling getExamQuestionPart #eqid"
       content = getExamQuestionPartData eqid, data, indexMeta
       content.0.alias = "#{eqid}"
       html = grunt.template.process grunt.file.read(layout), {
