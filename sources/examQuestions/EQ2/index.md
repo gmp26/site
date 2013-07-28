@@ -1,7 +1,7 @@
 ````
 alias: Problem
 source: NRICH
-layout: examQuestion
+layout: resource
 clearance: 0
 keywords: wibble wobble
 year: 1805

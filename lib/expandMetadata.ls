@@ -258,6 +258,10 @@ module.exports = (grunt) ->
       if _.isString(dependencies) && stations[dependencies]?
         dependencies = [dependencies]
 
+      # filter out any dependencies that do not exist
+      dependencies = _.filter dependencies, (stid) -> stations[stid]?
+      station.meta.dependencies = dependencies
+
       # otherwise we must have an array of dependencies
       grunt.fatal "#id dependencies must be a list" if dependencies && !_.isArray dependencies
 
