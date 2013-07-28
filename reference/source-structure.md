@@ -30,8 +30,8 @@ resources
 * publication status:
 * resourceType: one only
 * highlight: boolean or a list of stations
-* stations1: primary list of stations, comma separated
-* stations2: secondary list of stations, comma separated
+* stations1: primary list of stations
+* stations2: secondary list of stations
 * pideas1: primary list of pervasive ideas
 * pideas2: secondary list of pervasive ideas
 
@@ -43,8 +43,8 @@ examQuestions
 * paper
 * qno
 * highlight: boolean or a list of stations
-* stids1: primary list of stations, comma separated
-* stids2: secondary list of stations, comma separated
+* stids1: primary list of stations
+* stids2: secondary list of stations
 * pideas1: primary list of pervasive ideas
 * pideas2: secondary list of pervasive ideas
 

@@ -15,7 +15,7 @@ mountFolder = (connect, dir) ->
 
 module.exports = (grunt) ->
 
-  examQuestions = (require './lib/examQuestions.js')(grunt)
+  #examQuestions = (require './lib/examQuestions.js')(grunt)
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
@@ -48,10 +48,7 @@ module.exports = (grunt) ->
     stripMeta:
       dev:
         options:
-          process:
-            data: {
-              #examQuestions: (s) -> examQuestions(s)
-            }
+          process: false
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
           strippedPath: "<%= yeoman.partials %>/stripped.yaml"
@@ -79,10 +76,7 @@ module.exports = (grunt) ->
         ]
       pass2:
         options:
-          process:
-            data: {
-              examQuestions: (s) -> examQuestions(s)
-            }
+          process: false
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -158,7 +152,7 @@ module.exports = (grunt) ->
 
       dev:
         files: [
-          "lib/*.ls"
+          "lib/*.js"
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
           "<%= yeoman.sources %>/map.md"

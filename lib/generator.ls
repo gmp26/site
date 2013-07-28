@@ -159,24 +159,98 @@ module.exports = (grunt) ->
     #         alias: Solution
 
     #
+    # Read in acknowledgements
+    #
+    acks = grunt.file.readYAML "#{sourcesDir}/examQuestions/sources.yaml"
+
+    #
     # Render individual questions to partialsDir
     #
+    referenceFor = (qmeta) -> {
+      ref: [
+        qmeta.source ? eqid
+        qmeta.year ? "null"
+        qmeta.paper ? "null"
+        qmeta.qno ? "null"
+      ].join ', '
+      ack: if qmeta.source then acks[qmeta.source].acknowledgement else void
+    }
+
+    #
+    # Create a new resourceId for a station from a collection of rendered questions
+    #
+    createStationRT13s = (stid, rt13Sorted, resid) ->
+      #
+      # TODO: Add in code here to limit number of questions per page to 10 (or 5?)
+      #
+      rt13html = ""
+      i = 0
+      for eqid in rt13Sorted
+        rt13html += (grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html").replace "!!Problem!!", "#{++i}"
+
+
+      grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
+
+      # 
+      # locate images to copy
+      #
+      for eqid in rt13Sorted
+        dirFiles = fs.readdirSync "#{sourcesDir}/examQuestions/#{eqid}"
+        for f in dirFiles
+          ext = f.substr(-4)
+          if ('.png.gif.jpg.jpeg.PNG.GIF.JPG.JPEG').indexOf(ext) >= 0
+            # copy it to the resource directory
+            grunt.log.ok "#eqid -> #f"
+            grunt.file.copy "#{sourcesDir}/examQuestions/#{eqid}/#f", 
+            "#{appDir}/resources/#{resid}/#f"
+
+      # insert the new RT13 resource into the resource metadata
+      resources[resid] = {
+        index:
+          meta:
+            id: resid
+            stids1: [
+              stid
+            ]
+            layout: 'eqresource'
+            resourceType: 'RT13'
+      }
+
+      # insert the new resource in the station metadata
+      R1s = stations[stid].meta?.R1s ? []
+      resMeta = {
+        id: resid
+        rt: 'RT13'
+        highlight: null
+      }
+      insertAt = _.sortedIndex R1s, resMeta, (meta) -> +meta.rt.substr(2)+meta.id[*-1]/10
+      stations[stid].meta.R1s.splice insertAt, 0, resMeta
+
+
+    #
+    # Scan examQuestions to create rendered Questions
+    #
+
     st13s = {}
     pi13s = {}
+
     for eqid, data of examQuestions
       indexMeta = data.index?.meta
       layout = getLayout sources, 'renderQuestion', null
       content = getExamQuestionPartData eqid, data, indexMeta
+      content.0.alias = "#{eqid}"
       html = grunt.template.process grunt.file.read(layout), {
         data:
           content: content
+          reference: referenceFor indexMeta
+          eqid: eqid
           rootUrl: '../..'
           resourcesUrl: '..'
       }
       grunt.file.write "#{partialsDir}/renderedQuestions/#{eqid}/index.html", html
 
       #
-      # Collect eqids by station and pervasiveIdea
+      # Collect eqids by station and by pervasiveIdea
       #
       if indexMeta.stids1?
         for id in (indexMeta.stids1)
@@ -197,68 +271,14 @@ module.exports = (grunt) ->
 
       rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
 
-      #
-      # TODO: Add in code here to limit number of questions per page to 10
-      #
-      rt13html = (rt13Sorted.map (eqid) ->
-        grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html")
-      .join "<hr />\n"
+      # TODO: paginate instead of truncate
+      # rt13Sorted = _.filter rt13Sorted, (data, index) -> index < 9
 
-      # TODO: page these
-      resid = "#{stid}_RT13_EQ"
-      grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
-
-      # 
-      # locate images to copy
-      #
-      for eqid in rt13Sorted
-        dirFiles = fs.readdirSync "#{sourcesDir}/examQuestions/#{eqid}"
-        for f in dirFiles
-          ext = f.substr(-4)
-          if ('.png.gif.jpg.jpeg.PNG.GIF.JPG.JPEG').indexOf(ext) >= 0
-            # copy it to the resource directory
-            grunt.log.ok "#eqid -> #f"
-            grunt.file.copy "#{sourcesDir}/examQuestions/#{eqid}/#f", 
-            "#{appDir}/resources/#{resid}/#f"
-
-      # add the new RT13 resource into the resource metadata
-      resources[resid] = {
-        index:
-          meta:
-            id: resid
-            layout: 'eqresource'
-            resourceType: 'RT13'
-      }
-
-      # and into the station metadata
-      R1s = stations[stid].meta?.R1s ? []
-      R1s[*] = {
-        id: resid
-        rt: 'RT13'
-        highlight: null
-      }
-
-    #
-    # resources
-    #
-    for resourceName, files of resources
-      indexMeta = files.index.meta
-      layout = getLayout sources, 'resources', indexMeta
-      content = getResourceData resourceName, files, indexMeta
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
-          content: content
-          meta: indexMeta
-          rootUrl: '../..'
-          resourcesUrl: '..'
-      }
-      grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
-
-
+      # chop into max 5 questions per page
+      partition = _.groupBy rt13Sorted, (val, index)->Math.floor(index / 5)
+      for key, subset of partition
+        resid = "#{stid}_RT13_EQ_#{key}"
+        createStationRT13s stid, subset, resid
 
     #
     # stations
@@ -283,6 +303,26 @@ module.exports = (grunt) ->
       }
 
       grunt.file.write "#{appDir}/stations/#{stid}.html", html
+
+    #
+    # resources
+    #
+    for resourceName, files of resources
+      indexMeta = files.index.meta
+      layout = getLayout sources, 'resources', indexMeta
+      content = getResourceData resourceName, files, indexMeta
+      html = grunt.template.process grunt.file.read(layout), {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
+          content: content
+          meta: indexMeta
+          rootUrl: '../..'
+          resourcesUrl: '..'
+      }
+      grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
 
     generateLess sources
 

@@ -37,6 +37,7 @@ module.exports = (grunt, sources, partialsDir, folder) ->
         content[*] = {
           fileName: fileName
           fileMeta: file.meta
+          indexMeta: indexMeta
           alias: aliasOf fileName, file.meta
           html: grunt.file.read "#{pDir}/#{folder}/#{rName}/#{fileName}.html"
         }
