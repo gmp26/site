@@ -19,10 +19,12 @@
               <%= cdata.html%>
 
 <% if(reference && reference.ref && reference.ack) { %>
-              <div class="alert alert-info">
-                <%= reference.ack %>
+              <div class="muted eq-ack">
+                <%= reference.ref %>. <br /><%= reference.ack %>
               </div>
 <% } %>
+
+              <div class="eq-separator"></div>
 
           </div>
 <%   }); %>

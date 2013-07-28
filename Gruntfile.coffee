@@ -72,7 +72,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
         ]
       pass2:
         options:
@@ -83,7 +83,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*"]
+          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
           dest: "<%= yeoman.partials %>/"
           ext: ".html"
         ]

@@ -168,10 +168,9 @@ module.exports = (grunt) ->
     #
     referenceFor = (qmeta) -> {
       ref: [
-        qmeta.source ? eqid
-        qmeta.year ? "null"
         qmeta.paper ? "null"
-        qmeta.qno ? "null"
+        qmeta.year ? "null"
+        if qmeta.qno then "Q#{qmeta.qno}" else "null"
       ].join ', '
       ack: if qmeta.source then acks[qmeta.source].acknowledgement else void
     }
@@ -226,7 +225,7 @@ module.exports = (grunt) ->
         highlight: null
       }
       insertAt = _.sortedIndex R1s, resMeta, (meta) -> +meta.rt.substr(2)+meta.id[*-1]/10
-      stations[stid].meta.R1s = R1s.splice insertAt, 0, resMeta
+      R1s.splice insertAt, 0, resMeta
 
 
     #
@@ -291,6 +290,10 @@ module.exports = (grunt) ->
 
       meta = data.meta
       layout = getLayout sources, 'stations', meta
+
+      if stid=='G2'
+        debugger
+
       html = grunt.template.process grunt.file.read(layout), {
         data:
           _head: _head
