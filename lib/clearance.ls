@@ -18,6 +18,7 @@ module.exports = (grunt) ->
     # save the (new) clearance level
     grunt.log.ok "Clearance level "+target
     grunt.file.write clearanceFile, ""+target
+    grunt.config.set "clearanceLevel", +target
 
     # switch config to use appropriate source directory
     grunt.config.set "yeoman.sources", if target < 0

@@ -2,7 +2,7 @@
 alias: Problem
 source: NRICH
 layout: resource
-clearance: 0
+clearance: 3
 keywords: wibble wobble
 year: 1805
 paper: A level maths

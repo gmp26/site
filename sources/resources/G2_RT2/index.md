@@ -1,7 +1,7 @@
 ````
 alias: Problem
 layout: resource
-clearance: 0
+clearance: 3
 keywords:
   - giraffe
   - pineapple

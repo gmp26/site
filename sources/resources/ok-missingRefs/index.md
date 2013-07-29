@@ -1,6 +1,6 @@
 ````
 layout: resource
-clearance: 0
+clearance: 3
 keywords:
   - straight line
   - equation

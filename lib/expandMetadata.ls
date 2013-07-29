@@ -51,6 +51,36 @@ module.exports = (grunt) ->
     resources = sources.resources
     resourceTypes = sources.resourceTypes
     lines = sources.lines
+    examQuestions = sources.examQuestions
+
+    #
+    # Apply clearance filters
+    #
+    clearanceLevel = grunt.config.get "clearanceLevel"
+
+    # To test clearanceLevel in sample sources, set it here
+    clearanceLevel = 3
+
+    if clearanceLevel > 0
+
+      grunt.log.ok "Clearance Level = #clearanceLevel"
+
+      for id, file of resources
+        fileClearance = +(file.index?.meta?.clearance ? 0)
+        censor = fileClearance < clearanceLevel
+        if censor
+          grunt.log.ok "censoring resource #id"
+          delete resources[id]
+        sources.resources = resources
+
+      for id, file of examQuestions
+        fileClearance = +(file.index?.meta?.clearance ? 0)
+        censor = fileClearance < clearanceLevel
+        if censor
+          grunt.log.ok "censoring exam question #id"
+          delete examQuestions[id]
+        sources.examQuestions = examQuestions
+
 
     #
     # Make sure all lines have a valid id and colour
