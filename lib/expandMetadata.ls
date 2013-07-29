@@ -59,7 +59,7 @@ module.exports = (grunt) ->
     clearanceLevel = grunt.config.get "clearanceLevel"
 
     # To test clearanceLevel in sample sources, set it here
-    clearanceLevel = 3
+    # clearanceLevel = 3
 
     if clearanceLevel > 0
 
@@ -80,6 +80,15 @@ module.exports = (grunt) ->
           grunt.log.ok "censoring exam question #id"
           delete examQuestions[id]
         sources.examQuestions = examQuestions
+
+      for id, data of stations
+        # stations with no clearance level default to being cleared
+        fileClearance = +(data.meta?.clearance ? 100)
+        censor = fileClearance < clearanceLevel
+        if censor
+          grunt.log.ok "censoring station #id"
+          delete stations[id]
+        sources.stations = stations
 
 
     #

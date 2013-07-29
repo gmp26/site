@@ -224,7 +224,18 @@ module.exports = (grunt) ->
         rt: 'RT13'
         highlight: null
       }
-      insertAt = _.sortedIndex R1s, resMeta, (meta) -> +meta.rt.substr(2)+meta.id[*-1]/10
+      insertAt = _.sortedIndex R1s, resMeta, (meta) ->
+
+        if meta.id? && _.isString meta.id
+          m = meta.id.match /_(\d+)$/
+          if m != null
+            idWeight = +m[1]/10
+          else
+            idWeight = 0
+ 
+        weight =  +meta.rt.substr(2)+ idWeight
+        grunt.log.error "SORT sorting #{meta.id} on weight #weight"
+        +meta.rt.substr(2)+idWeight
       R1s.splice insertAt, 0, resMeta
 
 

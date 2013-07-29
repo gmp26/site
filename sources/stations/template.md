@@ -1,6 +1,7 @@
 ````
 id: NA1 (optional = omit if same as filename and url)
 title: A question
+clearance: A clearance level (defaults to level 100)
 dependencies:
 	- a dependency
 layout: station
