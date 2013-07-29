@@ -29,6 +29,7 @@ module.exports = (grunt) ->
     examQuestions = sources.examQuestions
     resources = sources.resources
     resourceTypes = sources.resourceTypes
+    resourceTypesHome = sources.resourceTypesHome
     stations = sources.stations
 
     sourcesDir = grunt.config.get "yeoman.sources"
@@ -107,6 +108,26 @@ module.exports = (grunt) ->
       resourcesUrl: './resources'
     }
     grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
+
+    #
+    # resourceTypesHome
+    #
+    meta = resourceTypesHome.meta
+    layout = getLayout sources, null, meta
+
+    html = grunt.template.process grunt.file.read(layout), {
+    data:
+      _head: _head
+      _nav: _nav
+      _foot: _foot
+      content: grunt.file.read "#{partialsDir}/resourceTypesHome.html"
+      meta: meta
+      families: families
+      resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
+      rootUrl: '.'
+      resourcesUrl: './resources'
+    }
+    grunt.file.write "#{appDir}/resourceTypesHome.html", html
 
     #
     # pervasiveIdeas
