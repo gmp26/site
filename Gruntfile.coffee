@@ -9,6 +9,8 @@ isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
 stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
+pass2Utils = require('./lib/pass2Utils.js')
+
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -76,7 +78,7 @@ module.exports = (grunt) ->
         ]
       pass2:
         options:
-          process: false
+          process: pass2Utils
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"

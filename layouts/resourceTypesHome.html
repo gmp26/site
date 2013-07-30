@@ -14,9 +14,8 @@
       <%= content %>
 
       <ul class="unstyled">
-<% _.each(resourceTypes, function(data, id) { 
-  m = data.meta
-%>
+<% _.each(resourceTypes, function(data, id) { %>
+<%   var m = data.meta %>
         <li>
           <span class="<%=m.icon%>"></span> <%= m.title %>
         </li>
