@@ -13,5 +13,3 @@ pvids2:
   - PI1
 
 ````
-
-<%= examQuestions('G2') %>
