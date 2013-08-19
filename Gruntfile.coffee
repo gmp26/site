@@ -142,6 +142,7 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
+
     # Watch 
     watch:
       recess:
@@ -154,7 +155,7 @@ module.exports = (grunt) ->
 
       dev:
         files: [
-          "lib/*.js"
+          "lib/*.ls"
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
           "<%= yeoman.sources %>/map.md"

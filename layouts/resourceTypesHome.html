@@ -7,21 +7,59 @@
 <div class="container">
   <div class="row">
 
-
     <div id="main" class="offset1 span10">
       <h1>Resource Types</h1>
 
       <%= content %>
 
-      <ul class="unstyled">
+<!--       <dl>
 <% _.each(resourceTypes, function(data, id) { %>
 <%   var m = data.meta %>
-        <li>
+        <dt>
           <span class="<%=m.icon%>"></span> <%= m.title %>
-        </li>
+        </dt>
+<% if(m.description) { %>
+          <dd>
+            <%= m.description %>
+          </dd>
+<% } %> 
+        </dd>
 
 <% }) %>
-      </ul>
+      </dl>
+
+ -->
+      <div id="rtAcc" class="accordion">
+<% _.each(resourceTypes, function(data, id) { %>
+<%   var m = data.meta %>
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#rtAcc" href="#<%=m.id%>">
+              <h4><span class="<%=m.icon%>"></span> <%= m.title %></h4>
+            </a>
+          </div>
+          <div id="<%=m.id%>" class="accordion-body collapse">
+            <div class="accordion-inner">
+<%   if(m.description) { %>
+              <p>
+                <%= m.description %>
+              </p>
+<%   } %> 
+            </div>
+          </div>
+        </div>
+<% }); %>        
+      </div>
+
+
+
+
+
+
+
+
 
     </div>
 

@@ -23,14 +23,14 @@ module.exports = (grunt, sources, partialsDir) ->
       if _.isArray(stids1) && stids1.length > 0
         rv ?= {}
         rv.stMetas = _.sortBy (_.map stids1, (id)->
-          grunt.log.error "DEBUG: resourceName = #resourceName id = #id"
+          #grunt.log.error "DEBUG: resourceName = #resourceName id = #id"
           sources.stations[id].meta), (.weight)
 
       pvids1 = indexMeta.pvids1
       if _.isArray(pvids1) && pvids1.length > 0
         rv ?= {}
         rv.pvMetas = _.map pvids1, (id)->sources.pervasiveIdeas[id].meta
-
+        
       priors = indexMeta.priors
       if _.isArray(priors) && priors.length > 0
         rv ?= {}

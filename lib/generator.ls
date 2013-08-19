@@ -200,10 +200,11 @@ module.exports = (grunt) ->
     # Create a new resourceId for a station from a collection of rendered questions
     #
     createStationRT13s = (stid, rt13Sorted, resid) ->
-      #
-      # TODO: Add in code here to limit number of questions per page to 10 (or 5?)
-      #
-      grunt.log.debug "createStationRT13s: #stid #resid"
+
+      # grunt.log.error "createStationRT13s: #stid #resid"
+      # for i, r in rt13Sorted
+      #   grunt.log.error "#i: #r"
+
 
       rt13html = ""
       i = 0
@@ -255,7 +256,7 @@ module.exports = (grunt) ->
             idWeight = 0
  
         weight =  +meta.rt.substr(2)+ idWeight
-        grunt.log.error "SORT sorting #{meta.id} on weight #weight"
+        #grunt.log.error "SORT sorting #{meta.id} on weight #weight"
         +meta.rt.substr(2)+idWeight
       R1s.splice insertAt, 0, resMeta
 

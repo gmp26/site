@@ -8,6 +8,12 @@ module.exports = (grunt) ->
   # register clearance task
   grunt.registerTask "clearance", "set or get the clearance level", (target) ->
     clearanceFile = ".clearance"
+
+    old = if grunt.file.exists clearanceFile
+      grunt.file.read clearanceFile
+    else
+      void
+
     if !target?
       target = if grunt.file.exists clearanceFile
         grunt.file.read clearanceFile
@@ -27,3 +33,7 @@ module.exports = (grunt) ->
       grunt.config.get "yeoman.content"
     grunt.log.ok "Content directory is "+grunt.config.get "yeoman.sources"
 
+    if target != +old
+      grunt.log.writeln '\n'+ '* ' * 25
+      grunt.log.writeln '* * * Level changed!  Now run `grunt clean` * * *'
+      grunt.log.writeln '* ' * 25
