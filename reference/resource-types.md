@@ -129,19 +129,6 @@ Something for students to get stuck into.  It might start with just an interesti
 
 ***
 
-Classic problem
----------------
-
-RT10
-
-This is a problem that we think that all students should experience.  This might be because it is somehow 'iconic' or 'quintessential', or because it illustrates something so beautifully, or because it is a 'once-in-a-lifetime' problem (one that everyone should do once, but that is never quite so fresh or startling again).  These are good for developing a shared mathematical culture and repertoire.
-
-###Examples
-* [Got it!](http://nrich.maths.org/1272)
-* Sasha's collection of problems
-
-***
-
 Fluency exercises
 ----------------
 
@@ -151,6 +138,7 @@ A bank of routine exercises (perhaps randomly generated) that students can use t
 
 ###Examples
 * [Mathmo](http://nrich.maths.org/mathmoApp/#/mathmo)
+* [Diamond collector](http://nrich.maths.org/5725)
 
 ***
 
