@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = 
+module.exports = (grunt) ->
 
   #
   # Data to pass to lodash templates in pass2

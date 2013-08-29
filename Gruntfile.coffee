@@ -9,7 +9,6 @@ isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
 stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
-pass2Utils = require('./lib/pass2Utils.js')
 
 
 mountFolder = (connect, dir) ->
@@ -17,6 +16,7 @@ mountFolder = (connect, dir) ->
 
 module.exports = (grunt) ->
 
+  pass2Utils = (require './lib/pass2Utils.js')(grunt)
   #examQuestions = (require './lib/examQuestions.js')(grunt)
 
   # load all grunt tasks
