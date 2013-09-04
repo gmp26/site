@@ -1,8 +1,57 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
+
+html, body {
+  /* padding-top: 80px; move this for sticky footer */
+  height: 100%;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+@footer-height: 250px;
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -@footer-height;
+  padding-top:80px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: @footer-height;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  overflow: scroll;
+}
+#footer {
+  background-color: #000;
+  color: white;
+}
+
+@import "../bower_components/bootstrap/less/responsive.less"; // Don't forget to comment lines 22 to remove the second import call to **mixin.less**
 @import "lineVars.less";
 
-body {
-  padding-top: 80px;
+
+@media (max-width: 979px) {
+  #wrap {
+    padding-top:0;
+  }
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 ol {
@@ -21,7 +70,6 @@ ol {
   }
 }
 
-@import "../bower_components/bootstrap/less/responsive.less"; // Don't forget to comment lines 22 to remove the second import call to **mixin.less**
 
 @import "../bower_components/font-awesome/less/font-awesome.less";
 @FontAwesomePath: "../fonts";
@@ -155,13 +203,14 @@ hr:after {
 figure img {
     display:inline-block;
     width: 100%;
+    zoom: 80%;
 }
 
 figure {
     text-align: center;
     display: inline-block;
     max-width: 75%; 
-    margin: 10px auto;
+    margin: 10px auto @footer-height;
 }
 
 .grow1 figure {
