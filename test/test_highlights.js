@@ -26,7 +26,8 @@ global describe, it
     });
     describe("A1", function(_it){
       return it("should have no dependencies", function(){
-        return should.not.exist(estations.A1.meta.dependencies);
+        estations.A1.meta.dependencies.should.be.a('array');
+        return estations.A1.meta.dependencies.length.should.equal(0);
       });
     });
     describe("A1", function(_it){

@@ -32,7 +32,8 @@ describe "Testing highlights expansion", (_it)->
 
   describe "A1", (_it) ->
     it "should have no dependencies", ->
-      should.not.exist(estations.A1.meta.dependencies)
+      estations.A1.meta.dependencies.should.be.a 'array'
+      estations.A1.meta.dependencies.length.should.equal 0
 
   describe "A1", (_it) ->
     it "should not have highlighted G2_RT7", ->
