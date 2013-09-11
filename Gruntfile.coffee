@@ -158,6 +158,8 @@ module.exports = (grunt) ->
           "lib/*.ls"
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
+          "<%= yeoman.sources %>/privacy.md"
+          "<%= yeoman.sources %>/cookies.md"
           "<%= yeoman.sources %>/map.md"
           "<%= yeoman.sources %>/pervasiveIdeasHome.md"
           "<%= yeoman.sources %>/guides/*.md"

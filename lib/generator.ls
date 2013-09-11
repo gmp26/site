@@ -47,6 +47,43 @@ module.exports = (grunt) ->
     getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
     getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
 
+
+    generateTopLevelPage = (fname, ...moreData) ->
+      meta = sources[fname].meta
+      layout = getLayout sources, null, meta
+      data = {
+        data:
+          _head: _head
+          _nav: _nav
+          _foot: _foot
+          meta: meta
+          content: grunt.file.read "#{partialsDir}/#{fname}.html"
+          sources: sources
+          rootUrl: '.'
+          resourcesUrl: './resources'
+      }
+      if moreData?
+        _.extend data.data, moreData.0
+
+      html = grunt.template.process grunt.file.read(layout), data
+      grunt.file.write "#{appDir}/#{fname}.html", html 
+
+
+    #
+    # Call the html generators
+    #
+    generateTopLevelPage 'index'
+    generateTopLevelPage 'map' do
+      _linesMenu: _linesMenu
+    generateTopLevelPage 'index'
+    generateTopLevelPage 'pervasiveIdeasHome' do
+      families: families
+      pervasiveIdeas: pervasiveIdeas
+    generateTopLevelPage 'resourceTypesHome' do
+      resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
+    generateTopLevelPage 'privacy'
+    generateTopLevelPage 'cookies'
+
     #
     # Call the html generators
     #
@@ -54,80 +91,80 @@ module.exports = (grunt) ->
     #
     # index (home)
     #
-    meta = sources.index.meta
-    layout = getLayout sources, null, meta
-    html = grunt.template.process grunt.file.read(layout), {
-      data:
-        _head: _head
-        _nav: _nav
-        _foot: _foot
-        meta: meta
-        content: grunt.file.read "#{partialsDir}/index.html"
-        sources: sources
-        rootUrl: '.'
-        resourcesUrl: './resources'
-    }
-    grunt.file.write "#{appDir}/index.html", html 
+    # meta = sources.index.meta
+    # layout = getLayout sources, null, meta
+    # html = grunt.template.process grunt.file.read(layout), {
+    #   data:
+    #     _head: _head
+    #     _nav: _nav
+    #     _foot: _foot
+    #     meta: meta
+    #     content: grunt.file.read "#{partialsDir}/index.html"
+    #     sources: sources
+    #     rootUrl: '.'
+    #     resourcesUrl: './resources'
+    # }
+    # grunt.file.write "#{appDir}/index.html", html 
 
     #
     # map
     #
-    meta = sources['map'].meta
-    layout = getLayout sources, null, meta
-    content = grunt.file.read "#{partialsDir}/map.html"
+    # meta = sources['map'].meta
+    # layout = getLayout sources, null, meta
+    # content = grunt.file.read "#{partialsDir}/map.html"
 
-    html = grunt.template.process grunt.file.read(layout), {
-      data:
-        _head: _head
-        _nav: _nav
-        _foot: _foot
-        _linesMenu: _linesMenu
-        meta: meta
-        content: content
-        sources: sources
-        rootUrl: '.'
-        resourcesUrl: './resources'
-    }
-    grunt.file.write "#{appDir}/map.html", html
+    # html = grunt.template.process grunt.file.read(layout), {
+    #   data:
+    #     _head: _head
+    #     _nav: _nav
+    #     _foot: _foot
+    #     _linesMenu: _linesMenu
+    #     meta: meta
+    #     content: content
+    #     sources: sources
+    #     rootUrl: '.'
+    #     resourcesUrl: './resources'
+    # }
+    # grunt.file.write "#{appDir}/map.html", html
 
     #
     # pervasiveIdeasHome
     #
-    meta = pervasiveIdeasHome.meta
-    layout = getLayout sources, null, meta
-    html = grunt.template.process grunt.file.read(layout), {
-    data:
-      _head: _head
-      _nav: _nav
-      _foot: _foot
-      content: grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
-      meta: meta
-      families: families
-      pervasiveIdeas: pervasiveIdeas
-      rootUrl: '.'
-      resourcesUrl: './resources'
-    }
-    grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
+    # meta = pervasiveIdeasHome.meta
+    # layout = getLayout sources, null, meta
+    # html = grunt.template.process grunt.file.read(layout), {
+    # data:
+    #   _head: _head
+    #   _nav: _nav
+    #   _foot: _foot
+    #   content: grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
+    #   meta: meta
+    #   families: families
+    #   pervasiveIdeas: pervasiveIdeas
+    #   rootUrl: '.'
+    #   resourcesUrl: './resources'
+    # }
+    # grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
 
     #
     # resourceTypesHome
     #
-    meta = resourceTypesHome.meta
-    layout = getLayout sources, null, meta
+    # meta = resourceTypesHome.meta
+    # layout = getLayout sources, null, meta
 
-    html = grunt.template.process grunt.file.read(layout), {
-    data:
-      _head: _head
-      _nav: _nav
-      _foot: _foot
-      content: grunt.file.read "#{partialsDir}/resourceTypesHome.html"
-      meta: meta
-      families: families
-      resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
-      rootUrl: '.'
-      resourcesUrl: './resources'
-    }
-    grunt.file.write "#{appDir}/resourceTypesHome.html", html
+    # html = grunt.template.process grunt.file.read(layout), {
+    # data:
+    #   _head: _head
+    #   _nav: _nav
+    #   _foot: _foot
+    #   content: grunt.file.read "#{partialsDir}/resourceTypesHome.html"
+    #   meta: meta
+    #   families: families
+    #   resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
+    #   rootUrl: '.'
+    #   resourcesUrl: './resources'
+    # }
+    # grunt.file.write "#{appDir}/resourceTypesHome.html", html
 
     #
     # pervasiveIdeas

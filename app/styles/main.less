@@ -5,42 +5,70 @@ html, body {
   height: 100%;
 }
 
+/*
 *, *:before, *:after {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
+*/
 
-@footer-height: 250px;
+@footer-height: 300px;
 
 /* Wrapper for page content to push down footer */
-#wrap {
+#wrap1 {
   min-height: 100%;
-  height: auto !important;
-  height: 100%;
+}
+
+#wrap2 {
   /* Negative indent footer by its height */
   margin: 0 auto;
+  padding-bottom: @footer-height;
   padding-top:80px;
+  position:relative;
 }
 
 /* Set the fixed height of the footer here */
-#push,
+// #push,
+// #footer {
+//   height: @footer-height;
+//   padding-top: 30px;
+// }
+// #footer {
+//   background-color: #444;
+//   position:relative;
+//   bottom:0;
+// }
+// #footer .container {
+//   position:relative;
+//   top:20px;
+//   bottom:20px;
+//   left:0;
+//   padding-left: 20px;
+//   padding-right:20px;
+//   max-width:750px;
+// }
+
+/* Set the fixed height of the footer here */
 #footer {
-  height: @footer-height;
+  clear:both;
+  margin-top: -@footer-height;
   padding-top: 30px;
-  overflow: scroll;
-}
-#footer {
+  height: @footer-height;
   background-color: #444;
-  position:relative
+  position:relative;
 }
 #footer .container {
-  position:absolute;
-  top:30px;
+  position:relative;
+  top:20px;
   bottom:20px;
   left:0;
   padding-left: 20px;
   padding-right:20px;
   max-width:750px;
+  ul.inline li {
+    padding-left:0;
+  }
 }
+
 
 /* pad content provided it comes immediately after the nav */
 .navbar-fixed-top + div {
@@ -53,13 +81,14 @@ html, body {
 
 
 @media (max-width: 979px) {
-  #wrap {
+  #wrap2 {
     padding-top:0;
   }
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
+
   #footer {
     margin-left: -20px;
     margin-right: -20px;

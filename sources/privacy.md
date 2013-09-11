@@ -8,11 +8,11 @@ This policy statement relates to personal data as defined by the Data Protection
 
 The policy explains what information is held about individual people by the CMEP system, how it is gathered and how it is used. Details of the data held or logged are given in the appropriate section below. This information is used to help support CMEP users, for system administration and bug tracking, and for producing usage statistics for management and planning purposes.
 
-Users are reminded that access to CMEP is via the CUDN and that the Privacy Policy Statement for the CUDN is also relevant.
+Users are reminded that access to CMEP is via the CUDN and that the [Privacy Policy Statement for the CUDN](http://www.ucs.cam.ac.uk/privacy/cudnprivacy) is also relevant.
 
 Access to CMEP logs is restricted to CMEP site maintainers where an appropriate site-specific privacy policy is in place.
 
-These logs are currently held indefinitely.
+These logs are currently held for 12 months.
 
 Logs are used to create summary statistics which may be made publicly available. Summary statistics do not include personal data.
 
