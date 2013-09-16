@@ -39,7 +39,7 @@ module.exports = (grunt, sources, partialsDir, folder) ->
           fileMeta: file.meta
           indexMeta: indexMeta
           alias: aliasOf fileName, file.meta
-          html: grunt.file.read "#{pDir}/#{folder}/#{rName}/#{fileName}.html"
+          html: grunt.file.read "#{pDir}/html/#{folder}/#{rName}/#{fileName}.html"
         }
       _.sortBy content, (cdata) -> weightOf cdata.fileName, cdata.fileMeta
 

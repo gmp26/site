@@ -2,7 +2,7 @@
 "use strict"
 
 expandMetadata = require './lib/expandMetadata.js'
-generator = require './lib/generator.js'
+generateHtml = require './lib/generateHtml.js'
 tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
 isolate = require './lib/isolate.js'
@@ -29,8 +29,8 @@ module.exports = (grunt) ->
     dist: "dist" # document root of production site
     content: "../CMEP-sources"  # the real sources
     samples: "sources"          # sample and test case sources
-    sources: "sources"    # the active source path which can switch between content and samples.
-    partials: "partials"  # where we put compiled HTML and metadata
+    sources: "sources"    # the active source path which can switch between content and samples
+    partials: "partials"  # a working directory for content to be assembled in
 
   grunt.initConfig
 
@@ -60,7 +60,7 @@ module.exports = (grunt) ->
         files: "<%= pass1Files %>"
 
 
-    # compile HTML and aggregate metadata
+    # compile HTML and tex, and aggregate metadata
     panda:
       pass1:
         options:
@@ -76,7 +76,7 @@ module.exports = (grunt) ->
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
         ]
-      pass2:
+      pass2html:
         options:
           process: pass2Utils
           stripMeta: '````'
@@ -86,7 +86,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
-          dest: "<%= yeoman.partials %>/"
+          dest: "<%= yeoman.partials %>/html/"
           ext: ".html"
         ]
 
@@ -111,7 +111,7 @@ module.exports = (grunt) ->
       options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
-    generator:
+    generateHtml:
       options: null
 
     # Create a tubemap from metadata
@@ -422,8 +422,8 @@ module.exports = (grunt) ->
   # register expandMetadata task
   expandMetadata grunt
 
-  # register generator task
-  generator grunt
+  # register generateHtml task
+  generateHtml grunt
 
   # register tubemap task
   tubemap grunt
@@ -469,8 +469,8 @@ module.exports = (grunt) ->
     "livescript"
     "panda:pass1"
     "expandMetadata"
-    "panda:pass2"
-    "generator"
+    "panda:pass2html"
+    "generateHtml"
     "mochaTest:sources"
   ]
 
@@ -491,9 +491,9 @@ module.exports = (grunt) ->
     "panda:pass1"
     "expandMetadata"
     "tubemap:png"
-    "panda:pass2"
+    "panda:pass2html"
     "copy:assets"
-    "generator"
+    "generateHtml"
     "clean:dist"
     "copy:server"
     "useminPrepare"
@@ -510,9 +510,9 @@ module.exports = (grunt) ->
     "panda:pass1"
     "expandMetadata"
     "tubemap:png"
-    "panda:pass2"
+    "panda:pass2html"
     "copy:assets"
-    "generator"
+    "generateHtml"
   ]
 
   grunt.registerTask "default", ["dev"]

@@ -10,7 +10,7 @@ module.exports = (grunt) ->
 
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
-  grunt.registerTask "generator", "Generate the site html, javascripts and CSS.", ->
+  grunt.registerTask "generateHtml", "Generate the site html, javascripts and CSS.", ->
 
     #
     # Run the site generator on grunt panda generated metadata
@@ -57,7 +57,7 @@ module.exports = (grunt) ->
           _nav: _nav
           _foot: _foot
           meta: meta
-          content: grunt.file.read "#{partialsDir}/#{fname}.html"
+          content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
           sources: sources
           rootUrl: '.'
           resourcesUrl: './resources'
@@ -246,10 +246,10 @@ module.exports = (grunt) ->
       rt13html = ""
       i = 0
       for eqid in rt13Sorted
-        rt13html += (grunt.file.read "#{partialsDir}/renderedQuestions/#{eqid}/index.html").replace "!!Problem!!", "#{++i}"
+        rt13html += (grunt.file.read "#{partialsDir}/html/renderedQuestions/#{eqid}/index.html").replace "!!Problem!!", "#{++i}"
 
 
-      grunt.file.write "#{partialsDir}/resources/#{resid}/index.html", rt13html
+      grunt.file.write "#{partialsDir}/html/resources/#{resid}/index.html", rt13html
 
       # 
       # locate images to copy
@@ -319,7 +319,7 @@ module.exports = (grunt) ->
           rootUrl: '../..'
           resourcesUrl: '..'
       }
-      grunt.file.write "#{partialsDir}/renderedQuestions/#{eqid}/index.html", html
+      grunt.file.write "#{partialsDir}/html/renderedQuestions/#{eqid}/index.html", html
 
       #
       # Collect eqids by station and by pervasiveIdea
@@ -371,7 +371,7 @@ module.exports = (grunt) ->
           _foot: _foot
           _linesMenu: _linesMenu
           meta: meta
-          content: grunt.file.read "#{partialsDir}/stations/#{stid}.html"
+          content: grunt.file.read "#{partialsDir}/html/stations/#{stid}.html"
           sources: sources
           rootUrl: ".."
           resourcesUrl: '../resources'

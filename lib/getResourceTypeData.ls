@@ -13,7 +13,7 @@ module.exports = (grunt, sources, partialsDir) ->
     return {
       title: meta.title
       icon: meta.icon
-      html: grunt.file.read "#{partialsDir}/resourceTypes/#{rtid}.html"
+      html: grunt.file.read "#{partialsDir}/html/resourceTypes/#{rtid}.html"
     }
 
 
