@@ -3,6 +3,7 @@
 
 expandMetadata = require './lib/expandMetadata.js'
 generateHtml = require './lib/generateHtml.js'
+generatePrintables = require './lib/generatePrintables.js'
 tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
 isolate = require './lib/isolate.js'
@@ -89,6 +90,19 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.partials %>/html/"
           ext: ".html"
         ]
+      pass2printables:
+        options:
+          process: pass2Utils
+          stripMeta: '````'
+          metaReplace: "<%= yeoman.sources %>"
+          metaReplacement: "sources"
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+          dest: "<%= yeoman.partials %>/printables/"
+          ext: ".tex"
+        ]
 
       dev:
         options:
@@ -112,6 +126,10 @@ module.exports = (grunt) ->
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
+      options: null
+
+    # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
+    generatePrintables:
       options: null
 
     # Create a tubemap from metadata
@@ -425,6 +443,9 @@ module.exports = (grunt) ->
   # register generateHtml task
   generateHtml grunt
 
+  # register generatePrintables task
+  generatePrintables grunt
+  
   # register tubemap task
   tubemap grunt
 
@@ -511,8 +532,10 @@ module.exports = (grunt) ->
     "expandMetadata"
     "tubemap:png"
     "panda:pass2html"
+    "panda:pass2printables"
     "copy:assets"
     "generateHtml"
+    "generatePrintables"
   ]
 
   grunt.registerTask "default", ["dev"]

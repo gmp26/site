@@ -1,0 +1,636 @@
+\documentclass[a4paper,twoside,parskip=half]{scrartcl}
+\usepackage{lipsum}
+%%% GEOMETRY
+\newlength{\customheadheight}\setlength{\customheadheight}{2cm}
+\usepackage[a4paper, twoside, hmargin=2cm, vmargin=2cm, headheight=1.6cm, headsep=.4cm]{geometry}
+
+%%% FONTS
+\usepackage{fontspec}
+\setmainfont{Helvetica Neue}
+\setsansfont{Helvetica Neue}
+\newfontfamily\ChalkFont[Path = ../../../app/fonts/]{Chalkboard.ttc}
+\newfontfamily\FontAwesome[
+  Path = ../../../app/fonts/,
+  UprightFont = *,
+  BoldFont = *,
+  ItalicFont = *,%
+  BoldItalicFont = *]{FontAwesome.otf}
+
+\newcommand{\iconglass}{{\FontAwesome }} 
+\newcommand{\iconmusic}{{\FontAwesome }} 
+\newcommand{\iconsearch}{{\FontAwesome }} 
+\newcommand{\iconenvelopealt}{{\FontAwesome }} 
+\newcommand{\iconheart}{{\FontAwesome }} 
+\newcommand{\iconstar}{{\FontAwesome }} 
+\newcommand{\iconstarempty}{{\FontAwesome }} 
+\newcommand{\iconuser}{{\FontAwesome }} 
+\newcommand{\iconfilm}{{\FontAwesome }} 
+\newcommand{\iconthlarge}{{\FontAwesome }} 
+\newcommand{\iconth}{{\FontAwesome }} 
+\newcommand{\iconthlist}{{\FontAwesome }} 
+\newcommand{\iconok}{{\FontAwesome }} 
+\newcommand{\iconremove}{{\FontAwesome }} 
+\newcommand{\iconzoomin}{{\FontAwesome }} 
+\newcommand{\iconzoomout}{{\FontAwesome }} 
+\newcommand{\iconoff}{{\FontAwesome }} 
+\newcommand{\iconsignal}{{\FontAwesome }} 
+\newcommand{\iconcog}{{\FontAwesome }} 
+\newcommand{\icontrash}{{\FontAwesome }} 
+\newcommand{\iconhome}{{\FontAwesome }} 
+\newcommand{\iconfilealt}{{\FontAwesome }} 
+\newcommand{\icontime}{{\FontAwesome }} 
+\newcommand{\iconroad}{{\FontAwesome }} 
+\newcommand{\icondownloadalt}{{\FontAwesome }} 
+\newcommand{\icondownload}{{\FontAwesome }} 
+\newcommand{\iconupload}{{\FontAwesome }} 
+\newcommand{\iconinbox}{{\FontAwesome }} 
+\newcommand{\iconplaycircle}{{\FontAwesome }} 
+\newcommand{\iconrepeat}{{\FontAwesome }} 
+\newcommand{\iconrefresh}{{\FontAwesome }} 
+\newcommand{\iconlistalt}{{\FontAwesome }} 
+\newcommand{\iconlock}{{\FontAwesome }} 
+\newcommand{\iconflag}{{\FontAwesome }} 
+\newcommand{\iconheadphones}{{\FontAwesome }} 
+\newcommand{\iconvolumeoff}{{\FontAwesome }} 
+\newcommand{\iconvolumedown}{{\FontAwesome }} 
+\newcommand{\iconvolumeup}{{\FontAwesome }} 
+\newcommand{\iconqrcode}{{\FontAwesome }} 
+\newcommand{\iconbarcode}{{\FontAwesome }} 
+\newcommand{\icontag}{{\FontAwesome }} 
+\newcommand{\icontags}{{\FontAwesome }} 
+\newcommand{\iconbook}{{\FontAwesome }} 
+\newcommand{\iconbookmark}{{\FontAwesome }} 
+\newcommand{\iconprint}{{\FontAwesome }} 
+\newcommand{\iconcamera}{{\FontAwesome }} 
+\newcommand{\iconfont}{{\FontAwesome }} 
+\newcommand{\iconbold}{{\FontAwesome }} 
+\newcommand{\iconitalic}{{\FontAwesome }} 
+\newcommand{\icontextheight}{{\FontAwesome }} 
+\newcommand{\icontextwidth}{{\FontAwesome }} 
+\newcommand{\iconalignleft}{{\FontAwesome }} 
+\newcommand{\iconaligncenter}{{\FontAwesome }} 
+\newcommand{\iconalignright}{{\FontAwesome }} 
+\newcommand{\iconalignjustify}{{\FontAwesome }} 
+\newcommand{\iconlist}{{\FontAwesome }} 
+\newcommand{\iconindentleft}{{\FontAwesome }} 
+\newcommand{\iconindentright}{{\FontAwesome }} 
+\newcommand{\iconfacetimevideo}{{\FontAwesome }} 
+\newcommand{\iconpicture}{{\FontAwesome }} 
+\newcommand{\iconpencil}{{\FontAwesome }} 
+\newcommand{\iconmapmarker}{{\FontAwesome }} 
+\newcommand{\iconadjust}{{\FontAwesome }} 
+\newcommand{\icontint}{{\FontAwesome }} 
+\newcommand{\iconedit}{{\FontAwesome }} 
+\newcommand{\iconshare}{{\FontAwesome }} 
+\newcommand{\iconcheck}{{\FontAwesome }} 
+\newcommand{\iconmove}{{\FontAwesome }} 
+\newcommand{\iconstepbackward}{{\FontAwesome }} 
+\newcommand{\iconfastbackward}{{\FontAwesome }} 
+\newcommand{\iconbackward}{{\FontAwesome }} 
+\newcommand{\iconplay}{{\FontAwesome }} 
+\newcommand{\iconpause}{{\FontAwesome }} 
+\newcommand{\iconstop}{{\FontAwesome }} 
+\newcommand{\iconforward}{{\FontAwesome }} 
+\newcommand{\iconfastforward}{{\FontAwesome }} 
+\newcommand{\iconstepforward}{{\FontAwesome }} 
+\newcommand{\iconeject}{{\FontAwesome }} 
+\newcommand{\iconchevronleft}{{\FontAwesome }} 
+\newcommand{\iconchevronright}{{\FontAwesome }} 
+\newcommand{\iconplussign}{{\FontAwesome }} 
+\newcommand{\iconminussign}{{\FontAwesome }} 
+\newcommand{\iconremovesign}{{\FontAwesome }} 
+\newcommand{\iconoksign}{{\FontAwesome }} 
+\newcommand{\iconquestionsign}{{\FontAwesome }} 
+\newcommand{\iconinfosign}{{\FontAwesome }} 
+\newcommand{\iconscreenshot}{{\FontAwesome }} 
+\newcommand{\iconremovecircle}{{\FontAwesome }} 
+\newcommand{\iconokcircle}{{\FontAwesome }} 
+\newcommand{\iconbancircle}{{\FontAwesome }} 
+\newcommand{\iconarrowleft}{{\FontAwesome }} 
+\newcommand{\iconarrowright}{{\FontAwesome }} 
+\newcommand{\iconarrowup}{{\FontAwesome }} 
+\newcommand{\iconarrowdown}{{\FontAwesome }} 
+\newcommand{\iconsharealt}{{\FontAwesome }} 
+\newcommand{\iconresizefull}{{\FontAwesome }} 
+\newcommand{\iconresizesmall}{{\FontAwesome }} 
+\newcommand{\iconplus}{{\FontAwesome }} 
+\newcommand{\iconminus}{{\FontAwesome }} 
+\newcommand{\iconasterisk}{{\FontAwesome }} 
+\newcommand{\iconexclamationsign}{{\FontAwesome }} 
+\newcommand{\icongift}{{\FontAwesome }} 
+\newcommand{\iconleaf}{{\FontAwesome }} 
+\newcommand{\iconfire}{{\FontAwesome }} 
+\newcommand{\iconeyeopen}{{\FontAwesome }} 
+\newcommand{\iconeyeclose}{{\FontAwesome }} 
+\newcommand{\iconwarningsign}{{\FontAwesome }} 
+\newcommand{\iconplane}{{\FontAwesome }} 
+\newcommand{\iconcalendar}{{\FontAwesome }} 
+\newcommand{\iconrandom}{{\FontAwesome }} 
+\newcommand{\iconcomment}{{\FontAwesome }} 
+\newcommand{\iconmagnet}{{\FontAwesome }} 
+\newcommand{\iconchevronup}{{\FontAwesome }} 
+\newcommand{\iconchevrondown}{{\FontAwesome }} 
+\newcommand{\iconretweet}{{\FontAwesome }} 
+\newcommand{\iconshoppingcart}{{\FontAwesome }} 
+\newcommand{\iconfolderclose}{{\FontAwesome }} 
+\newcommand{\iconfolderopen}{{\FontAwesome }} 
+\newcommand{\iconresizevertical}{{\FontAwesome }} 
+\newcommand{\iconresizehorizontal}{{\FontAwesome }} 
+\newcommand{\iconbarchart}{{\FontAwesome }} 
+\newcommand{\icontwittersign}{{\FontAwesome }} 
+\newcommand{\iconfacebooksign}{{\FontAwesome }} 
+\newcommand{\iconcameraretro}{{\FontAwesome }} 
+\newcommand{\iconkey}{{\FontAwesome }} 
+\newcommand{\iconcogs}{{\FontAwesome }} 
+\newcommand{\iconcomments}{{\FontAwesome }} 
+\newcommand{\iconthumbsupalt}{{\FontAwesome }} 
+\newcommand{\iconthumbsdownalt}{{\FontAwesome }} 
+\newcommand{\iconstarhalf}{{\FontAwesome }} 
+\newcommand{\iconheartempty}{{\FontAwesome }} 
+\newcommand{\iconsignout}{{\FontAwesome }} 
+\newcommand{\iconlinkedinsign}{{\FontAwesome }} 
+\newcommand{\iconpushpin}{{\FontAwesome }} 
+\newcommand{\iconexternallink}{{\FontAwesome }} 
+\newcommand{\iconsignin}{{\FontAwesome }} 
+\newcommand{\icontrophy}{{\FontAwesome }} 
+\newcommand{\icongithubsign}{{\FontAwesome }} 
+\newcommand{\iconuploadalt}{{\FontAwesome }} 
+\newcommand{\iconlemon}{{\FontAwesome }} 
+\newcommand{\iconphone}{{\FontAwesome }} 
+\newcommand{\iconcheckempty}{{\FontAwesome }} 
+\newcommand{\iconbookmarkempty}{{\FontAwesome }} 
+\newcommand{\iconphonesign}{{\FontAwesome }} 
+\newcommand{\icontwitter}{{\FontAwesome }} 
+\newcommand{\iconfacebook}{{\FontAwesome }} 
+\newcommand{\icongithub}{{\FontAwesome }} 
+\newcommand{\iconunlock}{{\FontAwesome }} 
+\newcommand{\iconcreditcard}{{\FontAwesome }} 
+\newcommand{\iconrss}{{\FontAwesome }} 
+\newcommand{\iconhdd}{{\FontAwesome }} 
+\newcommand{\iconbullhorn}{{\FontAwesome }} 
+\newcommand{\iconbell}{{\FontAwesome }} 
+\newcommand{\iconcertificate}{{\FontAwesome }} 
+\newcommand{\iconhandright}{{\FontAwesome }} 
+\newcommand{\iconhandleft}{{\FontAwesome }} 
+\newcommand{\iconhandup}{{\FontAwesome }} 
+\newcommand{\iconhanddown}{{\FontAwesome }} 
+\newcommand{\iconcirclearrowleft}{{\FontAwesome }} 
+\newcommand{\iconcirclearrowright}{{\FontAwesome }} 
+\newcommand{\iconcirclearrowup}{{\FontAwesome }} 
+\newcommand{\iconcirclearrowdown}{{\FontAwesome }} 
+\newcommand{\iconglobe}{{\FontAwesome }} 
+\newcommand{\iconwrench}{{\FontAwesome }} 
+\newcommand{\icontasks}{{\FontAwesome }} 
+\newcommand{\iconfilter}{{\FontAwesome }} 
+\newcommand{\iconbriefcase}{{\FontAwesome }} 
+\newcommand{\iconfullscreen}{{\FontAwesome }} 
+\newcommand{\icongroup}{{\FontAwesome }} 
+\newcommand{\iconlink}{{\FontAwesome }} 
+\newcommand{\iconcloud}{{\FontAwesome }} 
+\newcommand{\iconbeaker}{{\FontAwesome }} 
+\newcommand{\iconcut}{{\FontAwesome }} 
+\newcommand{\iconcopy}{{\FontAwesome }} 
+\newcommand{\iconpaperclip}{{\FontAwesome }} 
+\newcommand{\iconsave}{{\FontAwesome }} 
+\newcommand{\iconsignblank}{{\FontAwesome }} 
+\newcommand{\iconreorder}{{\FontAwesome }} 
+\newcommand{\iconlistul}{{\FontAwesome }} 
+\newcommand{\iconlistol}{{\FontAwesome }} 
+\newcommand{\iconstrikethrough}{{\FontAwesome }} 
+\newcommand{\iconunderline}{{\FontAwesome }} 
+\newcommand{\icontable}{{\FontAwesome }} 
+\newcommand{\iconmagic}{{\FontAwesome }} 
+\newcommand{\icontruck}{{\FontAwesome }} 
+\newcommand{\iconpinterest}{{\FontAwesome }} 
+\newcommand{\iconpinterestsign}{{\FontAwesome }} 
+\newcommand{\icongoogleplussign}{{\FontAwesome }} 
+\newcommand{\icongoogleplus}{{\FontAwesome }} 
+\newcommand{\iconmoney}{{\FontAwesome }} 
+\newcommand{\iconcaretdown}{{\FontAwesome }} 
+\newcommand{\iconcaretup}{{\FontAwesome }} 
+\newcommand{\iconcaretleft}{{\FontAwesome }} 
+\newcommand{\iconcaretright}{{\FontAwesome }} 
+\newcommand{\iconcolumns}{{\FontAwesome }} 
+\newcommand{\iconsort}{{\FontAwesome }} 
+\newcommand{\iconsortdown}{{\FontAwesome }} 
+\newcommand{\iconsortup}{{\FontAwesome }} 
+\newcommand{\iconenvelope}{{\FontAwesome }} 
+\newcommand{\iconlinkedin}{{\FontAwesome }} 
+\newcommand{\iconundo}{{\FontAwesome }} 
+\newcommand{\iconlegal}{{\FontAwesome }} 
+\newcommand{\icondashboard}{{\FontAwesome }} 
+\newcommand{\iconcommentalt}{{\FontAwesome }} 
+\newcommand{\iconcommentsalt}{{\FontAwesome }} 
+\newcommand{\iconbolt}{{\FontAwesome }} 
+\newcommand{\iconsitemap}{{\FontAwesome }} 
+\newcommand{\iconumbrella}{{\FontAwesome }} 
+\newcommand{\iconpaste}{{\FontAwesome }} 
+\newcommand{\iconlightbulb}{{\FontAwesome }} 
+\newcommand{\iconexchange}{{\FontAwesome }} 
+\newcommand{\iconclouddownload}{{\FontAwesome }} 
+\newcommand{\iconcloudupload}{{\FontAwesome }} 
+\newcommand{\iconusermd}{{\FontAwesome }} 
+\newcommand{\iconstethoscope}{{\FontAwesome }} 
+\newcommand{\iconsuitcase}{{\FontAwesome }} 
+\newcommand{\iconbellalt}{{\FontAwesome }} 
+\newcommand{\iconcoffee}{{\FontAwesome }} 
+\newcommand{\iconfood}{{\FontAwesome }} 
+\newcommand{\iconfiletextalt}{{\FontAwesome }} 
+\newcommand{\iconbuilding}{{\FontAwesome }} 
+\newcommand{\iconhospital}{{\FontAwesome }} 
+\newcommand{\iconambulance}{{\FontAwesome }} 
+\newcommand{\iconmedkit}{{\FontAwesome }} 
+\newcommand{\iconfighterjet}{{\FontAwesome }} 
+\newcommand{\iconbeer}{{\FontAwesome }} 
+\newcommand{\iconhsign}{{\FontAwesome }} 
+\newcommand{\iconplussignalt}{{\FontAwesome }} 
+\newcommand{\icondoubleangleleft}{{\FontAwesome }} 
+\newcommand{\icondoubleangleright}{{\FontAwesome }} 
+\newcommand{\icondoubleangleup}{{\FontAwesome }} 
+\newcommand{\icondoubleangledown}{{\FontAwesome }} 
+\newcommand{\iconangleleft}{{\FontAwesome }} 
+\newcommand{\iconangleright}{{\FontAwesome }} 
+\newcommand{\iconangleup}{{\FontAwesome }} 
+\newcommand{\iconangledown}{{\FontAwesome }} 
+\newcommand{\icondesktop}{{\FontAwesome }} 
+\newcommand{\iconlaptop}{{\FontAwesome }} 
+\newcommand{\icontablet}{{\FontAwesome }} 
+\newcommand{\iconmobilephone}{{\FontAwesome }} 
+\newcommand{\iconcircleblank}{{\FontAwesome }} 
+\newcommand{\iconquoteleft}{{\FontAwesome }} 
+\newcommand{\iconquoteright}{{\FontAwesome }} 
+\newcommand{\iconspinner}{{\FontAwesome }} 
+\newcommand{\iconcircle}{{\FontAwesome }} 
+\newcommand{\iconreply}{{\FontAwesome }} 
+\newcommand{\icongithubalt}{{\FontAwesome }} 
+\newcommand{\iconfolderclosealt}{{\FontAwesome }} 
+\newcommand{\iconfolderopenalt}{{\FontAwesome }} 
+\newcommand{\iconexpandalt}{{\FontAwesome }} 
+\newcommand{\iconcollapsealt}{{\FontAwesome }} 
+\newcommand{\iconsmile}{{\FontAwesome }} 
+\newcommand{\iconfrown}{{\FontAwesome }} 
+\newcommand{\iconmeh}{{\FontAwesome }} 
+\newcommand{\icongamepad}{{\FontAwesome }} 
+\newcommand{\iconkeyboard}{{\FontAwesome }} 
+\newcommand{\iconflagalt}{{\FontAwesome }} 
+\newcommand{\iconflagcheckered}{{\FontAwesome }} 
+\newcommand{\iconterminal}{{\FontAwesome }} 
+\newcommand{\iconcode}{{\FontAwesome }} 
+\newcommand{\iconreplyall}{{\FontAwesome }} 
+\newcommand{\iconmailreplyall}{{\FontAwesome }} 
+\newcommand{\iconstarhalfempty}{{\FontAwesome }} 
+\newcommand{\iconlocationarrow}{{\FontAwesome }} 
+\newcommand{\iconcrop}{{\FontAwesome }} 
+\newcommand{\iconcodefork}{{\FontAwesome }} 
+\newcommand{\iconunlink}{{\FontAwesome }} 
+\newcommand{\iconquestion}{{\FontAwesome }} 
+\newcommand{\iconinfo}{{\FontAwesome }} 
+\newcommand{\iconexclamation}{{\FontAwesome }} 
+\newcommand{\iconsuperscript}{{\FontAwesome }} 
+\newcommand{\iconsubscript}{{\FontAwesome }} 
+\newcommand{\iconeraser}{{\FontAwesome }} 
+\newcommand{\iconpuzzlepiece}{{\FontAwesome }} 
+\newcommand{\iconmicrophone}{{\FontAwesome }} 
+\newcommand{\iconmicrophoneoff}{{\FontAwesome }} 
+\newcommand{\iconshield}{{\FontAwesome }} 
+\newcommand{\iconcalendarempty}{{\FontAwesome }} 
+\newcommand{\iconfireextinguisher}{{\FontAwesome }} 
+\newcommand{\iconrocket}{{\FontAwesome }} 
+\newcommand{\iconmaxcdn}{{\FontAwesome }} 
+\newcommand{\iconchevronsignleft}{{\FontAwesome }} 
+\newcommand{\iconchevronsignright}{{\FontAwesome }} 
+\newcommand{\iconchevronsignup}{{\FontAwesome }} 
+\newcommand{\iconchevronsigndown}{{\FontAwesome }} 
+\newcommand{\iconhtmlfive}{{\FontAwesome }}
+\newcommand{\iconcssthree}{{\FontAwesome }}
+\newcommand{\iconanchor}{{\FontAwesome }} 
+\newcommand{\iconunlockalt}{{\FontAwesome }} 
+\newcommand{\iconbullseye}{{\FontAwesome }} 
+\newcommand{\iconellipsishorizontal}{{\FontAwesome }} 
+\newcommand{\iconellipsisvertical}{{\FontAwesome }} 
+\newcommand{\iconrsssign}{{\FontAwesome }} 
+\newcommand{\iconplaysign}{{\FontAwesome }} 
+\newcommand{\iconticket}{{\FontAwesome }} 
+\newcommand{\iconminussignalt}{{\FontAwesome }} 
+\newcommand{\iconcheckminus}{{\FontAwesome }} 
+\newcommand{\iconlevelup}{{\FontAwesome }} 
+\newcommand{\iconleveldown}{{\FontAwesome }} 
+\newcommand{\iconchecksign}{{\FontAwesome }} 
+\newcommand{\iconeditsign}{{\FontAwesome }} 
+\newcommand{\iconexternallinksign}{{\FontAwesome }} 
+\newcommand{\iconsharesign}{{\FontAwesome }} 
+\newcommand{\iconcompass}{{\FontAwesome }} 
+\newcommand{\iconcollapse}{{\FontAwesome }} 
+\newcommand{\iconcollapsetop}{{\FontAwesome }} 
+\newcommand{\iconexpand}{{\FontAwesome }} 
+\newcommand{\iconeur}{{\FontAwesome }} 
+\newcommand{\icongbp}{{\FontAwesome }} 
+\newcommand{\iconusd}{{\FontAwesome }} 
+\newcommand{\iconinr}{{\FontAwesome }} 
+\newcommand{\iconjpy}{{\FontAwesome }} 
+\newcommand{\iconcny}{{\FontAwesome }} 
+\newcommand{\iconkrw}{{\FontAwesome }} 
+\newcommand{\iconbtc}{{\FontAwesome }} 
+\newcommand{\iconfile}{{\FontAwesome }} 
+\newcommand{\iconfiletext}{{\FontAwesome }} 
+\newcommand{\iconsortbyalphabet}{{\FontAwesome }} 
+\newcommand{\iconsortbyalphabetalt}{{\FontAwesome }} 
+\newcommand{\iconsortbyattributes}{{\FontAwesome }} 
+\newcommand{\iconsortbyattributesalt}{{\FontAwesome }} 
+\newcommand{\iconsortbyorder}{{\FontAwesome }} 
+\newcommand{\iconsortbyorderalt}{{\FontAwesome }} 
+\newcommand{\iconthumbsup}{{\FontAwesome }} 
+\newcommand{\iconthumbsdown}{{\FontAwesome }} 
+\newcommand{\iconyoutubesign}{{\FontAwesome }} 
+\newcommand{\iconyoutube}{{\FontAwesome }} 
+\newcommand{\iconxing}{{\FontAwesome }} 
+\newcommand{\iconxingsign}{{\FontAwesome }} 
+\newcommand{\iconyoutubeplay}{{\FontAwesome }} 
+\newcommand{\icondropbox}{{\FontAwesome }} 
+\newcommand{\iconstackexchange}{{\FontAwesome }} 
+\newcommand{\iconinstagram}{{\FontAwesome }} 
+\newcommand{\iconflickr}{{\FontAwesome }} 
+\newcommand{\iconadn}{{\FontAwesome }} 
+\newcommand{\iconbitbucket}{{\FontAwesome }} 
+\newcommand{\iconbitbucketsign}{{\FontAwesome }} 
+\newcommand{\icontumblr}{{\FontAwesome }} 
+\newcommand{\icontumblrsign}{{\FontAwesome }} 
+\newcommand{\iconlongarrowdown}{{\FontAwesome }} 
+\newcommand{\iconlongarrowup}{{\FontAwesome }} 
+\newcommand{\iconlongarrowleft}{{\FontAwesome }} 
+\newcommand{\iconlongarrowright}{{\FontAwesome }} 
+\newcommand{\iconapple}{{\FontAwesome }} 
+\newcommand{\iconwindows}{{\FontAwesome }} 
+\newcommand{\iconandroid}{{\FontAwesome }} 
+\newcommand{\iconlinux}{{\FontAwesome }} 
+\newcommand{\icondribbble}{{\FontAwesome }} 
+\newcommand{\iconskype}{{\FontAwesome }} 
+\newcommand{\iconfoursquare}{{\FontAwesome }} 
+\newcommand{\icontrello}{{\FontAwesome }} 
+\newcommand{\iconfemale}{{\FontAwesome }} 
+\newcommand{\iconmale}{{\FontAwesome }} 
+\newcommand{\icongittip}{{\FontAwesome }} 
+\newcommand{\iconsun}{{\FontAwesome }} 
+\newcommand{\iconmoon}{{\FontAwesome }} 
+\newcommand{\iconarchive}{{\FontAwesome }} 
+\newcommand{\iconbug}{{\FontAwesome }} 
+\newcommand{\iconvk}{{\FontAwesome }} 
+\newcommand{\iconweibo}{{\FontAwesome }}
+
+% Load hyperref before amsmath and cleveref, and amsmath before unicode-math
+\usepackage[unicode]{hyperref}
+\usepackage{bookmark}
+\hypersetup{breaklinks=true,
+            pdfauthor={TODO},
+            pdftitle={TODO},
+            colorlinks=true,
+            urlcolor=myurlcolor,
+            linkcolor=mylinkcolor,
+            pdfborder={0 0 0}}
+\urlstyle{tt}  % choose from rm, sf, tt, same
+%%% MATHEMATICS
+\usepackage{amsmath, amsfonts, amsthm, amssymb, nicefrac, bm, bbm}
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\setmathfont{XITS Math}
+
+%%% STRUCTURE
+\setcounter{secnumdepth}{1}
+\newcommand{\cmepsection}[1]{\renewcommand{\thesection}{#1}\section}
+\newcommand{\sectionnumber}[1]{\renewcommand{\thesection}{#1}}
+
+%%% FIGURES FLOATS, AND TABLES
+\usepackage[section]{placeins}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage[format=plain,justification=centering,labelfont={bf,sf}]{caption}
+\usepackage{capt-of}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage[xcolor,framemethod=TikZ,suppressfirstparskip=false]{mdframed}
+\usepackage{calc}
+\usepackage[space]{grffile} %TODO Since this pakcage is a bit of a hack, just don't use spaces in our files. Should be more robust...?
+
+% A robust attempt at Pandoc's image size hack: this sets global max dimensions for images.
+% Aspect ratio is preserved when scaling to meet these dimensions.
+\usepackage[export]{adjustbox}
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{\Oldincludegraphics[max width=\linewidth,max height=0.9\textheight,#1]{#2}}
+
+%%% LISTS
+\usepackage{enumitem}
+% By default use noitemsep and 2cm left margin. This is NOT inherited by any sublists
+% so keep things equal...
+\setlist[itemize]{label=\textbullet,noitemsep,leftmargin=4em}
+\setlist[enumerate]{noitemsep,leftmargin=4em}
+
+%%% LENGTHS
+\newlength{\w}
+\newlength{\h}
+\newlength{\pw}
+
+%%% STATIONS
+% define the style of resource item lists, see station.tex for more details
+\newlist{resourceitems}{itemize}{1}
+\setlist[resourceitems]{label=\textbullet,noitemsep,leftmargin=4em}
+% the label won't get used, we use a FontAwesome icon per \item command:
+\definecolor{highlightcolor}{HTML}{FFA500}
+\newcommand*{\highlightitem}[1][]{\item[\textcolor{highlightcolor}{\iconthumbsupalt}\hspace*{1.2em}#1]}
+
+% style the pervasive ideas lists similarly
+\newlist{pervasiveitems}{itemize}{1}
+\setlist[pervasiveitems]{label=\textbullet,noitemsep,leftmargin=4em}
+
+\newcommand*{\resitemhighlightfont}{\bfseries}
+\newcommand*{\drawdependency}[3]{%
+\pgfmathtruncatemacro{\next}{#3+1}%
+\node[rectangle, rounded corners=8pt, fill=#2, text centered, anchor=west, right=of dependency#3]%
+                (dependency\next) {\hyperref[station:#1]{\large\sectfont\color{white} #1}};}
+\newcommand*{\drawdependent}[3]{%
+\pgfmathtruncatemacro{\next}{#3+1}%
+\node[rectangle, rounded corners=8pt, fill=#2, text centered, anchor=east, left=of dependent#3]%
+                (dependent\next) {\hyperref[station:#1]{\large\sectfont\color{white} #1}};}
+\newcommand*{\dvs}{40}
+
+%%% RESOURCES
+\definecolor{navpillbackground}{HTML}{0088CC}
+\definecolor{navpilltext}{HTML}{FFFFFF}
+\global\mdfdefinestyle{navpilltitle}{%
+backgroundcolor=navpillbackground,%
+fontcolor=navpilltext,%
+middlelinewidth=0pt,%
+skipabove=\baselineskip,%
+roundcorner=8pt,%
+nobreak% this is important, it should prevent the ocg layers in the tile being across page breaks
+}
+\global\mdfdefinestyle{navpillbody}{%
+middlelinewidth=.4pt,%
+roundcorner=8pt%
+}
+% use an xparse declaration, see the package documentation
+\DeclareDocumentEnvironment{navpilltab}{m}{%
+% commands before the environment
+\begin{mdframed}[style=navpilltitle]%
+    \Large #1%\section{#1}%
+  \end{mdframed}%
+}{%
+% commands after the environment
+}
+
+\newcommand{\navpillshowhide}[4]{%
+  \begin{mdframed}[style=navpilltitle]%
+    \Large #1 \hfill 
+    \toggleocgs{#4 cts#4 cth#4}{
+    \begin{tikzpicture}[baseline=0]
+      \tikzstyle{toggletext}=[anchor=base,outer sep=0,inner sep=0] % might need to set min height
+      \begin{ocg}[listintoolbar=never,printocg=never,exportocg=never]{Btn}{cts#4}{1}
+        \node[toggletext,white] {\emph{click to show}};
+      \end{ocg}
+      \begin{ocg}[listintoolbar=never,printocg=always,exportocg=always]{Btn}{cth#4}{0}
+        \node[overlay,toggletext,white] {\emph{click to hide}};
+      \end{ocg}
+      % this final ocg is to cover the text in case we have an unsupported reader
+      % the width and height are guessed but seem to work, try setting the node to black to see
+      \begin{ocg}[listintoolbar=never,printocg=always,exportocg=always]{Cover}{cov#4}{0}
+        \node[overlay,toggletext,fill=navpillbackground,navpillbackground,minimum height=15pt,minimum width=100pt] {\emph{click to cover}};
+      \end{ocg}
+    \end{tikzpicture}
+    }
+  \end{mdframed}%
+  % % Put the body of the navpill section in an mdframed in order to handle page breaks in ocgs
+  % except don't, because it doesn't work
+  % \begin{mdframed}[style=navpillbody]%,beforebreak={\end{ocg}},afterbreak={\begin{ocg}{#3}{#4}{0}}]
+  % \begin{ocgsplit}{#3}{#4}{0}%
+  \begin{ocg}{#3}{#4}{0}%
+    #2%
+  \end{ocg}
+  % \end{ocgsplit}
+  % \end{mdframed}
+}
+
+%%% HEADERS
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+% Colors used in the headers
+\definecolor{navbarbackground}{HTML}{000000}
+\definecolor{navbartext}{HTML}{999999}
+
+% make the headers full width
+\newlength{\oddleftmargintotal}
+\setlength{\oddleftmargintotal}{1in+\hoffset+\oddsidemargin}
+\newlength{\oddrightmargintotal}
+\setlength{\oddrightmargintotal}{\paperwidth-\oddleftmargintotal-\textwidth}
+\newlength{\evenleftmargintotal}
+\setlength{\evenleftmargintotal}{1in+\hoffset+\evensidemargin}
+\newlength{\evenrightmargintotal}
+\setlength{\evenrightmargintotal}{\paperwidth-\evenleftmargintotal-\textwidth}
+\fancyhfoffset[LO]{\oddleftmargintotal}
+\fancyhfoffset[RO]{\oddrightmargintotal}
+\fancyhfoffset[LE]{\evenleftmargintotal}
+\fancyhfoffset[RE]{\evenrightmargintotal}
+
+% Define header contents
+%\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\fancyhead{} % clear all header fields
+\fancyhead[C]{{%
+  \setlength{\fboxsep}{0pt} % get rid of any spacing in the colorbox
+  \colorbox{navbarbackground}{%
+    \makebox[\headwidth][l]{% this ensures we have content the full width of the page
+      % ensure we use the full height and set the baseline to the centre of the header
+      \raisebox{-0.5\height}{\rule{0pt}{\headheight}}
+      % centre the image vertically in the header
+      %TODO use a vector image
+      \raisebox{-0.5\height}{\hspace{5pt}\includegraphics[height=20pt]{cmep-logo3.png}}%
+      % choose a nice looking baseline for everything else
+      \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
+      \textcolor{white}{%
+      \raisebox{-5pt}{\hspace{25pt}\leftmark}%
+      \hfill%
+      \raisebox{-5pt}{\rightmark\hspace{5pt}}}%
+    }%
+  }%
+}} % double braces to (hopefully?) contain the change of \fboxsep
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{}
+\fancyfoot[LO,CE]{}
+\fancyfoot[CO,RE]{}
+\fancyfoot[LE,RO]{}
+\fancyfoot[LO,CE]{}
+\fancyfoot[CO,RE]{}
+% Rules
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%%% MISC CSS PARAMETERS
+
+\definecolor{myurlcolor}{HTML}{005580}
+\definecolor{mylinkcolor}{HTML}{005580}
+
+% ALERT
+\definecolor{alertbackground}{HTML}{FCF8E3}
+\definecolor{alertborder}{HTML}{FBEED5}
+\global\mdfdefinestyle{alert}{%
+backgroundcolor=alertbackground,%
+linecolor=alertborder,%
+middlelinewidth=1pt,%
+}
+
+% WELL
+\definecolor{wellbackground}{HTML}{F5F5F5} 
+\definecolor{wellborder}{HTML}{E3E3E3}
+\global\mdfdefinestyle{well}{%
+backgroundcolor=wellbackground,%
+linecolor=wellborder,%
+middlelinewidth=1pt,%
+roundcorner=4pt
+}
+
+% CHALK
+\definecolor{chalkbackground}{HTML}{FFFFFF}
+\definecolor{chalkborder}{HTML}{FFA500}
+\global\mdfdefinestyle{chalk}{%
+backgroundcolor=chalkbackground,%
+middlelinewidth=1pt,% weirdly the middle line is drawn underneath the dashed one added below
+middlelinecolor=white,% but if it's removed the dashed one goes too...
+roundcorner=20pt,%
+innertopmargin=20pt,%
+innerbottommargin=20pt,%
+font=\ChalkFont,%
+fontcolor=chalkborder,%
+tikzsetting={draw=chalkborder,dashed,line width=1pt,dash pattern = on 5pt off 5pt}%
+}
+
+\newcommand{\vect}[1]{\mathbf{#1}}      % choose a vector display style
+\newcommand{\intersect}{\cap}
+\newcommand{\union}{\cup}
+\newcommand{\containing}{\supset}
+\renewcommand\Re{\operatorname{Re}}
+\renewcommand\Im{\operatorname{Im}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{ex}[thm]{Example}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{rmk}{Remark}
+\newtheorem*{note}{Note}

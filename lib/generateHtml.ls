@@ -16,6 +16,7 @@ module.exports = (grunt) ->
     # Run the site generator on grunt panda generated metadata
     #
     grunt.verbose.writeln "Generating site"
+    grunt.config.set "layoutPostfix" ".html"
 
     #
     # set up some short cut references
