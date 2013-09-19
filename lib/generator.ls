@@ -53,6 +53,7 @@ module.exports = (grunt) ->
         grunt.log.error "source file #{fname}.md has no metadata"
       else
         meta = sources[fname].meta
+        meta.id = fname
         layout = getLayout sources, null, meta
         data = {
           data:
