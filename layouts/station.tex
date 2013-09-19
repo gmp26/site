@@ -1,12 +1,12 @@
 <%= _preamble %>
 <% _ = grunt.util._ %>
-<% grunt.log.write("  station layout "+meta.id+"... ") %>
+<% grunt.log.write("  station printable layout "+meta.id+"... ") %>
 \begin{document}
 
 %%% The station title and icon
 \noindent {
 \definecolor{tempcolor}{HTML}{<%=meta.colour.substring(1).toUpperCase()%>}
-\markboth{\textit{STATIONS}}{<%=meta.id%>}
+\markboth{STATIONS}{<%=meta.id%>}
 \centering
 \Large\sectfont
 \begin{tabular}{m{0.4\textwidth} m{0.5\textwidth}}

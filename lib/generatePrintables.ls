@@ -10,7 +10,7 @@ module.exports = (grunt) ->
 
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
-  grunt.registerTask "generateHtml", "Generate printable pdf versions of pages in the site.", ->
+  grunt.registerTask "generatePrintables", "Generate printable pdf versions of pages in the site.", ->
 
     #
     # Run the site generator on grunt panda generated metadata
@@ -39,11 +39,21 @@ module.exports = (grunt) ->
 
     # make tex from resource layout and data  
     _preamble = grunt.file.read "layouts/_printablesPreamble.tex"
+    compileScript = "cd #{partialsDir}/printables/\n"
+
+    # a helper function since LaTeX can't access images above the tex file in a folder hierarchy
+    copyImage = (filename, targetFolder) ->
+        grunt.file.copy "#{appDir}/images/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+    copyResourceAssets = (name) ->
+        files = grunt.file.expand("#{sourcesDir}/resources/#{name}/*.png")
+        for img in files
+            grunt.file.copy img, (img.replace "#{sourcesDir}", "#{partialsDir}/printables")
+
 
     #TODO work out what these do and fix them for tex generation
-    # getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir, 'examQuestions'
-    # getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
-    # getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
+    # getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir+'/printables', 'examQuestions'
+    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir+'/printables'
+    # getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir+'/printables'
 
     #TODO decide whether we want top level pdfs
     # generateTopLevelPage = (fname, ...moreData) ->
@@ -353,43 +363,86 @@ module.exports = (grunt) ->
     #
     # stations
     #
+    # Since (on some systems at least) LaTeX can't see images below the .tex file in the hierarchy
+    # copy any required images so they're next to the tex files.
+    compileScript += 'cd stations\n'
+    copyImage 'postmark.pdf' 'stations'
+    copyImage 'cmep-logo3.png' 'stations'
+    
     for stid, data of stations
-      #generateHTML sources, folder, stid, meta.meta
-
       meta = data.meta
       layout = getLayout sources, 'stations', meta
 
       markup = grunt.template.process grunt.file.read(layout), {
         data:
-          _preamble: _preamble
+          _preamble: _preamble.replace '<%= fontpath %>' '../../../app/fonts/'
           meta: meta
           content: grunt.file.read "#{partialsDir}/printables/stations/#{stid}.tex"
           sources: sources
       }
 
-      grunt.file.write "#{partialsDir}/printables/stations/#{stid}.final.tex", markup
+      texFilename = "#{stid}.printable.tex"
+      texPath = "#{partialsDir}/printables/stations/#{texFilename}"
+      grunt.file.write texPath, markup
+      if stid == 'G2'
+        compileScript += "echo \"compiling #{texFilename}\"\n"
+        compileScript += "lualatex --interaction=nonstopmode --halt-on-error #{texFilename}\n"
+
+    compileScript += 'cd ..\n'
 
     #
     # resources
     #
-    # for resourceName, files of resources
-    #   indexMeta = files.index.meta
-    #   layout = getLayout sources, 'resources', indexMeta
-    #   content = getResourceData resourceName, files, indexMeta
-    #   html = grunt.template.process grunt.file.read(layout), {
-    #     data:
-    #       _head: _head
-    #       _nav: _nav
-    #       _foot: _foot
-    #       resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
-    #       content: content
-    #       meta: indexMeta
-    #       rootUrl: '../..'
-    #       resourcesUrl: '..'
-    #   }
-    #   grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
+    compileScript += 'cd resources\n'
+    for resourceName, files of resources
+      copyResourceAssets resourceName
+      copyImage 'cmep-logo3.png' "resources/#{resourceName}"
 
+      indexMeta = files.index.meta
+      layout = getLayout sources, 'resources', indexMeta
 
+      if resourceName == 'G2_RT3'
+          compileScript += "cd #{resourceName}\n"
+
+      content = getResourceData resourceName, files, indexMeta
+      # cdata has fields
+      #   fileName:
+      #   fileMeta:
+      #   indexMeta:
+      #   alias:
+      #   markup:
+      _.each(content.parts, (cdata, index) -> 
+        markup = grunt.template.process grunt.file.read(layout), {
+          data:
+            _preamble: _preamble.replace '<%= fontpath %>' '../../../../app/fonts/' 
+            resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
+            content: cdata.markup
+            meta: indexMeta
+            sidebar: content.sidebar
+            icon: (name) -> '\\' + name.replace(/-/g,'')
+            stationbutton: (stMeta) -> 
+              "\\definecolor{tempcolor}{HTML}{#{(stMeta.colour.substring 1).toUpperCase()}}\n" + 
+                "\\begin{tikzpicture}[baseline=(n.base)]\n" + 
+                "  \\node[rectangle, rounded corners=8pt, fill=tempcolor, text centered] (n) " + 
+                "at (0,0) {\\hyperref[station:#{stMeta.id}]{\\large\\sectfont\\color{white} #{stMeta.id}}};\n" + 
+                "\\end{tikzpicture}\n"
+        }
+
+        texFilename = cdata.fileName + ".printable.tex"
+        resourcePath = "#{partialsDir}/printables/resources/#{resourceName}"
+        texPath = "#{resourcePath}/#{texFilename}"
+
+        grunt.file.write texPath, markup
+        if resourceName == 'G2_RT3'
+          compileScript += "echo \"compiling #{texFilename}\"\n"
+          compileScript += "lualatex --interaction=nonstopmode --halt-on-error #{texFilename}\n"
+      )
+      if resourceName == 'G2_RT3'
+        compileScript += 'cd ..\n'
+
+    compileScript += 'cd ..\n'
+
+    grunt.file.write 'scripts/compilePrintableLatex.sh' compileScript
     # return the metadata
     return metadata
 

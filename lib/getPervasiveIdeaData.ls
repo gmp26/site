@@ -13,7 +13,7 @@ module.exports = (grunt, sources, partialsDir) ->
     return {
       title: meta.title
       family: meta.family
-      html: grunt.file.read "#{partialsDir}/html/pervasiveIdeas/#{pvid}.html"
+      html: grunt.file.read "#{partialsDir}/pervasiveIdeas/#{pvid}.html"
     }
 
 

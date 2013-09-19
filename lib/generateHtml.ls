@@ -44,9 +44,9 @@ module.exports = (grunt) ->
     _linesMenu = grunt.file.read "layouts/_linesMenu.html"
     _piMenu = grunt.file.read "layouts/_piMenu.html"
     
-    getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir, 'examQuestions'
-    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir
-    getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir
+    getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir+'/html', 'examQuestions'
+    getResourceData = (require './getResourceData.js') grunt, sources, partialsDir+'/html'
+    getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir+'/html'
 
 
     generateTopLevelPage = (fname, ...moreData) ->

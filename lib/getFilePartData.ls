@@ -9,6 +9,9 @@ module.exports = (grunt, sources, partialsDir, folder) ->
 
     _ = grunt.util._
 
+    postfix = grunt.config.get 'layoutPostfix'
+    if postfix is undefined then postfix = '.html'
+
     # Weight of a part in a multipart tabbed resource. 
     # Heavier parts appear in later tabs.
     weightOf = (fileName, fileMeta) ->
@@ -39,7 +42,7 @@ module.exports = (grunt, sources, partialsDir, folder) ->
           fileMeta: file.meta
           indexMeta: indexMeta
           alias: aliasOf fileName, file.meta
-          html: grunt.file.read "#{pDir}/html/#{folder}/#{rName}/#{fileName}.html"
+          markup: grunt.file.read "#{pDir}/#{folder}/#{rName}/#{fileName}" + postfix 
         }
       _.sortBy content, (cdata) -> weightOf cdata.fileName, cdata.fileMeta
 

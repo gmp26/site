@@ -538,4 +538,12 @@ module.exports = (grunt) ->
     "generatePrintables"
   ]
 
+  grunt.registerTask "d", [
+    "livescript"
+    "panda:pass1"
+    "expandMetadata"
+    "panda:pass2printables"
+    "generatePrintables"
+  ]
+
   grunt.registerTask "default", ["dev"]

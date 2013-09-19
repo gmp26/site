@@ -1,0 +1,29 @@
+<%= _preamble %>
+<% _ = grunt.util._ %>
+<% grunt.log.write("  resource printable layout "+meta.id+"... ") %>
+\begin{document}
+
+\sectionnumber{<%=meta.id.replace(/_/g,'\\textunderscore{}')%>}
+\phantomsection\label{resource:<%=meta.id%>}
+\markboth{RESOURCES}{<%= meta.id.replace(/_/g,'\\textunderscore{}') %>}
+\section*{<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}')%>}
+
+<%= content %>
+
+<%  if(sidebar) { %>
+\section*{Relevance}
+<%    _.each(sidebar.stMetas, function(stMeta) { %>
+<%= stationbutton(stMeta) %> <%= stMeta.title %>
+<%    }); %>
+
+<%    if(sidebar.pvMetas && sidebar.pvMetas.length > 0) { %>
+\begin{pervasiveitems}
+<%      _.each(sidebar.pvMetas, function(pvMeta) { %>
+  \item <%= pvMeta.title %>
+<%      }); %>
+\end{pervasiveitems}
+<%    } %>
+<%  } %>
+
+<% grunt.log.ok("done"); %>
+\end{document}
