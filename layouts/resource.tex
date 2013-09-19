@@ -1,11 +1,34 @@
-<%= _preamble %>
-<% _ = grunt.util._ %>
 <% grunt.log.write("  resource printable layout "+meta.id+"... ") %>
+<% _ = grunt.util._ %>
+<%= _preamble %>
+
 \begin{document}
 
 \sectionnumber{<%=meta.id.replace(/_/g,'\\textunderscore{}')%>}
 \phantomsection\label{resource:<%=meta.id%>}
-\markboth{RESOURCES}{<%= meta.id.replace(/_/g,'\\textunderscore{}') %>}
+<%  if(sidebar) { %>
+\fancyhead[C]{{%
+  \setlength{\fboxsep}{0pt} % get rid of any spacing in the colorbox
+  \colorbox{navbarbackground}{%
+    \makebox[\headwidth][l]{% this ensures we have content the full width of the page
+      % ensure we use the full height and set the baseline to the centre of the header
+      \raisebox{-0.5\height}{\rule{0pt}{\headheight}}
+      % centre the image vertically in the header
+      %TODO use a vector image
+      \raisebox{-0.5\height}{\hspace{5pt}\includegraphics[height=20pt]{cmep-logo3.png}}%
+      % choose a nice looking baseline for everything else
+      \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
+      \textcolor{navbartext}{%
+      \raisebox{-5pt}{\hspace{25pt}}%
+      \hfill
+      \raisebox{-5pt}{<% _.each(sidebar.stMetas, function(stMeta) { %><%= stationbutton(stMeta) %><% }); %>%
+      \hspace{5pt}}}%
+    }%
+  }%
+}} % double braces to (hopefully?) contain the change of \fboxsep
+<%  } else { %>
+
+<%  } %>
 \section*{<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}')%>}
 
 <%= content %>
@@ -25,5 +48,5 @@
 <%    } %>
 <%  } %>
 
-<% grunt.log.ok("done"); %>
 \end{document}
+<% grunt.log.ok("done"); %>

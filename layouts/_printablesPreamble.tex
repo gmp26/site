@@ -447,6 +447,10 @@
 \setlist[pervasiveitems]{label=\textbullet,noitemsep,leftmargin=4em}
 
 \newcommand*{\resitemhighlightfont}{\bfseries}
+% \newcommand*{\stationbutton}[2]{%
+% \begin{tikzpicture}[baseline=(n.base)]
+%   \node[rectangle, rounded corners=8pt, fill=#2, text centered] (n) at (0,0) {\hyperref[station:#1]{\large\sectfont\color{white} #1}} 
+% \end{tikzpicture}}
 \newcommand*{\drawdependency}[3]{%
 \pgfmathtruncatemacro{\next}{#3+1}%
 \node[rectangle, rounded corners=8pt, fill=#2, text centered, anchor=west, right=of dependency#3]%
@@ -518,8 +522,8 @@ roundcorner=8pt%
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 % Colors used in the headers
-\definecolor{navbarbackground}{HTML}{000000}
-\definecolor{navbartext}{HTML}{999999}
+\definecolor{navbarbackground}{HTML}{CCCCCC}
+\definecolor{navbartext}{HTML}{000000}
 
 % make the headers full width
 \newlength{\oddleftmargintotal}
@@ -549,13 +553,14 @@ roundcorner=8pt%
       \raisebox{-0.5\height}{\hspace{5pt}\includegraphics[height=20pt]{cmep-logo3.png}}%
       % choose a nice looking baseline for everything else
       \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
-      \textcolor{white}{%
+      \textcolor{navbartext}{%
       \raisebox{-5pt}{\hspace{25pt}\leftmark}%
-      \hfill%
+      \hfill
       \raisebox{-5pt}{\rightmark\hspace{5pt}}}%
     }%
   }%
 }} % double braces to (hopefully?) contain the change of \fboxsep
+
 \fancyfoot{} % clear all footer fields
 \fancyfoot[LE,RO]{}
 \fancyfoot[LO,CE]{}
@@ -564,7 +569,7 @@ roundcorner=8pt%
 \fancyfoot[LO,CE]{}
 \fancyfoot[CO,RE]{}
 % Rules
-\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
 
 %%% MISC CSS PARAMETERS
