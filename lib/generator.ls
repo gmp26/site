@@ -49,24 +49,27 @@ module.exports = (grunt) ->
 
 
     generateTopLevelPage = (fname, ...moreData) ->
-      meta = sources[fname].meta
-      layout = getLayout sources, null, meta
-      data = {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          meta: meta
-          content: grunt.file.read "#{partialsDir}/#{fname}.html"
-          sources: sources
-          rootUrl: '.'
-          resourcesUrl: './resources'
-      }
-      if moreData?
-        _.extend data.data, moreData.0
+      if not sources[fname]?.meta?
+        grunt.log.error "source file #{fname}.md has no metadata"
+      else
+        meta = sources[fname].meta
+        layout = getLayout sources, null, meta
+        data = {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            meta: meta
+            content: grunt.file.read "#{partialsDir}/#{fname}.html"
+            sources: sources
+            rootUrl: '.'
+            resourcesUrl: './resources'
+        }
+        if moreData?
+          _.extend data.data, moreData.0
 
-      html = grunt.template.process grunt.file.read(layout), data
-      grunt.file.write "#{appDir}/#{fname}.html", html 
+        html = grunt.template.process grunt.file.read(layout), data
+        grunt.file.write "#{appDir}/#{fname}.html", html 
 
 
     #
