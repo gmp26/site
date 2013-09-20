@@ -16,14 +16,14 @@ module.exports = (grunt) ->
     if not grunt.option 'verbose'
       grunt.log.write "#{filepath}..."
     child = grunt.util.spawn {cmd: tmpCmd, args: tmpArgs, opts: {cwd: tmpCwd}}, (err, result, code) ->
-      success = code === 0
-      if code === 127
+      success = code == 0
+      if code == 127
         return grunt.warn 'You need to have a LaTeX distribution with lualatex installed ' +
           'and in your system PATH for this task to work.'
 
       # lualatex exits with error code 1 if it finds an error,
       # but it might be that a PDF could be created nevertheless.
-      if ( code === 1 and /Output written on/g.test result.stdout )
+      if ( code == 1 and /Output written on/g.test result.stdout )
         success = true
 
       if not grunt.option 'verbose'
