@@ -42,13 +42,13 @@ module.exports = (grunt) ->
   
 
   grunt.registerMultiTask 'latex', 'Compile a LaTeX source file to PDF', ->
-    done = @async
+    done = @async!
     args = ['lualatex', '--interaction=nonstopmode', '--halt-on-error']
     grunt.log.writeln "Creating pdfs with #{args[0]}:"
     async.forEachSeries( @filesSrc, ( f, cb )  ->
       tmpArgs = args.slice 0
       tmpArgs.push f
       compile tmpArgs, cb
-    , done() )
+    , done )
   
 
