@@ -10,7 +10,7 @@ module.exports = (grunt, sources, partialsDir, folder) ->
     _ = grunt.util._
 
     postfix = grunt.config.get 'layoutPostfix'
-    if postfix is undefined then postfix = '.html'
+    if postfix is void then postfix = '.html'
 
     # Weight of a part in a multipart tabbed resource. 
     # Heavier parts appear in later tabs.
