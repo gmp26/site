@@ -1,0 +1,76 @@
+<%= _preamble %>
+<% _ = grunt.util._ %>
+<% grunt.log.write("  station printable layout "+meta.id+"... ") %>
+\begin{document}
+
+%%% The station title and icon
+\noindent {
+\definecolor{tempcolor}{HTML}{<%=meta.colour.substring(1).toUpperCase()%>}
+\markboth{}{}
+\centering
+\Large\sectfont
+\begin{tabular}{m{0.4\textwidth} m{0.5\textwidth}}
+\begin{tikzpicture}[node distance=5pt]
+  % size parameters
+  \setlength{\w}{0.4\textwidth}
+  \setlength{\h}{2\baselineskip}
+  \setlength{\pw}{0.66\w}
+  % bounding box
+  \useasboundingbox (0,-\pw/2+\h/2) rectangle (\w,\pw/2+\h/2);
+  % draw the postmark
+   \node at (\w/2,\h/2) {\pgftext{\includegraphics[width=\pw]{postmark.pdf}}};
+  % draw the main bar
+  \draw[rounded corners=\h/2,color=orange,line width=3pt, fill=tempcolor] (0,0) rectangle (\w,\h);
+  \node (title) at (\w/2,\h/2) {\Large\sectfont\color{white}<%=meta.id%>};
+  % dependencies
+  \node[anchor=east] (dependency0) at (0,\h/2+\dvs) {};
+  <% var i = 0 %>
+  <% _.each(meta.dependencies, function(depId) {%>
+    \definecolor{tempcolor}{HTML}{<%=sources.stations[depId].meta.colour.substring(1).toUpperCase()%>}
+    \drawdependency{<%=sources.stations[depId].meta.id%>}{tempcolor}{<%= i++ %>}
+  <% })%>
+  % dependents
+  \node[anchor=west] (dependent0) at (\w,\h/2-\dvs) {};
+  <% var i = 0 %>
+  <% _.each(meta.dependents, function(depId) {%>
+    \definecolor{tempcolor}{HTML}{<%=sources.stations[depId].meta.colour.substring(1).toUpperCase()%>}
+    \drawdependent{<%=sources.stations[depId].meta.id%>}{tempcolor}{<%= i++ %>}
+<% })%>
+\end{tikzpicture}
+&
+\sectionnumber{<%=meta.id.replace(/_/g,'\\textunderscore{}')%>}
+\Large\sectfont\raggedright\noindent <%=meta.title.replace(/_/g,'')%> %HACK remove underscores for now
+\end{tabular}
+}
+
+% The markdown content contains Key Questions
+<%= content %>
+
+% Resources that list station in stids1
+<% if (meta.R1s) {%>
+  \subsection*{Resources}
+  \begin{resourceitems}
+  <% _.each(meta.R1s, function(res) {%>
+    <% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
+    \item[\clap{\<%=resourceTypeMeta.icon.replace(/-/g,'')%>}\,]%
+    \hyperref[resource:<%= res.id %>]{{% put the item para in a group to keep font changes local
+    <%=res.highlight ? '\\resitemhighlightfont' : ''%> <%=resourceTypeMeta.title%><% if(_.isString(res.title)) { %> - <%= res.title %> <% } %>
+    }}%
+  <% }) %>
+  \end{resourceitems}
+<% }%>
+
+
+% Pervasive Ideas
+<% if(_.size(meta.pervasiveIdeas)>0) { %>
+  \subsection*{Pervasive Ideas}
+  \begin{pervasiveitems}
+  <% _.each(meta.pervasiveIdeas, function(__, pvid) { %>
+    \item
+      <%=sources.pervasiveIdeas[pvid].meta.title%>
+  <% }) %>
+  \end{pervasiveitems}
+<% } %>
+
+\end{document}
+<% grunt.log.ok("done"); %>

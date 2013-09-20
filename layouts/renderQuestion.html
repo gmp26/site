@@ -16,7 +16,7 @@
 <%   _.each(content, function(cdata, index) { %>
           <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=cdata.fileMeta.id%>_<%=index%>">
 
-              <%= cdata.html%>
+              <%= cdata.markup%>
 
 <% if(reference && reference.ref && reference.ack) { %>
               <div class="muted eq-ack">
