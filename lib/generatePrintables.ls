@@ -39,7 +39,6 @@ module.exports = (grunt) ->
 
     # make tex from resource layout and data  
     _preamble = grunt.file.read "layouts/_printablesPreamble.tex"
-    compileScript = "cd #{partialsDir}/printables/\n"
 
     # a helper function since LaTeX can't access images above the tex file in a folder hierarchy
     copyImage = (filename, targetFolder) ->
@@ -365,7 +364,6 @@ module.exports = (grunt) ->
     #
     # Since (on some systems at least) LaTeX can't see images below the .tex file in the hierarchy
     # copy any required images so they're next to the tex files.
-    compileScript += 'cd stations\n'
     copyImage 'postmark.pdf' 'stations'
     copyImage 'cmep-logo3.pdf' 'stations'
     
@@ -384,25 +382,16 @@ module.exports = (grunt) ->
       texFilename = "#{stid}.printable.tex"
       texPath = "#{partialsDir}/printables/stations/#{texFilename}"
       grunt.file.write texPath, markup
-      if stid == 'G2'
-        compileScript += "echo \"compiling #{texFilename}\"\n"
-        compileScript += "lualatex --interaction=nonstopmode --halt-on-error #{texFilename}\n"
-
-    compileScript += 'cd ..\n'
 
     #
     # resources
     #
-    compileScript += 'cd resources\n'
     for resourceName, files of resources
       copyResourceAssets resourceName
       copyImage 'cmep-logo3.pdf' "resources/#{resourceName}"
 
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
-
-      if resourceName == 'G2_RT3'
-          compileScript += "cd #{resourceName}\n"
 
       content = getResourceData resourceName, files, indexMeta
       # cdata has fields
@@ -434,16 +423,8 @@ module.exports = (grunt) ->
         texPath = "#{resourcePath}/#{texFilename}"
 
         grunt.file.write texPath, markup
-        if resourceName == 'G2_RT3' and cdata.fileName == 'index'
-          compileScript += "echo \"compiling #{texFilename}\"\n"
-          compileScript += "lualatex --interaction=nonstopmode --halt-on-error #{texFilename}\n"
       )
-      if resourceName == 'G2_RT3'
-        compileScript += 'cd ..\n'
 
-    compileScript += 'cd ..\n'
-
-    grunt.file.write 'scripts/compilePrintableLatex.sh' compileScript
     # return the metadata
     return metadata
 
