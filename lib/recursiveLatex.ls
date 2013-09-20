@@ -33,8 +33,9 @@ module.exports = (grunt) ->
           grunt.log.error!
       else
         if not success
-          grunt.log.error("Failed to create file: #{filepath}")
+          grunt.log.error "Failed to create file: #{filepath}"
       cb()
+
     if grunt.option 'verbose'
       child.stdout.pipe(process.stdout)
     child.stderr.pipe(process.stderr)
