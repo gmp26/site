@@ -367,7 +367,7 @@ module.exports = (grunt) ->
     # copy any required images so they're next to the tex files.
     compileScript += 'cd stations\n'
     copyImage 'postmark.pdf' 'stations'
-    copyImage 'cmep-logo3.png' 'stations'
+    copyImage 'cmep-logo3.pdf' 'stations'
     
     for stid, data of stations
       meta = data.meta
@@ -396,7 +396,7 @@ module.exports = (grunt) ->
     compileScript += 'cd resources\n'
     for resourceName, files of resources
       copyResourceAssets resourceName
-      copyImage 'cmep-logo3.png' "resources/#{resourceName}"
+      copyImage 'cmep-logo3.pdf' "resources/#{resourceName}"
 
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
@@ -417,15 +417,16 @@ module.exports = (grunt) ->
             _preamble: _preamble.replace '<%= fontpath %>' '../../../../app/fonts/' 
             resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
             content: cdata.markup
+            alias: cdata.alias
             meta: indexMeta
             sidebar: content.sidebar
             icon: (name) -> '\\' + name.replace(/-/g,'')
             stationbutton: (stMeta) -> 
-              "\\definecolor{tempcolor}{HTML}{#{(stMeta.colour.substring 1).toUpperCase()}}\n" + 
-                "\\begin{tikzpicture}[baseline=(n.base)]\n" + 
+              "\\definecolor{tempcolor}{HTML}{#{(stMeta.colour.substring 1).toUpperCase()}}%\n" + 
+                "\\begin{tikzpicture}[baseline=(n.base)]%\n" + 
                 "  \\node[rectangle, rounded corners=8pt, fill=tempcolor, text centered] (n) " + 
-                "at (0,0) {\\hyperref[station:#{stMeta.id}]{\\large\\sectfont\\color{white} #{stMeta.id}}};\n" + 
-                "\\end{tikzpicture}\n"
+                "at (0,0) {\\hyperref[station:#{stMeta.id}]{\\large\\sectfont\\color{white} #{stMeta.id}}};%\n" + 
+                "\\end{tikzpicture}%\n"
         }
 
         texFilename = cdata.fileName + ".printable.tex"
@@ -433,7 +434,7 @@ module.exports = (grunt) ->
         texPath = "#{resourcePath}/#{texFilename}"
 
         grunt.file.write texPath, markup
-        if resourceName == 'G2_RT3'
+        if resourceName == 'G2_RT3' and cdata.fileName == 'index'
           compileScript += "echo \"compiling #{texFilename}\"\n"
           compileScript += "lualatex --interaction=nonstopmode --halt-on-error #{texFilename}\n"
       )

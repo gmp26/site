@@ -538,7 +538,9 @@ roundcorner=8pt%
 \fancyhfoffset[RO]{\oddrightmargintotal}
 \fancyhfoffset[LE]{\evenleftmargintotal}
 \fancyhfoffset[RE]{\evenrightmargintotal}
-
+\newlength{\headertextmargin}
+\setlength{\headertextmargin}{10pt}
+\newcommand*{\headspace}{\hspace{\headertextmargin}}
 % Define header contents
 %\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
 \fancyhead{} % clear all header fields
@@ -550,24 +552,24 @@ roundcorner=8pt%
       \raisebox{-0.5\height}{\rule{0pt}{\headheight}}
       % centre the image vertically in the header
       %TODO use a vector image
-      \raisebox{-0.5\height}{\hspace{5pt}\includegraphics[height=20pt]{cmep-logo3.png}}%
+      \raisebox{-0.5\height}{\headspace\includegraphics[height=20pt]{cmep-logo3}}%
       % choose a nice looking baseline for everything else
       \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
       \textcolor{navbartext}{%
       \raisebox{-5pt}{\hspace{25pt}\leftmark}%
       \hfill
-      \raisebox{-5pt}{\rightmark\hspace{5pt}}}%
+      \raisebox{-5pt}{\rightmark\headspace}}%
     }%
   }%
 }} % double braces to (hopefully?) contain the change of \fboxsep
 
+\usepackage{filemod}
+\renewcommand{\filemodsep}{ }
 \fancyfoot{} % clear all footer fields
-\fancyfoot[LE,RO]{}
-\fancyfoot[LO,CE]{}
-\fancyfoot[CO,RE]{}
-\fancyfoot[LE,RO]{}
-\fancyfoot[LO,CE]{}
-\fancyfoot[CO,RE]{}
+\fancyfoot[L]{\headspace\small{}Created \filemodprint{\jobname}}
+\fancyfoot[C]{\small\thepage}
+\fancyfoot[R]{\small{}Copyright \copyright{} CMEP \number\year{}\headspace}
+
 % Rules
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
