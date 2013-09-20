@@ -10,7 +10,7 @@ module.exports = (grunt) ->
 
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
-  grunt.registerTask "generator", "Generate the site html, javascripts and CSS.", ->
+  grunt.registerTask "generateHtml", "Generate the site html, javascripts and CSS.", ->
 
     #
     # Run the site generator on grunt panda generated metadata
