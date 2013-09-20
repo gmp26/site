@@ -101,6 +101,10 @@ ol {
   margin: 0 0 @baseLineHeight / 2 3em;
 }
 
+#sidebar1 signage {
+  margin-left: -6px;
+}
+
 @media (max-width: 767px) {
   #sidebar1 {
     position: static;
@@ -108,7 +112,7 @@ ol {
     top: 0;
     .signage {
       width:100%;
-      margin-left:-18px;
+      margin-left:0px;
     }
   }
 }
@@ -124,6 +128,9 @@ ol {
  station sidebar nav
  */
 .station {
+  .inline {
+    margin:0;
+  }
   .inline li {
     padding:0;
   }
@@ -148,6 +155,7 @@ ol {
     width: inherit;
     position:absolute;
     z-index:-1;
+    margin-left:-4px;
     .postmark {
       display:block; 
       margin-left:auto; 
@@ -251,7 +259,7 @@ figure img {
 
 figure {
     text-align: center;
-    display: inline-block;
+    display: block;
     max-width: 75%; 
     margin: 10px auto;
 }
@@ -292,5 +300,14 @@ tr.odd {
 
 .eq-separator {
   height: 40px;
+}
+
+.clearance {
+  color:orange;
+  display: inline;
+  float: left;
+  padding: 10px 20px 10px;
+  font-size: 16px;
+  font-weight: 200;
 }
 

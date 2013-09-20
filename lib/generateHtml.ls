@@ -10,7 +10,7 @@ module.exports = (grunt) ->
 
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
-  grunt.registerTask "generateHtml", "Generate the site html, javascripts and CSS.", ->
+  grunt.registerTask "generator", "Generate the site html, javascripts and CSS.", ->
 
     #
     # Run the site generator on grunt panda generated metadata
@@ -50,24 +50,28 @@ module.exports = (grunt) ->
 
 
     generateTopLevelPage = (fname, ...moreData) ->
-      meta = sources[fname].meta
-      layout = getLayout sources, null, meta
-      data = {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          meta: meta
-          content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
-          sources: sources
-          rootUrl: '.'
-          resourcesUrl: './resources'
-      }
-      if moreData?
-        _.extend data.data, moreData.0
+      if not sources[fname]?.meta?
+        grunt.log.error "source file #{fname}.md has no metadata"
+      else
+        meta = sources[fname].meta
+        meta.id = fname
+        layout = getLayout sources, null, meta
+        data = {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            meta: meta
+            content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
+            sources: sources
+            rootUrl: '.'
+            resourcesUrl: './resources'
+        }
+        if moreData?
+          _.extend data.data, moreData.0
 
-      html = grunt.template.process grunt.file.read(layout), data
-      grunt.file.write "#{appDir}/#{fname}.html", html 
+        html = grunt.template.process grunt.file.read(layout), data
+        grunt.file.write "#{appDir}/#{fname}.html", html 
 
 
     #
