@@ -10,6 +10,7 @@ isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
 stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
+latex = require './lib/recursiveLatex.js'
 
 
 mountFolder = (connect, dir) ->
@@ -119,6 +120,11 @@ module.exports = (grunt) ->
 
         files: "<%=pass1Files%>"
 
+    latex:
+      test:
+        src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/G2_RT3/*.printable.tex"]
+      printables:
+        src: ["<%= yeoman.partials %>/printables/**/*.printable.tex"]
 
     # Validate, weed, and expand metadata
     expandMetadata:
@@ -436,6 +442,8 @@ module.exports = (grunt) ->
           ]
         ]
 
+  #
+  latex grunt
 
   # register expandMetadata task
   expandMetadata grunt
@@ -535,14 +543,6 @@ module.exports = (grunt) ->
     "panda:pass2printables"
     "copy:assets"
     "generateHtml"
-    "generatePrintables"
-  ]
-
-  grunt.registerTask "d", [
-    "livescript"
-    "panda:pass1"
-    "expandMetadata"
-    "panda:pass2printables"
     "generatePrintables"
   ]
 

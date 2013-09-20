@@ -52,7 +52,7 @@
   \begin{resourceitems}
   <% _.each(meta.R1s, function(res) {%>
     <% var resourceTypeMeta = sources.resourceTypes[res.rt].meta; %>
-    \<%=res.highlight ? 'highlight' : ''%>item[\clap{\<%=resourceTypeMeta.icon.replace(/-/g,'')%>}\,]%
+    \item[\clap{\<%=resourceTypeMeta.icon.replace(/-/g,'')%>}\,]%
     \hyperref[resource:<%= res.id %>]{{% put the item para in a group to keep font changes local
     <%=res.highlight ? '\\resitemhighlightfont' : ''%> <%=resourceTypeMeta.title%><% if(_.isString(res.title)) { %> - <%= res.title %> <% } %>
     }}%
