@@ -9,7 +9,7 @@ module.exports = (grunt) ->
 
     prefix = 'layouts/'
     postfix = grunt.config.get 'layoutPostfix'
-    if postfix is undefined then postfix = '.html'
+    if postfix is void then postfix = '.html'
 
     layout = meta?.layout
     if !layout
