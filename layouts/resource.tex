@@ -18,10 +18,18 @@
       % choose a nice looking baseline for everything else
       \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
       \textcolor{navbartext}{%
-      \raisebox{-5pt}{\hspace{25pt}\Large\sectfont<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}')%>}%
-      \hfill<%  if(sidebar) { %>%
-      \raisebox{-5pt}{<% _.each(sidebar.stMetas, function(stMeta) { %><%= stationbutton(stMeta) %><% }); %>%
-      \headspace}}<%  } else { %><%  } %>%
+        \raisebox{-5pt}{%
+          \hspace{25pt}\Large\sectfont<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}')%>%
+        }
+        \hfill%
+        <%  if(sidebar) { %>%
+        % sidebar detected, draw station buttons
+        \raisebox{-5pt}{%
+          <% _.each(sidebar.stMetas, function(stMeta, index, collection) { %><%= (index > 0) ? '\\stationbuttonspace%\n' : '' %><%= stationbutton(stMeta) %><% }); %>%
+          \headspace%
+        }%
+        <%  } else { %><%  } %>%
+      }%
     }%
   }%
 }} % double braces to (hopefully?) contain the change of \fboxsep
@@ -32,7 +40,7 @@
 <%  if(sidebar) { %>
 \section*{Relevance}
 <%    _.each(sidebar.stMetas, function(stMeta) { %>
-<%= stationbutton(stMeta) %> <%= stMeta.title %>
+<%= stationbutton(stMeta) %>\stationbuttonspace{}<%= stMeta.title %>
 <%    }); %>
 
 <%    if(sidebar.pvMetas && sidebar.pvMetas.length > 0) { %>
