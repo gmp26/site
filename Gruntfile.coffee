@@ -11,7 +11,7 @@ integrate = require './lib/integrate.js'
 stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
-
+path = require 'path'
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -410,6 +410,15 @@ module.exports = (grunt) ->
           cwd: "<%= yeoman.app %>/bower_components/font-awesome/font/"
           dest: "<%= yeoman.app %>/fonts/"
           src: ["*"]
+        ]
+
+      printables:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.partials %>/printables"
+          src: "**/*.printable.pdf"
+          dest: "<%= yeoman.app %>"
+          rename: (dest, matchedSrcPath) -> (path.join dest, matchedSrcPath).replace ".printable.pdf", ".pdf"
         ]
 
     concurrent:
