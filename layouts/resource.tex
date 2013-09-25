@@ -26,7 +26,7 @@
   }%
 }} % double braces to (hopefully?) contain the change of \fboxsep
 
-\section*{<%= alias %>}
+\section*{<%= alias.replace(/_/g,'\\textunderscore{}') %>}
 <%= content %>
 
 <%  if(sidebar) { %>
