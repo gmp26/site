@@ -544,6 +544,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", [
+    "clearance"
     "livescript"
     "panda:pass1"
     "expandMetadata"
