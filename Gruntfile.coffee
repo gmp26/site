@@ -18,7 +18,10 @@ mountFolder = (connect, dir) ->
 
 module.exports = (grunt) ->
 
-  pass2Utils = (require './lib/pass2Utils.js')(grunt)
+  _ = grunt.util._
+
+  pass2UtilsHtml = (require './lib/pass2UtilsHtml.js')(grunt)
+  pass2UtilsTex = (require './lib/pass2UtilsTex.js')(grunt)
   #examQuestions = (require './lib/examQuestions.js')(grunt)
 
   # load all grunt tasks
@@ -80,7 +83,7 @@ module.exports = (grunt) ->
         ]
       pass2html:
         options:
-          process: pass2Utils
+          process: pass2UtilsHtml
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -93,7 +96,7 @@ module.exports = (grunt) ->
         ]
       pass2printables:
         options:
-          process: pass2Utils
+          process: pass2UtilsTex
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -122,7 +125,7 @@ module.exports = (grunt) ->
 
     latex:
       test:
-        src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/G2_RT3/*.printable.tex"]
+        src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/widget_lib/*.printable.tex"]
       printables:
         src: ["<%= yeoman.partials %>/printables/**/*.printable.tex"]
 
@@ -451,7 +454,10 @@ module.exports = (grunt) ->
           ]
         ]
 
-  #
+  # set some globals
+  grunt.template.addDelimiters 'CMEP', '<:', ':>'
+
+  # register latex task
   latex grunt
 
   # register expandMetadata task
@@ -477,7 +483,6 @@ module.exports = (grunt) ->
 
   # register stripMeta task
   stripMeta grunt
-
 
   grunt.renameTask "regarde", "watch"
 
@@ -543,17 +548,48 @@ module.exports = (grunt) ->
     "usemin"
   ]
 
-  grunt.registerTask "dev", [
-    "clearance"
-    "livescript"
-    "panda:pass1"
-    "expandMetadata"
-    "tubemap:png"
-    "panda:pass2html"
-    "panda:pass2printables"
-    "copy:assets"
-    "generateHtml"
-    "generatePrintables"
-  ]
+  grunt.registerTask "dev", (listOfTargets) ->
+    # Make the targets variable hold an array of strings representing desired targets.
+    # Assume that the passed parameter is a comma separated list (with no spaces)
+    # of target strings. 
+    # "all" is a special value that is replaced by all the targets
+    # "quick" is a special value which does a small amout of the latex
+    switch listOfTargets
+      when undefined then targets = ["html"]
+      when "all" then targets = ["html", "printables"]
+      when "quick" then targets = ["quick"] 
+      else targets = listOfTargets.split ","
+
+    grunt.log.writeln "Developing for targets:"
+    _.each targets, (value, index, collection) -> grunt.log.writeln "  " + value
+
+    # tasks common to all targets
+    grunt.task.run ([ 
+      "livescript"
+      "clearance"
+      "panda:pass1"
+      "expandMetadata"
+    ])
+    if _.contains(targets, "html")
+      grunt.task.run([
+        "tubemap:png"
+        "panda:pass2html"
+        "copy:assets"
+        "generateHtml"
+      ])
+    if _.contains(targets, "printables")
+      grunt.task.run([
+        "panda:pass2printables"
+        "generatePrintables"
+        "latex:printables"
+        "copy:printables"
+      ])
+    else if _.contains(targets, "quick")
+      grunt.task.run([
+        "panda:pass2printables"
+        "generatePrintables"
+        "latex:test"
+        "copy:printables"
+      ])
 
   grunt.registerTask "default", ["dev"]

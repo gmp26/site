@@ -18,4 +18,4 @@ module.exports = (grunt) ->
 """.replace '\n',''
 
     divReveal_: (id) -> "<div id=\"#{id}\" class=\"collapse\">"
-    _div: '</div>'   
+    _div: -> '</div>'   

@@ -42,7 +42,13 @@ module.exports = (grunt) ->
 
     # a helper function since LaTeX can't access images above the tex file in a folder hierarchy
     copyImage = (filename, targetFolder) ->
-        grunt.file.copy "#{appDir}/images/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+      grunt.file.copy "#{appDir}/images/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+    copyFont = (filename, targetFolder) ->
+      grunt.file.copy "#{appDir}/fonts/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+    copyFonts = (targetFolder) ->
+      fonts = grunt.file.expand {cwd: "#{appDir}/fonts/"}, ["*.ttc", "*.otf", "*.ttf"]
+      for file in fonts
+        grunt.file.copy "#{appDir}/fonts/#{file}", "#{partialsDir}/printables/#{targetFolder}/#{file}"
     copyResourceAssets = (name) ->
         files = grunt.file.expand("#{sourcesDir}/resources/#{name}/*.png")
         for img in files
@@ -366,6 +372,7 @@ module.exports = (grunt) ->
     # copy any required images so they're next to the tex files.
     copyImage 'postmark.pdf' 'stations'
     copyImage 'cmep-logo3.pdf' 'stations'
+    copyFonts 'stations'
     
     for stid, data of stations
       meta = data.meta
@@ -373,7 +380,8 @@ module.exports = (grunt) ->
 
       markup = grunt.template.process grunt.file.read(layout), {
         data:
-          _preamble: _preamble.replace '<%= fontpath %>' '../../../app/fonts/'
+          #_preamble: _preamble.replace /<%= fontpath %>/g '../../../app/fonts/'
+          _preamble: _preamble.replace /<%= fontpath %>/g './' 
           meta: meta
           content: grunt.file.read "#{partialsDir}/printables/stations/#{stid}.tex"
           sources: sources
@@ -389,6 +397,7 @@ module.exports = (grunt) ->
     for resourceName, files of resources
       copyResourceAssets resourceName
       copyImage 'cmep-logo3.pdf' "resources/#{resourceName}"
+      copyFonts "resources/#{resourceName}"
 
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
@@ -403,7 +412,8 @@ module.exports = (grunt) ->
       _.each(content.parts, (cdata, index) -> 
         markup = grunt.template.process grunt.file.read(layout), {
           data:
-            _preamble: _preamble.replace '<%= fontpath %>' '../../../../app/fonts/' 
+            #_preamble: _preamble.replace /<%= fontpath %>/g '../../../../app/fonts/'
+            _preamble: _preamble.replace /<%= fontpath %>/g './' 
             resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
             content: cdata.markup
             alias: cdata.alias
