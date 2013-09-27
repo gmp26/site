@@ -11,20 +11,29 @@ module.exports = (grunt) ->
     chalk: 0
     well: 1
 
+    showLodashed: (expression, interpolated=true) -> 
+      escape = (str) -> 
+        str = str.replace "{" "\\{"
+        str = str.replace "}" "\\}"
+        return str
+      "\\lodashed#{if interpolated then '[=]' else ''}{" + (escape expression) + "}"
+
     style: (value) -> switch value
-      | void  => "\\end{mdframed}"
-      | @chalk => "\\begin{mdframed}[style=chalk]"
-      | @well  => "\\begin{mdframed}[style=well]"
+      | void  => "\\end{mdframed}\n"
+      | @chalk => "\\begin{mdframed}[style=chalk]\n"
+      | @well  => "\\begin{mdframed}[style=well]\n"
 
-    hintAnswer: (hLabel, hint, aLabel, answer) -> 
-      grunt.log.writeln " "
-      grunt.log.warn "The hintAnswer group is not implemented in LaTeX yet"
+    hintAnswer: (hLabel, hint, aLabel, answer) -> ''
+
+    collapsed: (id) ->
+      switch id
+        | void => "\\fi"
+        | otherwise "\\iffalse"
+
+    warn: (msg) ->
+      grunt.log.write "\n"
+      grunt.log.warn msg
       grunt.log.write "..."
-      "\\textcolor{red}{The hintAnswer group is not implemented in LaTeX yet}"
-
-    collapsed: (id) -> switch id
-      | void => "\\end{mdframed}"
-      | otherwise "\\begin{mdframed}[style=alert,frametitle={#{id}}]"
 
 
 
