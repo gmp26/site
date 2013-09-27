@@ -1,7 +1,9 @@
 ````
+alias: Introduction
+weight: 0
 layout: resource
 clearance: -1
-title: Lodash Markup Documentation
+title: CMEP Contribution Documentation
 author: Ewan Davies
 lastUpdated: NOT YET IMPLEMENTED
 acknowledgementText: So long and thanks for all the fish.
@@ -17,187 +19,109 @@ priors:
 
 ````
 
-<: grunt.log.writeln("Testing lodash widget library") :>
+# How to contribute to CMEP
 
-#Introduction
+## What does a CMEP resource look like?
 
-Content for CEMP is written in _markdown_. This is a way of providing
-formatting information to the layout engines without too much visual 'noise'.
-Below are examples of the markdown we encourage, with some advice about how to
-use it.
+Each resource lives in its own folder. The main file is called `index.md` -- carrying a `.md` extension since it's expected to be in Markdown. See the [Markdown Guide](index.html#tab1) for more info. Each file can refer to others in the same folder - e.g. images, or other linked content. The `index.md` usually does not contain an index, though it might. 
 
-This file is written in exemplary CMEP markdown style so look at its source for
-guidance if you like.
+On the website the different `.md` files are combined into one `index.html` where each file is shown as a tab. To refer to other tabs (aside from being able to click on a tab to activate it), TODO: verify and fix this you can link to `index.html#tabN` where `N` is the number of the tab, starting with `0`. 
 
-# Metadata
+To build the CMEP content we use Pandoc, a compiler that can convert Markdown to a large number of other document formats. To preview your work you'll need a copy of `pandoc` installed, together with a good text editor -- we recommend using `Sublime Text 2` and hope to produce syntax highlighters for it that should make your job a little easier, available soon.
 
-At the top of each source file is a metadata block. When I have time I'll write
-more about this.
+## Preliminary Installations
 
-# Common Markdown Constructs
+Follow the links for downloads and installation instructions.
 
-## Headings
-In markdown use hashes (`#`) to make headings of various levels:
+* [Pandoc installation](http://johnmacfarlane.net/pandoc). Do make sure that you have 
+the resulting pandoc executable in your PATH. When this is right, executing the command `pandoc` at a console will run the program -- it will sit there waiting for input. Type ctrl-D to give it an end-of-file to finish.
+* [Sublime Text 2](http://sublimetext.com)
 
-    # A Top-level Heading
-    ## A Level 2 Heading
-    ### A Level 3 Heading
+It's useful to configure your editor so you can use pandoc to compile HTML previews. Here's how to do it in sublime text.
 
-which appear as:
+* Install the [Package Controller for Sublime](http://wbond.net/sublime_packages/package_control/installation). The console is available on the `View > Show Console` menu in Sublime. This plugin adds a number of package installation commands to sublime. which show up in the command palette when you start typing 'Package Control'. Find them in the `Tools > Command Palette` menu.
 
-# A Top-level Heading
-## A Level 2 Heading
-### A Level 3 Heading
+* Use your new package installer to install the package `Pandoc (Markdown)`. This will install  commands in the Tools menu of sublime which compile and preview Markdown. Provided pandoc is in your PATH, these should work.
 
-_Please refrain from using too many levels, the latex output will not be as
-intended if you use level 4 or below_
+### Enabling Maths rendering in preview
 
-TODO: write about paragraphs, links, tables, lists, etc. etc.
+1. On the menu go to `Sublime Text 2 > Preferences > Browse Packages`. This
+will open a window on a folder containing all your sublime packages.
 
-# Lodash Extensions
+2. Find the folder called Pandoc (Markdown) and open it.
 
-Markdown is somewhat limited, and we have a special way of doing extra things:
+3. Edit the python file 'PandocRender.py' *carefully*.
 
-- Adding metadata from the file in the displayed text
-- Applying extra formatting to paragraphs, images etc.
+  - Locate a line that says `cmd.append('--standalone')`
+  - Insert after it a line that says `cmd.append('--mathjax')`
 
-The main thing to know is that we use special tags: <:= showLodashed('') :> or
-even <:= showLodashed('', false) :> to access these features.
+4. Save, Quit Sublime, and restart. Maths should now render in pandoc html preview.
 
-The tags with the equals sign, namely <:= showLodashed('') :> _interpolate_ 
-the code inside; it runs the code and the result appears in place of the whole 
-tag. This is useful for metadata, styles and other things that need to provide
-some output.
 
-The tags without the equals sign, namely <:= showLodashed('', false) :> 
-_evaluate_ the code inside, and won't automatically make output. This is ideal
-for _logical statements_ which control what gets displayed. Examples are below
-to explain this (somewhat subtle) difference.
+### Extra instructions for Windows machines
 
-## Metadata
+1. In a command prompt, get the path to `pandoc` using
+```
+where pandoc
+```
 
-The following fields are available, and their expansion for this document is
-shown too. _Note that for these expansions to appear you have to define them
-in the metadata block._
+2. Open sublime, open a markdown file, and check that sublime thinks it is editing markdown by checking the indicator at bottom right of the window.
 
-<: grunt.log.write("  top-level metadata...") :>
-- <:= showLodashed('title') :> evaluates to: '<:= title :>'
-- <:= showLodashed('author') :> evaluates to: '<:= author :>'
-- <:= showLodashed('thisClearanceLevel') :> evaluates to: '<:= thisClearanceLevel :>'
-- <:= showLodashed('globalClearanceLevel') :> evaluates to: '<:= globalClearanceLevel :>'
-- <:= showLodashed('lastUpdated') :> evaluates to: '<:= lastUpdated :>'
-- <:= showLodashed('acknowledgementText') :> evaluates to: '<:= acknowledgementText :>'
-<: grunt.log.ok() :>
+3. In the menu, go to `Preferences > Package Setting > Pandoc > Settings - User`
 
-## Paragraph styles
+4. Type this:
 
-A style is activated with <:= showLodashed('style(name)') :> and deactivated 
-with <:= showLodashed('style()') :>. _Note that nested styles are not allowed and
-will break. You must deactivate your last style before activating another._
+```
+{
+  "pandoc_path": null,
+  "pandoc_bin": "path_to_pandoc_from_step_1 --mathjax"
+}
 
-Below are examples of the syntax, and the output of our paragraph styles.
+```
 
-<:= showLodashed('style(chalk)') :>
+5. Adjust the path to `pandoc` by replacing all backslashes `\` with doubled backslashes `\\`.
 
-This text looks like it's been written in chalk.
+6. Save.
 
-<:= showLodashed('style()') :>
+The pandoc commands should then work. The pandoc maths commands should work after a pandoc restart.
 
-<: grunt.log.write("  style(chalk)...") :>
-<:= style(chalk) :>
+## Starting to write
 
-This text looks like it's been written in chalk.
+Most of the things you'll need are in our [Markdown Guide](index.html#tab1) guide and there is a lot more to boot in the [Pandoc User Guide](http://johnmacfarlane.net/pandoc/README.html#pandocs-Markdown). A good place to start is with the top of the file, which contains the _metadata_...
 
-<:= style() :>
-<: grunt.log.ok() :>
+## Creating metadata
 
-<:= showLodashed('style(well)') :>
+At the top of the index.md file (and other .md files, which have _slightly_ different metadata) in your resource folder there is space for some metadata. It begins with 4 backticks (`` ` ``) at the start of the first line, and ends with 4 more backticks. Between the two sets of backticks you can add data about the resource. The following template may be handy:
 
-This text looks like it's been written in a well.
+````
+alias: the name that appears in a tab in a multipart resource. e.g. 'Problem', 'Solution'
+weight: determines the order of this part in a multipart tab bar. larget numbers come later.
+id: (optional = can omit if same as filename and url)
+title: (optional) but may be identified by resource type
+layout: resource (but some resources will have special layouts)
+author: (optional. If more than one, make it a yaml list)
+date: (of first publication - this should be automated soon)
+clearance: 0 (a number which determines who sees your resource, go with 0 for now)
+keywords: a yaml list of words or short phrases
+resourceType: resourceTypeId
+highlight: boolean or a list of station Ids
+stids1: primary list of stations ids as yaml list
+stids2: secondary list of station ids as yaml list
+pvids1: primary list of pervasive idea ids as yaml list
+pvids2: secondary list of pervasive ideas ids as yaml list
+priors: links back to previous resources (laters get generated)
 
-<:= showLodashed('style()') :>
+````
 
-<: grunt.log.write("  style(well)...") :>
-<:= style(well) :>
+The language for metadata is YAML. Look it up if you must, but it's simple enough to pick up by looking at a few examples.
 
-This text looks like it's been written in a well.
+## The paper copy
 
-<:= style() :>
-<: grunt.log.ok() :>
+Our system uses pandoc and latex to produce pdfs of certain resources. These are designed to be printed on paper and have much of the interactive content disables for this reason. Don't be afraid to use interactive content, we love it! Just don't expect paper users of CMEP to enjoy it quite so much.
 
-## Logical things
+## Submitting your resource
 
-Our special tags can do javascript logic. It's best shown by example. The
-current clearance is <:= globalClearanceLevel :> and this resource has 
-clearance <:= thisClearanceLevel :>. We can include content based on the
-global clearance with the following syntax:
+Email the folder to Vicky, vrn20@cam.ac.uk. You might be contacted with questions and suggestions from the technical team as they test the resource to make sure it appears correctly.
 
-<:= showLodashed('if (globalClearanceLevel == -1) {', false) :>
 
-This text will only be seen when the content is processed with clearance -1.
 
-<:= showLodashed('} else {', false) :>
-
-This text will be seen otherwise.
-
-<:= showLodashed('}', false) :>
-
-which provides the following output:
-
-<: if (globalClearanceLevel == -1) { :>
-
-This text will only be seen when the content is processed with clearance -1.
-
-<: } else { :>
-
-This text will be seen otherwise.
-
-<: } :>
-
-_It's important to get the brackets, braces and tags correct, as they are
-here._
-
-## Web-only features
-
-Content on a website can be interactive. The following environments give no
-output at all when the content is processed by the latex engine for printing
-on paper.
-
-### Hint-Answer Group
-
-The code <:= showLodashed("hintAnswer('hLabel', 'hId', 'aLabel', 'aId')") :> 
-makes a pair of buttons labelled with hLabel and aLabel. Clicking them reveals
-sections with id 'hId' and 'aId' which must be defined elsewhere. To define the
-content use, choose some unique ids, e.g. 'hint1' and 'answer1' and put:
-
-<:= showLodashed("collapsed('hint1')") :>
-
-This is text displayed when the hint button is clicked
-
-<:= showLodashed('collapsed()') :>
-
-<:= showLodashed("collapsed('answer1')") :>
-
-This is text displayed when the answer button is clicked
-
-<:= showLodashed('collapsed()') :>
-
-Multiple hint-answer groups can appear on the page, but the ids must be chosen
-uniquely for them to work as intended. An example appears below in html output:
-
-<: grunt.log.write("  hintAnswer(hLabel, hint, aLabel, answer)...") :>
-<:= hintAnswer('Hint 1', 'hint1', 'A possible response', 'answer1') :>
-
-<:= collapsed("hint1") :>
-
-This is text for the hint 1 reveal.
-
-<:= collapsed() :>
-
-<:= collapsed("answer1") :>
-
-And it's corresponding answer 1.
-
-<:= collapsed() :>
-
-<: grunt.log.ok() :>

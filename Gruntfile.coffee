@@ -50,7 +50,7 @@ module.exports = (grunt) ->
     optionsObject.data.author = grunt.config.get objectpath + '.author'
     optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
     optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
-    
+
     optionsObject.data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
     optionsObject.data.lastUpdated = 'NOT YET IMPLEMENTED'
 
