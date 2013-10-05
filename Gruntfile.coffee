@@ -400,7 +400,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.sources %>/resources"
-          src: ["*/*.png", "*/*.jpg", "*/*.gif"]
+          src: ["*/*.png", "*/*.svg", "*/*.jpg", "*/*.gif", "*/*.swf"]
           dest: "<%= yeoman.app %>/resources"
         ]
 

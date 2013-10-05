@@ -90,88 +90,6 @@ module.exports = (grunt) ->
     generateTopLevelPage 'cookies'
 
     #
-    # Call the html generators
-    #
-
-    #
-    # index (home)
-    #
-    # meta = sources.index.meta
-    # layout = getLayout sources, null, meta
-    # html = grunt.template.process grunt.file.read(layout), {
-    #   data:
-    #     _head: _head
-    #     _nav: _nav
-    #     _foot: _foot
-    #     meta: meta
-    #     content: grunt.file.read "#{partialsDir}/index.html"
-    #     sources: sources
-    #     rootUrl: '.'
-    #     resourcesUrl: './resources'
-    # }
-    # grunt.file.write "#{appDir}/index.html", html 
-
-    #
-    # map
-    #
-    # meta = sources['map'].meta
-    # layout = getLayout sources, null, meta
-    # content = grunt.file.read "#{partialsDir}/map.html"
-
-    # html = grunt.template.process grunt.file.read(layout), {
-    #   data:
-    #     _head: _head
-    #     _nav: _nav
-    #     _foot: _foot
-    #     _linesMenu: _linesMenu
-    #     meta: meta
-    #     content: content
-    #     sources: sources
-    #     rootUrl: '.'
-    #     resourcesUrl: './resources'
-    # }
-    # grunt.file.write "#{appDir}/map.html", html
-
-    #
-    # pervasiveIdeasHome
-    #
-    # meta = pervasiveIdeasHome.meta
-    # layout = getLayout sources, null, meta
-    # html = grunt.template.process grunt.file.read(layout), {
-    # data:
-    #   _head: _head
-    #   _nav: _nav
-    #   _foot: _foot
-    #   content: grunt.file.read "#{partialsDir}/pervasiveIdeasHome.html"
-    #   meta: meta
-    #   families: families
-    #   pervasiveIdeas: pervasiveIdeas
-    #   rootUrl: '.'
-    #   resourcesUrl: './resources'
-    # }
-    # grunt.file.write "#{appDir}/pervasiveIdeasHome.html", html
-
-    #
-    # resourceTypesHome
-    #
-    # meta = resourceTypesHome.meta
-    # layout = getLayout sources, null, meta
-
-    # html = grunt.template.process grunt.file.read(layout), {
-    # data:
-    #   _head: _head
-    #   _nav: _nav
-    #   _foot: _foot
-    #   content: grunt.file.read "#{partialsDir}/resourceTypesHome.html"
-    #   meta: meta
-    #   families: families
-    #   resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
-    #   rootUrl: '.'
-    #   resourcesUrl: './resources'
-    # }
-    # grunt.file.write "#{appDir}/resourceTypesHome.html", html
-
-    #
     # pervasiveIdeas
     #
     for pvid, data of pervasiveIdeas
@@ -365,9 +283,6 @@ module.exports = (grunt) ->
 
       meta = data.meta
       layout = getLayout sources, 'stations', meta
-
-      if stid=='G2'
-        debugger
 
       html = grunt.template.process grunt.file.read(layout), {
         data:
