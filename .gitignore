@@ -24,6 +24,9 @@ app/*.html
 app/styles/main.css
 test/actual
 test/unused
+app/scripts/main.js
+test/*.js
+lib/*.js
 scripts/main.js
 scripts/vendor
 styles

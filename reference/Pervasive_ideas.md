@@ -16,6 +16,11 @@ familyID process
 - Conjecturing (PI4)
 - Actions on objects
 - Choosing the right point of view
+- Mathematical language
+- Solving equations
+- Drawing and interpreting graphs
+- Drawing diagrams
+- Freedom and constraint
 
 Pervasive mathematical concepts
 -------------------------------
@@ -35,6 +40,11 @@ familyID concept
 - Division by zero
 - Invariance and invariants
 - Iteration (PI9)
+- Distributivity and its failure
+- Equilibrium
+- Exponential growth and decay
+- Similarity
+- Functions
 
 Applications and more advanced mathematics
 ------------------------------------------
