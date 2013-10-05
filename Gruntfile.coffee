@@ -148,24 +148,23 @@ module.exports = (grunt) ->
           "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
 
     # Compile livescript
-    livescript:
-      compile:
-        options:
-          bare: false
-          prelude: true
-        files: [
-          expand: true
-          cwd: "lib"
-          src: ["**/*.ls"]
-          dest: "./lib/"
-          ext: ".js"
-        ,
-          expand: true
-          src: ["test/*.ls"]
-          dest: "."
-          ext: ".js"
-        ]
-
+    # livescript:
+    #   compile:
+    #     options:
+    #       bare: false
+    #       prelude: true
+    #     files: [
+    #       expand: true
+    #       cwd: "lib"
+    #       src: ["**/*.ls"]
+    #       dest: "./lib/"
+    #       ext: ".js"
+    #     ,
+    #       expand: true
+    #       src: ["test/*.ls"]
+    #       dest: "."
+    #       ext: ".js"
+    #     ]
 
     # Watch 
     watch:
@@ -495,7 +494,7 @@ module.exports = (grunt) ->
   grunt.registerTask "test", [
     "clean:app"
     "clean:test"
-    "livescript"
+    "lsc"
     "panda:pass1"
     "expandMetadata"
     "panda:pass2html"
@@ -506,7 +505,7 @@ module.exports = (grunt) ->
   grunt.registerTask "units", [
     "clean:app"
     "clean:test"
-    "livescript"
+    "lsc"
     "integrate"
     "mochaTest:integrate"
     "isolate:EQ1,G2"
@@ -516,7 +515,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "clearance"
-    "livescript"
+    "lsc"
     "panda:pass1"
     "expandMetadata"
     "tubemap:png"
@@ -535,7 +534,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", [
-    "livescript"
+    "lsc"
     "panda:pass1"
     "expandMetadata"
     "tubemap:png"
