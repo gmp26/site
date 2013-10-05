@@ -16,7 +16,7 @@ describe "Testing resource data generation", (_it)->
   var metadata
   var sources
   var resources
-  var partialsDir
+  var partialsHtmlDir
   var getResourceData
   var data
   var data1
@@ -26,8 +26,8 @@ describe "Testing resource data generation", (_it)->
     metadata := grunt.config.get "metadata"
     sources := metadata.sources
     resources := sources.resources
-    partialsDir := grunt.config.get "yeoman.partials"
-    getResourceData := (require '../lib/getResourceData.js') grunt, sources, partialsDir
+    partialsHtmlDir := grunt.config.get("yeoman.partials") + "/html"
+    getResourceData := (require '../lib/getResourceData.js') grunt, sources, partialsHtmlDir
 
     resourceName = 'G2_RT3'
     files = resources.G2_RT3
