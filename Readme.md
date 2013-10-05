@@ -94,7 +94,12 @@ Install the necessary libraries for client-side scripts.
 bower install
 ```
 
-From a shell, start a background watch and compile livescript task. This is 
+Compile livescript sources to javascript
+```
+grunt lsc
+```
+
+Alternatively, start a background watch and compile livescript task. This is 
 only really necessary if doing code development.
 ```
 ./scripts/lswatch &

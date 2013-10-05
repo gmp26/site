@@ -8,7 +8,6 @@ tubemap = require './lib/tubemap.js'
 clearance = require './lib/clearance.js'
 isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
-stripMeta = require './lib/stripMeta.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
 
@@ -49,17 +48,18 @@ module.exports = (grunt) ->
           flags: 'gm'
         ]
 
-    stripMeta:
-      dev:
-        options:
-          process: false
-          stripMeta: '````'
-          metaDataPath: "<%= yeoman.partials %>/sources.yaml"
-          strippedPath: "<%= yeoman.partials %>/stripped.yaml"
-          metaDataVar: "metadata"
-          metaReplace: "<%= yeoman.sources %>"
-          metaReplacement: "sources"
-        files: "<%= pass1Files %>"
+    # Unused now?
+    # stripMeta:
+    #   dev:
+    #     options:
+    #       process: false
+    #       stripMeta: '````'
+    #       metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+    #       strippedPath: "<%= yeoman.partials %>/stripped.yaml"
+    #       metaDataVar: "metadata"
+    #       metaReplace: "<%= yeoman.sources %>"
+    #       metaReplacement: "sources"
+    #     files: "<%= pass1Files %>"
 
 
     # compile HTML and tex, and aggregate metadata
@@ -165,6 +165,24 @@ module.exports = (grunt) ->
     #       dest: "."
     #       ext: ".js"
     #     ]
+
+    lsc:
+      options:
+        bare: false
+      compile:
+        files: [
+          expand: true
+          cwd: "lib"
+          src: ["**/*.ls"]
+          dest: "./lib/"
+          ext: ".js"
+        ,
+          expand: true
+          src: ["test/*.ls"]
+          dest: "."
+          ext: ".js"
+        ]
+
 
     # Watch 
     watch:
@@ -465,8 +483,8 @@ module.exports = (grunt) ->
   # register integrate task
   integrate grunt
 
-  # register stripMeta task
-  stripMeta grunt
+  # register stripMeta task (Unused ???)
+  # stripMeta grunt
 
 
   grunt.renameTask "regarde", "watch"
