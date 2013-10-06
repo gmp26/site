@@ -165,8 +165,6 @@ module.exports = (grunt) ->
       # for i, r in rt13Sorted
       #   grunt.log.error "#i: #r"
 
-      debugger;
-
       rt13html = ""
       i = 0
       for eqid in rt13Sorted
@@ -184,7 +182,7 @@ module.exports = (grunt) ->
           ext = f.substr(-4)
           if ('.png.gif.jpg.jpeg.PNG.GIF.JPG.JPEG').indexOf(ext) >= 0
             # copy it to the resource directory
-            grunt.log.debug "#eqid -> #f"
+            # grunt.log.debug "#eqid -> #f"
             grunt.file.copy "#{sourcesDir}/examQuestions/#{eqid}/#f", 
             "#{appDir}/resources/#{resid}/#f"
 
@@ -232,7 +230,6 @@ module.exports = (grunt) ->
     for eqid, data of examQuestions
       indexMeta = data.index?.meta
       layout = getLayout sources, 'renderQuestion', null
-      grunt.log.error "Calling getExamQuestionPart #eqid"
       content = getExamQuestionPartData eqid, data, indexMeta
       content.0.alias = "#{eqid}"
       html = grunt.template.process grunt.file.read(layout), {
@@ -253,7 +250,7 @@ module.exports = (grunt) ->
           st13s[id] ?= {}
           rt13 = st13s[id]
           rt13[eqid] = true
-          grunt.log.error "stid = #{id} equid=#{eqid}"
+          #grunt.log.error "stid = #{id} equid=#{eqid}"
 
       if indexMeta.pvids1?
         for id in (indexMeta.pvids1)
