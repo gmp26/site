@@ -294,7 +294,6 @@ module.exports = (grunt) ->
           sources: sources
           rootUrl: ".."
           resourcesUrl: '../resources'
-
       }
 
       grunt.file.write "#{appDir}/stations/#{stid}.html", html
@@ -304,7 +303,7 @@ module.exports = (grunt) ->
     #
 
     for resourceName, files of resources
-      grunt.log.error "@@@@@@@@ Copying #{resourceName} to apps"
+      #grunt.log.error "Copying #{resourceName} to apps"
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta

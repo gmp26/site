@@ -400,7 +400,8 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.sources %>/resources"
-          src: ["*/*.png", "*/*.svg", "*/*.jpg", "*/*.gif", "*/*.swf"]
+          # pick up swfs, svgs and subfolders too
+          src: ["*/*.png", "*/*.svg", "*/*.jpg", "*/*.gif", "*/*.swf", "*/**/*"]
           dest: "<%= yeoman.app %>/resources"
         ]
 
@@ -557,10 +558,10 @@ module.exports = (grunt) ->
     "expandMetadata"
     "tubemap:png"
     "panda:pass2html"
-    "panda:pass2printables"
+#    "panda:pass2printables"
     "copy:assets"
     "generateHtml"
-    "generatePrintables"
+#    "generatePrintables"
   ]
 
   grunt.registerTask "default", ["dev"]
