@@ -165,6 +165,7 @@ module.exports = (grunt) ->
       # for i, r in rt13Sorted
       #   grunt.log.error "#i: #r"
 
+      debugger;
 
       rt13html = ""
       i = 0
@@ -195,7 +196,7 @@ module.exports = (grunt) ->
             stids1: [
               stid
             ]
-            layout: 'eqresource'
+            layout: 'resource'
             resourceType: 'RT13'
       }
 
@@ -231,7 +232,7 @@ module.exports = (grunt) ->
     for eqid, data of examQuestions
       indexMeta = data.index?.meta
       layout = getLayout sources, 'renderQuestion', null
-      grunt.log.debug "Calling getExamQuestionPart #eqid"
+      grunt.log.error "Calling getExamQuestionPart #eqid"
       content = getExamQuestionPartData eqid, data, indexMeta
       content.0.alias = "#{eqid}"
       html = grunt.template.process grunt.file.read(layout), {
@@ -252,6 +253,7 @@ module.exports = (grunt) ->
           st13s[id] ?= {}
           rt13 = st13s[id]
           rt13[eqid] = true
+          grunt.log.error "stid = #{id} equid=#{eqid}"
 
       if indexMeta.pvids1?
         for id in (indexMeta.pvids1)
@@ -303,7 +305,9 @@ module.exports = (grunt) ->
     #
     # resources
     #
+
     for resourceName, files of resources
+      grunt.log.error "@@@@@@@@ Copying #{resourceName} to apps"
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta

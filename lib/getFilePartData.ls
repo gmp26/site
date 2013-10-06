@@ -35,7 +35,7 @@ module.exports = (grunt, sources, partialsDir, folder) ->
     contentOf = (files, pDir = partialsDir, rName = resourceName) ->
       content = []
       for fileName, file of files
-        #grunt.log.debug "CONTENTOF: fileName = #{fileName}, rName = #{rName}"
+        # grunt.log.error "CONTENTOF: fileName = #{fileName}, rName = #{rName}, pDir = #{pDir}, folder=#{folder}"
         file.meta.id = rName
         content[*] = {
           fileName: fileName
