@@ -415,9 +415,13 @@ module.exports = (grunt) ->
             "*.{ico,txt}"
             "fonts/*"
             ".htaccess"
+            "bower_components/**/*.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
             "resources/*/*.png"
+            "resources/*/*.svg"
+            "resources/*/*.swf"
+            "resources/*/*/*"
           ]
         ]
 
