@@ -17,7 +17,51 @@ mountFolder = (connect, dir) ->
 
 module.exports = (grunt) ->
 
-  pass2Utils = (require './lib/pass2Utils.js')(grunt)
+  _ = grunt.util._
+
+  pass2UtilsHtml = (require './lib/pass2UtilsHtml.js')(grunt)
+  pass2UtilsTex = (require './lib/pass2UtilsTex.js')(grunt)
+
+  pass2MetadataInsert = (pathname, target) ->
+    switch target
+      when 'html'
+        optionsObject = pass2UtilsHtml
+        configstring = 'pass2html'
+      when 'printables'
+        optionsObject = pass2UtilsTex
+        configString = 'pass2printables'
+
+    # the pathname is a relative one from grunt's cwd to the source .md file
+    # this code is rather similar to stuff in grunt-panda
+    p = (path.dirname pathname) + path.sep + (path.basename pathname, '.md')
+    re = new RegExp "^#{grunt.config.get 'panda.#{configString}.options.metaReplace'}"
+    p = p.replace re, (grunt.config.get 'panda.#{configString}.options.metaReplacement' ? "")
+
+    names = (p.split path.sep).filter (name)->name && name.length > 0
+    objectpath = "metadata.#{names.join '.'}.meta"
+
+    currentMetadata = grunt.config.get objectpath
+    # expose the whole file meta under the meta field for now, this could be binned later if desired
+    optionsObject.data.meta = currentMetadata
+
+    # expose commonly used fields on the root level
+    optionsObject.data.title = grunt.config.get objectpath + '.title'
+    optionsObject.data.author = grunt.config.get objectpath + '.author'
+    optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
+    optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
+
+    optionsObject.data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
+    optionsObject.data.lastUpdated = 'NOT YET IMPLEMENTED'
+
+
+  printableProcess = (src, pathname) ->
+    pass2MetadataInsert pathname, 'printables'
+    grunt.template.process(src, pass2UtilsTex)
+
+  htmlProcess = (src, pathname) ->
+    pass2MetadataInsert pathname, 'html'
+    grunt.template.process(src, pass2UtilsHtml)
+
   #examQuestions = (require './lib/examQuestions.js')(grunt)
 
   # load all grunt tasks
@@ -80,7 +124,7 @@ module.exports = (grunt) ->
         ]
       pass2html:
         options:
-          process: pass2Utils
+          process: htmlProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -93,7 +137,8 @@ module.exports = (grunt) ->
         ]
       pass2printables:
         options:
-          process: pass2Utils
+          pandocOptions: "-f markdown-raw_html+raw_tex+fenced_code_blocks -t latex --listings --smart"
+          process: printableProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -122,7 +167,7 @@ module.exports = (grunt) ->
 
     latex:
       test:
-        src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/G2_RT3/*.printable.tex"]
+        src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/widget_lib/*.printable.tex"]
       printables:
         src: ["<%= yeoman.partials %>/printables/**/*.printable.tex"]
 
@@ -473,7 +518,10 @@ module.exports = (grunt) ->
           ]
         ]
 
-  #
+  # set some globals
+  grunt.template.addDelimiters 'CMEP', '<:', ':>'
+
+  # register latex task
   latex grunt
 
   # register expandMetadata task
@@ -499,7 +547,6 @@ module.exports = (grunt) ->
 
   # register stripMeta task (Unused ???)
   # stripMeta grunt
-
 
   grunt.renameTask "regarde", "watch"
 
@@ -565,17 +612,48 @@ module.exports = (grunt) ->
     "usemin"
   ]
 
-  grunt.registerTask "dev", [
-    "clearance"
-    "lsc"
-    "panda:pass1"
-    "expandMetadata"
-    "tubemap:png"
-    "panda:pass2html"
-#    "panda:pass2printables"
-    "copy:assets"
-    "generateHtml"
-#    "generatePrintables"
-  ]
+  grunt.registerTask "dev", (listOfTargets) ->
+    # Make the targets variable hold an array of strings representing desired targets.
+    # Assume that the passed parameter is a comma separated list (with no spaces)
+    # of target strings. 
+    # "all" is a special value that is replaced by all the targets
+    # "quick" is a special value which does a small amout of the latex
+    switch listOfTargets
+      when undefined then targets = ["html"]
+      when "all" then targets = ["html", "printables"]
+      when "quick" then targets = ["quick"] 
+      else targets = listOfTargets.split ","
+
+    grunt.log.writeln "Developing for targets:"
+    _.each targets, (value, index, collection) -> grunt.log.writeln "  " + value
+
+    # tasks common to all targets
+    grunt.task.run ([ 
+      "lsc"
+      "clearance"
+      "panda:pass1"
+      "expandMetadata"
+    ])
+    if _.contains(targets, "html")
+      grunt.task.run([
+        "tubemap:png"
+        "panda:pass2html"
+        "copy:assets"
+        "generateHtml"
+      ])
+    if _.contains(targets, "printables")
+      grunt.task.run([
+        "panda:pass2printables"
+        "generatePrintables"
+        "latex:printables"
+        "copy:printables"
+      ])
+    else if _.contains(targets, "quick")
+      grunt.task.run([
+        "panda:pass2printables"
+        "generatePrintables"
+        "latex:test"
+        "copy:printables"
+      ])
 
   grunt.registerTask "default", ["dev"]

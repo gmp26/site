@@ -6,13 +6,16 @@
 
 %%% FONTS
 \usepackage{fontspec}
-\setmainfont{Helvetica Neue}
-\setsansfont{Helvetica Neue}
-\newfontfamily\ChalkFont[Path = <%= fontpath %>]{Chalkboard.ttc}
+\setmainfont[Ligatures=TeX]{Helvetica Neue}
+\setsansfont[Ligatures=TeX]{Helvetica Neue}
+%\newfontfamily\ChalkFont[Path = <%= fontpath %>]{Chalkboard.ttc}
+\newfontfamily\ChalkFont[Path = <%= fontpath %>]{Delius-Regular.ttf}
+%\newfontfamily\ChalkFont[Path = <%= fontpath %>]{Handlee-Regular.ttf}
+%\newfontfamily\ChalkFont[Path = <%= fontpath %>]{PatrickHand-Regular.ttf}
 \newfontfamily\FontAwesome[
-  Path = <%= fontpath %>,
-  UprightFont = *,
-  BoldFont = *,
+  Path = <%= fontpath %>,%
+  UprightFont = *,%
+  BoldFont = *,%
   ItalicFont = *,%
   BoldItalicFont = *]{FontAwesome.otf}
 
@@ -388,6 +391,7 @@
             linkcolor=mylinkcolor,
             pdfborder={0 0 0}}
 \urlstyle{tt}  % choose from rm, sf, tt, same
+
 %%% MATHEMATICS
 \usepackage{amsmath, amsfonts, amsthm, amssymb, nicefrac, bm, bbm}
 \usepackage{mathtools}
@@ -395,8 +399,8 @@
 \setmathfont{XITS Math}
 
 %%% STRUCTURE
-\setcounter{secnumdepth}{1}
-\newcommand{\cmepsection}[1]{\renewcommand{\thesection}{#1}\section}
+\setcounter{secnumdepth}{0}
+% \newcommand{\cmepsection}[1]{\renewcommand{\thesection}{#1}\section}
 \newcommand{\sectionnumber}[1]{\renewcommand{\thesection}{#1}}
 
 %%% FIGURES FLOATS, AND TABLES
@@ -596,7 +600,9 @@ middlelinewidth=1pt,%
 backgroundcolor=wellbackground,%
 linecolor=wellborder,%
 middlelinewidth=1pt,%
-roundcorner=4pt
+innertopmargin=20pt,%
+innerbottommargin=20pt,%
+roundcorner=4pt%
 }
 
 % CHALK
@@ -604,15 +610,36 @@ roundcorner=4pt
 \definecolor{chalkborder}{HTML}{FFA500}
 \global\mdfdefinestyle{chalk}{%
 backgroundcolor=chalkbackground,%
-middlelinewidth=1pt,% weirdly the middle line is drawn underneath the dashed one added below
+middlelinewidth=3pt,% weirdly the middle line is drawn underneath the dashed one added below
 middlelinecolor=white,% but if it's removed the dashed one goes too...
 roundcorner=20pt,%
 innertopmargin=20pt,%
 innerbottommargin=20pt,%
 font=\ChalkFont,%
 fontcolor=chalkborder,%
-tikzsetting={draw=chalkborder,dashed,line width=1pt,dash pattern = on 5pt off 5pt}%
+tikzsetting={draw=chalkborder,dashed,line width=3pt,dash pattern = on 3pt off 3pt}%
 }
+
+% LODASHED
+\usepackage{listings}
+\definecolor{listingfgcolor}{HTML}{DD1144}
+\definecolor{listingbgcolor}{HTML}{F7F7F9}
+\lstdefinestyle{inline}{%
+language={},                             % choose the language of the code, js and ls are not supported
+basicstyle=\color{listingfgcolor}\ttfamily,
+%commentstyle=\textsl,
+%keywordstyle=\textup,
+%stringstyle=\textsl,
+numbers=none,                             % where to put the line-numbers
+showspaces=false,                         % show spaces adding particular underscores
+showstringspaces=false,                   % underline spaces within strings
+showtabs=false,                           % show tabs within strings adding particular underscores
+tabsize=2,                                % sets default tabsize to 2 spaces
+captionpos=t,                             % sets the caption-position to top
+}
+
+\lstset{style=inline}
+\newcommand*{\lodashed}[2][]{\lstinline!<:#1 #2 :>!}
 
 \newcommand{\vect}[1]{\mathbf{#1}}      % choose a vector display style
 \newcommand{\intersect}{\cap}
