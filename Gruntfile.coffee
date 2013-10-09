@@ -10,7 +10,7 @@ isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
-
+path = require 'path'
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -434,6 +434,15 @@ module.exports = (grunt) ->
           src: ["*"]
         ]
 
+      printables:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.partials %>/printables"
+          src: "**/*.printable.pdf"
+          dest: "<%= yeoman.app %>"
+          rename: (dest, matchedSrcPath) -> (path.join dest, matchedSrcPath).replace ".printable.pdf", ".pdf"
+        ]
+
     concurrent:
       dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
@@ -557,6 +566,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", [
+    "clearance"
     "lsc"
     "panda:pass1"
     "expandMetadata"
