@@ -35,5 +35,10 @@ module.exports = (grunt) ->
       grunt.log.warn msg
       grunt.log.write "..."
 
+    reveal: (id) ->
+      switch id
+        | void => "\\fi"
+        | otherwise "\\iffalse"
+
 
 
