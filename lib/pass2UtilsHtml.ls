@@ -15,7 +15,9 @@ module.exports = (grunt) ->
       '<code>&lt;:' + (if interpolated then '= ' else ' ') + expression + ' :&gt;</code>'
       #return "<div class=\"#{if interpolated then 'lodashed-interpolated' else 'lodashed'}\">" + expression + '</div>'
 
-    style: (value) -> switch value
+    style: (value) ->
+      #grunt.log.error "style called with value #value, chalk == #{this.chalk}"
+      switch value
       | void  => "</div>"
       | @chalk => "<div class=\"chalk\">"
       | @well  => "<div class=\"well\">"
@@ -40,6 +42,9 @@ module.exports = (grunt) ->
       grunt.log.warn msg
       grunt.log.write "..."
 
+    # create a button which reveals collapsed text, or hides it if already revealed.
+    reveal: (id) -> switch id
+      | void => "</button>"
+      | otherwise "<button type=\"button\" class=\"btn btn-action\" data-toggle=\"collapse\" data-target=\"\##{id}\">"
 
-    
 
