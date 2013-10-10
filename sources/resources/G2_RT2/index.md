@@ -15,14 +15,13 @@ pvids1:
 pvids2:
   - PI1
   - PI2
-
+title: Fooey
 ````
 1. Here's a question.
 
 2. Here's another question.
 
 Why resource types?
-
 
 3. <button type="button" class="btn btn-action" data-toggle="collapse" data-target="#question3">
 Question

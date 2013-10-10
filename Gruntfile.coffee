@@ -26,7 +26,7 @@ module.exports = (grunt) ->
     switch target
       when 'html'
         optionsObject = pass2UtilsHtml
-        configstring = 'pass2html'
+        configString = 'pass2html'
       when 'printables'
         optionsObject = pass2UtilsTex
         configString = 'pass2printables'
@@ -34,8 +34,10 @@ module.exports = (grunt) ->
     # the pathname is a relative one from grunt's cwd to the source .md file
     # this code is rather similar to stuff in grunt-panda
     p = (path.dirname pathname) + path.sep + (path.basename pathname, '.md')
-    re = new RegExp "^#{grunt.config.get 'panda.#{configString}.options.metaReplace'}"
-    p = p.replace re, (grunt.config.get 'panda.#{configString}.options.metaReplacement' ? "")
+    replaceKey = "panda.#{configString}.options.metaReplace"
+    replacementKey = "panda.#{configString}.options.metaReplacement"
+    re = new RegExp "^#{grunt.config.get replaceKey}"
+    p = p.replace re, (grunt.config.get(replacementKey) ? "")
 
     names = (p.split path.sep).filter (name)->name && name.length > 0
     objectpath = "metadata.#{names.join '.'}.meta"
