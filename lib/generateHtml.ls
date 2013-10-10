@@ -303,7 +303,6 @@ module.exports = (grunt) ->
     #
 
     for resourceName, files of resources
-      #grunt.log.error "Copying #{resourceName} to apps"
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta
