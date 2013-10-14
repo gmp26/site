@@ -47,6 +47,9 @@ module.exports = (grunt, path) ->
     optionsObject.data.author = grunt.config.get objectpath + '.author'
     optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
     optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
+
+    # to support markup such as <:= section(title, 2) :> 
+    # yielding '## Resource Title' or nothing if there is no title defined.
     optionsObject.data.section = (text, level) ->
       | _.isString text => '#' * level + " #{text}"
       | otherwise => ""

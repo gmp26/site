@@ -90,6 +90,15 @@ module.exports = (grunt) ->
           delete stations[id]
         sources.stations = stations
 
+      for id, data of pervasiveIdeas
+        # pervasiveIdeas with no clearance level default to being cleared
+        fileClearance = +(data.meta?.clearance ? 100)
+        censor = fileClearance < clearanceLevel
+        if censor
+          grunt.log.ok "censoring station #id"
+          delete pervasiveIdeas[id]
+        sources.pervasiveIdeas = pervasiveIdeas
+
 
     #
     # Make sure all lines have a valid id and colour
