@@ -34,6 +34,16 @@ module.exports = (grunt, path) ->
     # expose commonly used fields on the root level
     optionsObject.data.title = grunt.config.get objectpath + '.title'
 
+    # multipart non-index resources may default their title to that given in the index.md file
+    if !optionsObject.data.title?
+      if names.1 == 'resources' && names.3 != 'index'
+        # grunt.log.error 'resources'
+        indexNames = names.concat!
+        indexNames.3 = 'index'
+        indexPath = "metadata.#{indexNames.join '.'}.meta"
+        optionsObject.data.title = grunt.config.get indexPath + '.title'
+
+
     optionsObject.data.author = grunt.config.get objectpath + '.author'
     optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
     optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'

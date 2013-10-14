@@ -38,7 +38,8 @@ shown too. _Note that for these expansions to appear you have to define them
 in the metadata block._
 
 <: grunt.log.write("  top-level metadata...") :>
-- <:= showLodashed('title') :> evaluates to: '<:= title :>'
+- <:= showLodashed('title') :> evaluates to: '<:= title :>'.
+- <:= showLodashed('section(title, 2)') :> evaluates to: '##<:= title :>' or '' if there is no title. 
 - <:= showLodashed('author') :> evaluates to: '<:= author :>'
 - <:= showLodashed('thisClearanceLevel') :> evaluates to: '<:= thisClearanceLevel :>'
 - <:= showLodashed('globalClearanceLevel') :> evaluates to: '<:= globalClearanceLevel :>'
