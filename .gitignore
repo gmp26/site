@@ -1,0 +1,8 @@
+*.sublime*
+*.swp
+app/
+node_modules/
+partials/
+lib/*.js
+test/*.js
+.clearance

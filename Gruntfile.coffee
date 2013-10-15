@@ -11,6 +11,7 @@ integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
 path = require 'path'
+spawn = require('child_process').spawn
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -68,7 +69,10 @@ module.exports = (grunt) ->
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-  grunt.loadNpmTasks 'grunt-mocha-test'
+  # grunt.loadNpmTasks 'grunt-mocha-test'
+
+  # Give grunt shell script capabilities
+  # grunt.loadNpmTasks 'grunt-shell'
 
   # configurable paths
   yeomanConfig =
@@ -94,6 +98,12 @@ module.exports = (grunt) ->
           flags: 'gm'
         ]
 
+    # shell:
+    #   modifiedDate:
+    #     command:'git log -1 --pretty=format:%ad --date=short G2_RT2'
+    #     options:
+    #       callback:modifiedDateCallback
+
     # Unused now?
     # stripMeta:
     #   dev:
@@ -107,6 +117,14 @@ module.exports = (grunt) ->
     #       metaReplacement: "sources"
     #     files: "<%= pass1Files %>"
 
+    # find last modified date
+    lastUpdated:
+      task:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+        ]
 
     # compile HTML and tex, and aggregate metadata
     panda:
@@ -659,3 +677,24 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "default", ["dev"]
+
+  grunt.registerTask "lastUpdated", "", ->
+    done = @async
+    cmd = "git log -1 --pretty=format:%ad --date=short"
+    async.eachSeries @files, iterator, finalCallback
+    finalCallback = done # use this to tell grunt that we're finished!
+
+    iterator = (element, callback) ->
+      f.src.filter (path) ->
+        unless grunt.file.exists(path)
+          grunt.verbose.warn "Input file \"" + path + "\" not found."
+          return
+        # Find last modified date
+        args = path
+        child = spawn cmd, args
+
+        child.stderr.on 'data', (data) ->
+          grunt.verbose.writeln 'stderr: ' + data
+
+        child.stdout.on 'data', (data) ->
+          # The data is the last modified date
