@@ -10,9 +10,8 @@ isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
-lastUpdated = (require './lib/lastUpdated.js')
 path = require 'path'
-spawn = require('child_process').spawn
+lastUpdated = (require './lib/lastUpdated.js')
 
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
@@ -585,9 +584,9 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "lastUpdated"
       "lsc"
       "clearance"
+      "lastUpdated"
       "panda:pass1"
       "expandMetadata"
     ])
