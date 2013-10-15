@@ -24,10 +24,10 @@ module.exports = (grunt) ->
 
     hintAnswer: (hLabel, hint, aLabel, answer) ->"""
 <div class='btn-group hint'>
-<button type='button' class='btn btn-primary btn-action' data-toggle='collapse' data-target='\##{hint}'>
+<button type='button' class='btn btn-primary btn-action' data-toggle='collapse' data-target='#{hint}'>
 #{hLabel}
 </button>
-<button type='button' class='btn btn-action' data-toggle='collapse' data-target='\##{answer}'>
+<button type='button' class='btn btn-action' data-toggle='collapse' data-target='#{answer}'>
 #{aLabel}
 </button>
 </div>

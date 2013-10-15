@@ -8,13 +8,16 @@ module.exports = (grunt, path) ->
   pass2UtilsTex = (require './pass2UtilsTex.js')(grunt)
 
   pass2MetadataInsert = (pathname, target) ->
+
     switch target
       when 'html'
         optionsObject = pass2UtilsHtml
         configString = 'pass2html'
+        html = true
       when 'printables'
         optionsObject = pass2UtilsTex
         configString = 'pass2printables'
+        html = false
 
     # the pathname is a relative one from grunt's cwd to the source .md file
     # this code is rather similar to stuff in grunt-panda
@@ -27,35 +30,41 @@ module.exports = (grunt, path) ->
     names = (p.split path.sep).filter (name)->name && name.length > 0
     objectpath = "metadata.#{names.join '.'}.meta"
 
-    currentMetadata = grunt.config.get objectpath
-    # expose the whole file meta under the meta field for now, this could be binned later if desired
-    optionsObject.data.meta = currentMetadata
+    meta = grunt.config.get objectpath
 
-    # expose commonly used fields on the root level
-    optionsObject.data.title = grunt.config.get objectpath + '.title'
+    # The resource may have been culled, so check meta exists before proceeding.
+    if meta? 
 
-    # multipart non-index resources may default their title to that given in the index.md file
-    if !optionsObject.data.title?
-      if names.1 == 'resources' && names.3 != 'index'
-        # grunt.log.error 'resources'
-        indexNames = names.concat!
-        indexNames.3 = 'index'
-        indexPath = "metadata.#{indexNames.join '.'}.meta"
-        optionsObject.data.title = grunt.config.get indexPath + '.title'
+      # expose the whole file meta under the meta field. 
+      # useful for tests.
+      optionsObject.data.meta = meta
+      data = optionsObject.data
 
+      # expose commonly used fields on the root level for ease of use.
+      data.title = meta.title
+      data.author = meta.author
+      data.acknowledgementText = meta.acknowledgementText = 'Some acknowledgement'
+      data.thisClearanceLevel = meta.clearance
+      data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
+      data.lastUpdated = meta.lastUpdated
 
-    optionsObject.data.author = grunt.config.get objectpath + '.author'
-    optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
-    optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
+      # Add in some support functions 
 
-    # to support markup such as <:= section(title, 2) :> 
-    # yielding '## Resource Title' or nothing if there is no title defined.
-    optionsObject.data.section = (text, level) ->
-      | _.isString text => '#' * level + " #{text}"
-      | otherwise => ""
+      data.glossary = (text1, text2) ->
 
-    optionsObject.data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
-    optionsObject.data.lastUpdated = 'NOT YET IMPLEMENTED'
+        if text2?
+          ref = text2
+          link = text1
+        else
+          ref = text1
+          link = text1
+
+        if html
+          "[#{link}](/glossary.html/\##{ref})"
+        else
+          # provisionally...
+          explanation = grunt.config.get "metadata.glossary.#{ref}"
+          "#{link}\\footnote{#{explanation}}"
 
   #
   # Monkey patch grunt.warn for the duration of lodash template processing
@@ -72,6 +81,7 @@ module.exports = (grunt, path) ->
   return {
 
     printableProcess: (src, pathname) ->
+
       oldWarn = monkeyPatchWarn pathname
 
       pass2MetadataInsert pathname, 'printables'
@@ -81,6 +91,8 @@ module.exports = (grunt, path) ->
       return content
 
     htmlProcess: (src, pathname) ->
+      # we're only interested in resources
+
       oldWarn = monkeyPatchWarn pathname
 
       pass2MetadataInsert pathname, 'html'

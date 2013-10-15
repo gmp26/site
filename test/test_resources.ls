@@ -94,6 +94,13 @@ describe "Testing resources expansion", (_it)->
       (pmeta.laters.lastIndexOf('G2_RT3') - pmeta.laters.indexOf('G2_RT3'))
       .should.equal 0
 
+  describe 'titles are copied from index to solution', (_it) ->
+    it "G2_RT7 solution should have a title", ->
+      res = resources.G2_RT7
+      debugger
+      res.solution.meta.title should.equal "Woolly Mammoth"
+
+
 
 
 

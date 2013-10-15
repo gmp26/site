@@ -34,6 +34,10 @@
   }%
 }} % double braces to (hopefully?) contain the change of \fboxsep
 
+<% if(meta.title) { %>
+  \section*{<%= meta.title %>}
+<% }%>
+
 \section*{<%= alias.replace(/_/g,'\\textunderscore{}') %>}
 <%= content %>
 
