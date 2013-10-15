@@ -47,6 +47,7 @@ module.exports = (grunt, path) ->
     optionsObject.data.author = grunt.config.get objectpath + '.author'
     optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
     optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
+    optionsObject.data.lastUpdated = grunt.config.get objectpath + .'lastUpdated'
 
     # to support markup such as <:= section(title, 2) :> 
     # yielding '## Resource Title' or nothing if there is no title defined.
@@ -55,7 +56,6 @@ module.exports = (grunt, path) ->
       | otherwise => ""
 
     optionsObject.data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
-    optionsObject.data.lastUpdated = 'NOT YET IMPLEMENTED'
 
   #
   # Monkey patch grunt.warn for the duration of lodash template processing
