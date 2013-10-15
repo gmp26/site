@@ -14,58 +14,13 @@ path = require 'path'
 spawn = require('child_process').spawn
 
 mountFolder = (connect, dir) ->
-  connect.static require("path").resolve(dir)
+  connect.static path.resolve(dir)
 
 module.exports = (grunt) ->
 
   _ = grunt.util._
 
-  pass2UtilsHtml = (require './lib/pass2UtilsHtml.js')(grunt)
-  pass2UtilsTex = (require './lib/pass2UtilsTex.js')(grunt)
-
-  pass2MetadataInsert = (pathname, target) ->
-    switch target
-      when 'html'
-        optionsObject = pass2UtilsHtml
-        configString = 'pass2html'
-      when 'printables'
-        optionsObject = pass2UtilsTex
-        configString = 'pass2printables'
-
-    # the pathname is a relative one from grunt's cwd to the source .md file
-    # this code is rather similar to stuff in grunt-panda
-    p = (path.dirname pathname) + path.sep + (path.basename pathname, '.md')
-    replaceKey = "panda.#{configString}.options.metaReplace"
-    replacementKey = "panda.#{configString}.options.metaReplacement"
-    re = new RegExp "^#{grunt.config.get replaceKey}"
-    p = p.replace re, (grunt.config.get(replacementKey) ? "")
-
-    names = (p.split path.sep).filter (name)->name && name.length > 0
-    objectpath = "metadata.#{names.join '.'}.meta"
-
-    currentMetadata = grunt.config.get objectpath
-    # expose the whole file meta under the meta field for now, this could be binned later if desired
-    optionsObject.data.meta = currentMetadata
-
-    # expose commonly used fields on the root level
-    optionsObject.data.title = grunt.config.get objectpath + '.title'
-    optionsObject.data.author = grunt.config.get objectpath + '.author'
-    optionsObject.data.acknowledgementText = grunt.config.get objectpath + '.acknowledgementText'
-    optionsObject.data.thisClearanceLevel = grunt.config.get objectpath + '.clearance'
-
-    optionsObject.data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
-    optionsObject.data.lastUpdated = 'NOT YET IMPLEMENTED'
-
-
-  printableProcess = (src, pathname) ->
-    pass2MetadataInsert pathname, 'printables'
-    grunt.template.process(src, pass2UtilsTex)
-
-  htmlProcess = (src, pathname) ->
-    pass2MetadataInsert pathname, 'html'
-    grunt.template.process(src, pass2UtilsHtml)
-
-  #examQuestions = (require './lib/examQuestions.js')(grunt)
+  pass2 = (require './lib/pass2.js')(grunt, path)
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
@@ -97,7 +52,7 @@ module.exports = (grunt) ->
           replace: 'Questions'
           flags: 'gm'
         ]
-
+        
     # shell:
     #   modifiedDate:
     #     command:'git log -1 --pretty=format:%ad --date=short G2_RT2'
@@ -144,7 +99,7 @@ module.exports = (grunt) ->
         ]
       pass2html:
         options:
-          process: htmlProcess
+          process: pass2.htmlProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -158,7 +113,7 @@ module.exports = (grunt) ->
       pass2printables:
         options:
           pandocOptions: "-f markdown-raw_html+raw_tex+fenced_code_blocks -t latex --listings --smart"
-          process: printableProcess
+          process: pass2.printableProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
@@ -172,10 +127,6 @@ module.exports = (grunt) ->
 
       dev:
         options:
-          process:
-            data: {
-              #examQuestions: (s) -> examQuestions(s)
-            }
           stripMeta: '````'
           metaDataPath: "<%= yeoman.partials %>/sources.yaml"
           metaDataVar: "metadata"
@@ -211,25 +162,6 @@ module.exports = (grunt) ->
       png:
         files:
           "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
-
-    # Compile livescript
-    # livescript:
-    #   compile:
-    #     options:
-    #       bare: false
-    #       prelude: true
-    #     files: [
-    #       expand: true
-    #       cwd: "lib"
-    #       src: ["**/*.ls"]
-    #       dest: "./lib/"
-    #       ext: ".js"
-    #     ,
-    #       expand: true
-    #       src: ["test/*.ls"]
-    #       dest: "."
-    #       ext: ".js"
-    #     ]
 
     lsc:
       options:
