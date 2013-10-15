@@ -39,7 +39,7 @@
     "chai": "~1.7.0",
     "grunt-regex-replace": "~0.2.5",
     "grunt-panda": "~0.2.5",
-    "grunt-mocha-test": "~0.5.0",
+    "grunt-mocha-test": "~0.5.0"
   },
   "engines": {
     "node": ">=0.8.0"
