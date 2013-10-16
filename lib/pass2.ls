@@ -49,7 +49,6 @@ module.exports = (grunt, path) ->
       data.lastUpdated = meta.lastUpdated
 
       # Add in some support functions 
-
       data.glossary = (text1, text2) ->
 
         if text2?
@@ -60,11 +59,12 @@ module.exports = (grunt, path) ->
           link = text1
 
         if html
-          "[#{link}](/glossary.html/\##{ref})"
+          # replace with an api call which populates a popover
+          "[#{link}](/glossaries/#{ref.substr(0,1)}/\##{ref})"
         else
           # provisionally...
           explanation = grunt.config.get "metadata.glossary.#{ref}"
-          "#{link}\\footnote{#{explanation}}"
+          "[^#{link}]: #{explanation}"
 
   #
   # Monkey patch grunt.warn for the duration of lodash template processing
