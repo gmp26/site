@@ -19,9 +19,14 @@ module.exports = (grunt) ->
       "\\lodashed#{if interpolated then '[=]' else ''}{" + (escape expression) + "}"
 
     style: (value) -> switch value
-      | void  => "\\end{mdframed}\n"
-      | @chalk => "\\begin{mdframed}[style=chalk]\n"
-      | @well  => "\\begin{mdframed}[style=well]\n"
+      | void  => "\\nostyle\n"
+      | @chalk => "\\startchalk\n"
+      | @well  => "\\startwell\n"
+
+    # style: (value) -> switch value
+    #   | void  => "\\end{mdframed}\n"
+    #   | @chalk => "\\begin{mdframed}[style=chalk]\n"
+    #   | @well  => "\\begin{mdframed}[style=well]\n"
 
     hintAnswerBar: (id, hLabel, aLabel) -> ''
 
