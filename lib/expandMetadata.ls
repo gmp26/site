@@ -199,6 +199,15 @@ module.exports = (grunt) ->
     # resource from their primary and secondary stations
     # and pervasiveIdeas.
     #
+    # Add some metadata expansions:
+    #
+    # - if the resource is titled, but there are other resource parts in the
+    #    same folder which are untitled, then give them the same title.
+    # 
+    # - Look up, and insert the acknowledgement text from any source key
+    #
+    # ? Add in lastUpdated date here ?
+    #
     badResources = {}
     _.each resources, (resource, resourceId) ->
 
@@ -219,6 +228,13 @@ module.exports = (grunt) ->
         grunt.log.error("#resourceId has missing or bad resourceType")
         badResources[resourceId] = true
         return
+
+      # if the resource is titled, but there are other resource parts in the
+      # same folder which are untitled, then give them the same title.
+      for fileName, file  of resource when fileName != 'index'
+        if !file.meta?.title? && meta.title?
+          file.meta.title = meta.title
+
 
       # Expand the primary and secondary resources on objList (a station or a pervasiveIdea list)
       # Warn if any stids or pvids don't exist.
