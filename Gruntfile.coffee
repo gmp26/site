@@ -75,11 +75,7 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       task:
-        files: [
-          expand: true
-          cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
-        ]
+        options: null
 
     # compile HTML and tex, and aggregate metadata
     panda:
@@ -536,6 +532,11 @@ module.exports = (grunt) ->
     "mochaTest:sources"
   ]
 
+  grunt.registerTask "testLastUpd", [
+    "expandMetadata"
+    "lastUpdated"
+  ]
+
   grunt.registerTask "units", [
     "clean:app"
     "clean:test"
@@ -586,9 +587,9 @@ module.exports = (grunt) ->
     grunt.task.run ([ 
       "lsc"
       "clearance"
-      "lastUpdated"
       "panda:pass1"
       "expandMetadata"
+      "lastUpdated"
     ])
     if _.contains(targets, "html")
       grunt.task.run([
