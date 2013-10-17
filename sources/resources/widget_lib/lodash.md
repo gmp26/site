@@ -39,10 +39,9 @@ in the metadata block._
 
 <: grunt.log.write("  top-level metadata...") :>
 - <:= showLodashed('title') :> evaluates to: '<:= title :>'.
-- <:= showLodashed('section(title, 2)') :> evaluates to: '##<:= title :>' or '' if there is no title. 
 - <:= showLodashed('author') :> evaluates to: '<:= author :>'
-- <:= showLodashed('thisClearanceLevel') :> evaluates to: '<:= thisClearanceLevel :>'
-- <:= showLodashed('globalClearanceLevel') :> evaluates to: '<:= globalClearanceLevel :>'
+- <:= showLodashed('pageClearance') :> evaluates to: '<:= pageClearance :>'
+- <:= showLodashed('clearance') :> evaluates to: '<:= clearance :>'
 - <:= showLodashed('lastUpdated') :> evaluates to: '<:= lastUpdated :>'
 - <:= showLodashed('acknowledgementText') :> evaluates to: '<:= acknowledgementText :>'
 <: grunt.log.ok() :>
@@ -86,11 +85,11 @@ This text looks like it's been written in a well.
 ## Logical things
 
 Our special tags can do javascript logic. It's best shown by example. The
-current clearance is <:= globalClearanceLevel :> and this resource has 
-clearance <:= thisClearanceLevel :>. We can include content based on the
+current clearance is <:= clearance :> and this resource has 
+clearance <:= pageClearance :>. We can include content based on the
 global clearance with the following syntax:
 
-<:= showLodashed('if (globalClearanceLevel == -1) {', false) :>
+<:= showLodashed('if (clearance == -1) {', false) :>
 
 This text will only be seen when the content is processed with clearance -1.
 
@@ -102,7 +101,7 @@ This text will be seen otherwise.
 
 which provides the following output:
 
-<: if (globalClearanceLevel == -1) { :>
+<: if (clearance == -1) { :>
 
 This text will only be seen when the content is processed with clearance -1.
 
@@ -115,47 +114,32 @@ This text will be seen otherwise.
 _It's important to get the brackets, braces and tags correct, as they are
 here._
 
-## Web-only features
+## Web and Print
 
-Content on a website can be interactive. The following environments give no
-output at all when the content is processed by the latex engine for printing
-on paper.
+Interactive has to be ignored entirely, or handled specially in print. 
 
-### Hint-Answer Group
+### Hint-Answer Bar
 
-The code <:= showLodashed("hintAnswer('hLabel', 'hId', 'aLabel', 'aId')") :> 
-makes a pair of buttons labelled with hLabel and aLabel. Clicking them reveals
-sections with id 'hId' and 'aId' which must be defined elsewhere. To define the
-content use, choose some unique ids, e.g. 'hint1' and 'answer1' and put:
+The code <:= showLodashed("hintAnswerBar(N, 'hLabel', aLabel')") :> where N is a positive integer, makes a pair of buttons labelled with hLabel and aLabel. Clicking them reveals
+sections with id 'hintN' and 'answerN' which must be defined elsewhere. If you have more than one hintAnswerBar on a page, make sure to choose a different N for each one.
 
-<:= showLodashed("collapsed('hint1')") :>
+In print, the hint-answer bar makes a subsection labelled with the `hLabel`, containing the hint. The answer is given in a footnote. Because of this, the answer text must be a single paragraph, though it may contain hard line breaks.
 
-This is text displayed when the hint button is clicked
+The hint-answer bar connects to its content by the number N. This must therefore be unique on the page. The content may appear anywhere on the page.
 
-<:= showLodashed('collapsed()') :>
+To define the content use:
 
-<:= showLodashed("collapsed('answer1')") :>
+<:= showLodashed("hint(N)") :>
 
-This is text displayed when the answer button is clicked
+This is text displayed when the hint button in hintAnswerBar N is clicked
 
-<:= showLodashed('collapsed()') :>
+<:= showLodashed('hint()') :>
+
+<:= showLodashed("answer(N)") :>
+
+This is text displayed when the answer button in hintAnswerBar N is clicked. The answer must currently be written as one paragraph - i.e. with no empty lines. If you wish to break it up, you can use the pandoc technique to force a hard line break by ending a line with two spaces.
+
+<:= showLodashed('answer()') :>
 
 Multiple hint-answer groups can appear on the page, but the ids must be chosen
-uniquely for them to work as intended. An example appears below in html output:
-
-<: grunt.log.write("  hintAnswer(hLabel, hint, aLabel, answer)...") :>
-<:= hintAnswer('Hint 1', 'hint1', 'A possible response', 'answer1') :>
-
-<:= collapsed("hint1") :>
-
-This is text for the hint 1 reveal.
-
-<:= collapsed() :>
-
-<:= collapsed("answer1") :>
-
-And it's corresponding answer 1.
-
-<:= collapsed() :>
-
-<: grunt.log.ok() :>
+uniquely for them to work as intended. An example appears at resource [NA3_RT5_2](http://cmep.maths.org/fenman/reources/NA3_RT5_2/index.html).

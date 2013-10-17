@@ -13,3 +13,5 @@ pvids2:
   - PI1
 title: This is a title
 ````
+The clearance level is <:= clearance :>
+The page clearance level is <:= pageClearance :>

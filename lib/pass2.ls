@@ -44,8 +44,8 @@ module.exports = (grunt, path) ->
       data.title = meta.title
       data.author = meta.author
       data.acknowledgementText = meta.acknowledgementText = 'Some acknowledgement'
-      data.thisClearanceLevel = meta.clearance
-      data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
+      data.pageClearance = meta.clearance
+      data.clearance = grunt.config.get 'clearanceLevel'
       data.lastUpdated = meta.lastUpdated
 
       # Add in some support functions 
@@ -86,7 +86,9 @@ module.exports = (grunt, path) ->
 
       pass2MetadataInsert pathname, 'printables'
       content = grunt.template.process(src, pass2UtilsTex)
-
+      .replace "\\textless{}!--", ""
+      .replace "--\\textgreater{}", ""
+      
       grunt.warn = oldWarn
       return content
 
