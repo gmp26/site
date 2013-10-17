@@ -23,12 +23,19 @@ module.exports = (grunt) ->
       | @chalk => "\\begin{mdframed}[style=chalk]\n"
       | @well  => "\\begin{mdframed}[style=well]\n"
 
-    hintAnswer: (hLabel, hint, aLabel, answer) -> ''
+    hintAnswerBar: (id, hLabel, aLabel) -> ''
+
+    hint: (id) ->
+      | id? => '###'+"Hint [^#{id}]\n" 
+      | _   => ""
+
+    answer: (id) ->
+      | id? => "[^#{id}]: "
+      | _   => ""
 
     collapsed: (id) ->
-      switch id
-        | void => "\\fi"
-        | otherwise "\\iffalse"
+      | id? => "[^#{id}]:"
+      | _   => ""
 
     warn: (msg) ->
       grunt.log.write "\n"

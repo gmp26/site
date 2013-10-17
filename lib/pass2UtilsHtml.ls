@@ -22,20 +22,30 @@ module.exports = (grunt) ->
       | @chalk => "<div class=\"chalk\">"
       | @well  => "<div class=\"well\">"
 
-    hintAnswer: (hLabel, hint, aLabel, answer) ->"""
+    hintAnswerBar: (id, hLabel, aLabel) ->"""
 <div class='btn-group hint'>
-<button type='button' class='btn btn-primary btn-action' data-toggle='collapse' data-target='\##{hint}'>
+<button type='button' class='btn btn-primary btn-action' data-toggle='collapse' data-target='\#hint#{id}'>
 #{hLabel}
 </button>
-<button type='button' class='btn btn-action' data-toggle='collapse' data-target='\##{answer}'>
+<button type='button' class='btn btn-action' data-toggle='collapse' data-target='\#answer#{id}'>
 #{aLabel}
 </button>
 </div>
 """.replace '\n',''
 
-    collapsed: (id) -> switch id
-      | void => "</div>"
-      | otherwise "<div id=\"#{id}\" class=\"collapse\">"
+    hint: (id) ->
+      | id? => "<div id=\"hint#{id}\" class=\"collapse\"><div class=\"chalk\">"
+      | _   => "</div></div>"
+
+    answer: (id) ->
+      | id? => "<div id=\"answer#{id}\" class=\"collapse\">"
+      | _   => "</div>"
+
+    par: -> "\n\n"
+
+    collapsed: (id) ->
+      | id? => "<div id=\"#{id}\" class=\"collapse\">"
+      | _   => "</div>"
 
     warn: (msg) ->
       grunt.log.write "\n"
