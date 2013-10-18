@@ -116,7 +116,30 @@ here._
 
 ## Web and Print
 
-Interactive has to be ignored entirely, or handled specially in print. 
+Interactive can content be ignored entirely, or somehow handled specially in print. 
+
+### Toggle buttons and collapsed blocks
+
+These are linked to the collapsed content with which they share an id number.
+
+<:= showLodashed("collapsed(N)") :> starts a collapsed block identified by N.
+
+<:= showLodashed("collapsed()") :> ends a collapsed block.
+
+<:= showLodashed("toggle(N, \"label\", type)") :>
+
+- N is the id number referencing the content to be revealed or hidden.
+- "label" is the button label - it must be quoted.
+- type is a bootstrap button type which changes the button colour - it need not be quoted. The types are:
+  - no type parameter present - grey
+  - primary - blue
+  - info - cyan
+  - warning - orange
+  - danger - red
+  - success - green
+  - inverse - white text on black
+  - link - appear as a hyperlink
+
 
 ### Hint-Answer Bar
 

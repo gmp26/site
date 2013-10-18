@@ -4,6 +4,7 @@ path = require 'path'
 module.exports = (grunt) ->
 
   async = grunt.util.async
+  _ = grunt.util._
 
   compile = (args, cb) ->
     tmpCmd = args.shift!
@@ -43,6 +44,24 @@ module.exports = (grunt) ->
 
   grunt.registerMultiTask 'latex', 'Compile a LaTeX source file to PDF', ->
     done = @async!
+
+    #
+    # preprocess tex files to replace dummied-out environments
+    #
+    _.each @filesSrc, (path) ->
+      content = grunt.file.read path
+
+      content = content.replace /::\w+::/g (m) ->
+        switch m
+          | "::stopFrame::"   => "\\end{mdframed}"
+          | "::startChalk::"  => "\\begin{mdframed}[style=chalk]"
+          | "::startWell::"  => "\\begin{mdframed}[style=well]"
+          | _ =>
+            grunt.log.error "unrecognised environment key #{m} in #{path}"
+            return m
+
+      grunt.file.write path, content
+
     args = ['lualatex', '--interaction=nonstopmode', '--halt-on-error']
     grunt.log.writeln "Creating pdfs with #{args[0]}:"
     async.forEachSeries( @filesSrc, ( f, cb )  ->

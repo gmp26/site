@@ -11,12 +11,21 @@ module.exports = (grunt) ->
     chalk: 0
     well: 1
 
+    # button types
+    primary: "primary"
+    info: "info"
+    warning: "warning"
+    danger: "danger"
+    success: "success"
+    inverse: "inverse"
+    link: "link"
+
     showLodashed: (expression, interpolated=true) -> 
       '<code>&lt;:' + (if interpolated then '= ' else ' ') + expression + ' :&gt;</code>'
       #return "<div class=\"#{if interpolated then 'lodashed-interpolated' else 'lodashed'}\">" + expression + '</div>'
 
     style: (value) ->
-      #grunt.log.error "style called with value #value, chalk == #{this.chalk}"
+      debugger
       switch value
       | void  => "</div>"
       | @chalk => "<div class=\"chalk\">"
@@ -41,10 +50,10 @@ module.exports = (grunt) ->
       | id? => "<div id=\"answer#{id}\" class=\"collapse\">"
       | _   => "</div>"
 
-    par: -> "\n\n"
-
     collapsed: (id) ->
-      | id? => "<div id=\"#{id}\" class=\"collapse\">"
+      debugger
+      switch
+      | id? => "<div id=\"collapsed#{id}\" class=\"collapse\">"
       | _   => "</div>"
 
     warn: (msg) ->
@@ -53,8 +62,27 @@ module.exports = (grunt) ->
       grunt.log.write "..."
 
     # create a button which reveals collapsed text, or hides it if already revealed.
-    reveal: (id) -> switch id
-      | void => "</button>"
-      | otherwise "<button type=\"button\" class=\"btn btn-action\" data-toggle=\"collapse\" data-target=\"\##{id}\">"
+    toggle: (id, label, type) ->
+      debugger
+      disabled = 'disabled="disabled"'
+
+      if !id? || isNaN id
+        grunt.log.error "toggle button has a bad id"
+        label = "bad id"
+        type = "warning"
+
+      else if !label?
+        grunt.log.error "toggle button has no label"
+        label = "label me!"
+        type = "warning"
+      
+      disabled = ""
+
+      if grunt.util._.isString(type) and type != ""
+        type = "btn-#{type}"
+      else
+        type = ""
+
+      "<button type=\"button\" class=\"btn #{type} btn-action\" data-toggle=\"collapse\" data-target=\"\#collapsed#{id}\" #{disabled}>#{label}</button>"
 
 

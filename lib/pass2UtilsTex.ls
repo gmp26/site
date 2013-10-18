@@ -19,14 +19,9 @@ module.exports = (grunt) ->
       "\\lodashed#{if interpolated then '[=]' else ''}{" + (escape expression) + "}"
 
     style: (value) -> switch value
-      | void  => "\\nostyle\n"
-      | @chalk => "\\startchalk\n"
-      | @well  => "\\startwell\n"
-
-    # style: (value) -> switch value
-    #   | void  => "\\end{mdframed}\n"
-    #   | @chalk => "\\begin{mdframed}[style=chalk]\n"
-    #   | @well  => "\\begin{mdframed}[style=well]\n"
+      | void  => "::stopFrame::"
+      | @chalk => "::startChalk::\n"
+      | @well  => "::startWell::\n"
 
     hintAnswerBar: (id, hLabel, aLabel) -> ''
 
@@ -47,10 +42,8 @@ module.exports = (grunt) ->
       grunt.log.warn msg
       grunt.log.write "..."
 
-    reveal: (id) ->
-      switch id
-        | void => "\\fi"
-        | otherwise "\\iffalse"
+    toggle: (id, label) -> "See footnote[^#{id}]"
+
 
 
 
