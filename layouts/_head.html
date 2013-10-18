@@ -18,7 +18,12 @@
   <!-- endbuild -->
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-      TeX: { equationNumbers: { autoNumber: "AMS" } },
+      TeX: { 
+        equationNumbers: { autoNumber: "AMS" },
+        Macros: {
+          Var: "\\mathrm{Var}"
+        }
+      },
       tex2jax: {
         displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
