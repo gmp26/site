@@ -11,6 +11,7 @@ integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
 path = require 'path'
+lastUpdated = (require './lib/lastUpdated.js')
 
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
@@ -23,7 +24,10 @@ module.exports = (grunt) ->
 
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-  grunt.loadNpmTasks 'grunt-mocha-test'
+  # grunt.loadNpmTasks 'grunt-mocha-test'
+
+  # Give grunt shell script capabilities
+  # grunt.loadNpmTasks 'grunt-shell'
 
   # configurable paths
   yeomanConfig =
@@ -48,6 +52,30 @@ module.exports = (grunt) ->
           replace: 'Questions'
           flags: 'gm'
         ]
+        
+    # shell:
+    #   modifiedDate:
+    #     command:'git log -1 --pretty=format:%ad --date=short G2_RT2'
+    #     options:
+    #       callback:modifiedDateCallback
+
+    # Unused now?
+    # stripMeta:
+    #   dev:
+    #     options:
+    #       process: false
+    #       stripMeta: '````'
+    #       metaDataPath: "<%= yeoman.partials %>/sources.yaml"
+    #       strippedPath: "<%= yeoman.partials %>/stripped.yaml"
+    #       metaDataVar: "metadata"
+    #       metaReplace: "<%= yeoman.sources %>"
+    #       metaReplacement: "sources"
+    #     files: "<%= pass1Files %>"
+
+    # find last modified date
+    lastUpdated:
+      task:
+        options: null
 
     # compile HTML and tex, and aggregate metadata
     panda:
@@ -465,6 +493,9 @@ module.exports = (grunt) ->
   # register integrate task
   integrate grunt
 
+  # register lastUpdated task
+  lastUpdated grunt
+
   # register stripMeta task (Unused ???)
   # stripMeta grunt
 
@@ -499,6 +530,11 @@ module.exports = (grunt) ->
     "panda:pass2html"
     "generateHtml"
     "mochaTest:sources"
+  ]
+
+  grunt.registerTask "testLastUpd", [
+    "expandMetadata"
+    "lastUpdated"
   ]
 
   grunt.registerTask "units", [
@@ -553,6 +589,7 @@ module.exports = (grunt) ->
       "clearance"
       "panda:pass1"
       "expandMetadata"
+      "lastUpdated"
     ])
     if _.contains(targets, "html")
       grunt.task.run([

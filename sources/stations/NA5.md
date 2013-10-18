@@ -1,7 +1,7 @@
 ````
 id: NA5
 title: What can we say about powers modulo $n$?
-dependencies: 
+dependencies: NA4
 ````
 ##Key Questions
 

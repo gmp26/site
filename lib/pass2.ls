@@ -29,7 +29,6 @@ module.exports = (grunt, path) ->
 
     names = (p.split path.sep).filter (name)->name && name.length > 0
     objectpath = "metadata.#{names.join '.'}.meta"
-
     meta = grunt.config.get objectpath
 
     # The resource may have been culled, so check meta exists before proceeding.
