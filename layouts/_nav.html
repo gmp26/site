@@ -14,7 +14,7 @@
 
 <% if(grunt.clearanceLevel === 0) { %>
         <span class="clearance">
-          clearance <%= meta.clearance ? meta.clearance : "undefined"  %>
+          clearance <%= isNaN(meta.clearance) ? "undefined" : meta.clearance %>
         </span>
 <% } %>
 
