@@ -97,8 +97,13 @@ describe "Testing resources expansion", (_it)->
   describe 'titles are copied from index to solution', (_it) ->
     it "G2_RT7 solution should have a title", ->
       res = resources.G2_RT7
-      debugger
-      res.solution.meta.title should.equal "Woolly Mammoth"
+      res.solution.meta.title.should.equal "Woolly Mammoth"
+
+  describe 'lastUpdated', (_it) ->
+    it "should appear in resource metadata", ->
+      meta.lastUpdated.should.exist
+      (meta.lastUpdated.match /\d\d-\d\d-\d\d/).should.not.be.null
+
 
 
 

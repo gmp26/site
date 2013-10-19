@@ -527,6 +527,7 @@ module.exports = (grunt) ->
     "lsc"
     "panda:pass1"
     "expandMetadata"
+    "lastUpdated"
     "panda:pass2html"
     "generateHtml"
     "mochaTest:sources"
