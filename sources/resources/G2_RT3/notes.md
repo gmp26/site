@@ -6,6 +6,13 @@ Some Teachers Notes
 -------------------
 
 ###A desmos graph
-<div class="row-fluid">
-<iframe src="https://www.desmos.com/calculator/pyljv4ybod" class="desmos6"></iframe>
-</div>
+
+<:= style(twoColumn) :>
+<:= column(left) :>
+<:= linkedImage("desmos.png", "https://www.desmos.com/calculator/pyljv4ybod", "A weird graph") :>
+<:= column() :>
+
+<:= column(right) :>
+Click the thumbnail to visit the site.
+<:= column() :>
+<:= style() :>

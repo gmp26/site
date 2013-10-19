@@ -56,6 +56,8 @@ module.exports = (grunt) ->
           | "::stopFrame::"   => "\\end{mdframed}"
           | "::startChalk::"  => "\\begin{mdframed}[style=chalk]"
           | "::startWell::"  => "\\begin{mdframed}[style=well]"
+          | "::startTwoColumn::"  => "\\begin{multicols}{2}"
+          | "::stopTwoColumn::"  => "\\end{multicols}"
           | _ =>
             grunt.log.error "unrecognised environment key #{m} in #{path}"
             return m
