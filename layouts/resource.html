@@ -4,7 +4,7 @@
 <%= _nav %>
 
 <div class="container-fluid">
-  <div class="row-fluid">
+  <div class="row-fluid not-short">
     <div class="container span7 offset1">
 
       <h1>
@@ -15,7 +15,7 @@
       <h2>
         <%= meta.title %>
       </h2>
-<% }%>
+<% } %>
 
       <div class="tabbable">
 
@@ -88,7 +88,11 @@
     </div>
 
   </div>
+<% if(meta.lastUpdated) { %>
+      <span class="small muted pull-right">Last updated <%= meta.lastUpdated %></span>
+<% } %>
 </div>
+
 
 <%= _foot %>
 

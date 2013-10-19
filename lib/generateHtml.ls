@@ -306,6 +306,7 @@ module.exports = (grunt) ->
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta
+      # grunt.log.error "id=#{indexMeta.id}: title=#{indexMeta.title}, lastUpdated=#{indexMeta.lastUpdated}"
       html = grunt.template.process grunt.file.read(layout), {
         data:
           _head: _head

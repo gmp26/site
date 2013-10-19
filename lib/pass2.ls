@@ -85,8 +85,6 @@ module.exports = (grunt, path) ->
 
       pass2MetadataInsert pathname, 'printables'
       content = grunt.template.process(src, pass2UtilsTex)
-      .replace "\\textless{}!--", ""
-      .replace "--\\textgreater{}", ""
       
       grunt.warn = oldWarn
       return content

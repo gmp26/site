@@ -22,6 +22,7 @@ module.exports = (grunt) ->
     function finalCallback # js syntax due to hoisting
       # Write changes to YAML
       grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
+      grunt.config.set "metadata", metadata
       done! # use this to tell grunt that we're finished!
 
     function iterator(resourceKey, callback) # js syntax due to hoisting
