@@ -52,7 +52,6 @@ module.exports = (grunt) ->
         | _   => "</div></div>"
 
       collapsed: (id) ->
-        debugger
         switch
         | id? => "<div id=\"collapsed#{id}\" class=\"collapse\"><div class=\"padded\">"
         | _   => "</div></div>"
@@ -64,7 +63,7 @@ module.exports = (grunt) ->
 
       # create a button which reveals collapsed text, or hides it if already revealed.
       toggle: (id, label, type) ->
-        debugger
+
         disabled = 'disabled="disabled"'
 
         if !id? || isNaN id
