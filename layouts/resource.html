@@ -46,6 +46,23 @@
 
     <div id="sidebar" class="offset1 span3">
 <% if(content.sidebar) { %>
+
+    <h3>Printables</h3>
+    <ul class="unstyled">
+<%   if(content.parts.length > 1) {%>
+<%     _.each(content.parts, function(cdata, index) { %>
+      <li>
+        <span class="icon-print"></span> <a href="./<%= cdata.fileName %>.pdf"><%= cdata.alias %></a>
+      </li>
+<%     }); %>
+<%   } else { %>
+      <li>
+        <span class="icon-print"></span> <a href="./index.pdf">PDF version</a>
+      </li>
+<%   } %>
+    </ul>
+
+
       <h3>Relevance</h3>
 
       <div class="station">
@@ -88,6 +105,7 @@
     </div>
 
   </div>
+
 <% if(meta.lastUpdated) { %>
       <span class="small muted pull-right">Last updated <%= meta.lastUpdated %></span>
 <% } %>

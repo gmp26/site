@@ -18,6 +18,9 @@ pvids2:
 source: NRICH
 title: Fooey
 ````
+
+<:= icon("file-text") :> [Pdf version](./index.pdf)
+
 <:= style(well) :>
 
 1. Here's a question.
@@ -40,14 +43,12 @@ Why resource types?
   1.  And here's the final question.
 
 <:= toggle(2, "Show Hint", primary) :>
-
 <:= collapsed(2) :>
       Here's a useful hint that I don't want to reveal too soon.
 <:= collapsed() :>
 <:= style() :>
 
 <:= toggle() :>
-
 <:= toggle(3) :>
 
 <:= toggle(4, "Danger", danger) :>

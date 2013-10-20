@@ -2,30 +2,17 @@
 
 module.exports = (grunt) ->
 
+  _ = grunt.util._
 
-  return {
+  # Generate pass2 options configuring Tex translation of lodash templates
+
+  options = 
+
     delimiters: 'CMEP'
     #
     # Data to pass to lodash templates in pass2
     #
     data:
-      # declare constants to avoid needing quotes
-      chalk: 0
-      well: 1
-      left: 2
-      right: 3
-      twoColumn: 4
-
-      # button types
-      primary: "primary"
-      info: "info"
-      warning: "warning"
-      danger: "danger"
-      success: "success"
-      inverse: "inverse"
-      link: "link"
-
-      endStack: []
 
       showLodashed: (expression, interpolated=true) -> 
         escape = (str) -> 
@@ -35,7 +22,7 @@ module.exports = (grunt) ->
         "\\lodashed#{if interpolated then '[=]' else ''}{" + (escape expression) + "}"
 
       style: (value) -> switch value
-        case void  => @endStack.pop! #"::stopFrame::"
+        case void  => @endStack.pop!
         case @chalk => 
           @endStack[*] = "::stopFrame::"
           "::startChalk::\n"
@@ -62,17 +49,20 @@ module.exports = (grunt) ->
         | id? => "[^#{id}]: "
         | _   => ""
 
-      collapsed: (id) ->
-        | id? => "[^#{id}]:"
-        | _   => ""
-
-      warn: (msg) ->
-        grunt.log.write "\n"
-        grunt.log.warn msg
-        grunt.log.write "..."
+      toggled: []
 
       # (provisionally) represent a toggle button as a footnote anchor
-      toggle: (id, label) -> "See footnote[^#{id}]"
+      # but only if collapsed text exists. We mustn't generate a footnote if
+      # there is no collapsed text as pandoc will then echo the source rather
+      # than interpret it.
+      toggle: (id, label="label me", type="") ->
+        if id?
+          @toggled[id] = "See footnote[^#{id}]\n\n"
+        ""
+
+      collapsed: (id) ->
+        | id? && @toggled[id] => "#{@toggled[id]}[^#{id}]:"
+        | otherwise => ""
 
       # insert an icon
       icon: (iconClass) ->
@@ -81,7 +71,15 @@ module.exports = (grunt) ->
       # create a thumbnail linking to an external site
       linkedImage: (image, url, title) ->
         "[![#{title}](#{image})](#{url})"
-  }
+  
+      warn: (msg) ->
+        grunt.log.write "\n"
+        grunt.log.warn msg
+        grunt.log.write "..."
+
+  _.extend options.data, require('./pass2Constants.js')
+  return options
+
 
 
 
