@@ -101,7 +101,7 @@ describe "Testing resources expansion", (_it)->
 
   describe 'lastUpdated', (_it) ->
     it "should appear in resource metadata", ->
-      meta.lastUpdated.should.exist
+      should.exist meta.lastUpdated
       (meta.lastUpdated.match /\d\d-\d\d-\d\d/).should.not.be.null
 
 
