@@ -109,8 +109,9 @@
 <% if(meta.lastUpdated) { %>
       <span class="small muted pull-right">Last updated <%= meta.lastUpdated %></span>
 <% } %>
-
+<% if(meta.clearance == 0) { %>
   <div class="draft">Draft</div>
+<% } %>
 </div>
 
 
