@@ -67,7 +67,7 @@ module.exports = (grunt) ->
 
       for id, file of resources
         fileClearance = +(file.index?.meta?.clearance ? 0)
-        censor = fileClearance < clearanceLevel
+        censor = 1 < clearanceLevel > fileClearance
         if censor
           grunt.log.ok "censoring resource #id"
           delete resources[id]
@@ -75,7 +75,7 @@ module.exports = (grunt) ->
 
       for id, file of examQuestions
         fileClearance = +(file.index?.meta?.clearance ? 0)
-        censor = fileClearance < clearanceLevel
+        censor = 1 < clearanceLevel > fileClearance
         if censor
           grunt.log.ok "censoring exam question #id"
           delete examQuestions[id]
@@ -84,7 +84,7 @@ module.exports = (grunt) ->
       for id, data of stations
         # stations with no clearance level default to being cleared
         fileClearance = +(data.meta?.clearance ? 100)
-        censor = fileClearance < clearanceLevel
+        censor = 1 < clearanceLevel > fileClearance
         if censor
           grunt.log.ok "censoring station #id"
           delete stations[id]
@@ -93,7 +93,7 @@ module.exports = (grunt) ->
       for id, data of pervasiveIdeas
         # pervasiveIdeas with no clearance level default to being cleared
         fileClearance = +(data.meta?.clearance ? 100)
-        censor = fileClearance < clearanceLevel
+        censor = 1 < clearanceLevel > fileClearance
         if censor
           grunt.log.ok "censoring station #id"
           delete pervasiveIdeas[id]
