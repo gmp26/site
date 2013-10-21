@@ -72,6 +72,10 @@ module.exports = (grunt) ->
       linkedImage: (image, url, title) ->
         "[![#{title}](#{image})](#{url})"
   
+      # embed an iframe
+      iframe: (src, alternateText) ->
+        "[#{alternateText}](#{src})"
+
       warn: (msg) ->
         grunt.log.write "\n"
         grunt.log.warn msg

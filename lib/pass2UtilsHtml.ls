@@ -96,6 +96,12 @@ module.exports = (grunt) ->
         "<p class=\"text-center\">#{alternateText}</p>" +
         "</div></a>"
 
+      # embed an iframe
+      iframe: (src, alternateText) ->
+        "<div class=\"row-fluid\">" +
+        "<iframe src=\"#{src}\" style=\"width:600px; height:600px\" class=\"nrich-embed\"></iframe>" +
+        "</div>"
+
   _.extend options.data, require('./pass2Constants.js')
   return options
 

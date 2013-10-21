@@ -81,12 +81,14 @@ module.exports = (grunt, path) ->
 
     printableProcess: (src, pathname) ->
 
+      grunt.log.write "#{pathname}..."
       oldWarn = monkeyPatchWarn pathname
 
       pass2MetadataInsert pathname, 'printables'
       content = grunt.template.process(src, pass2UtilsTex)
       
       grunt.warn = oldWarn
+      grunt.log.ok!
       return content
 
     htmlProcess: (src, pathname) ->
@@ -94,8 +96,10 @@ module.exports = (grunt, path) ->
 
       oldWarn = monkeyPatchWarn pathname
 
+
       pass2MetadataInsert pathname, 'html'
       content = grunt.template.process(src, pass2UtilsHtml)
+
 
       grunt.warn = oldWarn
       return content
