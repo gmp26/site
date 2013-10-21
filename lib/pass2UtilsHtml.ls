@@ -96,11 +96,16 @@ module.exports = (grunt) ->
         "<p class=\"text-center\">#{alternateText}</p>" +
         "</div></a>"
 
+      linkedButton: (label, url, type = "", print=false) ->
+        type = "btn-#{type}" if type != ""
+        "<p><a class=\"btn btn-#{type}\" href=\"#{url}\">#{label}</a></p>"
+
       # embed an iframe
-      iframe: (src, alternateText) ->
+      iframe: (src, alternateText, width=600, height=600) ->
         "<div class=\"row-fluid\">" +
-        "<iframe src=\"#{src}\" style=\"width:600px; height:600px\" class=\"nrich-embed\"></iframe>" +
+        "<iframe src=\"#{src}\" style=\"width:#{width}px; height:#{height}px\" class=\"nrich-embed\"></iframe>" +
         "</div>"
+
 
   _.extend options.data, require('./pass2Constants.js')
   return options

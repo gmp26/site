@@ -69,39 +69,47 @@ module.exports = (grunt, path) ->
   # Monkey patch grunt.warn for the duration of lodash template processing
   # so it logs the pathname where any error occurred.
   #
-  monkeyPatchWarn = (pathname) ->
-    oldWarn = grunt.warn 
-    grunt.warn = (e, errcode) ->
-      message = if _.isString e then e else e.message
-      grunt.log.error "Error in #{pathname}: #{message}"
+  # monkeyPatchWarn = (pathname) ->
+  #   oldWarn = grunt.warn 
+  #   grunt.warn = (e, errcode) ->
+  #     message = if _.isString e then e else e.message
+  #     grunt.log.error "Error in #{pathname}: #{message}"
 
-    return oldWarn
+  #   return oldWarn
+
+  begin_mathenv = /\\begin\{\s*\w+\s*\}/g
+  end_mathenv = /\\end\{\s*\w+\s*\}/g
 
   return {
 
     printableProcess: (src, pathname) ->
 
-      grunt.log.write "#{pathname}..."
-      oldWarn = monkeyPatchWarn pathname
+      #oldWarn = monkeyPatchWarn pathname
 
+      grunt.log.write "#{pathname}..."
       pass2MetadataInsert pathname, 'printables'
       content = grunt.template.process(src, pass2UtilsTex)
-      
-      grunt.warn = oldWarn
       grunt.log.ok!
+      
+      #grunt.warn = oldWarn
       return content
 
     htmlProcess: (src, pathname) ->
       # we're only interested in resources
 
-      oldWarn = monkeyPatchWarn pathname
+      #oldWarn = monkeyPatchWarn pathname
 
+      # Wrap math environments in $$ (NB to insert $$, we need $$$$. $& is the match)
+      src = src.replace(begin_mathenv, "$$$$$&")
+      .replace(end_mathenv, "$&$$$$")
 
+      grunt.log.write "#{pathname}..."
       pass2MetadataInsert pathname, 'html'
       content = grunt.template.process(src, pass2UtilsHtml)
+      grunt.log.ok!
 
 
-      grunt.warn = oldWarn
+      #grunt.warn = oldWarn
       return content
 
   }

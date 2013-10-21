@@ -51,7 +51,7 @@ module.exports = (grunt) ->
     _.each @filesSrc, (path) ->
       content = grunt.file.read path
 
-      content = content.replace /::\w+::/g (m) ->
+      content = content.replace /::\w+::/g (m, p1) ->
         switch m
           | "::stopFrame::"   => "\\end{mdframed}"
           | "::startChalk::"  => "\\begin{mdframed}[style=chalk]"

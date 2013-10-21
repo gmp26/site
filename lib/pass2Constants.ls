@@ -26,4 +26,5 @@ module.exports =
   # later.
   #
   endStack: []
+  mathenv: ""
 

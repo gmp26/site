@@ -24,14 +24,14 @@ module.exports = (grunt) ->
       style: (value) -> switch value
         case void  => @endStack.pop!
         case @chalk => 
-          @endStack[*] = "::stopFrame::"
-          "::startChalk::\n"
+          @endStack[*] = "\n\n::stopFrame::\n"
+          "\n::startChalk::\n\n"
         case @well  => 
           @endStack[*] = "::stopFrame::"
-          "::startWell::\n"
+          "\n\n::startWell::\n"
         case @twoColumn =>
           @endStack[*] = "::stopTwoColumn::"
-          "::startTwoColumn::\n"
+          "\n\n::startTwoColumn::\n"
 
       column: (value) ->
         switch value
@@ -61,8 +61,8 @@ module.exports = (grunt) ->
         ""
 
       collapsed: (id) ->
-        | id? && @toggled[id] => "#{@toggled[id]}[^#{id}]:"
-        | otherwise => ""
+        | id? && @toggled[id] => "\\begin{small}"
+        | otherwise => "\\end{small}"
 
       # insert an icon
       icon: (iconClass) ->
@@ -72,8 +72,15 @@ module.exports = (grunt) ->
       linkedImage: (image, url, title) ->
         "[![#{title}](#{image})](#{url})"
   
+
+      linkedButton: (label, url, type = "", print=false) ->
+        if print
+          "\\href{#{url}}{#{label}}"
+        else
+          ""
+
       # embed an iframe
-      iframe: (src, alternateText) ->
+      iframe: (src, alternateText, width, height) ->
         "[#{alternateText}](#{src})"
 
       warn: (msg) ->
