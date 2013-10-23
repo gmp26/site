@@ -9,7 +9,7 @@ Some Teachers Notes
 
 <:= style(twoColumn) :>
 <:= column(left) :>
-<:= linkedImage("desmos.png", "https://www.desmos.com/calculator/pyljv4ybod", "A weird graph") :>
+<:= imageLink("desmos.png", "A weird graph", "https://www.desmos.com/calculator/pyljv4ybod") :>
 <:= column() :>
 
 <:= column(right) :>

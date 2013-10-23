@@ -1,6 +1,7 @@
 ````
 alias: Problem
 source: NRICH
+sourceUrl: http://nrich.maths.org/1234
 layout: resource
 clearance: 0
 keywords: wibble wobble

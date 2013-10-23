@@ -128,8 +128,6 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
-
-
         files: "<%=pass1Files%>"
 
     latex:
@@ -502,6 +500,7 @@ module.exports = (grunt) ->
   grunt.renameTask "regarde", "watch"
 
   grunt.registerTask "server", (target) ->
+    require('./lib/siteUrl.js')(grunt, target)
     if target is "dist"
       grunt.task.run([
         "build"
@@ -521,6 +520,9 @@ module.exports = (grunt) ->
         "watch"
       ])
 
+  #
+  # TODO: set siteUrl by adding dev or dist targets
+  #
   grunt.registerTask "test", [
     "clean:app"
     "clean:test"
@@ -570,6 +572,9 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", (listOfTargets) ->
+
+    require('./lib/siteUrl.js')(grunt, 'dev')
+
     # Make the targets variable hold an array of strings representing desired targets.
     # Assume that the passed parameter is a comma separated list (with no spaces)
     # of target strings. 

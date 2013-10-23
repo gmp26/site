@@ -13,6 +13,7 @@ module.exports = (grunt) ->
     # Data to pass to lodash templates in pass2
     #
     data:
+      siteUrl: grunt.config.get "siteUrl"
 
       showLodashed: (expression, interpolated=true) -> 
         escape = (str) -> 
@@ -60,28 +61,33 @@ module.exports = (grunt) ->
           @toggled[id] = "See footnote[^#{id}]\n\n"
         ""
 
-      collapsed: (id) ->
-        | id? && @toggled[id] => "\\begin{small}"
-        | otherwise => "\\end{small}"
+      # can't use environments here because we want markdown interpretation in printables
+      collapsed: (id) -> ""
 
       # insert an icon
       icon: (iconClass) ->
         "\\icon#{iconClass.replace '-', ''}"
 
-      # create a thumbnail linking to an external site
-      linkedImage: (image, url, title) ->
-        "[![#{title}](#{image})](#{url})"
-  
+      absolute: (url) ->
+        | (url.match /^http/) != null => url
+        | ([m, p1, p2] = url.match /(\.?\/)?(.*)/) != null =>
+          "#{@siteUrl}#{p2}"
 
-      linkedButton: (label, url, type = "", print=false) ->
-        if print
-          "\\href{#{url}}{#{label}}"
-        else
-          ""
+      # insert an ordinary link
+      textLink: (text, url) ->
+        "[#{text} \\url#{@absolute url}](#{@absolute url})"
 
-      # embed an iframe
-      iframe: (src, alternateText, width, height) ->
-        "[#{alternateText}](#{src})"
+      # insert an image link
+      imageLink: (image, text, url) ->
+        "[![#{text} #{@absolute url}](#{image})](#{@absolute url})"
+
+      # insert a button link - but only if `print` is true
+      buttonLink: (type, text, url, print = false) ->
+        if print then @textLink(text, url) else ""
+
+      # if pdf label and link to local url  
+      iframe: (text, url, width, height, image="thumbnail.png") ->
+        @imageLink image, text, url
 
       warn: (msg) ->
         grunt.log.write "\n"

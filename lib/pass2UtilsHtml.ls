@@ -89,23 +89,32 @@ module.exports = (grunt) ->
       icon: (iconClass) ->
         "<span class=\"icon-#{iconClass}\"></span>"
 
-      # create a thumbnail to an external site
-      linkedImage: (image, url, alternateText="linked thumbnail") ->
+      #
+      # A note on url links...
+      #   Local links in lodash must start with / for them to
+      #   work in both html and pdf.
+      #
+
+      # insert an ordinary link. Note that this has to be lodashed because in pdfs we need to 
+      # add a siteUrl prefix to the url.
+      textLink: (text, url) ->
+        "[#{text}](#{url})"
+  
+      imageLink: (image, text, url) ->
         "<a href=\"#{url}\"><div class=\"thumbnail\">" +
-        "<img src=\"#{image}\" alt=\"#{alternateText}\">" +
-        "<p class=\"text-center\">#{alternateText}</p>" +
+        "<img src=\"#{image}\" alt=\"#{text}\">" +
+        "<p class=\"text-center\">#{text}</p>" +
         "</div></a>"
 
-      linkedButton: (label, url, type = "", print=false) ->
-        type = "btn-#{type}" if type != ""
-        "<p><a class=\"btn btn-#{type}\" href=\"#{url}\">#{label}</a></p>"
+      # insert a button link - but only if `print` is true
+      buttonLink: (type, text, url, print = false) ->
+        "<a class=\"btn #{type}\" href=\"#{url}\">#{text}</a>"
 
-      # embed an iframe
-      iframe: (src, alternateText, width=600, height=600) ->
+      # embed an interactivity in an iframe
+      iframe: (text, url, width=600, height=600, image="thumbnail.png") ->
         "<div class=\"row-fluid\">" +
-        "<iframe src=\"#{src}\" style=\"width:#{width}px; height:#{height}px\" class=\"nrich-embed\"></iframe>" +
+        "<iframe src=\"#{url}\" style=\"width:#{width}px; height:#{height}px\" class=\"nrich-embed\"></iframe>" +
         "</div>"
-
 
   _.extend options.data, require('./pass2Constants.js')
   return options

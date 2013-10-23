@@ -12,13 +12,16 @@ module.exports =
   twoColumn: 4
 
   # button types
-  primary: "primary"
-  info: "info"
-  warning: "warning"
-  danger: "danger"
-  success: "success"
-  inverse: "inverse"
-  link: "link"
+  default: ""
+  primary: "btn-primary"
+  info: "btn-info"
+  warning: "btn-warning"
+  danger: "btn-danger"
+  success: "btn-success"
+  inverse: "btn-inverse"
+  link: "btn-link"
+
+
 
   #
   # A stack used by style(X) to determine the correct translation for style().
