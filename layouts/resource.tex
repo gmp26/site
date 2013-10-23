@@ -50,7 +50,7 @@
 <%    if(sidebar.pvMetas && sidebar.pvMetas.length > 0) { %>
 \begin{pervasiveitems}
 <%      _.each(sidebar.pvMetas, function(pvMeta) { %>
-  \item <%= pvMeta.title %>
+  \item \href{'../../pervasiveIdeas/<%= pvMeta.id %>.pdf'}{<%= pvMeta.title %>}
 <%      }); %>
 \end{pervasiveitems}
 <%    } %>

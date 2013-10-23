@@ -1,4 +1,4 @@
 #/bin/bash
-grunt clearance:0
+grunt clearance:1
 grunt build
 ./scripts/fenman.sh

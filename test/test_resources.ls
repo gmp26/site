@@ -35,6 +35,7 @@ describe "Testing resources expansion", (_it)->
   var res
   var meta
   var pmeta
+  var eq
 
   before ->
     metadata := grunt.config.get "metadata"
@@ -42,6 +43,7 @@ describe "Testing resources expansion", (_it)->
     res := resources.G2_RT2
     meta := resources.G2_RT3.index.meta
     pmeta := resources.G2_RT7.index.meta
+    eq := resources.G2_RT13_EQ_0
 
   describe "good resources should exist", (_it) ->
     it "G2_RT2 should exist", ->
@@ -97,8 +99,18 @@ describe "Testing resources expansion", (_it)->
   describe 'titles are copied from index to solution', (_it) ->
     it "G2_RT7 solution should have a title", ->
       res = resources.G2_RT7
-      debugger
-      res.solution.meta.title should.equal "Woolly Mammoth"
+      res.solution.meta.title.should.equal "Woolly Mammoth"
+
+  describe 'lastUpdated', (_it) ->
+    it "should appear in resource metadata", ->
+      should.exist meta.lastUpdated
+      (meta.lastUpdated.match /\d\d-\d\d-\d\d/).should.not.be.null
+
+  describe 'G2_RT13_EQ_0 review question', (_it) ->
+    it "should not have lastUpdated metadata", ->
+      should.exist eq?.index?.meta
+      should.not.exist eq.index.meta.lastUpdated
+
 
 
 

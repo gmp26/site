@@ -11,14 +11,14 @@
     </div>
     <div id="<%=m.id%>" class="accordion-body collapse">
       <div class="accordion-inner">
-        <ul>
+        <ul class="unstyled">
 
 <%    _.each(m.stids, function(id) { %>
-          <li>
-            <a href="<%=rootUrl%>/stations/<%=id%>.html">
+          <a href="<%=rootUrl%>/stations/<%=id%>.html" class="accordion-list-item">
+          <li class="list-over">
               <%=id%>: <%=sources.stations[id].meta.title%>
-            </a>
           </li>
+          </a>
 <%    }) %>
         </ul>
       </div>

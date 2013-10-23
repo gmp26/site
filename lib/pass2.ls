@@ -43,9 +43,10 @@ module.exports = (grunt, path) ->
       data.title = meta.title
       data.author = meta.author
       data.acknowledgementText = meta.acknowledgementText = 'Some acknowledgement'
-      data.thisClearanceLevel = meta.clearance
-      data.globalClearanceLevel = grunt.config.get 'clearanceLevel'
+      data.pageClearance = meta.clearance
+      data.clearance = grunt.config.get 'clearanceLevel'
       data.lastUpdated = meta.lastUpdated
+      data.siteUrl = grunt.config.get 'siteUrl'
 
       # Add in some support functions 
       data.glossary = (text1, text2) ->
@@ -65,10 +66,12 @@ module.exports = (grunt, path) ->
           explanation = grunt.config.get "metadata.glossary.#{ref}"
           "[^#{link}]: #{explanation}"
 
-  #
+  
   # Monkey patch grunt.warn for the duration of lodash template processing
   # so it logs the pathname where any error occurred.
-  #
+  # TODO: Check whether this is necessary now we have wrapped the template processing in
+  # logging calls. 
+  
   monkeyPatchWarn = (pathname) ->
     oldWarn = grunt.warn 
     grunt.warn = (e, errcode) ->
@@ -77,27 +80,43 @@ module.exports = (grunt, path) ->
 
     return oldWarn
 
+  #
+  # We can assume that every raw native environment is a math environment
+  # as these are the only kind that can be handled by MathJAX in html
+  #
+  begin_mathenv = /\s\\begin\{\s*\w+\s*\}\s/g
+  end_mathenv = /\s\\end\{\s*\w+\s*\}\s/g
+
   return {
 
     printableProcess: (src, pathname) ->
 
+      grunt.log.write "#{pathname}..."
       oldWarn = monkeyPatchWarn pathname
 
       pass2MetadataInsert pathname, 'printables'
       content = grunt.template.process(src, pass2UtilsTex)
-
+      
       grunt.warn = oldWarn
+      grunt.log.ok!
       return content
 
     htmlProcess: (src, pathname) ->
-      # we're only interested in resources
 
+      grunt.log.write "#{pathname}..."
       oldWarn = monkeyPatchWarn pathname
+
+      # Wrap math environments in $$ so mathJax detects them.
+      # (NB to insert $$, we need $$$$. $& is the match)
+      src = src.replace(begin_mathenv, "$$$$$&")
+      .replace(end_mathenv, "$&$$$$")
 
       pass2MetadataInsert pathname, 'html'
       content = grunt.template.process(src, pass2UtilsHtml)
+      grunt.log.ok!
 
-      grunt.warn = oldWarn
+
+      #grunt.warn = oldWarn
       return content
 
   }

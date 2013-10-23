@@ -98,6 +98,9 @@ module.exports = (grunt) ->
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
 
+      if resourceName == "NA3_RT1"
+        debugger
+
       content = getResourceData resourceName, files, indexMeta
       # cdata has fields
       #   fileName:

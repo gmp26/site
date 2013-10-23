@@ -1,6 +1,8 @@
 *.sublime*
 *.swp
 app/
+!app/styles
+!app/styles/*
 node_modules/
 partials/
 lib/*.js

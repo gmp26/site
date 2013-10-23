@@ -202,6 +202,7 @@ module.exports = (grunt) ->
             layout: 'resource'
             resourceType: 'RT13'
       }
+      #grunt.config.set "metadata.sources.resources.#{resid}" resources[resid]
 
       # insert the new resource in the station metadata
       R1s = stations[stid].meta?.R1s ? []
@@ -311,6 +312,7 @@ module.exports = (grunt) ->
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta
+      # grunt.log.error "id=#{indexMeta.id}: title=#{indexMeta.title}, lastUpdated=#{indexMeta.lastUpdated}"
       html = grunt.template.process grunt.file.read(layout), {
         data:
           _head: _head
@@ -326,7 +328,8 @@ module.exports = (grunt) ->
 
     generateLess sources
 
-    # return the metadata
+    # write back and return the metadata
+    grunt.config.set "metadata" metadata
     return metadata
 
 

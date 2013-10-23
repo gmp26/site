@@ -14,10 +14,19 @@ _ = grunt.util._
 describe "Testing exam questions", (_it)->
 
   var metadata
+  var meta
+  var examQuestions
+  var resources
 
   before ->
     metadata := grunt.config.get "metadata"
+    examQuestions := metadata.sources.examQuestions
+    resources := metadata.sources.resources
+    meta := examQuestions.Q1.index.meta
 
-  describe "dummy passing test", (_it) ->
-    it "should be false", ->
-      true.should.equal true
+  describe "ExamQuestions", (_it) ->
+    it "should have lastUpdated metadata", ->
+      should.exist meta.lastUpdated
+      (meta.lastUpdated.match /\d\d-\d\d-\d\d/).should.not.be.null
+
+

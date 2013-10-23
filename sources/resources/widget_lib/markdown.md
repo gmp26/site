@@ -74,6 +74,8 @@ To write mathematics use LaTeX notation. Actually, that part of LaTeX which is s
 
 Delimit inline mathematics with single dollar signs as in `$y=x^2$`, which will display as $y=x^2$. Delimit display mathematics with double dollars as in `$$y=\frac{1}{x^2}$$`, which will display on a separate centred line as $$y=\frac{1}{x^2}.$$
 
-Don't listen to other LaTeX users who will suggest you use `\begin{equation}` and `\end{equation}` around your display mathematics instead of `$$`. Unfortunately the equation and align constructs are ignored on the website as pandoc assumes that in html output we don't want any messy latex.
+Note that `$` and `$$` are the only mathematics delimiters that are recognised by code running in the browser. Anything in between is assumed to be valid TeX or LaTeX in a mathematics context. 
+
+In true LaTeX there are some LaTeX environments that also bracket the mathematics context - things like `\begin{eqnarray*}` and `\end{eqnarray*}`. When writing for CMEP, you should use these without wrapping them in `$$` because we wrap them up for you so MathJax sees them. We only do this if there's a whitespace character (a space, tab, carriage return, or line feed character) either side of the `\begin{xxx}` and the `\end{xxx}`. This will normally be the case for display maths environments. You can prevent the automatic `$$` wrapping of environments that are used __while already in maths mode__ - like `array` - by not leaving any space around them.
 
 Note that the pandoc preview may not centre display mathematics correctly unless you tweak the associated CSS. But you can probably imagine how it will look.

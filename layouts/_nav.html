@@ -12,12 +12,11 @@
         <!-- Be sure to leave the brand out there if you want it shown -->
         <a class="brand" href="<%=rootUrl%>/index.html"><img src="<%=rootUrl%>/images/cmep-logo3.png" style="height:20px;padding:0px 5px 0px 0px"/>Cambridge Mathematics</a>
 
-<% if(grunt.clearanceLevel === 0) { %>
+<% if(grunt.clearanceLevel <= 1) { %>
         <span class="clearance">
-          clearance <%= meta.clearance ? meta.clearance : "undefined"  %>
+          clearance <%= isNaN(meta.clearance) ? "undefined" : meta.clearance %>
         </span>
 <% } %>
-
 
         <!-- Everything you want hidden at 940px or less, place within here -->
         <div class="nav-collapse collapse">
