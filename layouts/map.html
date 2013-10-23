@@ -40,10 +40,10 @@ $(document).ready(function() {
     /* twitter bootstrap popovers */
     $("svg [id^='node']").each(function(){
       $(this).popover({
-        title: "Hi!",
-        content: "popover",
+        title: $(this).children(".popover-title").first().html(),
+        content: $(this).children(".popover-content").first().html(),
         container:"body",
-        trigger: "hover",
+        trigger: "click",
         placement: "top"
       });
     });

@@ -351,6 +351,15 @@ module.exports = (grunt) ->
 
     function removeTitles(data)
       $ = cheerio.load data 
+      $('[id ^="node"] title').each (i, elem) ->
+        id = $(elem).text()
+        grunt.verbose.writeln 'Station ' + id
+        # Generate appropriate popover data
+        title = "<a href=\"./stations/#{id}.html\">Station " + id + "</a>" 
+        content = sources.stations[id]?.meta.title
+        html = "<foreignobject><div class='popover-title'>#{title}</div>
+          <div class='popover-content'>#{content}</div></foreignobject>"
+        $(this).replaceWith(html)
       $('title').remove()
       return $.html()
 

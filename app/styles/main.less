@@ -350,4 +350,11 @@ a.accordion-list-item:hover {
   .rotate(-45deg);
 }
 
-.popover { z-index: 1040; }
+.popover { 
+  /* Needs to be this high to overlap top bar */
+  z-index: 1040; 
+}
+
+.popover-title, .popover-content { 
+  display:none;
+}
