@@ -593,7 +593,7 @@ module.exports = (grunt) ->
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:png"
+        "tubemap:svg"
         "panda:pass2html"
         "copy:assets"
         "generateHtml"

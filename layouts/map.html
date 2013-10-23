@@ -9,7 +9,12 @@
       <%= _linesMenu %>
     </div>
     <div id="content" class="span8 home">
-      <%= content %>
+      <figure id="map">
+        <svg style="-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none;
+                      -moz-user-select: none; -ms-user-select: none; user-select: none;">
+          <%= svgContent %>
+        </svg>
+      </figure>  
     </div>
   </div>
 </div>
@@ -25,6 +30,26 @@ $(document).ready(function() {
       MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
     })
   });
+
+  /* load fallback image if necessary */
+  function supportsSVG() {
+    // Grabbed from Modernizr
+    return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+  }
+  if (!supportsSVG()) {
+    $("#map").html('<img src="<%= pngUrl %>">');
+  }
+  else {
+    /* twitter bootstrap popovers */
+    $("svg [id^='node']").each(function(){
+      $(this).popover({
+        title: "Hi!",
+        content: "popover",
+        container:"body",
+        trigger: "hover"
+      });
+    });
+  }
 
 });
 </script>

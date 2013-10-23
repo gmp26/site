@@ -4,6 +4,7 @@ module.exports = (grunt) ->
 
   getLayout = (require './getLayout.js') grunt
   fs = require 'fs'
+  cheerio = require 'cheerio'
 
   # simplify access to lodash
   _ = grunt.util._
@@ -62,8 +63,8 @@ module.exports = (grunt) ->
             _nav: _nav
             _foot: _foot
             meta: meta
-            content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
             sources: sources
+            content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
             rootUrl: '.'
             resourcesUrl: './resources'
         }
@@ -80,6 +81,10 @@ module.exports = (grunt) ->
     generateTopLevelPage 'index'
     generateTopLevelPage 'map' do
       _linesMenu: _linesMenu
+      # relative to app directory
+      pngUrl: './images/tubeMap.png'
+      # relative to base directory
+      svgContent: removeTitles grunt.file.read "./app/images/tubeMap.svg"
     generateTopLevelPage 'index'
     generateTopLevelPage 'pervasiveIdeasHome' do
       families: families
@@ -341,4 +346,8 @@ module.exports = (grunt) ->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
       grunt.file.write "#{appDir}/styles/lines.less", css
 
+    function removeTitles(data)
+      $ = cheerio.load data 
+      $('title').remove()
+      return $.html()
 
