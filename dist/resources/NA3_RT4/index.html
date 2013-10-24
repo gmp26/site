@@ -1,0 +1,263 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Delius">
+  <!-- Place favicon.ico and apple-touch-icon.png in the rootUrl directory -->
+  <link rel="stylesheet" href="../../styles/main.css">
+  <script src="../../scripts/vendor/modernizr.js"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { 
+        equationNumbers: { autoNumber: "AMS" },
+        Macros: {
+          Var: "\\mathrm{Var}"
+        }
+      },
+      tex2jax: {
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+
+  <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+</head>
+<body>
+
+
+<div id="wrap1"><div id="wrap2">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="muted"><i class="icon-arrow-down"></i> Menu</span>
+        </a>
+
+        <!-- Be sure to leave the brand out there if you want it shown -->
+        <a class="brand" href="../../index.html"><img src="../../images/cmep-logo3.png" style="height:20px;padding:0px 5px 0px 0px">Cambridge Mathematics</a>
+
+
+        <span class="clearance">
+          clearance 3
+        </span>
+
+
+        <!-- Everything you want hidden at 940px or less, place within here -->
+        <div class="nav-collapse collapse">
+          <!-- .nav, .navbar-search, .navbar-form, etc -->
+          <ul class="nav">
+            <li><a href="../../map.html">Tube Map</a></li>
+            <li><a href="../../pervasiveIdeasHome.html">Pervasive Ideas</a></li>
+            <li><a href="../../resourceTypesHome.html">Resource Types</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid">
+  <div class="row-fluid not-short">
+    <div class="container span7 offset1">
+
+      <h1>
+        <span class="icon-th-list"></span> Worked examples
+      </h1>
+
+
+      <h2>
+        Euclid's algorithm
+      </h2>
+
+
+      <div class="tabbable">
+
+
+      
+        <div class="tab-content">
+
+          <div class="tab-pane active" id="tab0">
+            <p>Here’s an interesting thought. If I tell you that <span class="math">\(122381 = 3 \times 35889 + 14714\)</span> and that <span class="math">\(7\)</span> divides both <span class="math">\(35889\)</span> and <span class="math">\(14714\)</span>, then we know immediately that <span class="math">\(7\)</span> also divides <span class="math">\(122381\)</span>.</p>
+<div class="well">
+<p>Why is that? Try to find your own explanation.</p>
+</div>
+<p>Here’s a picture that might be helpful.</p>
+<figure>
+<img src="chocolatefinal.png" alt="Diagram"><figcaption>Diagram</figcaption>
+</figure>
+<p>We can use this idea to understand <em>Euclid’s algorithm</em>.</p>
+<p>To obtain the statement <span class="math">\(122381 = 3 \times 35889 + 14714\)</span>, I divided <span class="math">\(122381\)</span> by <span class="math">\(35889\)</span> and looked for the <em>quotient</em> (in this case <span class="math">\(3\)</span>) and the <em>remainder</em> (in this case <span class="math">\(14714\)</span>). We can now repeat this for the numbers <span class="math">\(35889\)</span> and <span class="math">\(14714\)</span>, and so on. Here’s the list of equations that we get.</p>
+
+<p>We stop there because the remainder in the final equation is <span class="math">\(0\)</span>.</p>
+<div class="chalk">
+Here’s a handy tip. I’ve written numbers that do the same job in the same column. For example, the quotients are all just before the <span class="math">\(\times\)</span> sign, and the remainders are all at the end. There’s a lot of flexibility about the order in which we write the components of these equations, but it’s a lot easier to keep track of which numbers are doing which jobs if you keep them in the same place each time.
+</div>
+<p>What can we deduce from these equations?</p>
+<p>The last non-zero remainder is <span class="math">\(7\)</span>, so we’d like to show that the highest common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span> is <span class="math">\(7\)</span>. (You might have been able to predict this if you’d made a suitable conjecture following your work on <a href="../NA3_RT1/index.html">the introductory investigation at this station</a>.)</p>
+<p>To show that <span class="math">\(7\)</span> is the highest common factor of these two numbers, we need to show two things:</p>
+<ul>
+<li><p>that <span class="math">\(7\)</span> really is a common factor of them (it divides both numbers);</p></li>
+<li><p>and that it’s the highest such number (any common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span> is at most <span class="math">\(7\)</span>).</p></li>
+</ul>
+<p>We’ll show these things in order.</p>
+<hr>
+<h5 id="is-a-common-factor-of-122381-and-35889"><span class="math">\(7\)</span> is a common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span></h5>
+<p>Let’s first start at the bottom and then work up.</p>
+<p>The last equation, <span class="math">\(14 = 2 \times 7\)</span>, tells us that <span class="math">\(7\)</span> divides <span class="math">\(14\)</span>.</p>
+<p>The next equation up, <span class="math">\(35 = 2 \times 14 + 7\)</span>, then tells us that <span class="math">\(7\)</span> divides <span class="math">\(35\)</span> (because it divides both <span class="math">\(14\)</span> and <span class="math">\(7\)</span> on the right-hand side).</p>
+<p>The next equation up, <span class="math">\(49 = 1 \times 35 + 14\)</span>, then tells us that <span class="math">\(7\)</span> divides <span class="math">\(49\)</span> (because it divides both <span class="math">\(35\)</span> and <span class="math">\(14\)</span> on the right-hand side).</p>
+<p>And so on, all the way up to the first equation, <span class="math">\(122381 = 3 \times 35889 + 14714\)</span>, which tells us that <span class="math">\(7\)</span> divides <span class="math">\(122381\)</span> (because it divides both <span class="math">\(35889\)</span> and <span class="math">\(14714\)</span>). In particular, <span class="math">\(7\)</span> is a common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>.</p>
+<p>That’s a good start.</p>
+<p>You might reasonably think that it would be a lot easier just to check directly that <span class="math">\(7\)</span> divides both numbers, but the advantage of what we’ve just done is that we can generalise it to <em>any</em> pair of starting numbers and still know that the last non-zero remainder divides both starting numbers.</p>
+<hr>
+<h5 id="any-common-factor-of-122381-and-35889-is-at-most-7">Any common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span> is at most <span class="math">\(7\)</span></h5>
+<p>Now let’s suppose that we have any old common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>. Let’s call it <span class="math">\(d\)</span>. (It’s much easier to talk about something if we’ve given it a name, and <span class="math">\(d\)</span> is a good name for a divisor.)</p>
+<p>Then the top equation, which we can rewrite as <span class="math">\(14714 = 122381 - 3 \times 35889\)</span>, tells us that <span class="math">\(d\)</span> divides <span class="math">\(14714\)</span> (because it divides both <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>).</p>
+<p>The next equation down, which we can rewrite as <span class="math">\(6461 = 35889 - 2 \times 14714\)</span>, tells us that <span class="math">\(d\)</span> divides <span class="math">\(6461\)</span> (because it divides both <span class="math">\(35889\)</span> and <span class="math">\(14714\)</span>).</p>
+<p>The next equation down, which we can rewrite as <span class="math">\(1792 = 14714 - 2 \times 6461\)</span>, tells us that <span class="math">\(d\)</span> divides <span class="math">\(1792\)</span> (because it divides both <span class="math">\(14714\)</span> and <span class="math">\(6461\)</span>).</p>
+<p>And so on, all the way down to the penultimate (last but one) equation, which we can rewrite as <span class="math">\(7 = 35 - 2 \times 14\)</span>. This tells us that <span class="math">\(d\)</span> divides <span class="math">\(7\)</span> (because, from the previous equations, it divides both <span class="math">\(35\)</span> and <span class="math">\(14\)</span>).</p>
+<p>So if <span class="math">\(d\)</span> is any common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>, then it divides <span class="math">\(7\)</span>, and also <span class="math">\(7\)</span> is a common factor of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>. But that means precisely that <span class="math">\(7\)</span> is the <em>highest common factor</em> of <span class="math">\(122381\)</span> and <span class="math">\(35889\)</span>.</p>
+<hr>
+<p>We do not have to write out all of that explanation every time we use Euclid’s algorithm. But it’s important that you’re able to explain why the algorithm finds the highest common factor.</p>
+<div class="well">
+Pick your own pair of positive integers, and run Euclid’s algorithm on them. Now explain to a friend why your equations have found the highest common factor for you.
+</div>
+<p>Here are some follow-up questions to help you develop your understanding of Euclid’s algorithm.</p>
+<div class="well">
+<ol type="1">
+<li><p>Find a pair of integers that have highest common factor <span class="math">\(12\)</span> and where it takes exactly four steps of Euclid’s algorithm to find that highest common factor.</p>
+<p>Can you still do this if you change the highest common factor and/or the number of steps?</p></li>
+<li><p>Find a pair of four-digit numbers for which it takes very few steps for Euclid’s algorithm to find their highest common factor.</p></li>
+<li><p>Find a pair of four-digit numbers for which it takes many steps for Euclid’s algorithm to find their highest common factor.</p></li>
+</ol>
+</div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar" class="offset1 span3">
+
+
+    <h3>Printables</h3>
+    <ul class="unstyled">
+
+      <li>
+        <span class="icon-print"></span> <a href="./index.pdf">PDF version</a>
+      </li>
+
+    </ul>
+
+
+      <h3>Relevance</h3>
+
+      <div class="station">
+
+        <p><a class="buttonNA" href="../../stations/NA3.html">NA3</a> What are highest common factors and why do they matter?</p>
+
+      </div>
+
+      <ul class="pvi">
+
+      </ul>
+
+
+      <h3>Look back</h3>
+      <ul class="unstyled priors">
+
+        <li>
+          <span class="icon-search"></span> <a href="../NA3_RT1/index.html">Introductory investigation</a>
+        </li>
+
+      </ul>
+
+
+
+      <h3>Look forwards</h3>
+      <ul class="unstyled laters">
+
+        <li>
+          <span class="icon-globe"></span> <a href="../NA3_RT9/index.html">Open-ended investigation</a>
+        </li>
+
+      </ul>
+
+
+
+    </div>
+
+  </div>
+
+
+      <span class="small muted pull-right">Last updated 2013-10-21</span>
+
+
+</div>
+
+
+
+<!--[if lt IE 7]>
+  <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+<script>
+  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src='//www.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+-->
+
+<script src="../../scripts/main.js"></script>
+
+
+
+
+<script src="../../scripts/vendor/bootstrap.js"></script>
+
+</div> <!-- close #wrap2 -->
+</div> <!-- close #wrap1 -->
+
+<div id="footer">
+  <div class="container muted">
+    <small>
+      <p class="credit">
+        Unless indicated otherwise, these unpublished materials are currently under development and are copyright © University of Cambridge, Cambridge Mathematics Education Project (CMEP).  All rights reserved.
+      </p>
+      <p>
+        These materials may only be used for CMEP internal developmental and testing purposes under the authority and supervision of the CMEP.  Otherwise, the materials may not be copied in whole or in part in any media or used in any manner or form. Queries: email: cmep@maths.cam.ac.uk phone: 01223 337994.
+      </p>
+    </small>
+    <ul class="inline">
+      <li>
+        <a class="btn btn-mini btn-inverse" href="../../privacy.html">
+          <span class="muted">CMEP Privacy Policy</span>
+        </a>
+      </li>
+      <li>
+        <a class="btn btn-mini btn-inverse" href="../../cookies.html">
+          <span class="muted">CMEP Cookie Policy</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

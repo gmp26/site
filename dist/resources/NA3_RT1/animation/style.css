@@ -1,0 +1,72 @@
+body {
+  font-family: sans-serif;
+  width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 300;
+}
+
+.footer {
+  font-size: smaller;
+  font-style: italic;
+  margin-top: 3em;
+}
+
+img.thumb {
+  width: 460px;
+  margin: 8px;
+}
+
+ol ol {
+  list-style-type: lower-alpha;
+}
+
+iframe {
+  border: none;
+  display: block;
+  margin: 0 auto;
+}
+
+.right {
+  text-align: right;
+}
+
+.fullscreen {
+  font-style: italic;
+  font-size: smaller;
+}
+
+.clear {
+  clear: both;
+}
+
+div.thumbs {
+  margin: 50px 0;
+}
+
+div.thumb {
+  float: left;
+  text-align: center;
+  width: 230px;
+}
+
+div.thumb .img {
+  display: block;
+  height: 180px;
+}
+
+div.thumb a {
+  text-decoration: none;
+}
+
+div.thumb a:hover {
+  text-decoration: underline;
+}
+
+div.thumb img {
+  width: 230px;
+}
