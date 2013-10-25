@@ -74,7 +74,9 @@ module.exports = (grunt) ->
 
     # find last modified date
     lastUpdated:
-      task:
+      resources:
+        options: null
+      examQuestions:
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -528,6 +530,7 @@ module.exports = (grunt) ->
     "lsc"
     "panda:pass1"
     "expandMetadata"
+    "lastUpdated"
     "panda:pass2html"
     "generateHtml"
     "mochaTest:sources"

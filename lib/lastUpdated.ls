@@ -16,10 +16,16 @@ module.exports = (grunt) ->
     baseArgs = "log -1 --pretty=format:%ad --date=short"
     partialsDir = grunt.config.get "yeoman.partials"
     metadata = grunt.config.get "metadata"
-    resources = metadata.sources.resources
-    resourceKeys = Object.keys resources
-    # grunt.log.writeln JSON.stringify resources
-    async.eachSeries resourceKeys, iterator, finalCallback
+    sourceType = @target
+
+    switch sourceType
+      when "resources"
+        sources = metadata.sources.resources
+      when "examQuestions"
+        sources = metadata.sources.examQuestions
+
+    sourceKeys = Object.keys sources
+    async.eachSeries sourceKeys, sourceIterator, finalCallback
     
     function finalCallback # js syntax due to hoisting
       # Write changes to YAML
@@ -27,10 +33,11 @@ module.exports = (grunt) ->
       grunt.config.set "metadata", metadata
       done! # use this to tell grunt that we're finished!
 
-    function iterator(resourceKey, callback) # js syntax due to hoisting
-      resource = resources[resourceKey]
-      id = resource.index.meta.id
-      filepath = "resources/#{id}/index.md"
+    function sourceIterator(sourceKey, callback) # js syntax due to hoisting
+      source = sources[sourceKey]
+      id = sourceKey 
+      # Need to have set sourceType appropriately
+      filepath = "#{sourceType}/#{id}/index.md"
       args = "#{baseArgs} #{filepath}"
  
       grunt.verbose.writeln "#cmd #args"
@@ -41,7 +48,7 @@ module.exports = (grunt) ->
 
       child.stdout.on 'data', (data) ->
         # The data is the last modified date
-        resource.index.meta.lastUpdated = "#data"
+        source.index.meta.lastUpdated = "#data"
 
       child.on 'exit', (err) ->
         if err
