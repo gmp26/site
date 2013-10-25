@@ -6,3 +6,7 @@ partials/
 lib/*.js
 test/*.js
 .clearance
+scripts/main.js
+scripts/vendor/*
+*.orig
+reference/slides/*.pdf
