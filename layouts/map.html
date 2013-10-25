@@ -40,11 +40,12 @@ $(document).ready(function() {
     /* twitter bootstrap popovers */
     $("svg [id^='node']").each(function(){
       $(this).popover({
-        title: $(this).children(".popover-title").first().html(),
-        content: $(this).children(".popover-content").first().html(),
+        title: $('div').append($(this).find("popover-title").children(":first")).html(),
+        content: $('div').append($(this).find("popover-content").children(":first")).html(),
         container:"body",
         trigger: "click",
-        placement: "top"
+        placement: "top",
+        html:true
       });
     });
   }

@@ -357,8 +357,8 @@ module.exports = (grunt) ->
         # Generate appropriate popover data
         title = "<a href=\"./stations/#{id}.html\">Station " + id + "</a>" 
         content = sources.stations[id]?.meta.title
-        html = "<foreignobject><div class='popover-title'>#{title}</div>
-          <div class='popover-content'>#{content}</div></foreignobject>"
+        html = "<popover-title>#{title}</popover-title>
+          <popover-content>#{content}</popover-content>"
         $(this).replaceWith(html)
       $('title').remove()
       return $.html()
