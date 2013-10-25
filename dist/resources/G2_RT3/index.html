@@ -1,0 +1,261 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Delius">
+  <!-- Place favicon.ico and apple-touch-icon.png in the rootUrl directory -->
+  <link rel="stylesheet" href="../../styles/main.css">
+  <script src="../../scripts/vendor/modernizr.js"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { 
+        equationNumbers: { autoNumber: "AMS" },
+        Macros: {
+          Var: "\\mathrm{Var}"
+        }
+      },
+      tex2jax: {
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+
+  <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+</head>
+<body>
+
+
+<div id="wrap1"><div id="wrap2">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="muted"><i class="icon-arrow-down"></i> Menu</span>
+        </a>
+
+        <!-- Be sure to leave the brand out there if you want it shown -->
+        <a class="brand" href="../../index.html"><img src="../../images/cmep-logo3.png" style="height:20px;padding:0px 5px 0px 0px">Cambridge Mathematics</a>
+
+
+        <span class="clearance">
+          clearance 3
+        </span>
+
+
+        <!-- Everything you want hidden at 940px or less, place within here -->
+        <div class="nav-collapse collapse">
+          <!-- .nav, .navbar-search, .navbar-form, etc -->
+          <ul class="nav">
+            <li><a href="../../map.html">Tube Map</a></li>
+            <li><a href="../../pervasiveIdeasHome.html">Pervasive Ideas</a></li>
+            <li><a href="../../resourceTypesHome.html">Resource Types</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid">
+  <div class="row-fluid not-short">
+    <div class="container span7 offset1">
+
+      <h1>
+        <span class="icon-info-sign"></span> Exposition
+      </h1>
+
+
+      <h2>
+        The equation of a circle
+      </h2>
+
+
+      <div class="tabbable">
+
+
+      
+        <div class="tab-content">
+
+          <div class="tab-pane active" id="tab0">
+            <p>What do we mean by a <em>circle</em>?</p>
+<p>It’s the set of all points at some fixed distance from some fixed point.</p>
+<p>For example, we might talk about the circle of radius <span class="math">\(3\)</span> with centre <span class="math">\((-1,2)\)</span>—this is the set of all points that are at distance <span class="math">\(3\)</span> from <span class="math">\((-1,2)\)</span>.</p>
+<p>Now we’re going to try to express this set of points as a set of solutions to an equation, in much the same way that we can describe a line as the set of solutions to an equation. For example, the line with gradient <span class="math">\(\frac{1}{2}\)</span> passing through <span class="math">\((0,1)\)</span> is precisely the set of all points <span class="math">\((x,y)\)</span> such that <span class="math">\(2y = x + 2\)</span>.</p>
+<p>When is the point <span class="math">\((x,y)\)</span> at distance <span class="math">\(3\)</span> from <span class="math">\((-1,2)\)</span>?</p>
+<p>Here’s a useful picture.</p>
+<figure>
+<img src="xy12-1.png" alt="When is (x,y) at distance 3 from (-1,2)?"><figcaption>When is <span class="math">\((x,y)\)</span> at distance <span class="math">\(3\)</span> from <span class="math">\((-1,2)\)</span>?</figcaption>
+</figure>
+<p>The coordinate system gives us a very natural way to get a helpful right-angled triangle from this.</p>
+<figure>
+<img src="xy12-2.png" alt="When is (x,y) at distance 3 from (-1,2)?"><figcaption>When is <span class="math">\((x,y)\)</span> at distance <span class="math">\(3\)</span> from <span class="math">\((-1,2)\)</span>?</figcaption>
+</figure>
+<p>If the point <span class="math">\((x,y)\)</span> were placed differently relative to <span class="math">\((-1,2)\)</span>, then we might get different triangles.</p>
+<div class="well">
+<h4>Exercise</h4>
+<p>Find all the possible diagrams, and the side lengths of the resulting triangles.</p>
+<button type="button" class="btn btn-action" data-toggle="collapse" data-target="#collapsed1">
+Answer
+</button>
+</div>
+
+<div id="collapsed1" class="collapse"><div class="padded">
+<img src="diagram.png" alt="Picture"> 
+</div>
+</div>
+
+
+<p>Now Pythagoras’s theorem helps us to find the distance between the points <span class="math">\((x,y)\)</span> and <span class="math">\((-1,2)\)</span>: it’s <span class="math">\[\sqrt{(x+1)^2 + (2-y)^2}.\]</span></p>
+<div class="well">
+<h4>Exercise</h4>
+<p>Find the corresponding expressions for the distances in the other possible diagrams.</p>
+<button type="button" class="btn btn-action" data-toggle="collapse" data-target="#collapsed2">
+Answer
+</button>
+
+<div id="collapsed2" class="collapse"><div class="padded">
+  
+The expressions for the distance between <span class="math">\((-1,2)\)</span> and <span class="math">\((x,y)\)</span> in each of the above diagrams are:<br> 1) <span class="math">\(\sqrt{(x+1)^2+(2-y)^2}\)</span>,<br> 2) <span class="math">\(\sqrt{(-1-x)^2+(2-y)^2}\)</span>,<br> 3) <span class="math">\(\sqrt{(-1-x)^2+(y-2)^2}\)</span>,<br> 4) <span class="math">\(\sqrt{(x+1)^2+(y-2)^2}\)</span>.<br> Using the fact that <span class="math">\((-a)^2=a^2\)</span> for any real number <span class="math">\(a\)</span>, we can see that these expressions are all equivalent!
+</div>
+</div>
+
+</div>
+
+<p>So <span class="math">\((x,y)\)</span> lies on the circle of radius <span class="math">\(3\)</span> with centre <span class="math">\((-1,2)\)</span> if, and only if, <span class="math">\[\sqrt{(x+1)^2 + (2-y)^2} = 3.\]</span></p>
+<p>This, in turn, is satisfied if, and only if, <span class="math">\[(x+1)^2 + (2-y)^2 = 9.\]</span> (In one direction this is clear: by squaring both sides of the first equation we obtain the second. In the other direction, we can use the fact that <span class="math">\(\sqrt{(x+1)^2 + (2-y)^2}\)</span> must be positive to justify taking the positive root on both sides.)</p>
+<p>So the equation of the circle of radius <span class="math">\(3\)</span> with centre <span class="math">\((-1,2)\)</span> is <span class="math">\[(x+1)^2 + (2-y)^2 = 9.\]</span></p>
+<div class="well">
+<h4>Exercise</h4>
+Expand out the brackets and experiment with different ways of writing this equation. Which way(s) do you find most convenient, and why?
+</div>
+<div class="well">
+<h4>Exercise</h4>
+Pick a radius and a centre, and find the equation of the corresponding circle, with an explanation. Repeat until you feel confident.
+</div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar" class="offset1 span3">
+
+
+    <h3>Printables</h3>
+    <ul class="unstyled">
+
+      <li>
+        <span class="icon-print"></span> <a href="./index.pdf">PDF version</a>
+      </li>
+
+    </ul>
+
+
+      <h3>Relevance</h3>
+
+      <div class="station">
+
+        <p><a class="buttonE" href="../../stations/E2.html">E2</a> How is the solution of equations related to problems in geometry?</p>
+
+        <p><a class="buttonG" href="../../stations/G2.html">G2</a> What is the connection between algebra and geometry, and how can we exploit it?</p>
+
+      </div>
+
+      <ul class="pvi">
+
+      </ul>
+
+
+
+
+      <h3>Look forwards</h3>
+      <ul class="unstyled laters">
+
+        <li>
+          <span class="icon-folder-open"></span> <a href="../G2_RT7/index.html">Carefully designed set of problems</a>
+        </li>
+
+        <li>
+          <span class="icon-folder-open"></span> <a href="../G2_RT7_2/index.html">Carefully designed set of problems</a>
+        </li>
+
+      </ul>
+
+
+
+    </div>
+
+  </div>
+
+
+      <span class="small muted pull-right">Last updated 2013-10-21</span>
+
+
+</div>
+
+
+
+<!--[if lt IE 7]>
+  <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+<script>
+  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src='//www.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+-->
+
+<script src="../../scripts/main.js"></script>
+
+
+
+
+<script src="../../scripts/vendor/bootstrap.js"></script>
+
+</div> <!-- close #wrap2 -->
+</div> <!-- close #wrap1 -->
+
+<div id="footer">
+  <div class="container muted">
+    <small>
+      <p class="credit">
+        Unless indicated otherwise, these unpublished materials are currently under development and are copyright © University of Cambridge, Cambridge Mathematics Education Project (CMEP).  All rights reserved.
+      </p>
+      <p>
+        These materials may only be used for CMEP internal developmental and testing purposes under the authority and supervision of the CMEP.  Otherwise, the materials may not be copied in whole or in part in any media or used in any manner or form. Queries: email: cmep@maths.cam.ac.uk phone: 01223 337994.
+      </p>
+    </small>
+    <ul class="inline">
+      <li>
+        <a class="btn btn-mini btn-inverse" href="../../privacy.html">
+          <span class="muted">CMEP Privacy Policy</span>
+        </a>
+      </li>
+      <li>
+        <a class="btn btn-mini btn-inverse" href="../../cookies.html">
+          <span class="muted">CMEP Cookie Policy</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

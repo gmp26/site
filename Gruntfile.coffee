@@ -414,6 +414,7 @@ module.exports = (grunt) ->
             "resources/*/*.png"
             "resources/*/*.svg"
             "resources/*/*.swf"
+            "resources/*/*.pdf"
             "resources/*/*/**"
           ]
         ]
@@ -553,7 +554,12 @@ module.exports = (grunt) ->
     "lsc"
     "panda:pass1"
     "expandMetadata"
+    "lastUpdated"
     "tubemap:png"
+    "panda:pass2printables"
+    "generatePrintables"
+    "latex:printables"
+    "copy:printables"
     "panda:pass2html"
     "copy:assets"
     "generateHtml"

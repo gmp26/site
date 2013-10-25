@@ -3,6 +3,7 @@
 jsy = require 'js-yaml'
 async = require 'async'
 spawn = require('child_process').spawn
+path = require('path')
 
 module.exports = (grunt) ->
 
@@ -10,8 +11,9 @@ module.exports = (grunt) ->
   # The expandMetadata task must be run first
   grunt.registerMultiTask "lastUpdated", "", ->
     done = @async!
-    cmd = "git"
-    baseArgs = "log -1 --pretty=format:%ad --date=short "
+    sourcesDir = grunt.config.get "yeoman.sources"
+    cmd="git"
+    baseArgs = "log -1 --pretty=format:%ad --date=short"
     partialsDir = grunt.config.get "yeoman.partials"
     metadata = grunt.config.get "metadata"
     resources = metadata.sources.resources
@@ -27,16 +29,15 @@ module.exports = (grunt) ->
 
     function iterator(resourceKey, callback) # js syntax due to hoisting
       resource = resources[resourceKey]
-      sourcesDir = grunt.config.get "yeoman.sources"
       id = resource.index.meta.id
-      filepath = "#{sourcesDir}/resources/#{id}/index.md"
-      args = baseArgs + "./#{filepath}"
-
+      filepath = "resources/#{id}/index.md"
+      args = "#{baseArgs} #{filepath}"
+ 
       grunt.verbose.writeln "#cmd #args"
-      child = spawn cmd, args.split " "
+      child = spawn cmd, (args.split " "), {cwd: sourcesDir}
 
       child.stderr.on 'data', (data) ->
-        grunt.verbose.writeln 'stderr: ' + data
+        grunt.log.error 'stderr: ' + data
 
       child.stdout.on 'data', (data) ->
         # The data is the last modified date

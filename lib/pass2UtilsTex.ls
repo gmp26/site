@@ -25,11 +25,11 @@ module.exports = (grunt) ->
       style: (value) -> switch value
         case void  => @endStack.pop!
         case @chalk => 
-          @endStack[*] = "\n\n::stopFrame::\n"
-          "\n::startChalk::\n\n"
+          @endStack[*] = "::stopFrame::"
+          "::startChalk::"
         case @well  => 
           @endStack[*] = "::stopFrame::"
-          "\n\n::startWell::\n"
+          "::startWell::"
         case @twoColumn =>
           @endStack[*] = "::stopTwoColumn::"
           "\n\n::startTwoColumn::\n"
