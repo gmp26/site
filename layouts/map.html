@@ -40,13 +40,24 @@ $(document).ready(function() {
     /* twitter bootstrap popovers */
     $("svg [id^='node']").each(function(){
       $(this).popover({
-        title: $('div').append($(this).find("popover-title").children(":first")).html(),
-        content: $('div').append($(this).find("popover-content").children(":first")).html(),
+        title: $('<div>').append($(this).find("popover-title").contents()).html(),
+        content: $('<div>').append($(this).find("popover-content").contents()).html(),
         container:"body",
-        trigger: "click",
+        trigger: "manual",
         placement: "top",
         html:true
+      }).click(function(e){
+        $("svg [id^='node']").not($(this)).popover('hide');
+        $(this).popover('toggle');
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
+        e.stopPropagation();
       });
+    });
+    $(document).click(function(e) {
+      /* close popover on click outside */
+      if (!$(e.target).is("svg [id^='node']") && $(e.target).closest(".popover").length == 0) {
+          $("svg [id^='node']").popover('hide');
+      }
     });
   }
 
