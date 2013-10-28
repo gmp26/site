@@ -153,10 +153,10 @@ module.exports = (grunt) ->
     tubemap:
       svg:
         files:
-          "app/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+          "<%= yeoman.appSources %>/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
       png:
         files:
-          "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
+          "<%= yeoman.appSources %>/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
 
     lsc:
       options:
