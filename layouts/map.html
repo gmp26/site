@@ -16,53 +16,7 @@
   </div>
 </div>
 
-<script>
-$(document).ready(function() {
-  // Handler for .ready() called.
-
-  /* kick MathJax to render the opened accordion element */
-  $(".accordion-body").each(function(index, element) {
-    $(element).on('shown', function() {
-      console.log('showing'+index);
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
-    })
-  });
-
-  /* load fallback image if necessary */
-  function supportsSVG() {
-    // Grabbed from Modernizr
-    return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
-  }
-  if (!supportsSVG()) {
-    $("#map").html('<img src="<%= pngUrl %>">');
-  }
-  else {
-    /* twitter bootstrap popovers */
-    $("svg [id^='node']").each(function(){
-      $(this).popover({
-        title: $('<div>').append($(this).find("popover-title").contents()).html(),
-        content: $('<div>').append($(this).find("popover-content").contents()).html(),
-        container:"body",
-        trigger: "manual",
-        placement: "top",
-        html:true
-      }).click(function(e){
-        $("svg [id^='node']").not($(this)).popover('hide');
-        $(this).popover('toggle');
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
-        e.stopPropagation();
-      });
-    });
-    $(document).click(function(e) {
-      /* close popover on click outside */
-      if (!$(e.target).is("svg [id^='node']") && $(e.target).closest(".popover").length == 0) {
-          $("svg [id^='node']").popover('hide');
-      }
-    });
-  }
-
-});
-</script>
+<script type="text/javascript" src="scripts/map.js"></script>
 
 <%= _foot %>
 <% grunt.log.ok("done"); %>

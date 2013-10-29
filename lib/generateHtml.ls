@@ -350,17 +350,32 @@ module.exports = (grunt) ->
       grunt.file.write "#{appDir}/styles/lines.less", css
 
     function removeTitles(data)
+      # Removes titles and generates popover markup
       $ = cheerio.load data 
+      popoverData = new Object()
       $('[id ^="node"] title').each (i, elem) ->
-        id = $(elem).text()
-        grunt.verbose.writeln 'Station ' + id
+        # Index on ids[0]
+        ids = $(elem).text().split("-")
+        grunt.verbose.writeln 'Station ' + ids[0]
+        $(elem).parent().attr 'station-id', ids[0]
         # Generate appropriate popover data
-        # This embedding seems allowed http://www.w3.org/TR/SVG/extend.html
-        title = "<a href=\"./stations/#{id}.html\">Station " + id + "</a>" 
-        content = sources.stations[id]?.meta.title
-        html = "<popover-title>#{title}</popover-title>
-          <popover-content>#{content}</popover-content>"
-        $(this).replaceWith(html)
+        title = ''
+        content = ''
+        for index from 0 til ids.length
+          title = title + "<a href=\"./stations/#{id}.html\">Station " + ids[index] + "</a>"
+          content = content + sources.stations[ids[index]]?.meta.title 
+          if index != ids.length - 1
+            title = title + " and " 
+            content = content + " "
+        popoverDatum = new Object()
+        popoverDatum.title = title
+        popoverDatum.content = content
+        # associative array
+        popoverData[ids[0]] = popoverDatum
+      # Add it to the map.js file
+      javascript = grunt.file.read "#{appDir}/scripts/map.js"
+      javascript = "popoverData = " + JSON.stringify(popoverData) + javascript
+      grunt.file.write "#{appDir}/scripts/map.js", javascript
       $('title').remove()
       return $.html()
 
