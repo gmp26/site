@@ -536,11 +536,6 @@ module.exports = (grunt) ->
     "mochaTest:sources"
   ]
 
-  grunt.registerTask "testLastUpd", [
-    "expandMetadata"
-    "lastUpdated"
-  ]
-
   grunt.registerTask "units", [
     "clean:app"
     "clean:test"
