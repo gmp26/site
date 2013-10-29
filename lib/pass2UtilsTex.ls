@@ -13,7 +13,7 @@ module.exports = (grunt) ->
     # Data to pass to lodash templates in pass2
     #
     data:
-      siteUrl: grunt.config.get "siteUrl"
+      #siteUrl: grunt.config.get "siteUrl"
 
       showLodashed: (expression, interpolated=true) -> 
         escape = (str) -> 
@@ -71,7 +71,7 @@ module.exports = (grunt) ->
       absolute: (url) ->
         | (url.match /^http/) != null => url
         | ([m, p1, p2] = url.match /(\.?\/)?(.*)/) != null =>
-          "#{@siteUrl}#{p2}"
+          "#{@resourceUrl}#{p2}"
 
       # insert an ordinary link
       textLink: (text, url) ->
