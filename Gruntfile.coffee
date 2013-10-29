@@ -31,7 +31,8 @@ module.exports = (grunt) ->
 
   # configurable paths
   yeomanConfig =
-    app: "app"  # document root of development site 
+    appSources: "app-sources" # static sources to be copied to app
+    app: "app"  # document root of development site
     dist: "dist" # document root of production site
     content: "../CMEP-sources"  # the real sources
     samples: "sources"          # sample and test case sources
@@ -156,10 +157,10 @@ module.exports = (grunt) ->
     tubemap:
       svg:
         files:
-          "app/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+          "<%= yeoman.appSources %>/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
       png:
         files:
-          "app/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
+          "<%= yeoman.appSources %>/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
 
     lsc:
       options:
@@ -182,11 +183,17 @@ module.exports = (grunt) ->
     # Watch 
     watch:
       recess:
-        files: ["<%= yeoman.app %>/styles/{,*/}*.less"]
+        files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
         tasks: ["recess"]
 
       livereload:
-        files: ["<%= yeoman.app %>/**/*.html","<%= yeoman.app %>/**/*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+        files: [
+          "<%= yeoman.app %>/**/*.html"
+          "<%= yeoman.app %>/**/*.html"
+          "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css"
+          "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
+          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
+        ]
         tasks: ["livereload"]
 
       dev:
@@ -244,7 +251,7 @@ module.exports = (grunt) ->
       dist:
         files: [
           dot: true
-          src: [".tmp", "<%= yeoman.dist %>/*", "!<%= yeoman.dist %>/.git*"]
+          src: [".tmp", "<%= yeoman.dist %>/*"]
         ]
 
       server: ".tmp"
@@ -254,21 +261,15 @@ module.exports = (grunt) ->
       app: 
         files: [
           src: [
-            "<%= yeoman.app %>/guides/*"
-            "<%= yeoman.app %>/lines/*"
-            "<%= yeoman.app %>/pervasiveIdeas/*"
-            "<%= yeoman.app %>/resources/**/*"
-            "<%= yeoman.app %>/resourceTypes/*"
-            "<%= yeoman.app %>/stations/*"
-            "<%= yeoman.app %>/resourceTypes/*"
+            "<%= yeoman.app %>"
           ]
         ]
 
-    jshint:
-      options:
-        jshintrc: ".jshintrc"
+    # jshint:
+    #   options:
+    #     jshintrc: ".jshintrc"
 
-      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/{,*/}*.js"]
+    #   all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/{,*/}*.js"]
 
     recess:
       dist:
@@ -276,7 +277,7 @@ module.exports = (grunt) ->
           compile: true
 
         files:
-          "<%= yeoman.app %>/styles/main.css": ["<%= yeoman.app %>/styles/main.less"]
+          "<%= yeoman.app %>/styles/main.css": ["<%= yeoman.appSources %>/styles/main.less"]
 
 
     # not used since Uglify task does concat,
@@ -391,8 +392,15 @@ module.exports = (grunt) ->
 
     copy:
 
+
       assets:
         files: [
+          expand: true
+          dot: true
+          cwd: "<%= yeoman.appSources %>"
+          src: ["**/*", "*"]
+          dest: "<%= yeoman.app %>"
+        ,
           expand: true
           cwd: "<%= yeoman.sources %>/resources"
           # pick up swfs, svgs and subfolders too

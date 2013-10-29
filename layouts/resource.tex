@@ -19,7 +19,7 @@
       \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
       \textcolor{navbartext}{%
         \raisebox{-5pt}{%
-          \hspace{25pt}\Large\sectfont<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}')%>%
+          \hspace{25pt}\Large\sectfont<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}').replace('Problem inviting m', 'M') %>%
         }
         \hfill%
         <%  if(sidebar) { %>%
