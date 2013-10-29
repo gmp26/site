@@ -362,7 +362,7 @@ module.exports = (grunt) ->
         title = ''
         content = ''
         for index from 0 til ids.length
-          title = title + "<a href=\"./stations/#{id}.html\">Station " + ids[index] + "</a>"
+          title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
           content = content + sources.stations[ids[index]]?.meta.title 
           if index != ids.length - 1
             title = title + " and " 
