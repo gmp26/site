@@ -253,10 +253,10 @@ hr:after {
     background: white;
 }
 
-figure img {
+figure img, figure svg {
     display:inline-block;
     width: 100%;
-    zoom: 80%;
+    height:100%;
 }
 
 figure {
@@ -313,6 +313,20 @@ tr.odd {
   font-weight: 200;
 }
 
+svg [id^="node"]:hover {
+  text-decoration:underline;
+  cursor: pointer;
+}
+
+svg { 
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+  -khtml-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; 
+}
+
 .not-short {
   min-height:900px;
 }
@@ -334,4 +348,13 @@ a.accordion-list-item:hover {
   left: 20%;
   opacity: 0.1;
   .rotate(-45deg);
+}
+
+.popover { 
+  /* Needs to be this high to overlap top bar */
+  z-index: 1040; 
+}
+
+popover-title, popover-content { 
+  display:none;
 }

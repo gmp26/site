@@ -75,7 +75,9 @@ module.exports = (grunt) ->
 
     # find last modified date
     lastUpdated:
-      task:
+      resources:
+        options: null
+      examQuestions:
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -109,7 +111,7 @@ module.exports = (grunt) ->
         ]
       pass2printables:
         options:
-          pandocOptions: "-f markdown+raw_tex+fenced_code_blocks -t latex --listings --smart"
+          pandocOptions: "-f markdown-raw_html+raw_tex+fenced_code_blocks -t latex --listings --smart"
           process: pass2.printableProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
@@ -129,6 +131,8 @@ module.exports = (grunt) ->
           metaDataVar: "metadata"
           metaReplace: "<%= yeoman.sources %>"
           metaReplacement: "sources"
+
+
         files: "<%=pass1Files%>"
 
     latex:
@@ -509,7 +513,6 @@ module.exports = (grunt) ->
   grunt.renameTask "regarde", "watch"
 
   grunt.registerTask "server", (target) ->
-    require('./lib/siteUrl.js')(grunt, target)
     if target is "dist"
       grunt.task.run([
         "build"
@@ -529,9 +532,6 @@ module.exports = (grunt) ->
         "watch"
       ])
 
-  #
-  # TODO: set siteUrl by adding dev or dist targets
-  #
   grunt.registerTask "test", [
     "clean:app"
     "clean:test"
@@ -542,11 +542,6 @@ module.exports = (grunt) ->
     "panda:pass2html"
     "generateHtml"
     "mochaTest:sources"
-  ]
-
-  grunt.registerTask "testLastUpd", [
-    "expandMetadata"
-    "lastUpdated"
   ]
 
   grunt.registerTask "units", [
@@ -586,9 +581,6 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dev", (listOfTargets) ->
-
-    require('./lib/siteUrl.js')(grunt, 'dev')
-
     # Make the targets variable hold an array of strings representing desired targets.
     # Assume that the passed parameter is a comma separated list (with no spaces)
     # of target strings. 
@@ -613,7 +605,7 @@ module.exports = (grunt) ->
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:png"
+        "tubemap:svg"
         "panda:pass2html"
         "copy:assets"
         "generateHtml"

@@ -20,6 +20,8 @@ module.exports = (grunt) ->
 
     gvFile = "#{partials}/tubemap/tubemap.dot"
 
+    target = @target
+
     # Merge task-specific and/or target-specific options with these defaults.
     options = @options(
     )
@@ -75,7 +77,14 @@ module.exports = (grunt) ->
       #dot = '/opt/local/bin/dot'
       #if grunt.file.exists dot
 
-      options = {cmd:'dot',args:['-Tpng', "-o#{f.dest}", gvFile]}
+      switch target
+        when 'svg'
+          # Make a SVG for html display
+          options = {cmd:'dot',args:['-Tsvg', "-o#{f.dest}", gvFile]}
+        when 'png'
+          # Make a PNG for html display
+          options = {cmd:'dot',args:['-Tpng', "-o#{f.dest}", gvFile]}
+
       grunt.util.spawn options, (error, result, code) ->
         grunt.log.debug code
         if code != 0

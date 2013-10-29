@@ -4,6 +4,7 @@ module.exports = (grunt) ->
 
   getLayout = (require './getLayout.js') grunt
   fs = require 'fs'
+  cheerio = require 'cheerio'
 
   # simplify access to lodash
   _ = grunt.util._
@@ -62,8 +63,8 @@ module.exports = (grunt) ->
             _nav: _nav
             _foot: _foot
             meta: meta
-            content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
             sources: sources
+            content: grunt.file.read "#{partialsDir}/html/#{fname}.html"
             rootUrl: '.'
             resourcesUrl: './resources'
         }
@@ -80,6 +81,10 @@ module.exports = (grunt) ->
     generateTopLevelPage 'index'
     generateTopLevelPage 'map' do
       _linesMenu: _linesMenu
+      # relative to app directory
+      pngUrl: './images/tubeMap.png'
+      # relative to base directory
+      svgContent: removeTitles grunt.file.read "./app/images/tubeMap.svg"
     generateTopLevelPage 'index'
     generateTopLevelPage 'pervasiveIdeasHome' do
       families: families
@@ -344,4 +349,33 @@ module.exports = (grunt) ->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
       grunt.file.write "#{appDir}/styles/lines.less", css
 
+    function removeTitles(data)
+      # Removes titles and generates popover markup
+      $ = cheerio.load data 
+      popoverData = new Object()
+      $('[id ^="node"] title').each (i, elem) ->
+        # Index on ids[0]
+        ids = $(elem).text().split("-")
+        grunt.verbose.writeln 'Station ' + ids[0]
+        $(elem).parent().attr 'station-id', ids[0]
+        # Generate appropriate popover data
+        title = ''
+        content = ''
+        for index from 0 til ids.length
+          title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
+          content = content + sources.stations[ids[index]]?.meta.title 
+          if index != ids.length - 1
+            title = title + " and " 
+            content = content + " "
+        popoverDatum = new Object()
+        popoverDatum.title = title
+        popoverDatum.content = content
+        # associative array
+        popoverData[ids[0]] = popoverDatum
+      # Add it to the map.js file
+      javascript = grunt.file.read "#{appDir}/scripts/map.js"
+      javascript = "popoverData = " + JSON.stringify(popoverData) + javascript
+      grunt.file.write "#{appDir}/scripts/map.js", javascript
+      $('title').remove()
+      return $.html()
 

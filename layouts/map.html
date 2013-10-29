@@ -9,25 +9,14 @@
       <%= _linesMenu %>
     </div>
     <div id="content" class="span8 home">
-      <%= content %>
+      <figure id="map">
+          <%= svgContent %>
+      </figure>  
     </div>
   </div>
 </div>
 
-<script>
-$(document).ready(function() {
-  // Handler for .ready() called.
-
-  /* kick MathJax to render the opened accordion element */
-  $(".accordion-body").each(function(index, element) {
-    $(element).on('shown', function() {
-      console.log('showing'+index);
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
-    })
-  });
-
-});
-</script>
+<script type="text/javascript" src="scripts/map.js"></script>
 
 <%= _foot %>
 <% grunt.log.ok("done"); %>
