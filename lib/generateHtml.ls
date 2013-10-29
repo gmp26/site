@@ -355,6 +355,7 @@ module.exports = (grunt) ->
         id = $(elem).text()
         grunt.verbose.writeln 'Station ' + id
         # Generate appropriate popover data
+        # This embedding seems allowed http://www.w3.org/TR/SVG/extend.html
         title = "<a href=\"./stations/#{id}.html\">Station " + id + "</a>" 
         content = sources.stations[id]?.meta.title
         html = "<popover-title>#{title}</popover-title>
