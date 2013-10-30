@@ -284,7 +284,7 @@ module.exports = (grunt) ->
     # stations
     #
     for stid, data of stations
-      #generateHTML sources, folder, stid, meta.meta
+      #generateHTML sources, fder, stid, meta.meta
 
       meta = data.meta
       layout = getLayout sources, 'stations', meta
@@ -367,7 +367,7 @@ module.exports = (grunt) ->
           station = sources.stations[ids[index]]
           title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
           content = content + station?.meta.title 
-          dependecies = dependencies ++ station.meta.dependencies # ++ is concat operator
+          dependencies = dependencies ++ station.meta.dependencies # ++ is concat operator
           dependents = dependents ++ station.meta.dependents # ++ is concat operator
           if index != ids.length - 1
             title = title + " and " 
