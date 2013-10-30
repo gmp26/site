@@ -64,7 +64,8 @@ module.exports = (grunt) ->
             if linecolour != prevlinecolour
               output = output+'edge [style=bold ,color="'+linecolour+'"]\n'
               prevlinecolour = linecolour
-            output = output + stationname + ' -> ' + data.meta.dependents[dept] + ' ;\n'
+            output = output + stationname + ' -> ' + data.meta.dependents[dept] + 
+              ' [id="' + stationname.replace(/"/g, "") + '_' + data.meta.dependents[dept] + '"] ;\n'
 
       for next of postreplace
         reg = new RegExp postreplace[next].stationname+' ', 'g'

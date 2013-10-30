@@ -350,10 +350,13 @@ module.exports = (grunt) ->
       grunt.file.write "#{appDir}/styles/lines.less", css
 
     function removeTitles(data)
+      # TODO | refactor this more nicely?
       # Removes titles and generates popover markup
       $ = cheerio.load data 
       popoverData = new Object()
       $('[id ^="node"] title').each (i, elem) ->
+        # TODO | can we be sure that the title will always give us what we want?
+        # maybe better to use http://www.graphviz.org/content/preservation-dot-id-svg
         # Index on ids[0]
         ids = $(elem).text().split("-")
         grunt.verbose.writeln 'Station ' + ids[0]
@@ -367,7 +370,7 @@ module.exports = (grunt) ->
           station = sources.stations[ids[index]]
           title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
           content = content + station?.meta.title 
-          dependecies = dependencies ++ station.meta.dependencies # ++ is concat operator
+          dependencies = dependencies ++ station.meta.dependencies # ++ is concat operator
           dependents = dependents ++ station.meta.dependents # ++ is concat operator
           if index != ids.length - 1
             title = title + " and " 

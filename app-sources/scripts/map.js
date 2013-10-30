@@ -40,6 +40,36 @@ $(document).ready(function() {
         $(this).popover('toggle');
         MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
         e.stopPropagation();
+      }).hover(function(e){
+        /* mouseenter event */
+        id = $(this).attr("station-id");
+        // TODO | recurse over dependencies/dependents?
+        dependencies = popoverData[String(id)].dependencies;
+        dependents = popoverData[String(id)].dependents;
+        relevantStationIds = dependencies.concat(dependents);
+        relevantStationIds.push(String(id));
+        relevantEdges = $.grep($("svg .edge"), function(elem, index) {
+          /* does this edge connect to a relevant station? */
+          for (i = 0; i < relevantStationIds.length; i++) {
+            if ($(elem).attr('id').indexOf(relevantStationIds[i]) > -1) 
+              return true;
+          }
+          return false;
+        });
+        relevantStations = $.grep($("svg [id^='node']"), function(elem, index) {
+          /* does this station have the right station-id */
+          for (i = 0; i < relevantStationIds.length; i++) {
+            if ($(elem).attr('station-id').indexOf(relevantStationIds[i]) > -1) 
+              return true;
+          }
+          return false;
+        });
+        $("svg .edge").not(relevantEdges).fadeTo('fast',0.5);
+        $("svg [id^='node']").not(relevantStations).fadeTo('fast',0.5);
+      }, function(e){
+        /* mouseout event */
+        $("svg .edge").fadeTo('fast',1.0);
+        $("svg [id^='node']").fadeTo('fast',1.0);
       });
     });
     $(document).click(function(e) {
