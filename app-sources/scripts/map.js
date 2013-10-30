@@ -28,7 +28,12 @@ $(document).ready(function() {
         content: popoverData[String(id)].content,
         container:"body",
         trigger: "manual",
-        placement: "top",
+        placement: function(context, source) {
+          var position = $(source).position();
+          if (position.top < 120)
+            return "bottom";
+          return "top";
+        },
         html:true
       }).click(function(e){
         $("svg [id^='node']").not($(this)).popover('hide');

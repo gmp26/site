@@ -419,6 +419,7 @@ module.exports = (grunt) ->
             "fonts/*"
             ".htaccess"
             "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
+            "scripts/map.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
             "resources/*/*.png"
@@ -576,7 +577,7 @@ module.exports = (grunt) ->
     "cssmin"
     "concat"
     "uglify"
-    "copy"
+    "copy:dist"
     "usemin"
   ]
 

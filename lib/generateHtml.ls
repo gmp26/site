@@ -361,15 +361,22 @@ module.exports = (grunt) ->
         # Generate appropriate popover data
         title = ''
         content = ''
+        dependencies = new Array()
+        dependents = new Array()
         for index from 0 til ids.length
+          station = sources.stations[ids[index]]
           title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
-          content = content + sources.stations[ids[index]]?.meta.title 
+          content = content + station?.meta.title 
+          dependecies = dependencies ++ station.meta.dependencies # ++ is concat operator
+          dependents = dependents ++ station.meta.dependents # ++ is concat operator
           if index != ids.length - 1
             title = title + " and " 
             content = content + " "
         popoverDatum = new Object()
         popoverDatum.title = title
         popoverDatum.content = content
+        popoverDatum.dependencies = dependencies
+        popoverDatum.dependents = dependents
         # associative array
         popoverData[ids[0]] = popoverDatum
       # Add it to the map.js file
