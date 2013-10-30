@@ -112,7 +112,7 @@ module.exports = (grunt) ->
         ]
       pass2printables:
         options:
-          pandocOptions: "-f markdown-raw_html+raw_tex+fenced_code_blocks -t latex --listings --smart"
+          pandocOptions: "-f markdown+raw_tex+fenced_code_blocks -t latex --listings --smart"
           process: pass2.printableProcess
           stripMeta: '````'
           metaReplace: "<%= yeoman.sources %>"
@@ -450,7 +450,7 @@ module.exports = (grunt) ->
         ]
 
     concurrent:
-      dist: ["recess", "imagemin",  "htmlmin"] # TODO: "svgmin" -- breaks the tubemap popovers.
+      dist: ["recess", "imagemin", "svgmin", "htmlmin"]
 
     mochaTest:
       sources:
