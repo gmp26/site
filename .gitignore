@@ -2,6 +2,7 @@
 *.swp
 app/
 app-sources/bower_components/
+app-sources/images/tubemap.*
 dist/
 node_modules/
 partials/
