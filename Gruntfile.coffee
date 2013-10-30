@@ -5,6 +5,7 @@ expandMetadata = require './lib/expandMetadata.js'
 generateHtml = require './lib/generateHtml.js'
 generatePrintables = require './lib/generatePrintables.js'
 tubemap = require './lib/tubemap.js'
+siteUrl = require './lib/siteUrl.js'
 clearance = require './lib/clearance.js'
 isolate = require './lib/isolate.js'
 integrate = require './lib/integrate.js'
@@ -449,7 +450,7 @@ module.exports = (grunt) ->
         ]
 
     concurrent:
-      dist: ["recess", "imagemin", "svgmin", "htmlmin"]
+      dist: ["recess", "imagemin",  "htmlmin"] # TODO: "svgmin" -- breaks the tubemap popovers.
 
     mochaTest:
       sources:
@@ -496,6 +497,9 @@ module.exports = (grunt) ->
   # register tubemap task
   tubemap grunt
 
+  # register siteUrl task
+  siteUrl grunt
+
   # register clearance task
   clearance grunt
 
@@ -524,6 +528,7 @@ module.exports = (grunt) ->
       grunt.task.run ([
         "clearance"
         "clean:server"
+        "siteUrl:dev"
         "recess"
         "copy:server"
         "dev"
@@ -557,12 +562,13 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "build", [
-    "clearance"
     "lsc"
+    "clearance"
     "panda:pass1"
     "expandMetadata"
     "lastUpdated"
     "tubemap:png"
+    "siteUrl:dist"
     "panda:pass2printables"
     "generatePrintables"
     "latex:printables"

@@ -47,6 +47,7 @@ module.exports = (grunt, path) ->
       data.clearance = grunt.config.get 'clearanceLevel'
       data.lastUpdated = meta.lastUpdated
       data.siteUrl = grunt.config.get 'siteUrl'
+      data.resourceUrl = "#{data.siteUrl}/resources/#{meta.id}/" 
 
       # Add in some support functions 
       data.glossary = (text1, text2) ->
