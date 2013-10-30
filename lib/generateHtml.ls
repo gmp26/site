@@ -284,7 +284,7 @@ module.exports = (grunt) ->
     # stations
     #
     for stid, data of stations
-      #generateHTML sources, folder, stid, meta.meta
+      #generateHTML sources, fder, stid, meta.meta
 
       meta = data.meta
       layout = getLayout sources, 'stations', meta
