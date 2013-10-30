@@ -216,6 +216,15 @@ module.exports = (grunt) ->
         ]
         tasks: ["dev"]
 
+      scripts:
+        files: [
+          "<%= yeoman.appSources %>/scripts/*"
+        ]
+        tasks: [
+          "copy:assets"
+          "generateHtml"
+        ]
+
     connect:
       options:
         port: 9000

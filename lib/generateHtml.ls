@@ -351,6 +351,10 @@ module.exports = (grunt) ->
 
     function removeTitles(data)
       # TODO | refactor this more nicely?
+      # is this really the correct place for this to be?
+      # or should it have its own task?
+      # NB that would clean up some of the dist problem better
+      # as well as improving the watch situation
       # Removes titles and generates popover markup
       $ = cheerio.load data 
       popoverData = new Object()
@@ -360,7 +364,7 @@ module.exports = (grunt) ->
         # Index on ids[0]
         ids = $(elem).text().split("-")
         grunt.verbose.writeln 'Station ' + ids[0]
-        $(elem).parent().attr 'station-id', ids[0]
+        $(elem).parent().attr 'station-id', ids.join("-")
         # Generate appropriate popover data
         title = ''
         content = ''
@@ -381,7 +385,7 @@ module.exports = (grunt) ->
         popoverDatum.dependencies = dependencies
         popoverDatum.dependents = dependents
         # associative array
-        popoverData[ids[0]] = popoverDatum
+        popoverData[ids.join("-")] = popoverDatum
       # Add it to the map.js file
       javascript = grunt.file.read "#{appDir}/scripts/map.js"
       javascript = "popoverData = " + JSON.stringify(popoverData) + javascript

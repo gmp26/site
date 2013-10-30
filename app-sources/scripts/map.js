@@ -43,24 +43,27 @@ $(document).ready(function() {
       }).hover(function(e){
         /* mouseenter event */
         id = $(this).attr("station-id");
-        // TODO | recurse over dependencies/dependents?
-        dependencies = popoverData[String(id)].dependencies;
-        dependents = popoverData[String(id)].dependents;
-        relevantStationIds = dependencies.concat(dependents);
-        relevantStationIds.push(String(id));
+        relevantStationIds = findRelevantStationIds(id);
+        console.log(relevantStationIds);
         relevantEdges = $.grep($("svg .edge"), function(elem, index) {
-          /* does this edge connect to a relevant station? */
+          /* does this edge connect two relevant stations */
+          foundOneRelevantStationEnd = false;
           for (i = 0; i < relevantStationIds.length; i++) {
-            if ($(elem).attr('id').indexOf(relevantStationIds[i]) > -1) 
-              return true;
+            edgeEnds = $(elem).attr('id').split("_");
+            if (_.contains(edgeEnds, relevantStationIds[i])) {
+              if (foundOneRelevantStationEnd) 
+                return true;
+              foundOneRelevantStationEnd = true;
+            }
           }
           return false;
         });
         relevantStations = $.grep($("svg [id^='node']"), function(elem, index) {
-          /* does this station have the right station-id */
+          /* does this station have a relevant station-id */
           for (i = 0; i < relevantStationIds.length; i++) {
-            if ($(elem).attr('station-id').indexOf(relevantStationIds[i]) > -1) 
+            if ($(elem).attr('station-id') == relevantStationIds[i]) {
               return true;
+            }
           }
           return false;
         });
@@ -81,3 +84,37 @@ $(document).ready(function() {
   }
 
 });
+
+function findRelevantStationIds(id) {
+  // find relevant station ids recursively
+  dependencies = findAllDependencies(id);
+  dependents = findAllDependents(id);
+  return _.union(dependencies, dependents, id);
+}
+
+function findAllDependencies(id) {
+  // TODO | need extra care with possible e.g. C3-E4 dependencies
+  // must check for these but make sure we don't go into an infinite loop
+  // Solution : compare dependencies against "current" id!
+  console.log(id);
+  var dependencies = popoverData[String(id)].dependencies;
+  console.log(dependencies);
+  var recursiveDependencies = dependencies;
+  for (var i = 0; i < dependencies.length; i++) {
+    console.log(dependencies.length)
+    console.log(i);
+    try {
+      recursiveDependencies = _.union(recursiveDependencies,findAllDependencies(dependencies[i]));
+    }
+    catch(ex) {
+      // hit the recursion limit
+      console.log("Error " + ex + " for station " + String(id));
+    }
+  }
+  return _.union(dependencies, recursiveDependencies);
+}
+
+function findAllDependents(id) {
+  return [];
+}
+
