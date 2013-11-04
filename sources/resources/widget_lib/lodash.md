@@ -9,17 +9,15 @@ acknowledgementText: So long and thanks for all the fish.
 
 ````
 
-<: grunt.log.writeln("Testing lodash widget library") :>
+<: grunt.log.writeln('Testing lodash widget library') :>
 
-# Lodash Extensions
+# Lodash Markup
 
-Markdown is somewhat limited, and we have a special way of doing extra things:
-
-- Adding metadata from the file in the displayed text
-- Applying extra formatting to paragraphs, images etc.
+Markdown isn't quite rich enough to do all that we want. We occasionally need extra markup to insert new styles, interactive elements, or to echo some metadata within the page.
 
 The main thing to know is that we use special tags: <:= showLodashed('') :> or
-even <:= showLodashed('', false) :> to access these features.
+even <:= showLodashed('', false) :> to construct this extra markup. This markup is
+implemented using templates from the [http://lodash.com/docs#template](lodash template library).
 
 The tags with the equals sign, namely <:= showLodashed('') :> _interpolate_ 
 the code inside; it runs the code and the result appears in place of the whole 
@@ -29,7 +27,7 @@ some output.
 The tags without the equals sign, namely <:= showLodashed('', false) :> 
 _evaluate_ the code inside, and won't automatically make output. This is ideal
 for _logical statements_ which control what gets displayed. Examples are below
-to explain this (somewhat subtle) difference.
+to explain this difference.
 
 ## Metadata
 
@@ -81,6 +79,29 @@ This text looks like it's been written in a well.
 
 <:= style() :>
 <: grunt.log.ok() :>
+
+## Two column sections
+
+Divide a section of a page into 2 near equal columns. In HTML the left column will be slightly narrower.
+
+<:= showLodashed('column(left)') :>
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. <:= showLodashed('style(well)') :>Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est.<:= showLodashed('style()'):> Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
+<:= showLodashed('column()' :>
+
+<:= showLodashed('column(right)') :>
+  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. <:= showLodashed('style(chalk)') :>Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. <:= showLodashed('style()') :> Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
+<:= showLodashed('column()') :>
+
+<:= column(left) :>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. <:= style(well) :>Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est.<:= style() :> Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
+<:= column() :>
+
+<:= column(right) :>
+  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. <:= style(chalk) :>Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. <:= style() :> Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
+<:= column() :>
+
+Note that the left or right column may be empty.
+
 
 ## Logical things
 

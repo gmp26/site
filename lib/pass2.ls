@@ -96,6 +96,7 @@ module.exports = (grunt, path) ->
       oldWarn = monkeyPatchWarn pathname
 
       pass2MetadataInsert pathname, 'printables'
+      debugger;
       content = grunt.template.process(src, pass2UtilsTex)
       
       grunt.warn = oldWarn
