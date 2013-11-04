@@ -388,7 +388,7 @@ module.exports = (grunt) ->
         popoverData[ids.join("-")] = popoverDatum
       # Add it to the map.js file
       javascript = grunt.file.read "#{appDir}/scripts/map.js"
-      javascript = "popoverData = " + JSON.stringify(popoverData) + javascript
+      javascript = "popoverData = " + JSON.stringify(popoverData) + ";" + javascript
       grunt.file.write "#{appDir}/scripts/map.js", javascript
       $('title').remove()
       return $.html()

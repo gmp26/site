@@ -89,29 +89,36 @@ function findRelevantStationIds(id) {
   // find relevant station ids recursively
   dependencies = findAllDependencies(id);
   dependents = findAllDependents(id);
-  return _.union(dependencies, dependents, id);
+  return _.union(dependencies, dependents);
 }
 
 function findAllDependencies(id) {
-  // TODO | need extra care with possible e.g. C3-E4 dependencies
-  // must check for these but make sure we don't go into an infinite loop
-  // Solution : compare dependencies against "current" id!
-  console.log(id);
+  if (typeof popoverData[String(id)] === 'undefined') {
+    // deal with stations that are joined
+    var stationIds = Object.keys(popoverData);
+    // redefine id
+    id = _.filter(stationIds, function(s){
+      return s.indexOf(id + "-") > -1 || s.indexOf("-" + id) > -1;
+    })[0];
+  }
+  console.log("Station " + id);
   var dependencies = popoverData[String(id)].dependencies;
   console.log(dependencies);
   var recursiveDependencies = dependencies;
   for (var i = 0; i < dependencies.length; i++) {
-    console.log(dependencies.length)
-    console.log(i);
+    if (id.indexOf(dependencies[i]) > -1) {
+      // ignore circular dependencies
+      continue;
+    }
     try {
       recursiveDependencies = _.union(recursiveDependencies,findAllDependencies(dependencies[i]));
     }
     catch(ex) {
       // hit the recursion limit
-      console.log("Error " + ex + " for station " + String(id));
+      console.log("Error " + ex);
     }
   }
-  return _.union(dependencies, recursiveDependencies);
+  return _.union(dependencies, recursiveDependencies, id);
 }
 
 function findAllDependents(id) {
