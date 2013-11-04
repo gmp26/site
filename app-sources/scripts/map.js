@@ -12,10 +12,6 @@ $(document).ready(function() {
   });
 
   /* load fallback image if necessary */
-  function supportsSVG() {
-    // Grabbed from Modernizr
-    return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
-  }
   if (!supportsSVG()) {
     $("#map").html('<img src="<%= pngUrl %>">');
   }
@@ -39,51 +35,67 @@ $(document).ready(function() {
         $("svg [id^='node']").not($(this)).popover('hide');
         $(this).popover('toggle');
         MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
+        stationOver.call($(this), e, true); // get context right
         e.stopPropagation();
-      }).hover(function(e){
-        /* mouseenter event */
-        id = $(this).attr("station-id");
-        relevantStationIds = findRelevantStationIds(id);
-        console.log(relevantStationIds);
-        relevantEdges = $.grep($("svg .edge"), function(elem, index) {
-          /* does this edge connect two relevant stations */
-          foundOneRelevantStationEnd = false;
-          for (i = 0; i < relevantStationIds.length; i++) {
-            edgeEnds = $(elem).attr('id').split("_");
-            if (_.contains(edgeEnds, relevantStationIds[i])) {
-              if (foundOneRelevantStationEnd) 
-                return true;
-              foundOneRelevantStationEnd = true;
-            }
-          }
-          return false;
-        });
-        relevantStations = $.grep($("svg [id^='node']"), function(elem, index) {
-          /* does this station have a relevant station-id */
-          for (i = 0; i < relevantStationIds.length; i++) {
-            if ($(elem).attr('station-id') == relevantStationIds[i]) {
-              return true;
-            }
-          }
-          return false;
-        });
-        $("svg .edge").not(relevantEdges).fadeTo('fast',0.5);
-        $("svg [id^='node']").not(relevantStations).fadeTo('fast',0.5);
-      }, function(e){
-        /* mouseout event */
-        $("svg .edge").fadeTo('fast',1.0);
-        $("svg [id^='node']").fadeTo('fast',1.0);
-      });
+      }).hover(stationOver, stationOut);
     });
     $(document).click(function(e) {
       /* close popover on click outside */
       if (!$(e.target).is("svg [id^='node']") && $(e.target).closest(".popover").length == 0) {
-          $("svg [id^='node']").popover('hide');
+        $("svg [id^='node']").popover('hide');
+        stationOut(e, true);
       }
     });
   }
 
 });
+
+function stationOver(e, force) {
+  /* mouseenter event */
+  if (!force && ($(".popover").is(":visible"))) 
+    return;
+  // only do things if no popover
+  // TODO: this only works because there's only one source of popovers
+  id = $(this).attr("station-id");
+  relevantStationIds = findRelevantStationIds(id);
+  console.log(relevantStationIds);
+  relevantEdges = $.grep($("svg .edge"), function(elem, index) {
+    /* does this edge connect two relevant stations */
+    foundOneRelevantStationEnd = false;
+    for (i = 0; i < relevantStationIds.length; i++) {
+      edgeEnds = $(elem).attr('id').split("_");
+      if (_.contains(edgeEnds, relevantStationIds[i])) {
+        if (foundOneRelevantStationEnd) 
+          return true;
+        foundOneRelevantStationEnd = true;
+      }
+    }
+    return false;
+  });
+  relevantStations = $.grep($("svg [id^='node']"), function(elem, index) {
+    /* does this station have a relevant station-id */
+    for (i = 0; i < relevantStationIds.length; i++) {
+      if ($(elem).attr('station-id') == relevantStationIds[i]) {
+        return true;
+      }
+    }
+    return false;
+  });
+  $("svg .edge").not(relevantEdges).fadeTo('fast',0.5);
+  $("svg [id^='node']").not(relevantStations).fadeTo('fast',0.5);
+  $("svg .edge").filter(relevantEdges).fadeTo('fast',1.0);
+  $("svg [id^='node']").filter(relevantStations).fadeTo('fast',1.0);
+}
+
+function stationOut(e, force) {
+  /* mouseout event */
+  if (!force && ($(".popover").is(":visible"))) 
+    return;
+  // only do things if no popover
+  // TODO: this only works because there's only one source of popovers
+  $("svg .edge").fadeTo('fast',1.0);
+  $("svg [id^='node']").fadeTo('fast',1.0);
+}
 
 function findRelevantStationIds(id) {
   // find relevant station ids recursively
@@ -106,7 +118,7 @@ function findAllDependencies(id) {
   console.log(dependencies);
   var recursiveDependencies = dependencies;
   for (var i = 0; i < dependencies.length; i++) {
-    if (id.indexOf(dependencies[i]) > -1) {
+    if (id.split("-").indexOf(dependencies[i]) > -1) {
       // ignore circular dependencies
       continue;
     }
@@ -125,3 +137,7 @@ function findAllDependents(id) {
   return [];
 }
 
+function supportsSVG() {
+  // Grabbed from Modernizr
+  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+}
