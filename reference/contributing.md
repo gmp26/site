@@ -86,9 +86,9 @@ Note that the pandoc preview may not centre display mathematics correctly unless
 
 Write maths environments as you would in standard LaTeX - i.e. don't wrap them in dollar signs. You do need to pay a bit of attention to white space for this to work correctly.
 
-o To use display math environments such as `eqnarray*`, make sure that the `\begin` and `\end` commands are on a line of their own. They'll then be automatically wrapped in the `$$`s that mathJAX needs in order to see and process them. 
+* To use display math environments such as `eqnarray*`, make sure that the `\begin` and `\end` commands are on a line of their own. They'll then be automatically wrapped in the `$$`s that mathJAX needs in order to see and process them. 
 
-o To use inline math environments such as `array`, make sure that there are non-whitespace characters butting up to the `\begin{}` and `\end{}` before or after, or (before and after). If they have whitespace before and after then `$$` will be inserted into the HTML and things will break.
+* To use inline math environments such as `array`, make sure that there are non-whitespace characters butting up to the `\begin{}` and `\end{}` before or after, or (before and after). If they have whitespace before and after then `$$` will be inserted into the HTML and things will break.
 
 
 Writing everything else
@@ -144,9 +144,9 @@ Instead the extensions we need to capture special styles, or to embed animations
 
 These are special bracketed commands that wrap javascript. They open with either `<:=` or `<:` and close with `:>`. 
 
-The `:= xxx :>` form of the command inserts something in the document.
+The `<:= xxx :>` form of the command inserts something in the document.
 
-The `: xxx :>` form of the command can be used to control whether something should appear or not.
+The `<: xxx :>` form of the command can be used to control whether something should appear or not.
 e.g. 
 ```
 <: if(false) { :>
@@ -164,9 +164,13 @@ where styleId is `chalk` or `well` without any quotation marks.
 
 ## Two column sections
 
-Use these sections in order - left then right. They should both be present, but they do not both have to contain content. The page will be roughly split down the middle in two columns.
+Use these sections in order - left then right - inside the twoColumn style. 
+They should both be present, but they do not both have to contain content. 
+The page will be roughly split down the middle in two columns.
 
 ```
+<:= style(twoColumn) :>
+
 <:= column(left) :>
   left column content in markdown
 <:= column() :>
@@ -174,6 +178,8 @@ Use these sections in order - left then right. They should both be present, but 
 <:= column(right) :>
   right column content in markdown
 <:= column() :>
+
+<:= style() :>
 ```
 ### Hint/Answer button bars
 
