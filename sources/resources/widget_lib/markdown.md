@@ -7,7 +7,7 @@ title: Markdown Guide
 ````
 # Intro to Markdown
 
-Content for CEMP is written in _markdown_. This is a way of providing
+Content for CMEP is written in _markdown_. This is a way of providing
 formatting information to the layout engines without too much visual 'noise'.
 Below are examples of the markdown we encourage, with some advice about how to
 use it.
