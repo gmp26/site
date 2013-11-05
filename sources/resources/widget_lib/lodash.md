@@ -3,8 +3,7 @@ alias: Lodash Guide
 weight: 5
 clearance: -1
 title: Lodash Markup Documentation
-author: Ewan Davies
-lastUpdated: NOT YET IMPLEMENTED
+author: Douglas Adams
 acknowledgementText: So long and thanks for all the fish.
 
 ````
@@ -17,30 +16,30 @@ Markdown isn't quite rich enough to do all that we want. We occasionally need ex
 
 The main thing to know is that we use special tags: <:= showLodashed('') :> or
 even <:= showLodashed('', false) :> to construct this extra markup. This markup is
-implemented using templates from the [http://lodash.com/docs#template](lodash template library).
+implemented using the [lodash template library](http://lodash.com/docs#template).
 
 The tags with the equals sign, namely <:= showLodashed('') :> _interpolate_ 
-the code inside; it runs the code and the result appears in place of the whole 
+the code inside; it runs the javascript code inside and the result appears in place of the whole 
 tag. This is useful for metadata, styles and other things that need to provide
-some output.
+some output. We provide a set of javascript variables and functions that can be included to do useful things, and these can be extended as necessary.
 
 The tags without the equals sign, namely <:= showLodashed('', false) :> 
 _evaluate_ the code inside, and won't automatically make output. This is ideal
 for _logical statements_ which control what gets displayed. Examples are below
 to explain this difference.
 
-## Metadata
+## Local Page Metadata
 
 The following fields are available, and their expansion for this document is
 shown too. _Note that for these expansions to appear you have to define them
-in the metadata block._
+in the document's YAML header._
 
 <: grunt.log.write("  top-level metadata...") :>
 - <:= showLodashed('title') :> evaluates to: '<:= title :>'.
 - <:= showLodashed('author') :> evaluates to: '<:= author :>'
 - <:= showLodashed('pageClearance') :> evaluates to: '<:= pageClearance :>'
 - <:= showLodashed('clearance') :> evaluates to: '<:= clearance :>'
-- <:= showLodashed('lastUpdated') :> evaluates to: '<:= lastUpdated :>'
+- <:= showLodashed('lastUpdated') :> evaluates to: the date the document was last changed in git
 - <:= showLodashed('acknowledgementText') :> evaluates to: '<:= acknowledgementText :>'
 <: grunt.log.ok() :>
 
@@ -82,25 +81,32 @@ This text looks like it's been written in a well.
 
 ## Two column sections
 
-Divide a section of a page into 2 near equal columns. In HTML the left column will be slightly narrower.
+These divide a section of a page into 2 near equal columns. Use the `twoColumn` style to wrap a `column(left)` and a `column(right)`. Note that the left or right column may be empty, and that text does not flow from the left column to the right column.
+
+<:= showLodashed('style(twoColumn)') :>
 
 <:= showLodashed('column(left)') :>
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. <:= showLodashed('style(well)') :>Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est.<:= showLodashed('style()'):> Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
-<:= showLodashed('column()' :>
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est. Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
 
-<:= showLodashed('column(right)') :>
-  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. <:= showLodashed('style(chalk)') :>Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. <:= showLodashed('style()') :> Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
 <:= showLodashed('column()') :>
 
+<:= showLodashed('column(right)') :>
+  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
+<:= showLodashed('column()') :>
+
+<:= showLodashed('style()') :>
+
+<:= style(twoColumn) :>
 <:= column(left) :>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. <:= style(well) :>Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est.<:= style() :> Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit vel nulla porta porttitor. Nulla eget magna vitae diam rhoncus laoreet. Vivamus quis leo ullamcorper, mattis turpis at, bibendum risus. Pellentesque fermentum eleifend sapien ac dignissim. Aenean sed nisi eu felis placerat commodo id at est. Quisque ut blandit erat. In ullamcorper lacus sit amet ligula feugiat elementum.
 <:= column() :>
 
 <:= column(right) :>
-  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. <:= style(chalk) :>Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. <:= style() :> Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
+  Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla porta, lectus nec gravida fringilla, tellus dolor feugiat risus, vitae ullamcorper lorem tortor facilisis mi. Nunc imperdiet non sem ut pellentesque. Suspendisse condimentum leo at enim congue luctus. Mauris sem tortor, pharetra in libero id, pretium euismod elit. Proin dignissim lorem vitae bibendum pretium.
 <:= column() :>
+<:= style() :>
 
-Note that the left or right column may be empty.
+
 
 
 ## Logical things

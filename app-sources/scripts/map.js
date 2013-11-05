@@ -85,8 +85,8 @@ function stationOver(e, force) {
     }
     return false;
   });
-  $("svg .edge").not(relevantEdges).fadeTo('fast',0.5);
-  $("svg [id^='node']").not(relevantStations).fadeTo('fast',0.5);
+  $("svg .edge").not(relevantEdges).fadeTo('fast',0.3);
+  $("svg [id^='node']").not(relevantStations).fadeTo('fast',0.3);
   $("svg .edge").filter(relevantEdges).fadeTo('fast',1.0);
   $("svg [id^='node']").filter(relevantStations).fadeTo('fast',1.0);
 }

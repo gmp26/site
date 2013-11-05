@@ -120,7 +120,8 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.sources %>"
-          src: ["resources/widget_lib/lodash.md"] #["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+          src: ["resources/widget_lib/lodash.md"]
+          # src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
           dest: "<%= yeoman.partials %>/printables/"
           ext: ".tex"
         ]
@@ -140,7 +141,8 @@ module.exports = (grunt) ->
       test:
         src: ["<%= yeoman.partials %>/printables/stations/G2.printable.tex", "<%= yeoman.partials %>/printables/resources/widget_lib/*.printable.tex"]
       printables:
-        src: ["<%= yeoman.partials %>/printables/resources/widget_lib/lodash.printable.tex"] #["<%= yeoman.partials %>/printables/**/*.printable.tex"]
+        src: ["<%= yeoman.partials %>/printables/resources/widget_lib/lodash.printable.tex"]
+        # src: ["<%= yeoman.partials %>/printables/**/*.printable.tex"]
 
     # Validate, weed, and expand metadata
     expandMetadata:
