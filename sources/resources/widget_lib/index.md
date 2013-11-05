@@ -25,9 +25,9 @@ priors:
 
 Each resource lives in its own folder. The main file is called `index.md` -- carrying a `.md` extension since it's expected to be in Markdown. See the [Markdown Guide](index.html#tab1) for more info. Each file can refer to others in the same folder - e.g. images, or other linked content. The `index.md` usually does not contain an index, though it might. 
 
-On the website the different `.md` files are combined into one `index.html` where each file is shown as a tab. To refer to other tabs (aside from being able to click on a tab to activate it), TODO: verify and fix this you can link to `index.html#tabN` where `N` is the number of the tab, starting with `0`. 
+On the website the different `.md` files are combined into one `index.html` where each file is shown as a tab. To refer to other tabs you will (when this is implemented) be able to append `#tabN` to the url.`N` is the tab number, counting from `0`. 
 
-To build the CMEP content we use Pandoc, a compiler that can convert Markdown to a large number of other document formats. To preview your work you'll need a copy of `pandoc` installed, together with a good text editor -- we recommend using `Sublime Text 2` and hope to produce syntax highlighters for it that should make your job a little easier, available soon.
+To build the CMEP content we use [`Pandoc`](http://johnmacfarlane.net/pandoc/), a compiler that can convert Markdown to a large number of other document formats. To preview your work you'll need a copy of `pandoc` installed, together with a good text editor -- we recommend using `Sublime Text 2`.
 
 ## Preliminary Installations
 

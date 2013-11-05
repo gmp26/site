@@ -268,11 +268,11 @@ Image references are similar. If you simply want to include an image from the sa
 
 ### Image Links
 
-<:= showLodashed('imageLink(image, text, url)') :> embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`. The image must be available to the site's build system if it's to appear in printable pdfs, so the Swanage example below breaks the printable generation of this page.
+<:= showLodashed('imageLink(image, text, url)') :> embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`. The image must be available to the site's build system if it's to appear in printable pdfs. 
 
-<:= showLodashed('imageLink("image.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage")') :>
+<:= showLodashed('imageLink("swanage.png", "Swanage", "http://en.wikipedia.org/wiki/Swanage")') :>
 
-<:= imageLink("http://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Swanage_-_geograph.org.uk_-_6609.jpg/240px-Swanage_-_geograph.org.uk_-_6609.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage") :>
+<:= imageLink("swanage.png", "Swanage", "http://en.wikipedia.org/wiki/Swanage") :>
 
 ### iframe embeds
 
