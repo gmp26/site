@@ -144,9 +144,9 @@ Instead the extensions we need to capture special styles, or to embed animations
 
 These are special bracketed commands that wrap javascript. They open with either `<:=` or `<:` and close with `:>`. 
 
-The `:= xxx :>` form of the command inserts something in the document.
+The `<:= xxx :>` form of the command inserts something in the document.
 
-The `: xxx :>` form of the command can be used to control whether something should appear or not.
+The `<: xxx :>` form of the command can be used to control whether something should appear or not.
 e.g. 
 ```
 <: if(false) { :>
