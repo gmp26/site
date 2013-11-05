@@ -164,9 +164,13 @@ where styleId is `chalk` or `well` without any quotation marks.
 
 ## Two column sections
 
-Use these sections in order - left then right. They should both be present, but they do not both have to contain content. The page will be roughly split down the middle in two columns.
+Use these sections in order - left then right - inside the twoColumn style. 
+They should both be present, but they do not both have to contain content. 
+The page will be roughly split down the middle in two columns.
 
 ```
+<:= style(twoColumn) :>
+
 <:= column(left) :>
   left column content in markdown
 <:= column() :>
@@ -174,6 +178,8 @@ Use these sections in order - left then right. They should both be present, but 
 <:= column(right) :>
   right column content in markdown
 <:= column() :>
+
+<:= style() :>
 ```
 ### Hint/Answer button bars
 
