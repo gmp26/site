@@ -1,6 +1,10 @@
-<%= _preamble %>
-<% _ = grunt.util._ %>
 <% grunt.log.write("  station printable layout "+meta.id+"... ") %>
+<% _ = grunt.util._ %>
+<%= _preamble %>
+<% if(meta.lastUpdated) { %>
+\fancyfoot[L]{\headspace\small{}Last updated <%= meta.lastUpdated %>}
+<% } %>
+
 \begin{document}
 
 %%% The station title and icon

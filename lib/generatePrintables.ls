@@ -35,20 +35,20 @@ module.exports = (grunt) ->
 
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
-    appDir = grunt.config.get "yeoman.app"
+    appSrcDir = grunt.config.get "yeoman.appSources"
 
     # make tex from resource layout and data  
     _preamble = grunt.file.read "layouts/_printablesPreamble.tex"
 
     # a helper function since LaTeX can't access images above the tex file in a folder hierarchy
     copyImage = (filename, targetFolder) ->
-      grunt.file.copy "#{appDir}/images/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+      grunt.file.copy "#{appSrcDir}/images/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
     copyFont = (filename, targetFolder) ->
-      grunt.file.copy "#{appDir}/fonts/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
+      grunt.file.copy "#{appSrcDir}/fonts/#{filename}" "#{partialsDir}/printables/#{targetFolder}/#{filename}"
     copyFonts = (targetFolder) ->
-      fonts = grunt.file.expand {cwd: "#{appDir}/fonts/"}, ["*.ttc", "*.otf", "*.ttf"]
+      fonts = grunt.file.expand {cwd: "#{appSrcDir}/fonts/"}, ["*.ttc", "*.otf", "*.ttf"]
       for file in fonts
-        grunt.file.copy "#{appDir}/fonts/#{file}", "#{partialsDir}/printables/#{targetFolder}/#{file}"
+        grunt.file.copy "#{appSrcDir}/fonts/#{file}", "#{partialsDir}/printables/#{targetFolder}/#{file}"
     copyResourceAssets = (name) ->
         files = grunt.file.expand("#{sourcesDir}/resources/#{name}/*.png")
         for img in files
