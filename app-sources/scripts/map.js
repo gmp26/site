@@ -25,10 +25,14 @@ $(document).ready(function() {
         container:"body",
         trigger: "manual",
         placement: function(context, source) {
+          return "bottom";
+          /* -- always bottom.
           var position = $(source).position();
+
           if (position.top < 120)
             return "bottom";
           return "top";
+          */
         },
         html:true
       }).click(function(e){
