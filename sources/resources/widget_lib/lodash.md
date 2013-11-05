@@ -111,8 +111,7 @@ These divide a section of a page into 2 near equal columns. Use the `twoColumn` 
 
 ## Logical things
 
-Our special tags can do javascript logic. It's best shown by example. The
-current clearance is <:= clearance :> and this resource has 
+The lodash markup can do javascript logic. It's best shown by example. The current clearance is <:= clearance :> and this resource has 
 clearance <:= pageClearance :>. We can include content based on the
 global clearance with the following syntax:
 
@@ -138,12 +137,11 @@ This text will be seen otherwise.
 
 <: } :>
 
-_It's important to get the brackets, braces and tags correct, as they are
-here._
+_It's important to get the brackets, braces and tags correct._
 
 ## Web and Print
 
-Interactive can content be ignored entirely, or somehow handled specially in print. 
+Interactive content can be ignored entirely, or somehow handled specially in print. 
 
 ### Toggle buttons and collapsed blocks
 
@@ -166,6 +164,55 @@ These are linked to the collapsed content with which they share an id number.
   - success - green
   - inverse - white text on black
   - link - appear as a hyperlink
+
+<:= toggle(1, "A default button") :>
+
+<:= collapsed(1) :>
+Some hidden content. Press the default button again to hide.
+<:= collapsed() :>
+
+
+<:= toggle(2, "A primary button", primary) :>
+
+<:= collapsed(2) :>
+Some hidden content. Press the primary button again to hide.
+<:= collapsed() :>
+
+<:= toggle(3, "An info button", info) :>
+
+<:= collapsed(3) :>
+Hidden info. Press the info button again to hide.
+<:= collapsed() :>
+
+<:= toggle(4, "A warning button", warning) :>
+
+<:= collapsed(4) :>
+A hidden warning. Press the warning button again to hide.
+<:= collapsed() :>
+
+<:= toggle(5, "A danger button", danger) :>
+
+<:= collapsed(5) :>
+A hidden danger. Press the danger button again to hide.
+<:= collapsed() :>
+
+<:= toggle(6, "A success button", success) :>
+
+<:= collapsed(6) :>
+A hidden success. Press the success button again to hide.
+<:= collapsed() :>
+
+<:= toggle(7, "An inverse button", inverse) :>
+
+<:= collapsed(7) :>
+Press the inverse button again to hide.
+<:= collapsed() :>
+
+<:= toggle(8, "A link button", link) :>
+
+<:= collapsed(8) :>
+Press the link button again to hide.
+<:= collapsed() :>
 
 
 ### Hint-Answer Bar
@@ -192,4 +239,49 @@ This is text displayed when the answer button in hintAnswerBar N is clicked. The
 <:= showLodashed('answer()') :>
 
 Multiple hint-answer groups can appear on the page, but the ids must be chosen
-uniquely for them to work as intended. An example appears at resource [NA3_RT5_2](http://cmep.maths.org/fenman/reources/NA3_RT5_2/index.html).
+uniquely for them to work as intended. An example appears at resource [NA3_RT5_2](http://cmep.maths.org/fenman/resources/NA3_RT5_2/index.html).
+
+<:= hintAnswerBar(1, 'A possible approach', 'which might lead here') :>
+<:= hint(1) :>
+You could press the answer button now?
+<:= hint() :>
+
+<:= answer(1) :>
+Which might reveal this.
+<:= answer() :>
+
+### Icons
+
+<:= showLodashed('icon(name)') :>
+
+Inserts an icon by quoted name. The names are listed on the [Bootstrap site](http://getbootstrap.com/2.3.2/base-css.html#icons), but drop the leading 'icon-' part.
+
+For example, <:= showLodashed('icon("file")') :> will produce <:= icon("file") :>.
+
+## Lodash hyperlinking commands
+
+You will normally only need to use standard markdown to make hyperlinks and to include images. 
+
+Urls must be either page relative urls or external http urls. For example, use `../G2_RT2/index.html` to reference that resource from another one. Urls must be quoted.
+
+Image references are similar. If you simply want to include an image from the same folder, just give the filename.
+
+### Image Links
+
+<:= showLodashed('imageLink(image, text, url)') :> embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`.
+
+For example, here's Swanage: 
+
+<:= showLodashed('imageLink("image.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage")') :>
+
+<:= imageLink("http://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Swanage_-_geograph.org.uk_-_6609.jpg/240px-Swanage_-_geograph.org.uk_-_6609.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage") :>
+
+## Debugging Lodash commands
+
+Save often and check that the HTML view looks reasonable. Certain errors
+cause all the lodash markdown on a page to fail, and so they can be difficult to find if you have made many changes. We're working on making the error reporting better.
+
+If you do get into the situation where nothing appears to work the best plan currently is to use HTML comments to comment out large sections of the text. That way you can move the commented section around to narrow the problem down to its source.
+
+
+

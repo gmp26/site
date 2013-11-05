@@ -79,7 +79,7 @@ module.exports = (grunt) ->
         disabled = ""
 
         if grunt.util._.isString(type) and type != ""
-          type = "btn-#{type}"
+          type = "#{type}"
         else
           type = ""
 
