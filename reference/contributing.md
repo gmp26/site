@@ -82,6 +82,15 @@ Delimit inline mathematics with single dollar signs as in `$y=x^2$`, which will 
 
 Note that the pandoc preview may not centre display mathematics correctly unless you tweak the associated CSS. But you can probably imagine how it will look.
 
+### Maths environments
+
+Write maths environments as you would in standard LaTeX - i.e. don't wrap them in dollar signs. You do need to pay a bit of attention to white space for this to work correctly.
+
+o To use display math environments such as `eqnarray*`, make sure that the `\begin` and `\end` commands are on a line of their own. They'll then be automatically wrapped in the `$$`s that mathJAX needs in order to see and process them. 
+
+o To use inline math environments such as `array`, make sure that there are non-whitespace characters butting up to the `\begin{}` and `\end{}` before or after, or (before and after). If they have whitespace before and after then `$$` will be inserted into the HTML and things will break.
+
+
 Writing everything else
 -----------------------
 
@@ -126,46 +135,137 @@ Similar rules apply when providing the URL for an image file, but you will want 
 
 However, many mathematical diagrams are best provided in a vector graphics format such as SVG. This is resolution independent. The free graphics editor [`Inkscape`](http://inkscape.org) will get you started.
 
-Including specials
-------------------
 
-`Pandoc` allows us to insert raw HTML codes in the Markdown source to cope with special needs. These must be styled with CSS (cascading style sheets). The site provides a [Twitter Bootstrap](http://twitter.github.io/bootstrap) stylesheet and JavaScript environment -- you'll find some excellent docs and examples under the link. However be sparing, and do ask what the house style is if unsure. Here's a list of the features that may find a place in your resource. 
+# Extensions to markdown
 
-* [Fluid grid system](http://twitter.github.io/bootstrap/scaffolding.html#fluidGridSystem)
-* [Typography](http://twitter.github.io/bootstrap/base-css.html#typography) e.g. for default header styling and 
-  - `<div class="lead">`Lead content to an article.`</div>`
-* [Wells](http://twitter.github.io/bootstrap/components.html#misc)
-  - `<div class="well">`Content in Markdown to be styled in a box that stands out from the rest of the text.`</div>`
-* [Collapse](http://twitter.github.io/bootstrap/JavaScript.html#collapse) is very useful for hide/reveal problems. It can be triggered by a button or by a link as in
-this [jsFiddle example](http://jsfiddle.net/gmp26/gD3Vz/5/). 
-* [Float left or right](http://twitter.github.io/bootstrap/components.html#misc). 
-* [Icons](http://twitter.github.io/bootstrap/base-css.html#icons)
-* [Labels and Badges](http://twitter.github.io/bootstrap/components.html#labels-badges)
-* [Hero Unit](http://twitter.github.io/bootstrap/components.html#typography) A very prominent box.
-* [Page header](http://twitter.github.io/bootstrap/components.html#typography)
-* [Thumbnails and Images](http://twitter.github.io/bootstrap/components.html#thumbnails)
-* [Alerts](http://twitter.github.io/bootstrap/components.html#alerts) Useful for warnings or attention grabbing notes.
-* [Media object](http://twitter.github.io/bootstrap/components.html#media) for icon, header, description. 
+Pandoc can process raw TeX into LaTeX when making a TeX document, and it can process raw HTML into html when making an HTML document. It can't process HTML into TeX or TeX into HTML. We are generating both HTML and TeX, so please don't include HTML or TeX in the markdown.
 
-Desperate Snippets
-------------------
+Instead the extensions we need to capture special styles, or to embed animations, are written using `lodash templates`.
 
-This is a collection of markup that works, that will get around certain problems, but which is in some sense a kludge. Do not use unless you are desperate. Many of these will in time be generated from simpler markup in a preprocessing step.
+These are special bracketed commands that wrap javascript. They open with either `<:=` or `<:` and close with `:>`. 
 
-###Overriding the styling of an element 
+The `:= xxx :>` form of the command inserts something in the document.
 
-e.g. to override the 50% max-width of a figure:
+The `: xxx :>` form of the command can be used to control whether something should appear or not.
+e.g. 
+```
+<: if(false) { :>
+This text will not appear in the document
+<: } else { :>
+This text does appear in the document
+<: } :>
+
+## Styles
+<:= style(styleId) :> 
+  markdown text
+<:= style() :>
+```
+where styleId is `chalk` or `well` without any quotation marks.
+
+## Two column sections
+
+Use these sections in order - left then right. They should both be present, but they do not both have to contain content. The page will be roughly split down the middle in two columns.
 
 ```
-<style>
-  #figure-8 {display: none;}
-  #figure-8 + figure {max-width:100%;}
-</style>
-#####Figure 8
-![Figure 8](cartesiancoordinatesdiagram8.png)
+<:= column(left) :>
+  left column content in markdown
+<:= column() :>
+
+<:= column(right) :>
+  right column content in markdown
+<:= column() :>
+```
+### Hint/Answer button bars
+
+This provides a 2 button bar. The left button reveals a hit, the right button reveals a possible answer, but you can label them as you wish. The hint and answer are identified by a number which must be unique to the resource. (To the whole resource, not just the resource part.)
+
+```
+<:= hintAnswerBar(N, hLabel, aLabel) :>
 ```
 
-In explanation, `#####Figure 8` defines an `<h5>` with id `figure-8` which is selected by the CSS and hidden. Its sibling element (the figure) is given the new max-width.
+`N` is a positive unique integer for the page, unquoted. Note that it must be unique across all page parts, index, solution, hints, notes etc. It identifies the collapsed areas revealed by pressing the buttons in the bar.
+
+`hLabel` is the label for the hint button. Must be in single or double quotes.
+`aLabel` is the label for the answer button. Similarly quoted.
+
+```
+<:= hint(N) :>
+  collapsed hint text in markdown
+<:= hint() :>
+
+<:= answer(N) :>
+  collapsed answer text in markdown
+<:= answer() :>
+```
+
+### Single toggle buttons and their collapsed targets
+
+```
+<:= toggle(N, label, type) :>
+```
+
+`N` is a positive unique integer identifying a collapsed section.
+`label` is a quoted label for the button.
+`type` is an unquoted button type which affects the button style. The defined types are
+
+```
+  default
+  primary
+  info
+  warning
+  danger
+  success
+  inverse
+  link
+```
+See http://getbootstrap.com/2.3.2/base-css.html#buttons for the resulting button types
+
+```
+<:= collapsed(N) :>
+  A collapsed markdown section to be revealed by pressing the toggle(N) button
+<:= collapsed() :>
+```
+
+### Icons
+
+```
+<:= icon( name ) :>
+```
+
+Inserts an icon by quoted name. The names are listed here, but drop the leading 'icon-' part:
+http://getbootstrap.com/2.3.2/base-css.html#icons
+
+## Lodash hyperlinking commands
+
+All urls should be either relative urls, or external http urls. 
+
+Where needed, references to embedded images should be relative urls - normally it's simply the filename of an image located in the same directory as the markdown source. Image filenames must be quoted.
+
+### Text Links
+
+`<:= textLink(text, url) :>` is now the usual way to insert hyperlinked text. Unlike the native markdown command,  it makes the url visible in the pdf document as well a making the link for those people reading pdf printouts.
+
+`[text](url)`
+If you don't need the url to be in the pdf, the native markdown command suffices.
+
+### Image Links
+
+`<:= imageLink(image, text, url) :>` embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`.
+
+### Button Links
+
+`<:= buttonLink(type, text, url, print=false) :>` inserts a button of the given unquoted `type`, labelled with the quoted `text`, which will follow the link to the quoted `url`. `print` may be omitted, in which case the button will be invisible in the pdf. If `print` is set to true, the button displays as a textLink in the pdf.
+
+### iframe embeds
+
+`<:= iframe(text, url, width, height, image="thumbnail.png") :>` inserts an iframe in html, or the thumbnail image in pdf. The url is the url of the page to be inserted in the iframe. The iframe box has width and height specified in pixels by `width` and `height`. In pdf, width and height are ignored, and the thumbnail image is reproduced at its natural size.
+
+## Debugging lodash
+
+Keep an eye on the console log. Helpful error messages appear there if there's a problem.
+
+`<:= warn("message") :>` will print the message on the console during panda:pass2html and panda:pass2printables tasks which run as part of `grunt server` or `grunt dev:printables`. This can be useful when trying to locate a markup problem.
+
 
 ###Linking to another resource
 
