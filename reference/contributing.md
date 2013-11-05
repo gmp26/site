@@ -86,9 +86,9 @@ Note that the pandoc preview may not centre display mathematics correctly unless
 
 Write maths environments as you would in standard LaTeX - i.e. don't wrap them in dollar signs. You do need to pay a bit of attention to white space for this to work correctly.
 
-o To use display math environments such as `eqnarray*`, make sure that the `\begin` and `\end` commands are on a line of their own. They'll then be automatically wrapped in the `$$`s that mathJAX needs in order to see and process them. 
+* To use display math environments such as `eqnarray*`, make sure that the `\begin` and `\end` commands are on a line of their own. They'll then be automatically wrapped in the `$$`s that mathJAX needs in order to see and process them. 
 
-o To use inline math environments such as `array`, make sure that there are non-whitespace characters butting up to the `\begin{}` and `\end{}` before or after, or (before and after). If they have whitespace before and after then `$$` will be inserted into the HTML and things will break.
+* To use inline math environments such as `array`, make sure that there are non-whitespace characters butting up to the `\begin{}` and `\end{}` before or after, or (before and after). If they have whitespace before and after then `$$` will be inserted into the HTML and things will break.
 
 
 Writing everything else
