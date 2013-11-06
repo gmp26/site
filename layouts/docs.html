@@ -1,0 +1,128 @@
+<%   grunt.log.write("  resource layout "+meta.id+"... "); %>
+
+<%= _head %>
+<%= _nav %>
+
+<div class="container-fluid">
+  <div class="row-fluid not-short">
+    <div class="container span7 offset1">
+
+      <h1>
+        <span class="<%= resourceTypeMeta.icon %>"></span> <%= resourceTypeMeta.title %>
+      </h1>
+
+<% if(meta.title) { %>
+      <h2>
+        <%= meta.title %>
+      </h2>
+<% } %>
+
+      <div class="tabbable">
+
+<% if(content.parts.length > 1) {%>
+        <ul class="nav nav-pills">
+<%   _.each(content.parts, function(cdata, index) { %>
+          <li <%=index==0?'class="active"':''%>>
+            <a href="#tab<%=index%>" data-toggle="tab">
+              <%= cdata.alias %>
+            </a>
+          </li>
+<%   }); %>
+        </ul>
+<% } %>
+      
+        <div class="tab-content">
+<%   _.each(content.parts, function(cdata, index) { %>
+          <div class="tab-pane <%=index==0?'active':''%>" id="tab<%=index%>">
+
+            <div class="alert alert-block alert-warning fade in">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4 class="alert-heading">Provisional documentation</h4>
+              <p>These guides appear only at clearance 1 and below. They are the best we have as they demonstrate the features they are documenting. Features with working examples are safe to use now. However not all the examples are working yet, and some only work in HTML or only in printables, and some will change their behaviour shortly. If markup requirements change we'll rework the site sources to keep them current.</p>
+              <p>At present, you will need to refer to this changing document frequently.</p>
+            </div>
+
+            <%= cdata.markup%>
+          </div>
+<%   }); %>
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar" class="offset1 span3">
+<% if(content.sidebar) { %>
+
+    <h3>Printables</h3>
+    <ul class="unstyled">
+<%   if(content.parts.length > 1) {%>
+<%     _.each(content.parts, function(cdata, index) { %>
+      <li>
+        <span class="icon-print"></span> <a href="./<%= cdata.fileName %>.pdf"><%= cdata.alias %></a>
+      </li>
+<%     }); %>
+<%   } else { %>
+      <li>
+        <span class="icon-print"></span> <a href="./index.pdf">PDF version</a>
+      </li>
+<%   } %>
+    </ul>
+
+
+      <h3>Relevance</h3>
+
+      <div class="station">
+<%   _.each(content.sidebar.stMetas, function(stMeta) { %>
+        <p><a class="button<%=stMeta.line%>" href="<%= rootUrl %>/stations/<%= stMeta.id %>.html"><%= stMeta.id %></a> <%= stMeta.title %></p>
+<%   }); %>
+      </div>
+
+      <ul class="pvi">
+<%   _.each(content.sidebar.pvMetas, function(pvMeta) { %>
+        <li>
+          <a href="<%= rootUrl %>/pervasiveIdeas/<%= pvMeta.id %>.html"><%= pvMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+
+<% if(content.sidebar.priorMetas) { %>
+      <h3>Look back</h3>
+      <ul class="unstyled priors">
+<%   _.each(content.sidebar.priorMetas, function(priorMeta) { %>
+        <li>
+          <span class="<%= priorMeta.rtMeta.icon%>"></span> <a href="../<%= priorMeta.id %>/index.html"><%= priorMeta.rtMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+<% }%>
+
+<% if(content.sidebar.laterMetas) { %>
+      <h3>Look forwards</h3>
+      <ul class="unstyled laters">
+<%   _.each(content.sidebar.laterMetas, function(laterMeta) { %>
+        <li>
+          <span class="<%= laterMeta.rtMeta.icon%>"></span> <a href="../<%= laterMeta.id %>/index.html"><%= laterMeta.rtMeta.title%></a>
+        </li>
+<%   }); %>
+      </ul>
+<% }%>
+
+<% } %>
+    </div>
+
+  </div>
+
+<% if(meta.lastUpdated) { %>
+      <span class="small muted pull-right">Last updated <%= meta.lastUpdated %></span>
+<% } %>
+<% if(meta.clearance == 0) { %>
+  <div class="draft">Draft</div>
+<% } %>
+</div>
+
+
+<%= _foot %>
+
+
+
+<% grunt.log.ok("done"); %>
+

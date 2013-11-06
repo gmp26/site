@@ -1,0 +1,63 @@
+<% grunt.log.write("  resource printable layout "+meta.id+"... ") %>
+<% _ = grunt.util._ %>
+<%= _preamble %>
+<% if(meta.lastUpdated) { %>
+\fancyfoot[L]{\headspace\small{}Last updated <%= meta.lastUpdated %>}
+<% } %>
+
+\begin{document}
+
+\sectionnumber{<%=meta.id.replace(/_/g,'\\textunderscore{}')%>}
+\phantomsection\label{resource:<%=meta.id%>}
+\fancyhead[C]{{%
+  \setlength{\fboxsep}{0pt} % get rid of any spacing in the colorbox
+  \colorbox{navbarbackground}{%
+    \makebox[\headwidth][l]{% this ensures we have content the full width of the page
+      % ensure we use the full height and set the baseline to the centre of the header
+      \raisebox{-0.5\height}{\rule{0pt}{\headheight}}
+      % centre the image vertically in the header
+      %TODO use a vector image
+      \raisebox{-0.5\height}{\headspace\includegraphics[height=20pt]{cmep-logo3}}%
+      % choose a nice looking baseline for everything else
+      \raisebox{-5pt}{\hspace{5pt}\Large\color{navbartext} Cambridge Mathematics}%
+      \textcolor{navbartext}{%
+        \raisebox{-5pt}{%
+          \hspace{25pt}\Large\sectfont<%= icon(resourceTypeMeta.icon) %>{} <%=resourceTypeMeta.title.replace(/_/g,'\\textunderscore{}').replace('Problem inviting m', 'M') %>%
+        }
+        \hfill%
+        <%  if(sidebar) { %>%
+        % sidebar detected, draw station buttons
+        \raisebox{-5pt}{%
+          <% _.each(sidebar.stMetas, function(stMeta, index, collection) { %><%= (index > 0) ? '\\stationbuttonspace%\n' : '' %><%= stationbutton(stMeta) %><% }); %>%
+          \headspace%
+        }%
+        <%  } else { %><%  } %>%
+      }%
+    }%
+  }%
+}} % double braces to (hopefully?) contain the change of \fboxsep
+
+<% if(meta.title) { %>
+  \section*{\huge{<%= meta.title %>}}
+<% }%>
+
+\section*{<%= alias.replace(/_/g,'\\textunderscore{}') %>}
+<%= content %>
+
+<%  if(sidebar) { %>
+\section*{Relevance}
+<%    _.each(sidebar.stMetas, function(stMeta) { %>
+<%= stationbutton(stMeta) %>\stationbuttonspace{}<%= stMeta.title %>
+<%    }); %>
+
+<%    if(sidebar.pvMetas && sidebar.pvMetas.length > 0) { %>
+\begin{pervasiveitems}
+<%      _.each(sidebar.pvMetas, function(pvMeta) { %>
+  \item \href{'../../pervasiveIdeas/<%= pvMeta.id %>.pdf'}{<%= pvMeta.title %>}
+<%      }); %>
+\end{pervasiveitems}
+<%    } %>
+<%  } %>
+
+\end{document}
+<% grunt.log.ok("done"); %>
