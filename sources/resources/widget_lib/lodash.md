@@ -284,4 +284,9 @@ cause all the lodash markdown on a page to fail, and so they can be difficult to
 If you do get into the situation where nothing appears to work the best plan currently is to use HTML comments to comment out large sections of the text. That way you can move the commented section around to narrow the problem down to its source.
 
 
+### Button Links
 
+<:= showLodashed('buttonLink(type, text, url, print=false)') :> inserts a button of the given unquoted `type`, labelled with the quoted `text`, which will follow the link to the quoted `url`. `print` may be omitted, in which case the button will be invisible in the pdf. If `print` is set to true, the button displays as a textLink in the pdf.
+
+For example, <:= showLodashed('buttonLink(info, "Swanage again", "https://cmep.maths.org/swanage")') :> yields
+<:= buttonLink(info, "Swanage again", "https://cmep.maths.org/swanage") :>.

@@ -68,7 +68,7 @@ Getting started
 
 ### Prerequisites
 
-Make sure you have [`node`](http://nodejs.org/),  
+Make sure you have [`node`](http://nodejs.org/),
 [`grunt`](http://gruntjs.com/), 
 [`bower`](http://bower.io/),
 [`livescript`](http://livescript.net), 
