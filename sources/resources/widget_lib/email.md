@@ -63,7 +63,7 @@ N is a positive unique integer identifying a collapsed section.
 
 See http://getbootstrap.com/2.3.2/base-css.html#buttons for the resulting button types
 
-<:= colapsed(N) :>
+<:= collapsed(N) :>
   A collapsed markdown section to be revealed by pressing the toggle(N) button
 <:= collapsed() :>
 

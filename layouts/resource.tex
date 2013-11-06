@@ -1,6 +1,9 @@
 <% grunt.log.write("  resource printable layout "+meta.id+"... ") %>
 <% _ = grunt.util._ %>
 <%= _preamble %>
+<% if(meta.lastUpdated) { %>
+\fancyfoot[L]{\headspace\small{}Last updated <%= meta.lastUpdated %>}
+<% } %>
 
 \begin{document}
 

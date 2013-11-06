@@ -268,13 +268,19 @@ Image references are similar. If you simply want to include an image from the sa
 
 ### Image Links
 
-<:= showLodashed('imageLink(image, text, url)') :> embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`.
+<:= showLodashed('imageLink(image, text, url)') :> embeds the `image` file - captioned with the quoted `text`, and hyperlinks it to the `url`. The image must be available to the site's build system if it's to appear in printable pdfs. 
 
-For example, here's Swanage: 
+<:= showLodashed('imageLink("swanage.png", "Swanage", "http://en.wikipedia.org/wiki/Swanage")') :>
 
-<:= showLodashed('imageLink("image.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage")') :>
+<:= imageLink("swanage.png", "Swanage", "http://en.wikipedia.org/wiki/Swanage") :>
 
-<:= imageLink("http://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Swanage_-_geograph.org.uk_-_6609.jpg/240px-Swanage_-_geograph.org.uk_-_6609.jpg", "Swanage", "http://en.wikipedia.org/wiki/Swanage") :>
+### iframe embeds
+
+<:= showLodashed('iframe(text, url, width, height, image="thumbnail.png")') :> inserts an iframe in html, or the thumbnail `image` in pdf. `url` is the url of the page to be inserted in the iframe. The iframe box size is specified in pixels by `width` and `height`. In pdf, width and height are ignored, and the thumbnail image is reproduced at its natural size, and the alternate text is reproduced.
+
+<:= showLodashed('iframe("Sunny Swanage", "http://en.wikipedia.org/wiki/Swanage", 500, 300, image="swanage.png")') :> will generate the following iframe.
+
+<:= iframe("See http://en.wikipedia.org/wiki/Swanage", "http://en.wikipedia.org/wiki/Swanage", 500, 300, image="swanage.png") :>
 
 ## Debugging Lodash commands
 
