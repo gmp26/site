@@ -432,6 +432,7 @@ module.exports = (grunt) ->
             ".htaccess"
             "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
             "scripts/map.js"
+            "scripts/underscore-min.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
             "resources/*/*.png"
