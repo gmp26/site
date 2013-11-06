@@ -22,7 +22,7 @@ pvids2:
 	- The points $(1,2)$ and $(0,-1)$
 	- $y = 4x$
 	- $y = 2x - 3$
-	- The point $(3,3)$ and the direction vector $\left(\begin{array}{c} 1 \\ 2 \end{array} \right)$
+	- The point $(3,3)$ and the direction vector $\left(\begin{array}{c} 1 \\ 2 \end{array}\right)$
 	- $x = 7y$
 	- The points $(-1, -4)$, $(3, 7)$, and $(8, 8)$
 	- $y - 10 = 3(x + 2)$
