@@ -552,12 +552,15 @@ module.exports = (grunt) ->
   grunt.registerTask "test", [
     "clean:app"
     "clean:test"
-    "lsc"
-    "panda:pass1"
-    "expandMetadata"
-    "lastUpdated"
-    "panda:pass2html"
-    "generateHtml"
+    "dev:html"
+    # "lsc"
+    # "panda:pass1"
+    # "expandMetadata"
+    # "lastUpdated"
+    # "panda:pass2html"
+    # "copy:assets"
+    # "generateHtml"
+
     "mochaTest:sources"
   ]
 
@@ -578,7 +581,7 @@ module.exports = (grunt) ->
     "panda:pass1"
     "expandMetadata"
     "lastUpdated"
-    "tubemap:png"
+    "tubemap:svg"
     "siteUrl:dist"
     "panda:pass2printables"
     "generatePrintables"

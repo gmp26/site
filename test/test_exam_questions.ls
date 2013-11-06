@@ -27,6 +27,6 @@ describe "Testing exam questions", (_it)->
   describe "ExamQuestions", (_it) ->
     it "should have lastUpdated metadata", ->
       should.exist meta.lastUpdated
-      (meta.lastUpdated.match /\d\d-\d\d-\d\d/).should.not.be.null
+      (meta.lastUpdated.match /\d\d-\w\w\w\w-\d\d\d\d/).should.not.be.null
 
 
