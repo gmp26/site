@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("svg [id^='node']").each(function(){
       id = $(this).attr("station-id");
       $(this).popover({
-        title: "",
+        title: popoverData[String(id)].title,
         content: popoverData[String(id)].content,
         container:"body",
         trigger: "manual",
