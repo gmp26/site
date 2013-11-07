@@ -80,6 +80,10 @@ describe "Testing resources expansion", (_it)->
     it "solution should exist",  ->
       should.exist res.solution
 
+    # acknowledgement text should exist
+    it "should contain acknowledgement text", ->
+      should.exist res.index.meta.acknowledgementText
+
   describe 'priors', (_it) ->
     it "should delete bad prior references", ->
       meta.priors.should.not.include 'missing' 
