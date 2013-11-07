@@ -22,7 +22,8 @@ module.exports = (grunt) ->
     #
     # set up some short cut references
     # 
-    metadata = grunt.config.get "metadata"
+    # we do not need a deep copy
+    metadata = grunt.config.data.metadata
 
     sources = metadata.sources
     families = metadata.families
@@ -328,8 +329,8 @@ module.exports = (grunt) ->
 
     generateLess sources
 
-    # write back and return the metadata
-    grunt.config.set "metadata" metadata
+    # return the metadata
+    # NB no writing of metadata needed, because we didn't get a deep copy!
     return metadata
 
 

@@ -37,13 +37,9 @@ module.exports = (grunt) ->
 
     partialsDir = grunt.config.get "yeoman.partials"
     sourcesDir = grunt.config.get "yeoman.sources"
-    metadata = grunt.config.get "metadata"
-
-    #if !metadata
     metadata = grunt.file.readYAML "#{partialsDir}/sources.yaml"
 
     grunt.config.set "metadata", metadata
-
 
     sources = metadata.sources
     stations = sources.stations 

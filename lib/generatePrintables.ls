@@ -21,7 +21,8 @@ module.exports = (grunt) ->
     #
     # set up some short cut references
     # 
-    metadata = grunt.config.get "metadata"
+    # don't need a deep copy
+    metadata = grunt.config.data.metadata
 
     sources = metadata.sources
     families = metadata.families
