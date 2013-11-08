@@ -15,7 +15,8 @@ module.exports = (grunt) ->
     cmd="git"
     baseArgs = "log -1 --pretty=format:%ad --date=short"
     partialsDir = grunt.config.get "yeoman.partials"
-    metadata = grunt.config.get "metadata"
+    # we don't need a deep copy
+    metadata = grunt.config.data.metadata
     sourceType = @target
 
     switch sourceType
@@ -30,7 +31,7 @@ module.exports = (grunt) ->
     function finalCallback # js syntax due to hoisting
       # Write changes to YAML
       grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
-      grunt.config.set "metadata", metadata
+      # NB no writing of metadata needed because we didn't get a deep copy!
       done! # use this to tell grunt that we're finished!
 
     function sourceIterator(sourceKey, callback) # js syntax due to hoisting

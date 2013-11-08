@@ -22,7 +22,8 @@ module.exports = (grunt) ->
     #
     # set up some short cut references
     # 
-    metadata = grunt.config.get "metadata"
+    # we do not need a deep copy
+    metadata = grunt.config.data.metadata
 
     sources = metadata.sources
     families = metadata.families
@@ -84,7 +85,7 @@ module.exports = (grunt) ->
       # relative to app directory
       pngUrl: './images/tubeMap.png'
       # relative to base directory
-      svgContent: removeTitles grunt.file.read "./app/images/tubeMap.svg"
+      svgContent: parseSVG grunt.file.read "./app/images/tubeMap.svg"
     generateTopLevelPage 'index'
     generateTopLevelPage 'pervasiveIdeasHome' do
       families: families
@@ -328,8 +329,8 @@ module.exports = (grunt) ->
 
     generateLess sources
 
-    # write back and return the metadata
-    grunt.config.set "metadata" metadata
+    # return the metadata
+    # NB no writing of metadata needed, because we didn't get a deep copy!
     return metadata
 
 
@@ -349,39 +350,39 @@ module.exports = (grunt) ->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
       grunt.file.write "#{appDir}/styles/lines.less", css
 
-    function removeTitles(data)
-      # TODO | refactor this more nicely?
-      # is this really the correct place for this to be?
-      # or should it have its own task?
-      # NB that would clean up some of the dist problem better
-      # as well as improving the watch situation
+    function parseSVG(data)
       # Removes titles and generates popover markup
       $ = cheerio.load data 
       popoverData = new Object()
       $('[id ^="node"] title').each (i, elem) ->
-        # TODO | can we be sure that the title will always give us what we want?
-        # maybe better to use http://www.graphviz.org/content/preservation-dot-id-svg
-        # Index on ids[0]
+        # The title contains the element id according to SVG spec
+        # Maybe better to use http://www.graphviz.org/content/preservation-dot-id-svg
         ids = $(elem).text().split("-")
         grunt.verbose.writeln 'Station ' + ids[0]
         $(elem).parent().attr 'station-id', ids.join("-")
         # Generate appropriate popover data
-        title = ''
         content = ''
         dependencies = new Array()
         dependents = new Array()
         for index from 0 til ids.length
           station = sources.stations[ids[index]]
-          title = title + "<a href=\"./stations/#{ids[index]}.html\">Station " + ids[index] + "</a>"
-          content = content + station?.meta.title 
+          title = "
+          <h3 class=\"popover-title\"><ul class=\"inline\">
+            <li class=\"dependency\" data-content=\"#{ids[index]}\">
+              <a class=\"button#{station?.meta.line}\" href=\"./stations/#{ids[index]}.html\">
+              <span>#{ids[index]}</span>
+              </a>
+            </li>
+          </ul>#{sources.lines[station?.meta.line]?.meta.title}</h3>"
+          content = content + title + station?.meta.title 
           dependencies = dependencies ++ station.meta.dependencies # ++ is concat operator
           dependents = dependents ++ station.meta.dependents # ++ is concat operator
           if index != ids.length - 1
-            title = title + " and " 
-            content = content + " "
+            content = content + "<div style='height:5px;'></div>"
         popoverDatum = new Object()
-        popoverDatum.title = title
-        popoverDatum.content = content
+        # no need for title in present implementation
+        # popoverDatum.title = title
+        popoverDatum.content =  content
         popoverDatum.dependencies = dependencies
         popoverDatum.dependents = dependents
         # associative array
@@ -390,6 +391,7 @@ module.exports = (grunt) ->
       javascript = grunt.file.read "#{appDir}/scripts/map.js"
       javascript = "popoverData = " + JSON.stringify(popoverData) + ";" + javascript
       grunt.file.write "#{appDir}/scripts/map.js", javascript
+      # we don't want tooltips
       $('title').remove()
       return $.html()
 
