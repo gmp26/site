@@ -373,7 +373,9 @@ module.exports = (grunt) ->
               <span>#{ids[index]}</span>
               </a>
             </li>
-          </ul>#{sources.lines[station?.meta.line]?.meta.title}</h3>"
+          </ul><span class=\"line\">
+            #{sources.lines[station?.meta.line]?.meta.title}
+          </h3>"
           content = content + title + station?.meta.title 
           dependencies = dependencies ++ station.meta.dependencies # ++ is concat operator
           dependents = dependents ++ station.meta.dependents # ++ is concat operator
