@@ -361,29 +361,27 @@ module.exports = (grunt) ->
         grunt.verbose.writeln 'Station ' + ids[0]
         $(elem).parent().attr 'station-id', ids.join("-")
         # Generate appropriate popover data
-        title = ''
         content = ''
         dependencies = new Array()
         dependents = new Array()
         for index from 0 til ids.length
           station = sources.stations[ids[index]]
-          title = title + "#{sources.lines[station?.meta.line]?.meta.title}:
-          <ul class=\"inline\">
+          title = "
+          <h3 class=\"popover-title\"><ul class=\"inline\">
             <li class=\"dependency\" data-content=\"#{ids[index]}\">
               <a class=\"button#{station?.meta.line}\" href=\"./stations/#{ids[index]}.html\">
               <span>#{ids[index]}</span>
               </a>
             </li>
-          </ul>"
-          content = content + station?.meta.title 
+          </ul>#{sources.lines[station?.meta.line]?.meta.title}</h3>"
+          content = content + title + station?.meta.title 
           dependencies = dependencies ++ station.meta.dependencies # ++ is concat operator
           dependents = dependents ++ station.meta.dependents # ++ is concat operator
           if index != ids.length - 1
-            content = content + " "
-            title = title + "<div style='height:5px;'></div>"
+            content = content + "<div style='height:5px;'></div>"
         popoverDatum = new Object()
         # no need for title in present implementation
-        popoverDatum.title = title
+        # popoverDatum.title = title
         popoverDatum.content =  content
         popoverDatum.dependencies = dependencies
         popoverDatum.dependents = dependents
