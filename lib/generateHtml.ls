@@ -367,7 +367,7 @@ module.exports = (grunt) ->
         for index from 0 til ids.length
           station = sources.stations[ids[index]]
           title = "
-          <h3 class=\"popover-title\"><ul class=\"inline\">
+          <h3 class=\"popover-title onmap\"><ul class=\"inline\">
             <li class=\"dependency\" data-content=\"#{ids[index]}\">
               <a class=\"button#{station?.meta.line}\" href=\"./stations/#{ids[index]}.html\">
               <span>#{ids[index]}</span>
