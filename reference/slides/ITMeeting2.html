@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js.gz"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div id="cmep-it-summary" class="slide section level1">
+<h1>CMEP IT Summary</h1>
+<p>10 June 2013</p>
+</div>
+<div id="agenda" class="slide section level1">
+<h1>Agenda</h1>
+<ul class="incremental">
+<li><p>Development Process</p></li>
+<li><p>Definitions</p></li>
+<li><p>The CMEP curriculum site</p></li>
+<li><p>The LinkedIn discussion site</p></li>
+<li><p>Discussion</p></li>
+</ul>
+</div>
+<div id="the-development-process" class="slide section level1">
+<h1>The Development Process</h1>
+<div class="figure">
+<img src="Development_process_v1.png" alt="The Development Process" /><p class="caption">The Development Process</p>
+</div>
+</div>
+<div id="definitions" class="slide section level1">
+<h1>Definitions</h1>
+<ul class="incremental">
+<li><strong><code>Git</code></strong> is a modern distributed version control system written by Linus Torvalds - the man who wrote the Linux kernel.</li>
+<li><strong><code>Git</code></strong> is widely used for development and is beginning to be taken up in other spheres such as design.
+<ul class="incremental">
+<li>Each CMEP author and developer has a local copy of <code>Git</code> installed.</li>
+<li><code>Git</code> makes it easy to merge local copies into final canonical versions.</li>
+<li>Contributors do not need to use <code>Git</code></li>
+</ul></li>
+<li>A <strong>repository</strong> is a collection of files managed by <code>Git</code>.
+<ul class="incremental">
+<li>The CMEP repository for the curriculum site is called <a href="https://github.com/CMEPorg/CMEP-site">CMEP-site</a></li>
+<li>Each author and developer has a local copy of <a href="https://github.com/CMEPorg/CMEP-site">CMEP-site</a>.</li>
+<li>Contributors do not have access</li>
+</ul></li>
+<li><strong><a href="http://github.com"><code>GitHub</code></a></strong> is a cloud service that makes use of <code>Git</code>.
+<ul class="incremental">
+<li>It's an extremely useful service, but we are not in any way dependent on its continued existence.</li>
+<li>We have a <code>GitHub</code> account, enabling us to keep a copy of the <a href="https://github.com/CMEPorg/CMEP-site">CMEP-site</a> repository private there.</li>
+<li>On top of version control, <code>GitHub</code> provides:
+<ul class="incremental">
+<li>Compilation of <code>Markdown</code> documents into viewable web pages</li>
+<li>An Issues tracker</li>
+<li>A Web editor</li>
+<li>Easy access to the change history - who did what and when</li>
+<li>Activity tracking</li>
+<li>Change notifications.</li>
+</ul></li>
+</ul></li>
+<li><strong><code>Markdown</code></strong> is a wiki-like markup language.
+<ul class="incremental">
+<li><code>GitHub</code> displays <code>Markdown</code> files nicely so we can preview resources there.</li>
+</ul></li>
+<li><strong><a href="http://johnmacfarlane.net/pandoc"><code>Pandoc</code></a></strong> is a document converter written in Haskell.
+<ul class="incremental">
+<li>It is an <a href="https://code.google.com/p/pandoc/downloads/list">open source Haskell program</a>.</li>
+<li>It can compile <code>Markdown</code>, HTML and <em>core</em> <code>LaTeX</code> into HTML, <code>TeX</code>, Word documents, pdf, e-book, and slides.</li>
+<li>It uses <code>LaTeX</code> for mathematics notation.</li>
+<li>It can embed HTML to cope with special requirements such as embedded interactives.</li>
+</ul></li>
+<li><p><strong><a href="http://www.yaml.org/"><code>YAML</code></a></strong> is Yet Another Markup Language. We are using it to annotate documents with metadata.</p></li>
+<li>CMEP source documents contain:
+<ul class="incremental">
+<li>a metadata header in <code>YAML</code></li>
+<li>content in <code>Pandoc flavour Markdown</code>.</li>
+</ul></li>
+</ul>
+<p>See the <a href="https://github.com/CMEPorg/CMEP-site/tree/master/sources/resources/template">resource template here</a></p>
+<ul class="incremental">
+<li>The unfortunately named <strong><a href="http://gruntjs.com/"><code>Grunt</code></a></strong> is a task runner, which we will use to run the various tasks that convert source material into web sites and other output forms.
+<ul class="incremental">
+<li>For example we have written a grunt task <a href="http://gruntjs.com/plugins/pandoc">grunt-panda</a> to run pandoc over directories of markdown sources.</li>
+</ul></li>
+</ul>
+</div>
+<div id="the-cmep-curriculum-site" class="slide section level1">
+<h1>The CMEP curriculum site</h1>
+<ul class="incremental">
+<li><p>All source material for the site lives in <a href="https://github.com/CMEPorg/CMEP-site/tree/master/sources">CMEP-site/sources</a>.</p></li>
+<li>We'll be compiling these sources into the various preview and production sites, sub-sites, and review copies.
+<ul class="incremental">
+<li>local preview for authors</li>
+<li>limited previews for contributors</li>
+<li>level 1 to 5 distributions for the various reviewers as in Vicky's memo</li>
+<li>published version</li>
+</ul></li>
+<li>We expect the final site(s) will not need a database or any active server-side processing.
+<ul class="incremental">
+<li>It should therefore be
+<ul class="incremental">
+<li>very fast</li>
+<li>and very secure.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="linkedin-discussion-site" class="slide section level1">
+<h1>LinkedIn Discussion Site</h1>
+<ul class="incremental">
+<li>Why LinkedIn?
+<ul class="incremental">
+<li>It's seen as the leading social networking site for professionals</li>
+<li>It offers closed access discussion groups.</li>
+<li><a href="http://www.linkedin.com/myGroups?trk=nav_responsive_sub_nav_groups">LinkedIn Group Demo</a></li>
+</ul></li>
+<li>We need a name for the new group</li>
+</ul>
+</div>
+<div id="qa" class="slide section level1">
+<h1>Q&amp;A</h1>
+<ul class="incremental">
+<li>Post Graduate help
+<ul class="incremental">
+<li>2 candidates applied</li>
+<li>on hold pending part III exams</li>
+</ul></li>
+<li>More shopping
+<ul class="incremental">
+<li>A UPS power supply for the new server</li>
+<li>A laptop for Steve when he returns</li>
+<li>UCS copies of Office for Vicky/Steve laptops</li>
+<li>Licences for 5 seats of <a href="https://www.sublimetext.com/buy">Sublime Text</a></li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>
