@@ -6,7 +6,7 @@ $(document).ready(function() {
   /* kick MathJax to render the opened accordion element */
   $(".accordion-body").each(function(index, element) {
     $(element).on('shown', function() {
-      console.log('showing'+index);
+      //console.log('showing'+index);
       MathJax.Hub.Queue(["Typeset",MathJax.Hub, element]);
     })
   });
@@ -26,22 +26,22 @@ $(document).ready(function() {
         trigger: "manual",
         placement: function(context, source) {
           return "bottom";
-          /* -- always bottom.
-          var position = $(source).position();
-
-          if (position.top < 120)
-            return "bottom";
-          return "top";
-          */
         },
         html:true
       }).click(function(e){
         $("svg [id^='node']").not($(this)).popover('hide');
+        var popup1=$(".popover");
         $(this).popover('toggle');
+        if(popup1 && popup1.length > 0) {
+          stationOut.call($(this), e, true); // get context right
+        }
+        else {
+          stationOver.call($(this), e, true); // get context right
+          $(".popover")[0].scrollIntoView(false);
+        }
         MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
-        stationOver.call($(this), e, true); // get context right
         e.stopPropagation();
-      }).hover(stationOver, stationOut);
+      });//.hover(stationOver, stationOut);
     });
     $(document).click(function(e) {
       /* close popover on click outside */
@@ -62,7 +62,7 @@ function stationOver(e, force) {
   // TODO: this only works because there's only one source of popovers
   id = $(this).attr("station-id");
   relevantStationIds = findRelevantStationIds(id);
-  console.log(relevantStationIds);
+  //console.log(relevantStationIds);
   relevantEdges = $.grep($("svg .edge"), function(elem, index) {
     /* does this edge connect two relevant stations */
     foundOneRelevantStationEnd = false;
@@ -117,9 +117,9 @@ function findAllDependencies(id) {
       return s.indexOf(id + "-") > -1 || s.indexOf("-" + id) > -1;
     })[0];
   }
-  console.log("Station " + id);
+  //console.log("Station " + id);
   var dependencies = popoverData[String(id)].dependencies;
-  console.log(dependencies);
+  //console.log(dependencies);
   var recursiveDependencies = dependencies;
   for (var i = 0; i < dependencies.length; i++) {
     if (id.split("-").indexOf(dependencies[i]) > -1) {
