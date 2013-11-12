@@ -642,17 +642,17 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "lsc" # newer doesn't play nicely here - why?
+      "newer:lsc" # newer does play nicely here - why?
       "clearance"
-      "newer:panda:pass1" # newer does play nicely here - why?
+      "panda:pass1" # newer doesn't play nicely here - why?
       "expandMetadata" # newer doesn't play nicely here (even with our dummy files above!)
       "lastUpdated"
     ])
     if _.contains(targets, "html")
       grunt.task.run([
         "tubemap:svg" # newer doesn't play nicely here 
-        "newer:panda:pass2html" # newer does play nicely here
-        "newer:copy:assets" # newer does play nicely here
+        "newer:panda:pass2html" # newer does play nicely here -why? maybe because it's got dests?
+        "newer:copy:assets" # newer does play nicely here - why?
         "generateHtml"
       ])
     if _.contains(targets, "printables")
