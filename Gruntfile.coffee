@@ -187,7 +187,7 @@ module.exports = (grunt) ->
     watch:
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-        tasks: ["recess"]
+        tasks: ["newer:recess"]
 
       livereload:
         files: [
@@ -197,7 +197,10 @@ module.exports = (grunt) ->
           "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
-        tasks: ["livereload"]
+        # watch can now handle livereload!
+        options:
+          livereload: true
+        
 
       dev:
         files: [
@@ -221,9 +224,19 @@ module.exports = (grunt) ->
       scripts:
         files: [
           "<%= yeoman.appSources %>/scripts/*"
+          "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "copy:assets"
+          "newer:copy:assets"
+        ]
+
+      # The map.js script has metadata created by generateHtml
+      # TODO: possibly refactor this out into its own task?
+      mapScript: 
+        files: [
+          "<%= yeoman.appSources %>/scripts/map.js"
+        ]
+        tasks: [
           "generateHtml"
         ]
 
@@ -527,8 +540,6 @@ module.exports = (grunt) ->
   # register stripMeta task (Unused ???)
   # stripMeta grunt
 
-  grunt.renameTask "regarde", "watch"
-
   grunt.registerTask "server", (target) ->
     if target is "dist"
       grunt.task.run([
@@ -544,7 +555,7 @@ module.exports = (grunt) ->
         "recess"
         "copy:server"
         "dev"
-        "livereload-start"
+        # livereload now handled in watch
         "connect:livereload"
         "open"
         "watch"
@@ -619,17 +630,17 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "lsc"
+      "newer:lsc"
       "clearance"
-      "panda:pass1"
+      "newer:panda:pass1"
       "expandMetadata"
       "lastUpdated"
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:svg"
-        "panda:pass2html"
-        "copy:assets"
+        "newer:tubemap:svg"
+        "newer:panda:pass2html"
+        "newer:copy:assets"
         "generateHtml"
       ])
     if _.contains(targets, "printables")
