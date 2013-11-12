@@ -30,15 +30,14 @@ $(document).ready(function() {
         html:true
       }).click(function(e){
         $("svg [id^='node']").not($(this)).popover('hide');
-        var popup1=$(".popover");
+        var oldPopover=$(".popover");
         $(this).popover('toggle');
-        if(popup1 && popup1.length > 0) {
+        if(oldPopover && oldPopover.length > 0) {
           stationOut.call($(this), e, true); // get context right
         }
-        else {
-          stationOver.call($(this), e, true); // get context right
-          $(".popover")[0].scrollIntoView(false);
-        }
+        stationOver.call($(this), e, true); // get context right
+        $(".popover")[0].scrollIntoView(false);
+
         MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
         e.stopPropagation();
       });//.hover(stationOver, stationOut);
