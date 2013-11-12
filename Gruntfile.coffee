@@ -146,7 +146,13 @@ module.exports = (grunt) ->
 
     # Validate, weed, and expand metadata
     expandMetadata:
-      options: null
+      task:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.sources %>"
+          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+        ] 
+        options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
@@ -282,6 +288,12 @@ module.exports = (grunt) ->
       server: ".tmp"
 
       partials: "<%= yeoman.partials %>"
+
+      newer: 
+        files: [
+          dot: true
+          src: ["node_modules/grunt-newer/.cache/**"]
+        ]
 
       app: 
         files: [
@@ -630,17 +642,17 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "newer:lsc"
+      "lsc" # newer doesn't play nicely here - why?
       "clearance"
-      "newer:panda:pass1"
-      "expandMetadata"
+      "newer:panda:pass1" # newer does play nicely here - why?
+      "expandMetadata" # newer doesn't play nicely here (even with our dummy files above!)
       "lastUpdated"
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "newer:tubemap:svg"
-        "newer:panda:pass2html"
-        "newer:copy:assets"
+        "tubemap:svg" # newer doesn't play nicely here 
+        "newer:panda:pass2html" # newer does play nicely here
+        "newer:copy:assets" # newer does play nicely here
         "generateHtml"
       ])
     if _.contains(targets, "printables")
