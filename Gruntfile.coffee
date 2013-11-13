@@ -14,6 +14,20 @@ latex = require './lib/recursiveLatex.js'
 path = require 'path'
 lastUpdated = (require './lib/lastUpdated.js')
 
+# Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
+# This is a catch-all of src files which require rerunning of the above tasks on modification
+dummyFiles = [
+  src: [
+    "<%= yeoman.sources %>/**/*.md" 
+    "!<%= yeoman.sources %>/**/template.md" 
+    "!<%= yeoman.sources %>/**/template/*"
+    "!<%= yeoman.sources %>/Temporary/*"
+    "!<%= yeoman.sources %>/Temporary/**/*.md"
+    "lib/*.ls"
+    "layouts/*.html"
+  ]
+] 
+
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
 
@@ -77,8 +91,12 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       resources:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
         options: null
       examQuestions:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -96,6 +114,8 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
+          dest: "<%= yeoman.sources %>"
         ]
       pass2html:
         options:
@@ -147,16 +167,16 @@ module.exports = (grunt) ->
     # Validate, weed, and expand metadata
     expandMetadata:
       task:
-        files: [
-          expand: true
-          cwd: "<%= yeoman.sources %>"
-          src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
-        ] 
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
         options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
-      options: null
+      task:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
+        options: null
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
@@ -165,11 +185,15 @@ module.exports = (grunt) ->
     # Create a tubemap from metadata
     tubemap:
       svg:
-        files:
-          "<%= yeoman.appSources %>/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+        files: [
+          dest: "<%= yeoman.appSources %>/images/tubeMap.svg"
+          src: "<%= yeoman.partials %>/expanded.yaml"
+        ]
       png:
-        files:
-          "<%= yeoman.appSources %>/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
+        files: [
+          dest: "<%= yeoman.appSources %>/images/tubeMap.png"
+          src: "<%= yeoman.partials %>/expanded.yaml"
+        ]
 
     lsc:
       options:
@@ -642,18 +666,18 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "newer:lsc" # newer does play nicely here - why?
-      "clearance"
-      "panda:pass1" # newer doesn't play nicely here - why?
-      "expandMetadata" # newer doesn't play nicely here (even with our dummy files above!)
-      "lastUpdated"
+      "newer:lsc" 
+      "clearance" # no newer implementation needed
+      "newer:panda:pass1" 
+      "newer:expandMetadata"
+      "newer:lastUpdated" 
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:svg" # newer doesn't play nicely here 
-        "newer:panda:pass2html" # newer does play nicely here -why? maybe because it's got dests?
-        "newer:copy:assets" # newer does play nicely here - why?
-        "generateHtml"
+        "newer:tubemap:svg" 
+        "newer:panda:pass2html" 
+        "newer:copy:assets" 
+        "newer:generateHtml" # newer not yet implemented
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
