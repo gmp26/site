@@ -267,6 +267,7 @@ module.exports = (grunt) ->
           "<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
+          "expandMetadata"
           "generateHtml"
         ]
 
