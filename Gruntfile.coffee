@@ -180,7 +180,10 @@ module.exports = (grunt) ->
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
-      options: null
+      task:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
+        options: null
 
     # Create a tubemap from metadata
     tubemap:
@@ -678,14 +681,14 @@ module.exports = (grunt) ->
         "newer:tubemap:svg" 
         "newer:panda:pass2html" 
         "newer:copy:assets" 
-        "newer:generateHtml" # newer not yet implemented
+        "newer:generateHtml" 
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
-        "panda:pass2printables"
-        "generatePrintables"
-        "latex:printables"
-        "copy:printables"
+        "newer:panda:pass2printables"
+        "newer:generatePrintables"
+        "newer:latex:printables"
+        "newer:copy:printables"
       ])
     else if _.contains(targets, "quick")
       grunt.task.run([

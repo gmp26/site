@@ -3,7 +3,7 @@
 $(document).ready(function() {
   // Handler for .ready() called.
 
-  // Snipper to add popover callback functionality
+  // Snippet to add popover callback functionality
   // Not needed strictly, but possibly useful for refactor so leaving it here
   var tmp = $.fn.popover.Constructor.prototype.show; $.fn.popover.Constructor.prototype.show = function () { tmp.call(this); if (this.options.callback) { this.options.callback(); } };
 
