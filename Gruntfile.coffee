@@ -12,7 +12,8 @@ integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
 path = require 'path'
-lastUpdated = (require './lib/lastUpdated.js')
+lastUpdated = require './lib/lastUpdated.js'
+timer = require 'grunt-timer'
 
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
@@ -21,6 +22,7 @@ module.exports = (grunt) ->
 
   _ = grunt.util._
 
+  timer.init(grunt)
   pass2 = (require './lib/pass2.js')(grunt, path)
 
   # load all grunt tasks
