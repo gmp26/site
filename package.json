@@ -13,7 +13,8 @@
     "should": "~1.2.2",
     "grunt-usemin": "~0.1.12",
     "color-string": "~0.1.2",
-    "cheerio": "~0.12.3"
+    "cheerio": "~0.12.3",
+    "time-grunt": "~0.2.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
