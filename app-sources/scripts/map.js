@@ -3,6 +3,10 @@
 $(document).ready(function() {
   // Handler for .ready() called.
 
+  // Snippet to add popover callback functionality
+  // Not needed strictly, but possibly useful for refactor so leaving it here
+  var tmp = $.fn.popover.Constructor.prototype.show; $.fn.popover.Constructor.prototype.show = function () { tmp.call(this); if (this.options.callback) { this.options.callback(); } };
+
   /* kick MathJax to render the opened accordion element */
   $(".accordion-body").each(function(index, element) {
     $(element).on('shown', function() {
@@ -20,45 +24,47 @@ $(document).ready(function() {
     $("svg [id^='node']").each(function(){
       id = $(this).attr("station-id");
       $(this).popover({
-        title: ""/* popoverData[String(id)].title */,
+        title: "",
         content: popoverData[String(id)].content,
         container:"body",
+        callback: function() { // TODO: not needed strictly but useful for possible refactor?
+        },
         trigger: "manual",
         placement: function(context, source) {
           return "bottom";
         },
         html:true
       }).click(function(e){
+        thisPopoverVisible = $(this).data('popover').tip().hasClass('in');
         $("svg [id^='node']").not($(this)).popover('hide');
-        var oldPopover=$(".popover");
         $(this).popover('toggle');
-        if(oldPopover && oldPopover.length > 0) {
-          stationOut.call($(this), e, true); // get context right
+        // TODO: this logic only works because there's only one source of popovers
+        if (thisPopoverVisible) {
+          stationOut(e);
         }
-        stationOver.call($(this), e, true); // get context right
-        $(".popover")[0].scrollIntoView(false);
+        else {
+          stationOver.call($(this), e); // get context right
+          // Scroll the popover into view if necessary  
+          $(".popover").last().scrollintoview({ duration: 'slow' });
+        }
 
         MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(".popover-content").get()]);
         e.stopPropagation();
-      });//.hover(stationOver, stationOut);
+      });
     });
     $(document).click(function(e) {
       /* close popover on click outside */
       if (!$(e.target).is("svg [id^='node']") && $(e.target).closest(".popover").length == 0) {
         $("svg [id^='node']").popover('hide');
-        stationOut(e, true);
+        stationOut(e);
       }
     });
   }
 
 });
 
-function stationOver(e, force) {
+function stationOver(e) {
   /* mouseenter event */
-  if (!force && ($(".popover").is(":visible"))) 
-    return;
-  // only do things if no popover
-  // TODO: this only works because there's only one source of popovers
   id = $(this).attr("station-id");
   relevantStationIds = findRelevantStationIds(id);
   //console.log(relevantStationIds);
@@ -90,12 +96,8 @@ function stationOver(e, force) {
   $("svg [id^='node']").filter(relevantStations).fadeTo('fast',1.0);
 }
 
-function stationOut(e, force) {
+function stationOut(e) {
   /* mouseout event */
-  if (!force && ($(".popover").is(":visible"))) 
-    return;
-  // only do things if no popover
-  // TODO: this only works because there's only one source of popovers
   $("svg .edge").fadeTo('fast',1.0);
   $("svg [id^='node']").fadeTo('fast',1.0);
 }

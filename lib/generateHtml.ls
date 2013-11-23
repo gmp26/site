@@ -38,6 +38,7 @@ module.exports = (grunt) ->
     sourcesDir = grunt.config.get "yeoman.sources"
     partialsDir = grunt.config.get "yeoman.partials"
     appDir = grunt.config.get "yeoman.app"
+    appSourcesDir = grunt.config.get "yeoman.appSources"
 
     # make html from resource layout and data
     _head = grunt.file.read "layouts/_head.html"
@@ -353,6 +354,7 @@ module.exports = (grunt) ->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
       grunt.file.write "#{appDir}/styles/lines.less", css
 
+    # TODO: refactor into separate task?
     function parseSVG(data)
       # Removes titles and generates popover markup
       $ = cheerio.load data 
@@ -393,7 +395,7 @@ module.exports = (grunt) ->
         # associative array
         popoverData[ids.join("-")] = popoverDatum
       # Add it to the map.js file
-      javascript = grunt.file.read "#{appDir}/scripts/map.js"
+      javascript = grunt.file.read "#{appSourcesDir}/scripts/map.js"
       javascript = "popoverData = " + JSON.stringify(popoverData) + ";" + javascript
       grunt.file.write "#{appDir}/scripts/map.js", javascript
       # we don't want tooltips

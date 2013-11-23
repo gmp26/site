@@ -15,6 +15,20 @@ path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
 
+# Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
+# This is a catch-all of src files which require rerunning of the above tasks on modification
+dummyFiles = [
+  src: [
+    "<%= yeoman.sources %>/**/*.md" 
+    "!<%= yeoman.sources %>/**/template.md" 
+    "!<%= yeoman.sources %>/**/template/*"
+    "!<%= yeoman.sources %>/Temporary/*"
+    "!<%= yeoman.sources %>/Temporary/**/*.md"
+    "lib/*.ls"
+    "layouts/*.html"
+  ]
+] 
+
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
 
@@ -79,8 +93,12 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       resources:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
         options: null
       examQuestions:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -98,6 +116,8 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
+          dest: "<%= yeoman.sources %>"
         ]
       pass2html:
         options:
@@ -148,24 +168,37 @@ module.exports = (grunt) ->
 
     # Validate, weed, and expand metadata
     expandMetadata:
-      options: null
+      task:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
+        options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
-      options: null
+      task:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
+        options: null
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
-      options: null
+      task:
+        # Dummy files to make newer play nicely!
+        files: dummyFiles
+        options: null
 
     # Create a tubemap from metadata
     tubemap:
       svg:
-        files:
-          "<%= yeoman.appSources %>/images/tubeMap.svg": "<%= yeoman.partials %>/expanded.yaml"
+        files: [
+          dest: "<%= yeoman.appSources %>/images/tubeMap.svg"
+          src: "<%= yeoman.partials %>/expanded.yaml"
+        ]
       png:
-        files:
-          "<%= yeoman.appSources %>/images/tubeMap.png": "<%= yeoman.partials %>/expanded.yaml"
+        files: [
+          dest: "<%= yeoman.appSources %>/images/tubeMap.png"
+          src: "<%= yeoman.partials %>/expanded.yaml"
+        ]
 
     lsc:
       options:
@@ -189,7 +222,7 @@ module.exports = (grunt) ->
     watch:
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-        tasks: ["recess"]
+        tasks: ["newer:recess"]
 
       livereload:
         files: [
@@ -199,7 +232,10 @@ module.exports = (grunt) ->
           "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
-        tasks: ["livereload"]
+        # watch can now handle livereload!
+        options:
+          livereload: true
+        
 
       dev:
         files: [
@@ -223,9 +259,20 @@ module.exports = (grunt) ->
       scripts:
         files: [
           "<%= yeoman.appSources %>/scripts/*"
+          "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "copy:assets"
+          "newer:copy:assets"
+        ]
+
+      # The map.js script has metadata created by generateHtml
+      # TODO: possibly refactor this out into its own task?
+      mapScript: 
+        files: [
+          "<%= yeoman.appSources %>/scripts/map.js"
+        ]
+        tasks: [
+          "expandMetadata"
           "generateHtml"
         ]
 
@@ -271,6 +318,12 @@ module.exports = (grunt) ->
       server: ".tmp"
 
       partials: "<%= yeoman.partials %>"
+
+      newer: 
+        files: [
+          dot: true
+          src: ["node_modules/grunt-newer/.cache/**"]
+        ]
 
       app: 
         files: [
@@ -432,8 +485,9 @@ module.exports = (grunt) ->
             "*.{ico,txt}"
             "fonts/*"
             ".htaccess"
-            "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
+            "bower_components/**/*.js"  # can we restrict to *.min.js in dist? NO! usemin concats and minifies
             "scripts/map.js"
+            "scripts/jquery.scrollintoview.min.js"
             "scripts/underscore-min.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
@@ -529,8 +583,6 @@ module.exports = (grunt) ->
   # register stripMeta task (Unused ???)
   # stripMeta grunt
 
-  grunt.renameTask "regarde", "watch"
-
   grunt.registerTask "server", (target) ->
     if target is "dist"
       grunt.task.run([
@@ -546,15 +598,16 @@ module.exports = (grunt) ->
         "recess"
         "copy:server"
         "dev"
-        "livereload-start"
+        # livereload now handled in watch
         "connect:livereload"
         "open"
         "watch"
       ])
 
   grunt.registerTask "test", [
-    "clean:app"
-    "clean:test"
+    #"clean:app"
+    #"clean:test"
+    "clean"
     "dev:html"
     # "lsc"
     # "panda:pass1"
@@ -621,25 +674,25 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "lsc"
-      "clearance"
-      "panda:pass1"
-      "expandMetadata"
-      "lastUpdated"
+      "newer:lsc" 
+      "clearance" # no newer implementation needed
+      "newer:panda:pass1" 
+      "newer:expandMetadata"
+      "newer:lastUpdated" 
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:svg"
-        "panda:pass2html"
-        "copy:assets"
-        "generateHtml"
+        "newer:tubemap:svg" 
+        "newer:panda:pass2html" 
+        "newer:copy:assets" 
+        "newer:generateHtml" 
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
-        "panda:pass2printables"
-        "generatePrintables"
-        "latex:printables"
-        "copy:printables"
+        "newer:panda:pass2printables"
+        "newer:generatePrintables"
+        "newer:latex:printables"
+        "newer:copy:printables"
       ])
     else if _.contains(targets, "quick")
       grunt.task.run([

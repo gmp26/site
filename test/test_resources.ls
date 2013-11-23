@@ -73,6 +73,11 @@ describe "Testing resources expansion", (_it)->
 
   describe "G2_RT2 resource", (_it) ->
 
+    var html
+
+    before ->
+      html := grunt.file.read 'app/resources/G2_RT2/index.html'
+
     it "index metadata should exist",  ->
       should.exist res.index.meta
 
@@ -82,7 +87,7 @@ describe "Testing resources expansion", (_it)->
 
     # acknowledgement text should exist
     it "should contain acknowledgement text", ->
-      should.exist res.index.meta.acknowledgementText
+      html.should.match /Reproduced by kind permission of/
 
   describe 'priors', (_it) ->
     it "should delete bad prior references", ->

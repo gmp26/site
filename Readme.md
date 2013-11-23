@@ -72,9 +72,9 @@ Make sure you have [`node`](http://nodejs.org/),
 [`grunt`](http://gruntjs.com/), 
 [`bower`](http://bower.io/),
 [`livescript`](http://livescript.net), 
-[`pandoc`](http://johnmacfarlane.net/pandoc/), and
-[`graphviz`](http://www.graphviz.org/Download.php) installed.
-
+[`pandoc`](http://johnmacfarlane.net/pandoc/),
+[`graphviz`](http://www.graphviz.org/Download.php), and
+[TexLive 2013](http://www.tug.org/texlive/) installed.
 
 ### Installation
 
