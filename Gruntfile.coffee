@@ -485,8 +485,9 @@ module.exports = (grunt) ->
             "*.{ico,txt}"
             "fonts/*"
             ".htaccess"
-            "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
+            "bower_components/**/*.js"  # can we restrict to *.min.js in dist? NO! usemin concats and minifies
             "scripts/map.js"
+            "scripts/jquery.scrollintoview.min.js"
             "scripts/underscore-min.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
@@ -604,8 +605,9 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
-    "clean:app"
-    "clean:test"
+    #"clean:app"
+    #"clean:test"
+    "clean"
     "dev:html"
     # "lsc"
     # "panda:pass1"
