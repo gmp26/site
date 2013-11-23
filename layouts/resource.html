@@ -103,6 +103,11 @@
 
   </div>
 
+<% if(ackText) { %>
+  <span class ="small muted pull-left"><%= ackText %></span>
+<% } %>
+
+
 <% if(meta.lastUpdated) { %>
       <span class="small muted pull-right">Last updated <%= meta.lastUpdated %></span>
 <% } %>

@@ -46,7 +46,12 @@ module.exports = (grunt) ->
     _foot = grunt.file.read "layouts/_foot.html"
     _linesMenu = grunt.file.read "layouts/_linesMenu.html"
     _piMenu = grunt.file.read "layouts/_piMenu.html"
-    
+
+    #    
+    # read in acknowledgements hash
+    #
+    metadata.acknowledgements = grunt.file.readYAML "#{sourcesDir}/acknowledgements.yaml"
+
     getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir+'/html', 'examQuestions'
     getResourceData = (require './getResourceData.js') grunt, sources, partialsDir+'/html'
     getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir+'/html'
@@ -147,11 +152,6 @@ module.exports = (grunt) ->
     #         alias: Solution
 
     #
-    # Read in acknowledgements
-    #
-    acks = grunt.file.readYAML "#{sourcesDir}/examQuestions/sources.yaml"
-
-    #
     # Render individual questions to partialsDir
     #
     referenceFor = (qmeta) -> {
@@ -160,7 +160,7 @@ module.exports = (grunt) ->
         qmeta.year ? "null"
         if qmeta.qno then "Q#{qmeta.qno}" else "null"
       ].join ', '
-      ack: if qmeta.source then acks[qmeta.source].acknowledgement else void
+      ack: if qmeta.source then metadata.acknowledgements[qmeta.source].acknowledgement else void
     }
 
     #
@@ -314,6 +314,8 @@ module.exports = (grunt) ->
       indexMeta = files.index.meta
       layout = getLayout sources, 'resources', indexMeta
       content = getResourceData resourceName, files, indexMeta
+      ackText = if indexMeta.source then metadata.acknowledgements[indexMeta.source].acknowledgement else void
+
       # grunt.log.error "id=#{indexMeta.id}: title=#{indexMeta.title}, lastUpdated=#{indexMeta.lastUpdated}"
       html = grunt.template.process grunt.file.read(layout), {
         data:
@@ -323,6 +325,7 @@ module.exports = (grunt) ->
           resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
           content: content
           meta: indexMeta
+          ackText: ackText
           rootUrl: '../..'
           resourcesUrl: '..'
       }

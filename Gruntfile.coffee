@@ -12,7 +12,8 @@ integrate = require './lib/integrate.js'
 lrSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 latex = require './lib/recursiveLatex.js'
 path = require 'path'
-lastUpdated = (require './lib/lastUpdated.js')
+lastUpdated = require './lib/lastUpdated.js'
+timer = require 'grunt-timer'
 
 # Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # This is a catch-all of src files which require rerunning of the above tasks on modification
@@ -35,6 +36,7 @@ module.exports = (grunt) ->
 
   _ = grunt.util._
 
+  timer.init(grunt)
   pass2 = (require './lib/pass2.js')(grunt, path)
 
   # load all grunt tasks
