@@ -41,11 +41,7 @@
     "grunt-panda": "~0.2.5",
     "grunt-mocha-test": "~0.5.0",
     "cheerio": "~0.12.3",
-<<<<<<< HEAD
-    "grunt-timer": "~0.1.1"
-=======
     "grunt-newer": "~0.5.4"
->>>>>>> bluxu-master
   },
   "engines": {
     "node": ">=0.8.0"
