@@ -399,7 +399,6 @@ module.exports = (grunt) ->
       javascript = "popoverData = " + JSON.stringify(popoverData) + ";" + javascript
       grunt.file.write "#{appDir}/scripts/map.js", javascript
       # we don't want tooltips
-      $('title').remove()
-      # TODO we don't want the XML header...
-      return $.html()
-
+      $('title').remove!
+      # we don't want XML headers (first 3 lines)
+      return $.html!.split('\n').slice(3).join('\n');
