@@ -400,5 +400,6 @@ module.exports = (grunt) ->
       grunt.file.write "#{appDir}/scripts/map.js", javascript
       # we don't want tooltips
       $('title').remove()
+      # TODO we don't want the XML header...
       return $.html()
 
