@@ -20,8 +20,10 @@ The site copy is at `https://github.com/CMEPorg/CMEP-sources.git`.
 
 ### Add CMEPorg as a remote
 First time only
-`$ git remote add CMEPorg https://github.com/CMEPorg/CMEP-sources.git`
-
+```
+$ cd CMEP-sources
+$ git remote add CMEPorg https://github.com/CMEPorg/CMEP-sources.git
+```
 The new remote is visible with `git remote -v`
 
 ### Fetch it from GitHub
@@ -70,12 +72,12 @@ $ git commit -am'updated from site copy'
 ```
 
 ### Resolving any merge conflict
-This usually works fine, but if there are any files that have been edited in both the site copy and your local master copy there may be merge conflict that need to be resolved manually. Fortunately there is a good tool to do this
+This usually works fine, but if there are any files that have been edited in both the site copy and your local master copy there may be some merge conflicts that need to be resolved manually. Fortunately there is a good tool to do this
 ```
 $ git mergetool
 ```
 
-Use the up-down keys to navigate through the conflicts, selecting the version you want to keep with the left-right keys. When you are finished save and quit. Git will repeat this process until all the merge conflicts have been resolved. Once done, commit your merged copy.
+Use the up-down keys to navigate through the conflicts, selecting the version you want to keep with the left-right keys. When you are finished save and quit. Git will repeat this process until all files with merge conflicts have been resolved. Once done, commit your merged copy.
 ```
 $ git commit -am'updated from site copy'
 ``` 
