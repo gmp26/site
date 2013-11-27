@@ -67,7 +67,7 @@ $ git pull
 ### Switch back to your own master and merge
 ```
 $ git checkout master
-$ git merge
+$ git merge site
 $ git commit -am'updated from site copy'
 ```
 
