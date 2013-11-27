@@ -176,8 +176,10 @@ module.exports = (grunt) ->
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
       task:
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+        files: [
+          src: ["<%= yeoman.partials %>/html/*.html", "<%= yeoman.partials %>/html/**/*.html"]
+          dest: "<%= yeoman.app %>"
+        ]
         options: null
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
@@ -485,9 +487,8 @@ module.exports = (grunt) ->
             "*.{ico,txt}"
             "fonts/*"
             ".htaccess"
-            "bower_components/**/*.js"  # can we restrict to *.min.js in dist? NO! usemin concats and minifies
+            "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
             "scripts/map.js"
-            "scripts/jquery.scrollintoview.min.js"
             "scripts/underscore-min.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
@@ -605,9 +606,8 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
-    #"clean:app"
-    #"clean:test"
-    "clean"
+    "clean:app"
+    "clean:test"
     "dev:html"
     # "lsc"
     # "panda:pass1"
