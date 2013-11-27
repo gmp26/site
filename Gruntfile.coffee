@@ -168,19 +168,41 @@ module.exports = (grunt) ->
 
     # Validate, weed, and expand metadata
     expandMetadata:
-      task:
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
-        options: null
+      options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
-      task:
+      stations:
         files: [
-          src: ["<%= yeoman.partials %>/html/*.html", "<%= yeoman.partials %>/html/**/*.html"]
-          dest: "<%= yeoman.app %>"
+          expand: true
+          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/station.html", "layouts/_*.html"]
+          # no dest files so that newer has the correct behaviour!
         ]
-        options: null
+      resources:
+        files: [
+          expand: true
+          src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
+          # no dest files so that newer has the correct behaviour!
+        ]
+      topLevelPages:
+        files: [
+          expand: true
+          src: ["<%= yeoman.partials %>/html/*.html", "layouts/default.html", "layouts/_*.html"]
+          # no dest files so that newer has the correct behaviour!
+        ]
+      pervasiveIdeas:
+        files: [
+          expand: true
+          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
+          # no dest files so that newer has the correct behaviour!
+        ]
+      examQuestions:
+        files: [
+          expand: true
+          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
+          # no dest files so that newer has the correct behaviour!
+        ]
+
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
@@ -677,7 +699,7 @@ module.exports = (grunt) ->
       "newer:lsc" 
       "clearance" # no newer implementation needed
       "newer:panda:pass1" 
-      "newer:expandMetadata"
+      "expandMetadata" # not expensive so can afford not to run newer
       "newer:lastUpdated" 
     ])
     if _.contains(targets, "html")
