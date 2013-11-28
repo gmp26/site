@@ -173,36 +173,15 @@ module.exports = (grunt) ->
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
       stations:
-        files: [
-          expand: true
-          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/station.html", "layouts/_*.html"]
-          # no dest files so that newer has the correct behaviour!
-        ]
+        src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/station.html", "layouts/_*.html"]
       resources:
-        files: [
-          expand: true
-          src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
-          # no dest files so that newer has the correct behaviour!
-        ]
+        src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
       topLevelPages:
-        files: [
-          expand: true
-          src: ["<%= yeoman.partials %>/html/*.html", "layouts/default.html", "layouts/_*.html"]
-          # no dest files so that newer has the correct behaviour!
-        ]
+        src: ["<%= yeoman.partials %>/html/*.html", "layouts/default.html", "layouts/_*.html"]
       pervasiveIdeas:
-        files: [
-          expand: true
-          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
-          # no dest files so that newer has the correct behaviour!
-        ]
+        src: ["<%= yeoman.partials %>/html/pervasiveIdeas/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
       examQuestions:
-        files: [
-          expand: true
-          src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
-          # no dest files so that newer has the correct behaviour!
-        ]
-
+        src: ["<%= yeoman.partials %>/html/examQuestion/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
