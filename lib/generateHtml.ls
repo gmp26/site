@@ -171,7 +171,7 @@ module.exports = (grunt) ->
     _.each @filesSrc, (filepath, key) ->
       pathParts = filepath.split("/")
       len = pathParts.length
-      filename = pathParts[len - 1]
+      filename = pathParts[len - 1].split(".")[0]
       if pathParts[len - 2] is "layouts"
         layouts.push filename
       else
@@ -290,7 +290,9 @@ module.exports = (grunt) ->
       #
       # stations
       #
+      grunt.verbose.writeln "STATIONS"
       for stid, data of stations
+        grunt.verbose.writeln stid + partials
         if !layouts.length && stid not in partials
           # we don't need to recompile
           continue
