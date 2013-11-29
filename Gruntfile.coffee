@@ -15,7 +15,6 @@ path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
 
-## Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # This is a catch-all of src files which require rerunning of the above tasks on modification
 dummyFiles = [
@@ -94,12 +93,10 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       resources:
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+        src: "<%= yeoman.partials %>/sources.yaml"
         options: null
       examQuestions:
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+        src: "<%= yeoman.partials %>/sources.yaml"
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -171,7 +168,7 @@ module.exports = (grunt) ->
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
-      stations:
+      stations: 
         src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/station.html", "layouts/_*.html"]
       resources:
         src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
@@ -612,7 +609,7 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
-    "clean:app"
+    # "clean:app"
     "clean:test"
     "dev:html"
     # "lsc"

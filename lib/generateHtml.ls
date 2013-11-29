@@ -374,7 +374,7 @@ module.exports = (grunt) ->
         # The title contains the element id according to SVG spec
         # Maybe better to use http://www.graphviz.org/content/preservation-dot-id-svg
         ids = $(elem).text().split("-")
-        grunt.verbose.writeln 'Station ' + ids[0]
+        # grunt.verbose.writeln 'Station ' + ids[0]
         $(elem).parent().attr 'station-id', ids.join("-")
         # Generate appropriate popover data
         content = ''
