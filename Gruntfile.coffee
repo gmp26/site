@@ -116,8 +116,6 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
-          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
-          dest: "<%= yeoman.sources %>"
         ]
       pass2html:
         options:
@@ -677,7 +675,7 @@ module.exports = (grunt) ->
     grunt.task.run ([ 
       "newer:lsc" 
       "clearance" # no newer implementation needed
-      "newer:panda:pass1" 
+      "panda:pass1" 
       "expandMetadata" # not expensive so can afford not to run newer
       "newer:lastUpdated" 
     ])
