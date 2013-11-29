@@ -15,6 +15,7 @@ path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
 
+## Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # This is a catch-all of src files which require rerunning of the above tasks on modification
 dummyFiles = [
@@ -93,10 +94,12 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       resources:
+#        # Dummy files to make newer play nicely!
         # Dummy files to make newer play nicely!
         files: dummyFiles
         options: null
       examQuestions:
+#        # Dummy files to make newer play nicely!
         # Dummy files to make newer play nicely!
         files: dummyFiles
         options: null
@@ -116,6 +119,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
+#          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
           # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
           dest: "<%= yeoman.sources %>"
         ]
@@ -169,6 +173,7 @@ module.exports = (grunt) ->
     # Validate, weed, and expand metadata
     expandMetadata:
       task:
+#        # Dummy files to make newer play nicely!
         # Dummy files to make newer play nicely!
         files: dummyFiles
         options: null
@@ -176,6 +181,7 @@ module.exports = (grunt) ->
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
       task:
+#        # Dummy files to make newer play nicely!
         # Dummy files to make newer play nicely!
         files: dummyFiles
         options: null
@@ -183,6 +189,7 @@ module.exports = (grunt) ->
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
       task:
+#        # Dummy files to make newer play nicely!
         # Dummy files to make newer play nicely!
         files: dummyFiles
         options: null
@@ -222,7 +229,8 @@ module.exports = (grunt) ->
     watch:
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-        tasks: ["newer:recess"]
+#        tasks: ["newer:recess"]
+        tasks: ["recess"]
 
       livereload:
         files: [
@@ -249,7 +257,9 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/guides/*.md"
           "<%= yeoman.sources %>/lines/*.md"
           "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/examQuestions/*"
           "<%= yeoman.sources %>/examQuestions/*/*"
+          "<%= yeoman.sources %>/resources/*"
           "<%= yeoman.sources %>/resources/*/*"
           "<%= yeoman.sources %>/resourceTypes/*.md"
           "<%= yeoman.sources %>/stations/*.md"
@@ -262,7 +272,8 @@ module.exports = (grunt) ->
           "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "newer:copy:assets"
+          # "newer:copy:assets"
+          "copy:assets"
         ]
 
       # The map.js script has metadata created by generateHtml
@@ -672,27 +683,57 @@ module.exports = (grunt) ->
     grunt.log.writeln "Developing for targets:"
     _.each targets, (value, index, collection) -> grunt.log.writeln "  " + value
 
+    # # tasks common to all targets
+    # grunt.task.run ([ 
+    #   "newer:lsc" 
+    #   "clearance" # no newer implementation needed
+    #   "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadataser
+    #   "newer:expandMetadata"
+    #   "newer:lastUpdated" 
+    # ])
+    # if _.contains(targets, "html")
+    #   grunt.task.run([
+    #     "newer:tubemap:svg" 
+    #     "newer:panda:pass2html" 
+    #     "newer:copy:assets" 
+    #     "newer:generateHtml" 
+    #   ])
+    # if _.contains(targets, "printables")
+    #   grunt.task.run([
+    #     "newer:panda:pass2printables"
+    #     "newer:generatePrintables"
+    #     "newer:latex:printables"
+    #     "newer:copy:printables"
+    #   ])
+    # else if _.contains(targets, "quick")
+    #   grunt.task.run([
+    #     "panda:pass2printables"
+    #     "generatePrintables"
+    #     "latex:test"
+    #     "copy:printables"
+    #   ])
+
     # tasks common to all targets
     grunt.task.run ([ 
-      "newer:lsc" 
+      "lsc" 
       "clearance" # no newer implementation needed
-      "newer:panda:pass1" 
-      "newer:expandMetadata"
-      "newer:lastUpdated" 
+      "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadataser
+      "expandMetadata"
+      "lastUpdated" 
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "newer:tubemap:svg" 
-        "newer:panda:pass2html" 
-        "newer:copy:assets" 
-        "newer:generateHtml" 
+        "tubemap:svg" 
+        "panda:pass2html" 
+        "copy:assets" 
+        "generateHtml" 
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
-        "newer:panda:pass2printables"
-        "newer:generatePrintables"
-        "newer:latex:printables"
-        "newer:copy:printables"
+        "panda:pass2printables"
+        "generatePrintables"
+        "latex:printables"
+        "copy:printables"
       ])
     else if _.contains(targets, "quick")
       grunt.task.run([
