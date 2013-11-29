@@ -177,20 +177,21 @@ module.exports = (grunt) ->
       else
         partials.push filename
 
-    if @target is "topLevelPages"
+    if @target is "map" 
+      generateTopLevelPage 'map' do
+        _linesMenu: _linesMenu
+        # relative to app directory
+        pngUrl: './images/tubeMap.png'
+        # relative to base directory
+        svgContent: parseSVG grunt.file.read "./app/images/tubeMap.svg"
+
+    else if @target is "topLevelPages"
       #
       # top level pages
       #
       if layouts.length
         partials = _.union partials, ['index', 'map', 'pervasiveIdeasHome', 'resourceTypesHome', 'privacy', 'cookies']
       if 'index' in partials then generateTopLevelPage 'index'
-      if 'map' in partials
-        generateTopLevelPage 'map' do
-          _linesMenu: _linesMenu
-          # relative to app directory
-          pngUrl: './images/tubeMap.png'
-          # relative to base directory
-          svgContent: parseSVG grunt.file.read "./app/images/tubeMap.svg"
       if 'pervasiveIdeasHome' in partials
         generateTopLevelPage 'pervasiveIdeasHome' do
           families: families
@@ -290,9 +291,7 @@ module.exports = (grunt) ->
       #
       # stations
       #
-      grunt.verbose.writeln "STATIONS"
       for stid, data of stations
-        grunt.verbose.writeln stid + partials
         if !layouts.length && stid not in partials
           # we don't need to recompile
           continue

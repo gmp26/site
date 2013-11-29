@@ -175,11 +175,13 @@ module.exports = (grunt) ->
       resources:
         src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
       topLevelPages:
-        src: ["<%= yeoman.partials %>/html/*.html", "layouts/default.html", "layouts/_*.html"]
+        src: ["<%= yeoman.partials %>/html/*.html", "!<%= yeoman.partials %>/html/map.html", "layouts/default.html", "layouts/_*.html"]
       pervasiveIdeas:
         src: ["<%= yeoman.partials %>/html/pervasiveIdeas/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
       examQuestions:
         src: ["<%= yeoman.partials %>/html/examQuestion/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
+      map:
+        src: ["<%= yeoman.partials %>/html/map.html", "<%= yeoman.partials %>/expanded.yaml", "layouts/map.html"]
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
