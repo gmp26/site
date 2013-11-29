@@ -15,20 +15,6 @@ path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
 
-# Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
-# This is a catch-all of src files which require rerunning of the above tasks on modification
-dummyFiles = [
-  src: [
-    "<%= yeoman.sources %>/**/*.md" 
-    "!<%= yeoman.sources %>/**/template.md" 
-    "!<%= yeoman.sources %>/**/template/*"
-    "!<%= yeoman.sources %>/Temporary/*"
-    "!<%= yeoman.sources %>/Temporary/**/*.md"
-    "lib/*.ls"
-    "layouts/*.html"
-  ]
-] 
-
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
 
@@ -183,10 +169,7 @@ module.exports = (grunt) ->
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
-      task:
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
-        options: null
+      options: null
 
     # Create a tubemap from metadata
     tubemap:
@@ -463,8 +446,6 @@ module.exports = (grunt) ->
         ]
 
     copy:
-
-
       assets:
         files: [
           expand: true
@@ -609,7 +590,7 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
-    # "clean:app"
+    "clean:app"
     "clean:test"
     "dev:html"
     # "lsc"
@@ -677,25 +658,25 @@ module.exports = (grunt) ->
 
     # tasks common to all targets
     grunt.task.run ([ 
-      "newer:lsc" 
-      "clearance" # no newer implementation needed
-      "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadata
-      "expandMetadata" # not expensive so can afford not to run newer
-      "newer:lastUpdated" # TODO | maybe just use YAML metadata as the src for newer?
+      "newer:lsc"       # good idea to use newer - well defined src-dest mappings
+      "clearance"       #  bad idea to use newer - no dests
+      "panda:pass1"     #  bad idea to use newer - no dests
+      "expandMetadata"  #  bad idea to use newer - no dests
+      "lastUpdated"     #  bad idea to use newer - no dests
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "newer:tubemap:svg" 
-        "newer:panda:pass2html" 
-        "newer:copy:assets" 
-        "newer:generateHtml" 
+        "newer:tubemap:svg"       # good idea to use newer - well defined src-dest mappings
+        "newer:panda:pass2html"   # good idea to use newer - well defined src-dest mappings
+        "newer:copy:assets"       # good idea to use newer - well defined src-dest mappings
+        "newer:generateHtml"      # *** development of appropriate src-dest mappings in progress ***
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
-        "newer:panda:pass2printables"
-        "newer:generatePrintables"
-        "newer:latex:printables"
-        "newer:copy:printables"
+        "newer:panda:pass2printables"   # good idea to use newer - well defined src-dest mappings
+        "generatePrintables"            #  bad idea to use newer - no dests (yet...)
+        "latex:printables"              #  bad idea to use newer - no dests (yet...)` 
+        "newer:copy:printables"         # good idea to use newer - well defined src-dest mappings
       ])
     else if _.contains(targets, "quick")
       grunt.task.run([
