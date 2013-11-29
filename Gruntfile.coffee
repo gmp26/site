@@ -15,6 +15,7 @@ path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
 
+## Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
 # This is a catch-all of src files which require rerunning of the above tasks on modification
 dummyFiles = [
@@ -225,7 +226,8 @@ module.exports = (grunt) ->
     watch:
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-        tasks: ["newer:recess"]
+#        tasks: ["newer:recess"]
+        tasks: ["recess"]
 
       livereload:
         files: [
@@ -252,7 +254,9 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/guides/*.md"
           "<%= yeoman.sources %>/lines/*.md"
           "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/examQuestions/*"
           "<%= yeoman.sources %>/examQuestions/*/*"
+          "<%= yeoman.sources %>/resources/*"
           "<%= yeoman.sources %>/resources/*/*"
           "<%= yeoman.sources %>/resourceTypes/*.md"
           "<%= yeoman.sources %>/stations/*.md"
@@ -265,7 +269,8 @@ module.exports = (grunt) ->
           "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "newer:copy:assets"
+          # "newer:copy:assets"
+          "copy:assets"
         ]
 
       # The map.js script has metadata created by generateHtml
@@ -677,9 +682,9 @@ module.exports = (grunt) ->
     grunt.task.run ([ 
       "newer:lsc" 
       "clearance" # no newer implementation needed
-      "panda:pass1" 
+      "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadata
       "expandMetadata" # not expensive so can afford not to run newer
-      "newer:lastUpdated" 
+      "newer:lastUpdated" # TODO | maybe just use YAML metadata as the src for newer?
     ])
     if _.contains(targets, "html")
       grunt.task.run([
