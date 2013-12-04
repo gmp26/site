@@ -27,7 +27,7 @@ module.exports = (grunt) ->
     # configure station src-dest mappings
     #
     stationFiles = new Array()
-    config = grunt.config.get(['generateHtml', 'stations']);
+    config = grunt.config.get ['generateHtml', 'stations']
 
     for stid, data of stations
       meta = data.meta
@@ -40,61 +40,61 @@ module.exports = (grunt) ->
     delete config.src
     delete config.dest
     config.files = stationFiles
-    grunt.config.set(['generateHtml', 'stations'], config);
+    grunt.config.set ['generateHtml', 'stations'], config
 
     #
     # configure resource src-dest mappings
     #
     resourceFiles = new Array()
-    config = grunt.config.get(['generateHtml', 'resources']);
+    config = grunt.config.get ['generateHtml', 'resources']
 
     for resourceName, files of resources
       meta = files.index.meta
       layout = getLayout sources, 'resources', meta
       srcDest = new Object()
-      srcDest.src = ["#{partialsDir}/html/resources/#{meta.id}",  layout, "layouts/_*.html"]
-      srcDest.dest = "#{appDir}/resources/#{meta.id}"
+      srcDest.src = ["#{partialsDir}/html/resources/#{meta.id}/index.html",  layout, "layouts/_*.html"]
+      srcDest.dest = "#{appDir}/resources/#{meta.id}/index.html"
       resourceFiles.push srcDest
 
     delete config.src
     delete config.dest
     config.files = resourceFiles
-    grunt.config.set(['generateHtml', 'resources'], config);
+    grunt.config.set ['generateHtml', 'resources'], config
 
     #
     # configure examQuestion src-dest mappings
     #
     examQuestionFiles = new Array()
-    config = grunt.config.get(['generateHtml', 'examQuestions']);
+    config = grunt.config.get ['generateHtml', 'examQuestions']
 
     for eqid, data of examQuestions
       meta = data.index?.meta
       layout = getLayout sources, 'renderQuestion', null
       srcDest = new Object()
-      srcDest.src = ["#{partialsDir}/html/examQuestions/#{meta.id}",  layout, "layouts/_*.html"]
-      srcDest.dest = "#{partialsDir}/html/renderedQuestions/#{meta.id}"
+      srcDest.src = ["#{partialsDir}/html/examQuestions/#{eqid}/index.html",  layout, "layouts/_*.html"]
+      srcDest.dest = "#{partialsDir}/html/renderedQuestions/#{eqid}/index.html"
       examQuestionFiles.push srcDest
 
     delete config.src
     delete config.dest
     config.files = examQuestionFiles
-    grunt.config.set(['generateHtml', 'examQuestions'], config);
+    grunt.config.set ['generateHtml', 'examQuestions'], config
 
     #
     # configure pervasiveIdea src-dest mappings
     #
     pervasiveIdeaFiles = new Array()
-    config = grunt.config.get(['generateHtml', 'pervasiveIdeas']);
+    config = grunt.config.get ['generateHtml', 'pervasiveIdeas']
 
     for pvid, data of pervasiveIdeas
       meta = data.meta
       layout = getLayout sources, 'pervasiveIdeas', meta
       srcDest = new Object()
       srcDest.src = ["#{partialsDir}/html/pervasiveIdeas/#{pvid}.html",  layout, "layouts/_*.html"]
-      srcDest.dest = "#{partialsDir}/html/pervasiveIdeas/#{pvid}.html"
+      srcDest.dest = "#{appDir}/pervasiveIdeas/#{pvid}.html"
       pervasiveIdeaFiles.push srcDest
 
     delete config.src
     delete config.dest
     config.files = pervasiveIdeaFiles
-    grunt.config.set(['generateHtml', 'pervasiveIdeas'], config);
+    grunt.config.set ['generateHtml', 'pervasiveIdeas'], config

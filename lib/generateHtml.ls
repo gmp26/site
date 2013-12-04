@@ -178,13 +178,16 @@ module.exports = (grunt) ->
     layouts = new Array()
     _.each @filesSrc, (filepath, key) ->
       pathParts = filepath.split("/")
-      len = pathParts.length
-      filename = pathParts[len - 1].split(".")[0]
-      if pathParts[len - 2] is "layouts"
+      if pathParts[0] is "layouts"
         # use the full path for layouts
         layouts.push filepath
-      else
-        # but just the name for partials
+      else if pathParts[0] is "partials" and pathParts.length is 3
+        # but just the filename for partials
+        filename = pathParts[2].split(".")[0]
+        partials.push filename
+      else if pathParts[0] is "partials" and pathParts.length > 3
+        # everthing but the topLevelPages
+        filename = pathParts[3].split(".")[0]
         partials.push filename
 
     universalLayoutChanged = _.intersection(layouts, universalLayouts).length

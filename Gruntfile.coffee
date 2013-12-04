@@ -199,9 +199,9 @@ module.exports = (grunt) ->
           }
         ]
       pervasiveIdeas:
-        src: ["<%= yeoman.partials %>/html/pervasiveIdeas/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
+        options: null
       examQuestions:
-        src: ["<%= yeoman.partials %>/html/examQuestion/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
+        options: null
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
@@ -240,10 +240,10 @@ module.exports = (grunt) ->
 
     # Watch 
     watch:
+
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-#        tasks: ["newer:recess"]
-        tasks: ["recess"]
+        tasks: ["newer: recess"] # good idea to use newer - well defined src-dest mappings
 
       livereload:
         files: [
@@ -256,11 +256,19 @@ module.exports = (grunt) ->
         # watch can now handle livereload!
         options:
           livereload: true
-        
 
-      dev:
+      # for safety force a full rebuild when library files are changed
+      lib:
         files: [
           "lib/*.ls"
+        ]
+        tasks: [
+          "clean"
+          "server"
+        ]
+        
+      dev:
+        files: [
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
           "<%= yeoman.sources %>/privacy.md"
@@ -285,20 +293,24 @@ module.exports = (grunt) ->
           "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          # "newer:copy:assets"
-          "copy:assets"
+          "newer:copy:assets" # good idea to use newer - well defined src-dest mappings
         ]
 
       # The map.js script has metadata created by generateHtml
-      # TODO: possibly refactor this out into its own task?
       mapScript: 
         files: [
           "<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "expandMetadata"
-          "generateHtml"
+          "touch:map" 
+          # "dev"
         ]
+
+    touch: 
+      map: 
+        options: 
+          mtime: true
+        src: ["layouts/map.html"]
 
     connect:
       options:
