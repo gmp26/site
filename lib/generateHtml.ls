@@ -187,30 +187,32 @@ module.exports = (grunt) ->
         # but just the name for partials
         partials.push filename
 
-    if @target is "map" 
-      generateTopLevelPage 'map' do
-        _linesMenu: _linesMenu
-        # relative to app directory
-        pngUrl: './images/tubeMap.png'
-        # relative to base directory
-        svgContent: parseSVG grunt.file.read "./app/images/tubeMap.svg"
-
-    else if @target is "topLevelPages"
+    universalLayoutChanged = _.intersection(layouts, universalLayouts).length
+      
+    if @target is "topLevelPages"
       #
       # top level pages
       #
-      if layouts.length
-        partials = _.union partials, ['index', 'map', 'pervasiveIdeasHome', 'resourceTypesHome', 'privacy', 'cookies']
-      if 'index' in partials then generateTopLevelPage 'index'
-      if 'pervasiveIdeasHome' in partials
+      if 'index' in partials or 'layouts/home.html' in layouts or universalLayoutChanged 
+        generateTopLevelPage 'index'
+      if 'map' in partials or 'layouts/map.html' in layouts or universalLayoutChanged 
+        generateTopLevelPage 'map' do
+          _linesMenu: _linesMenu
+          # relative to app directory
+          pngUrl: 'images/tubeMap.png'
+          # relative to base directory
+          svgContent: parseSVG grunt.file.read "#{appDir}/images/tubeMap.svg"
+      if 'pervasiveIdeasHome' in partials or 'layouts/pervasiveIdeasHome.html' in layouts or universalLayoutChanged
         generateTopLevelPage 'pervasiveIdeasHome' do
           families: families
           pervasiveIdeas: pervasiveIdeas
-      if 'resourceTypesHome' in partials
+      if 'resourceTypesHome' in partials or 'layouts/resourceTypesHome.html' in layouts or universalLayoutChanged
         generateTopLevelPage 'resourceTypesHome' do
           resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
-      if 'privacy' in partials then generateTopLevelPage 'privacy'
-      if 'cookies' in partials then generateTopLevelPage 'cookies'
+      if 'privacy' in partials or 'layouts/default.html' in layouts or universalLayoutChanged
+        generateTopLevelPage 'privacy'
+      if 'cookies' in partials or 'layouts/default.html' in layouts or universalLayoutChanged
+        generateTopLevelPage 'cookies'
 
     else if @target is "pervasiveIdeas"
       #
@@ -248,11 +250,11 @@ module.exports = (grunt) ->
       pi13s = {}
 
       for eqid, data of examQuestions
-        if !layouts.length && eqid not in partials
-          # we don't need to recompile
-          continue
         indexMeta = data.index?.meta
         layout = getLayout sources, 'renderQuestion', null
+        unless eqid in partials or layout in layouts or universalLayoutChanged
+          # we don't need to recompile
+          continue
         content = getExamQuestionPartData eqid, data, indexMeta
         content.0.alias = "#{eqid}"
         html = grunt.template.process grunt.file.read(layout), {
@@ -304,7 +306,7 @@ module.exports = (grunt) ->
       for stid, data of stations
         meta = data.meta
         layout = getLayout sources, 'stations', meta
-        unless stid in partials or layout in layouts or _.intersection(layouts, universalLayouts).length
+        unless stid in partials or layout in layouts or universalLayoutChanged
           # we don't need to recompile
           continue
 
@@ -327,11 +329,11 @@ module.exports = (grunt) ->
       # resources
       #
       for resourceName, files of resources
-        if !layouts.length && resourceName not in partials
-          # we don't need to recompile
-          continue
         indexMeta = files.index.meta
         layout = getLayout sources, 'resources', indexMeta
+        unless resourceName in partials or layout in layouts or universalLayoutChanged
+          # we don't need to recompile
+          continue
         content = getResourceData resourceName, files, indexMeta
         ackText = if indexMeta.source then metadata.acknowledgements[indexMeta.source].acknowledgement else void
 

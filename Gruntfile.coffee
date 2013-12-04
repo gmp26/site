@@ -162,15 +162,46 @@ module.exports = (grunt) ->
       stations: 
         options: null
       resources:
-        src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
+        options: null
       topLevelPages:
-        src: ["<%= yeoman.partials %>/html/*.html", "!<%= yeoman.partials %>/html/map.html", "layouts/default.html", "layouts/_*.html"]
+        files: [
+          {
+            src: ["<%= yeoman.partials %>/html/index.html", "layouts/_*.html", "layouts/home.html"]
+            dest: "<%= yeoman.app %>/index.html" 
+          }
+          {
+            src: ["<%= yeoman.partials %>/html/map.html", "layouts/_*.html", "layouts/map.html"]
+            dest: "<%= yeoman.app %>/map.html" 
+          }
+          {
+            src: [
+              "<%= yeoman.partials %>/html/pervasiveIdeasHome.html"
+              "layouts/_*.html"
+              "layouts/pervasiveIdeasHome.html"
+            ]
+            dest: "<%= yeoman.app %>/pervasiveIdeasHome.html" 
+          }
+          {
+            src: [
+              "<%= yeoman.partials %>/html/resourceTypesHome.html"
+              "layouts/_*.html"
+              "layouts/resourceTypesHome.html"
+            ]
+            dest: "<%= yeoman.app %>/resourceTypesHome.html" 
+          }
+          {
+            src: ["<%= yeoman.partials %>/html/privacy.html", "layouts/_*.html", "layouts/default.html"]
+            dest: "<%= yeoman.app %>/privacy.html" 
+          }
+          {
+            src: ["<%= yeoman.partials %>/html/cookies.html", "layouts/_*.html", "layouts/default.html"]
+            dest: "<%= yeoman.app %>/cookies.html" 
+          }
+        ]
       pervasiveIdeas:
         src: ["<%= yeoman.partials %>/html/pervasiveIdeas/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
       examQuestions:
         src: ["<%= yeoman.partials %>/html/examQuestion/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
-      # map:
-        # src: ["<%= yeoman.partials %>/html/map.html", "<%= yeoman.partials %>/expanded.yaml", "layouts/map.html"]
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
