@@ -27,6 +27,8 @@ title: Fooey
 
 1. Here's another question.
 
+1. This should do something...
+
 Why resource types?
 
 1. Hello there
