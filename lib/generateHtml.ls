@@ -39,6 +39,14 @@ module.exports = (grunt) ->
     appDir = grunt.config.get "yeoman.app"
     appSourcesDir = grunt.config.get "yeoman.appSources"
 
+    universalLayouts = [
+      "layouts/_head.html"
+      "layouts/_nav.html"
+      "layouts/_foot.html"
+      "layouts/_linesMenu.html"
+      "layouts/_piMenu.html"
+    ]
+
     #
     # read in ubiquitous layouts
     #
@@ -173,8 +181,10 @@ module.exports = (grunt) ->
       len = pathParts.length
       filename = pathParts[len - 1].split(".")[0]
       if pathParts[len - 2] is "layouts"
-        layouts.push filename
+        # use the full path for layouts
+        layouts.push filepath
       else
+        # but just the name for partials
         partials.push filename
 
     if @target is "map" 
@@ -292,12 +302,11 @@ module.exports = (grunt) ->
       # stations
       #
       for stid, data of stations
-        if !layouts.length && stid not in partials
-          # we don't need to recompile
-          continue
-        # generateHTML sources, fder, stid, meta.meta
         meta = data.meta
         layout = getLayout sources, 'stations', meta
+        unless stid in partials or layout in layouts or _.intersection(layouts, universalLayouts).length
+          # we don't need to recompile
+          continue
 
         html = grunt.template.process grunt.file.read(layout), {
           data:

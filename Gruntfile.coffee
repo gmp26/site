@@ -4,6 +4,7 @@
 expandMetadata = require './lib/expandMetadata.js'
 generateHtml = require './lib/generateHtml.js'
 generatePrintables = require './lib/generatePrintables.js'
+setupGenerateHtml = require './lib/setupGenerateHtml.js'
 tubemap = require './lib/tubemap.js'
 siteUrl = require './lib/siteUrl.js'
 clearance = require './lib/clearance.js'
@@ -152,10 +153,14 @@ module.exports = (grunt) ->
     expandMetadata:
       options: null
 
+    # Use metadata to configure the generateHtml task
+    setupGenerateHtml:
+      options: null
+
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
       stations: 
-        src: ["<%= yeoman.partials %>/html/stations/*.html", "layouts/station.html", "layouts/_*.html"]
+        options: null
       resources:
         src: ["<%= yeoman.partials %>/html/resources/*.html", "layouts/resource.html", "layouts/_*.html"]
       topLevelPages:
@@ -164,8 +169,8 @@ module.exports = (grunt) ->
         src: ["<%= yeoman.partials %>/html/pervasiveIdeas/*.html", "layouts/pervasiveIdea.html", "layouts/_*.html"]
       examQuestions:
         src: ["<%= yeoman.partials %>/html/examQuestion/*.html", "layouts/examQuestion.html", "layouts/_*.html"]
-      map:
-        src: ["<%= yeoman.partials %>/html/map.html", "<%= yeoman.partials %>/expanded.yaml", "layouts/map.html"]
+      # map:
+        # src: ["<%= yeoman.partials %>/html/map.html", "<%= yeoman.partials %>/expanded.yaml", "layouts/map.html"]
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
@@ -541,6 +546,9 @@ module.exports = (grunt) ->
   # register expandMetadata task
   expandMetadata grunt
 
+  # register configSrc task
+  setupGenerateHtml grunt
+
   # register generateHtml task
   generateHtml grunt
 
@@ -669,6 +677,7 @@ module.exports = (grunt) ->
         "newer:tubemap:svg"       # good idea to use newer - well defined src-dest mappings
         "newer:panda:pass2html"   # good idea to use newer - well defined src-dest mappings
         "newer:copy:assets"       # good idea to use newer - well defined src-dest mappings
+        "setupGenerateHtml"       #  bad idea to use newer - no dests
         "newer:generateHtml"      # *** development of appropriate src-dest mappings in progress ***
       ])
     if _.contains(targets, "printables")
