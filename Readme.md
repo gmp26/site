@@ -68,12 +68,17 @@ Getting started
 
 ### Prerequisites
 
-Make sure you have [`node`](http://nodejs.org/),
-[`grunt`](http://gruntjs.com/), 
+Make sure you have [`git`](http://git-scm.com/),
+and follow up with these set up [instructions](https://help.github.com/articles/set-up-git).
+
+Continue with
+
+[`node`](http://gruntjs.com/), 
 [`bower`](http://bower.io/),
 [`livescript`](http://livescript.net), 
 [`pandoc`](http://johnmacfarlane.net/pandoc/),
-[`graphviz`](http://www.graphviz.org/Download.php), and
+[`graphviz`](http://www.graphviz.org/Download.php), 
+[`sublime text 2`](http://www.sublimetext.com/2) and
 [TexLive 2013](http://www.tug.org/texlive/) installed.
 
 ### Installation
@@ -88,6 +93,7 @@ git clone git@github.com:CMEPorg/CMEP-site.git
 
 Install the necessary node_modules used by the various grunt tasks.
 ```
+cd CMEP-site
 npm install
 ```
 
@@ -96,12 +102,8 @@ Install the necessary libraries for client-side scripts.
 bower install
 ```
 
-Compile livescript sources to javascript
-```
-grunt lsc
-```
 
-Alternatively, start a background watch and compile livescript task. This is 
+Start a background watch and compile livescript task. This is 
 only really necessary if doing code development.
 ```
 ./scripts/lswatch &
