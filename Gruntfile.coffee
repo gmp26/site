@@ -245,6 +245,16 @@ module.exports = (grunt) ->
 
     # Watch 
     watch:
+      
+      # watching the gruntfile is supported - awesome!
+      grunt: 
+       files: ["Gruntfile.coffee"] 
+       tasks: [
+          "clean"
+          "recess"
+          "copy:server"
+          "dev"
+       ]
 
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
@@ -253,18 +263,36 @@ module.exports = (grunt) ->
         options:
           event: ['added', 'changed']
 
-
-      livereload:
+      # split up the livereload tasks to prevent unnecessary snowballing!
+      html:
         files: [
           "<%= yeoman.app %>/**/*.html"
-          "<%= yeoman.app %>/**/*.html"
-          "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css"
-          "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
-          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
-        # watch can now handle livereload!
         options:
           livereload: true
+
+      css:
+        files: [
+          "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css"
+        ]
+        options:
+          livereload: true
+
+      js:
+        files: [
+          "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
+        ]
+        options:
+          livereload: true
+
+      images:
+        files: [
+          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
+        ]
+        options:
+          livereload: true
+
+
 
       # for safety force a full rebuild when library files are changed
       lib:
