@@ -39,14 +39,6 @@ module.exports = (grunt) ->
     appDir = grunt.config.get "yeoman.app"
     appSourcesDir = grunt.config.get "yeoman.appSources"
 
-    universalLayouts = [
-      "layouts/_head.html"
-      "layouts/_nav.html"
-      "layouts/_foot.html"
-      "layouts/_linesMenu.html"
-      "layouts/_piMenu.html"
-    ]
-
     #
     # read in ubiquitous layouts
     #
@@ -170,63 +162,53 @@ module.exports = (grunt) ->
         #grunt.log.error "SORT sorting #{meta.id} on weight #weight"
         +meta.rt.substr(2)+idWeight
       R1s.splice insertAt, 0, resMeta
-
-    # 
-    # create arrays of partials and layouts
-    #
-    partials = new Array()
-    layouts = new Array()
-    others = new Array()
-    _.each @filesSrc, (filepath, key) ->
-      pathParts = filepath.split("/")
-      if pathParts[0] is "layouts"
-        # use the full path for layouts
-        layouts.push filepath
-      else if pathParts[0] is "partials" and pathParts.length is 3
-        # but just the filename for partials
-        filename = pathParts[2].split(".")[0]
-        partials.push filename
-      else if pathParts[0] is "partials" and pathParts.length > 3
-        # everthing but the topLevelPages
-        filename = pathParts[3].split(".")[0]
-        partials.push filename
-      else
-        # use the full path for any other src files
-        others.push filepath
-
-    universalLayoutChanged = _.intersection(layouts, universalLayouts).length
       
     if @target is "topLevelPages"
       #
       # top level pages
       #
-      if 'index' in partials or 'layouts/home.html' in layouts or universalLayoutChanged 
+      pageNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[1]
+        destFileName = destFile.split(".")[0]
+        pageNames.push destFileName
+
+      if 'index' in pageNames
         generateTopLevelPage 'index'
-      if 'map' in partials or 'layouts/map.html' in layouts or universalLayoutChanged or others.length
+      if 'map' in pageNames
         generateTopLevelPage 'map' do
           _linesMenu: _linesMenu
           # relative to app directory
           pngUrl: 'images/tubeMap.png'
           # relative to base directory
           svgContent: parseSVG grunt.file.read "#{appDir}/images/tubeMap.svg"
-      if 'pervasiveIdeasHome' in partials or 'layouts/pervasiveIdeasHome.html' in layouts or universalLayoutChanged
+      if 'pervasiveIdeasHome' in pageNames
         generateTopLevelPage 'pervasiveIdeasHome' do
           families: families
           pervasiveIdeas: pervasiveIdeas
-      if 'resourceTypesHome' in partials or 'layouts/resourceTypesHome.html' in layouts or universalLayoutChanged
+      if 'resourceTypesHome' in pageNames
         generateTopLevelPage 'resourceTypesHome' do
           resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
-      if 'privacy' in partials or 'layouts/default.html' in layouts or universalLayoutChanged
+      if 'privacy' in pageNames
         generateTopLevelPage 'privacy'
-      if 'cookies' in partials or 'layouts/default.html' in layouts or universalLayoutChanged
+      if 'cookies' in pageNames
         generateTopLevelPage 'cookies'
 
     else if @target is "pervasiveIdeas"
       #
       # pervasiveIdeas
       #
+
+      pvNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[2]
+        destFileName = destFile.split(".")[0]
+        pvNames.push destFileName
+
       for pvid, data of pervasiveIdeas
-        if !layouts.length && pvid not in partials
+        if pvid not in pvNames
           # we don't need to recompile
           continue
         meta = data.meta
@@ -253,13 +235,20 @@ module.exports = (grunt) ->
       #
       # examQuestions 
       #
+
+      eqNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFileName = destPath.split("/")[3]
+        eqNames.push destFileName
+
       st13s = {}
       pi13s = {}
 
       for eqid, data of examQuestions
         indexMeta = data.index?.meta
         layout = getLayout sources, 'renderQuestion', null
-        unless eqid in partials or layout in layouts or universalLayoutChanged
+        unless eqid in eqNames
           # we don't need to recompile
           continue
         content = getExamQuestionPartData eqid, data, indexMeta
@@ -310,10 +299,17 @@ module.exports = (grunt) ->
       #
       # stations
       #
+      stationNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[2]
+        destFileName = destFile.split(".")[0]
+        stationNames.push destFileName
+
       for stid, data of stations
         meta = data.meta
         layout = getLayout sources, 'stations', meta
-        unless stid in partials or layout in layouts or universalLayoutChanged
+        unless stid in stationNames
           # we don't need to recompile
           continue
 
@@ -335,10 +331,16 @@ module.exports = (grunt) ->
       #
       # resources
       #
+      resNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFileName = destPath.split("/")[2]
+        resNames.push destFileName
+
       for resourceName, files of resources
         indexMeta = files.index.meta
         layout = getLayout sources, 'resources', indexMeta
-        unless resourceName in partials or layout in layouts or universalLayoutChanged
+        unless resourceName in resNames
           # we don't need to recompile
           continue
         content = getResourceData resourceName, files, indexMeta

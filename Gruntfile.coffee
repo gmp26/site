@@ -188,7 +188,7 @@ module.exports = (grunt) ->
           }
           {
             src: [
-              "<%= yeoman.partials %>/html/resourceTypesHome.html"
+              "<%= yeoman.sources %>/resourceTypes/*.md"
               "layouts/_*.html"
               "layouts/resourceTypesHome.html"
             ]
@@ -273,6 +273,8 @@ module.exports = (grunt) ->
         ]
         tasks: [
           "clean"
+          "recess"
+          "copy:server"
           "dev"
         ]
         
@@ -319,6 +321,8 @@ module.exports = (grunt) ->
         ]
         tasks: [
           "clean"
+          "recess"
+          "copy:server"
           "dev"
         ]
         options:
