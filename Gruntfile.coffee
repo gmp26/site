@@ -170,7 +170,12 @@ module.exports = (grunt) ->
             dest: "<%= yeoman.app %>/index.html" 
           }
           {
-            src: ["<%= yeoman.partials %>/html/map.html", "layouts/_*.html", "layouts/map.html"]
+            src: [
+              "<%= yeoman.partials %>/html/map.html" 
+              "layouts/_*.html"
+              "layouts/map.html"
+              "<%= yeoman.app %>/images/tubeMap.svg"
+            ]
             dest: "<%= yeoman.app %>/map.html" 
           }
           {
@@ -244,6 +249,10 @@ module.exports = (grunt) ->
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
         tasks: ["newer: recess"] # good idea to use newer - well defined src-dest mappings
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
+
 
       livereload:
         files: [
@@ -264,7 +273,7 @@ module.exports = (grunt) ->
         ]
         tasks: [
           "clean"
-          "server"
+          "dev"
         ]
         
       dev:
@@ -286,6 +295,34 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/stations/*.md"
         ]
         tasks: ["dev"]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
+
+      sourceDelete: 
+        files: [
+          "layouts/*.html"
+          "<%= yeoman.sources %>/index.md"
+          "<%= yeoman.sources %>/privacy.md"
+          "<%= yeoman.sources %>/cookies.md"
+          "<%= yeoman.sources %>/map.md"
+          "<%= yeoman.sources %>/pervasiveIdeasHome.md"
+          "<%= yeoman.sources %>/guides/*.md"
+          "<%= yeoman.sources %>/lines/*.md"
+          "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/examQuestions/*"
+          "<%= yeoman.sources %>/examQuestions/*/*"
+          "<%= yeoman.sources %>/resources/*"
+          "<%= yeoman.sources %>/resources/*/*"
+          "<%= yeoman.sources %>/resourceTypes/*.md"
+          "<%= yeoman.sources %>/stations/*.md"
+        ]
+        tasks: [
+          "clean"
+          "dev"
+        ]
+        options:
+          event: ['deleted']
 
       scripts:
         files: [
@@ -295,16 +332,22 @@ module.exports = (grunt) ->
         tasks: [
           "newer:copy:assets" # good idea to use newer - well defined src-dest mappings
         ]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
 
       # The map.js script has metadata created by generateHtml
+      # so we touch the map to force regeneration
       mapScript: 
         files: [
           "<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
           "touch:map" 
-          # "dev"
         ]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
 
     touch: 
       map: 
@@ -721,7 +764,7 @@ module.exports = (grunt) ->
         "newer:panda:pass2html"   # good idea to use newer - well defined src-dest mappings
         "newer:copy:assets"       # good idea to use newer - well defined src-dest mappings
         "setupGenerateHtml"       #  bad idea to use newer - no dests
-        "newer:generateHtml"      # *** development of appropriate src-dest mappings in progress ***
+        "newer:generateHtml"      # good idea to use newer - well defined src-dest mappings
       ])
     if _.contains(targets, "printables")
       grunt.task.run([

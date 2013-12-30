@@ -176,6 +176,7 @@ module.exports = (grunt) ->
     #
     partials = new Array()
     layouts = new Array()
+    others = new Array()
     _.each @filesSrc, (filepath, key) ->
       pathParts = filepath.split("/")
       if pathParts[0] is "layouts"
@@ -189,6 +190,9 @@ module.exports = (grunt) ->
         # everthing but the topLevelPages
         filename = pathParts[3].split(".")[0]
         partials.push filename
+      else
+        # use the full path for any other src files
+        others.push filepath
 
     universalLayoutChanged = _.intersection(layouts, universalLayouts).length
       
@@ -198,7 +202,7 @@ module.exports = (grunt) ->
       #
       if 'index' in partials or 'layouts/home.html' in layouts or universalLayoutChanged 
         generateTopLevelPage 'index'
-      if 'map' in partials or 'layouts/map.html' in layouts or universalLayoutChanged 
+      if 'map' in partials or 'layouts/map.html' in layouts or universalLayoutChanged or others.length
         generateTopLevelPage 'map' do
           _linesMenu: _linesMenu
           # relative to app directory
