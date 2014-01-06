@@ -19,7 +19,8 @@ and follow up with these set up [instructions](https://help.github.com/articles/
 
 Continue with
 
-[`node`](http://gruntjs.com/), 
+[`node`](http://nodejs.org/), 
+[`grunt`](http://gruntjs.com/), 
 [`bower`](http://bower.io/),
 [`livescript`](http://livescript.net), 
 [`pandoc`](http://johnmacfarlane.net/pandoc/),
