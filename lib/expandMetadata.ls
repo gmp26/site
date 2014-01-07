@@ -238,6 +238,8 @@ module.exports = (grunt) ->
       expandIds = (objList, idPrefix, idNumber) ->
         bad = {}
         srcList = meta[idPrefix+idNumber]
+        if _.isString srcList
+          srcList = [srcList]
         _.each srcList, (id, index) ->
 
           # a star postfix implies the resource is to be highlighted
