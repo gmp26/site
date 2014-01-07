@@ -1,1 +1,1 @@
-../../../../CMEP-sources/resources/contributing/github.md
+../../../../sources/resources/contributing/github.md

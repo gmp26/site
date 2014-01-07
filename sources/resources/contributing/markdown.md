@@ -1,1 +1,1 @@
-../../../../CMEP-sources/resources/contributing/markdown.md
+../../../../sources/resources/contributing/markdown.md

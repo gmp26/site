@@ -52,7 +52,7 @@ module.exports = (grunt) ->
     appSources: "app-sources" # static sources to be copied to app
     app: "app"  # document root of development site
     dist: "dist" # document root of production site
-    content: "../CMEP-sources"  # the real sources
+    content: "../sources"  # the real sources
     samples: "sources"          # sample and test case sources
     sources: "sources"    # the active source path which can switch between content and samples
     partials: "partials"  # a working directory for content to be assembled in

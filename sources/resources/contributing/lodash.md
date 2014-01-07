@@ -1,1 +1,1 @@
-../../../../CMEP-sources/resources/contributing/lodash.md
+../../../../sources/resources/contributing/lodash.md

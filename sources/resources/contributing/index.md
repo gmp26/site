@@ -1,1 +1,1 @@
-../../../../CMEP-sources/resources/contributing/index.md
+../../../../sources/resources/contributing/index.md

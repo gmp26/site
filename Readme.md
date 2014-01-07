@@ -1,7 +1,7 @@
-CMEP-site
-=========
+NRICH tubemap site 
+====
 
-These are the files necessary to generate  [the CMEP curriculum map](http://cambridge.maths.org) site.
+These are the files necessary to generate  [the NRICH curriculum map](http://notpublished) site.
 
 Usage
 -----
@@ -30,17 +30,17 @@ Continue with
 
 ### Installation
 
-In a terminal, `cd` to a suitable parent directory, and clone the repository. If your parent directory is called `~/cmep`, this creates
-~/cmep/CMEP-site.
+In a terminal, `cd` to a suitable parent directory, and clone the repository. If your parent directory is called `~/NRICHtubemap`, this creates
+~/NRICHtubemap/site.
 
 ```
-cd ~/cmep
-git clone git@github.com:CMEPorg/CMEP-site.git
+cd ~/NRICHtubemap
+git clone git@github.com:gmp26/site.git
 ```
 
 Install the necessary node_modules used by the various grunt tasks.
 ```
-cd CMEP-site
+cd site
 npm install
 ```
 
@@ -61,8 +61,8 @@ only really necessary if doing code development.
 Run the following command to set the repository to its internal sample and test content.
 The variable `samples`
 in the file `.clearance` defines the location of clearance level -1 content. 
-`samples` is normally set up to point to the CMEP-site internal `sources` directory so it
-is only necessary to install CMEP-site to have a working test system. 
+`samples` is normally set up to point to the `site` internal `sources` directory so it
+is only necessary to install `site` to have a working test system. 
 
 ```
 grunt clearance:-1
@@ -73,7 +73,7 @@ grunt clearance:-1
 Run one of these commands to set up the repository to use content cleared at the given level.
 These commands require that the content directory is installed at the location specified 
 by the `content` variable in the file `.clearance`. By default this is a directory named 
-`CMEP-sources` sitting alongside this `CMEP-site` directory.
+`sources` sitting alongside this `site` directory.
 
 ```
 grunt clearance:0   -- include work in progress not intended for review
