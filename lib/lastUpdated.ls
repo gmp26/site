@@ -25,9 +25,12 @@ module.exports = (grunt) ->
       when "examQuestions"
         sources = metadata.sources.examQuestions
 
-    sourceKeys = Object.keys sources
-    async.eachSeries sourceKeys, sourceIterator, finalCallback
-    
+    if sources
+      sourceKeys = Object.keys sources
+      async.eachSeries sourceKeys, sourceIterator, finalCallback
+    else
+      done!
+      
     function finalCallback # js syntax due to hoisting
       # Write changes to YAML
       grunt.file.write "#{partialsDir}/expanded.yaml", jsy.safeDump metadata
