@@ -347,12 +347,12 @@ module.exports = (grunt) ->
       _.each sources.lines, (line, lineId)->
         colour = line.meta.colour
         css += "@linecolor#{lineId}: #colour;\n"
-      grunt.file.write "#{appDir}/styles/lineVars.less", css
+      grunt.file.write "#{appSourcesDir}/styles/lineVars.less", css
 
       css = ''
       _.each sources.lines, (line, lineId)->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
-      grunt.file.write "#{appDir}/styles/lines.less", css
+      grunt.file.write "#{appSourcesDir}/styles/lines.less", css
 
     # TODO: refactor into separate task?
     function parseSVG(data)
