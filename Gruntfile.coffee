@@ -767,6 +767,31 @@ module.exports = (grunt) ->
     "usemin"
   ]
 
+  grunt.registerTask "debugPrintables", [
+    "lsc"
+    "clearance"
+    "panda:pass1"
+    "expandMetadata"
+    "lastUpdated"
+    "siteUrl:dist"
+    "panda:pass2printables"
+    "generatePrintables"
+    # "latex:printables"
+    # "copy:printables"
+    # "panda:pass2html"
+    # "copy:assets"
+    # "generateHtml"
+    # "clean:dist"
+    # "copy:server"
+    # "useminPrepare"
+    # "concurrent"
+    # "cssmin"
+    # "concat"
+    # "uglify"
+    # "copy:dist"
+    # "usemin"
+  ]
+
   grunt.registerTask "dev", (listOfTargets) ->
     # Make the targets variable hold an array of strings representing desired targets.
     # Assume that the passed parameter is a comma separated list (with no spaces)

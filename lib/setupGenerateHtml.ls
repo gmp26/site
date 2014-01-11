@@ -98,3 +98,8 @@ module.exports = (grunt) ->
     delete config.dest
     config.files = pervasiveIdeaFiles
     grunt.config.set ['generateHtml', 'pervasiveIdeas'], config
+
+    # For debug purposes, write config.html of a file
+    jsy = require 'js-yaml'
+    grunt.file.write "#{partialsDir}/generateHtmlMappings.yaml", jsy.safeDump grunt.config.get 'generateHtml'
+
