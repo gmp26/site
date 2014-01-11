@@ -59,13 +59,13 @@ module.exports = (grunt) ->
 
     if clearanceLevel > 0
 
-      grunt.log.ok "Clearance Level = #clearanceLevel"
+      grunt.verbose.ok "Clearance Level = #clearanceLevel"
 
       for id, file of resources
         fileClearance = +(file.index?.meta?.clearance ? 0)
         censor = 1 < clearanceLevel > fileClearance
         if censor
-          grunt.log.ok "censoring resource #id"
+          grunt.verbose.ok "censoring resource #id"
           delete resources[id]
         sources.resources = resources
 
@@ -73,7 +73,7 @@ module.exports = (grunt) ->
         fileClearance = +(file.index?.meta?.clearance ? 0)
         censor = 1 < clearanceLevel > fileClearance
         if censor
-          grunt.log.ok "censoring exam question #id"
+          grunt.verbose.ok "censoring exam question #id"
           delete examQuestions[id]
         sources.examQuestions = examQuestions
 
@@ -82,7 +82,7 @@ module.exports = (grunt) ->
         fileClearance = +(data.meta?.clearance ? 100)
         censor = 1 < clearanceLevel > fileClearance
         if censor
-          grunt.log.ok "censoring station #id"
+          grunt.verbose.ok "censoring station #id"
           delete stations[id]
         sources.stations = stations
 
@@ -91,7 +91,7 @@ module.exports = (grunt) ->
         fileClearance = +(data.meta?.clearance ? 100)
         censor = 1 < clearanceLevel > fileClearance
         if censor
-          grunt.log.ok "censoring station #id"
+          grunt.verbose.ok "censoring station #id"
           delete pervasiveIdeas[id]
         sources.pervasiveIdeas = pervasiveIdeas
 
@@ -243,10 +243,10 @@ module.exports = (grunt) ->
         _.each srcList, (id, index) ->
 
           # a star postfix implies the resource is to be highlighted
-          grunt.log.ok "testing id #id"
+          grunt.verbose.ok "testing id #id"
           highlight = (idNumber == 1) && id.match /\s*(\w+)\*/
           if highlight
-            grunt.log.ok "highlight"
+            grunt.verbose.ok "highlight"
             id = highlight.1
             srcList[index] = id
 
@@ -264,7 +264,7 @@ module.exports = (grunt) ->
 
             if meta.title
               res.title = meta.title
-              grunt.log.ok "***** writing #{meta.title} to res *****"
+              grunt.verbose.ok "***** writing #{meta.title} to res *****"
             oml.push res
 
             # sort generated resource list by resource type number

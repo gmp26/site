@@ -4,6 +4,7 @@
 expandMetadata = require './lib/expandMetadata.js'
 generateHtml = require './lib/generateHtml.js'
 generatePrintables = require './lib/generatePrintables.js'
+setupGenerateHtml = require './lib/setupGenerateHtml.js'
 tubemap = require './lib/tubemap.js'
 siteUrl = require './lib/siteUrl.js'
 clearance = require './lib/clearance.js'
@@ -14,21 +15,6 @@ latex = require './lib/recursiveLatex.js'
 path = require 'path'
 lastUpdated = require './lib/lastUpdated.js'
 timer = require 'grunt-timer'
-
-## Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
-# Dummy files to make grunt-newer play nicely with expandMetadata, lastUpdated and generateHtml
-# This is a catch-all of src files which require rerunning of the above tasks on modification
-dummyFiles = [
-  src: [
-    "<%= yeoman.sources %>/**/*.md" 
-    "!<%= yeoman.sources %>/**/template.md" 
-    "!<%= yeoman.sources %>/**/template/*"
-    "!<%= yeoman.sources %>/Temporary/*"
-    "!<%= yeoman.sources %>/Temporary/**/*.md"
-    "lib/*.ls"
-    "layouts/*.html"
-  ]
-] 
 
 mountFolder = (connect, dir) ->
   connect.static path.resolve(dir)
@@ -94,14 +80,10 @@ module.exports = (grunt) ->
     # find last modified date
     lastUpdated:
       resources:
-#        # Dummy files to make newer play nicely!
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+        src: "<%= yeoman.partials %>/sources.yaml"
         options: null
       examQuestions:
-#        # Dummy files to make newer play nicely!
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+        src: "<%= yeoman.partials %>/sources.yaml"
         options: null
 
     # compile HTML and tex, and aggregate metadata
@@ -119,9 +101,6 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.sources %>"
           src: ["**/*.md", "!**/template.md", "!**/template/*", "!Temporary/*", "!Temporary/**/*.md"]
-#          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
-          # The dest: is a hack to get newer to play nicely - it needs to be the same as cwd
-          dest: "<%= yeoman.sources %>"
         ]
       pass2html:
         options:
@@ -172,27 +151,66 @@ module.exports = (grunt) ->
 
     # Validate, weed, and expand metadata
     expandMetadata:
-      task:
-#        # Dummy files to make newer play nicely!
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
-        options: null
+      options: null
+
+    # Use metadata to configure the generateHtml task
+    setupGenerateHtml:
+      options: null
 
     # Generate pages using layouts and partial HTML, guided by expanded metadata
     generateHtml:
-      task:
-#        # Dummy files to make newer play nicely!
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
+      stations: 
+        options: null
+      resources:
+        options: null
+      topLevelPages:
+        files: [
+          {
+            src: ["<%= yeoman.partials %>/html/index.html", "layouts/_*.html", "layouts/home.html"]
+            dest: "<%= yeoman.app %>/index.html" 
+          }
+          {
+            src: [
+              "<%= yeoman.partials %>/html/map.html" 
+              "layouts/_*.html"
+              "layouts/map.html"
+              "<%= yeoman.app %>/images/tubeMap.svg"
+            ]
+            dest: "<%= yeoman.app %>/map.html" 
+          }
+          {
+            src: [
+              "<%= yeoman.partials %>/html/pervasiveIdeasHome.html"
+              "layouts/_*.html"
+              "layouts/pervasiveIdeasHome.html"
+            ]
+            dest: "<%= yeoman.app %>/pervasiveIdeasHome.html" 
+          }
+          {
+            src: [
+              "<%= yeoman.sources %>/resourceTypes/*.md"
+              "layouts/_*.html"
+              "layouts/resourceTypesHome.html"
+            ]
+            dest: "<%= yeoman.app %>/resourceTypesHome.html" 
+          }
+          {
+            src: ["<%= yeoman.partials %>/html/privacy.html", "layouts/_*.html", "layouts/default.html"]
+            dest: "<%= yeoman.app %>/privacy.html" 
+          }
+          {
+            src: ["<%= yeoman.partials %>/html/cookies.html", "layouts/_*.html", "layouts/default.html"]
+            dest: "<%= yeoman.app %>/cookies.html" 
+          }
+        ]
+      pervasiveIdeas:
+        options: null
+      examQuestions:
         options: null
 
     # Generate printable pdfs using layouts and partial tex, guided by expanded metadata
     generatePrintables:
-      task:
-#        # Dummy files to make newer play nicely!
-        # Dummy files to make newer play nicely!
-        files: dummyFiles
-        options: null
+      options: null
 
     # Create a tubemap from metadata
     tubemap:
@@ -227,27 +245,69 @@ module.exports = (grunt) ->
 
     # Watch 
     watch:
+      
+      # watching the gruntfile is supported - awesome!
+      grunt: 
+       files: ["Gruntfile.coffee"] 
+       tasks: [
+          "clean"
+          "recess"
+          "copy:server"
+          "dev"
+       ]
+
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-#        tasks: ["newer:recess"]
-        tasks: ["recess"]
+        tasks: ["newer: recess"] # good idea to use newer - well defined src-dest mappings
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
 
-      livereload:
+      # split up the livereload tasks to prevent unnecessary snowballing!
+      html:
         files: [
           "<%= yeoman.app %>/**/*.html"
-          "<%= yeoman.app %>/**/*.html"
-          "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css"
-          "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
-          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
-        # watch can now handle livereload!
         options:
           livereload: true
-        
 
-      dev:
+      css:
+        files: [
+          "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css"
+        ]
+        options:
+          livereload: true
+
+      js:
+        files: [
+          "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js"
+        ]
+        options:
+          livereload: true
+
+      images:
+        files: [
+          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
+        ]
+        options:
+          livereload: true
+
+
+
+      # for safety force a full rebuild when library files are changed
+      lib:
         files: [
           "lib/*.ls"
+        ]
+        tasks: [
+          "clean"
+          "recess"
+          "copy:server"
+          "dev"
+        ]
+        
+      dev:
+        files: [
           "layouts/*.html"
           "<%= yeoman.sources %>/index.md"
           "<%= yeoman.sources %>/privacy.md"
@@ -265,6 +325,36 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/stations/*.md"
         ]
         tasks: ["dev"]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
+
+      sourceDelete: 
+        files: [
+          "layouts/*.html"
+          "<%= yeoman.sources %>/index.md"
+          "<%= yeoman.sources %>/privacy.md"
+          "<%= yeoman.sources %>/cookies.md"
+          "<%= yeoman.sources %>/map.md"
+          "<%= yeoman.sources %>/pervasiveIdeasHome.md"
+          "<%= yeoman.sources %>/guides/*.md"
+          "<%= yeoman.sources %>/lines/*.md"
+          "<%= yeoman.sources %>/pervasiveIdeas/*.md"
+          "<%= yeoman.sources %>/examQuestions/*"
+          "<%= yeoman.sources %>/examQuestions/*/*"
+          "<%= yeoman.sources %>/resources/*"
+          "<%= yeoman.sources %>/resources/*/*"
+          "<%= yeoman.sources %>/resourceTypes/*.md"
+          "<%= yeoman.sources %>/stations/*.md"
+        ]
+        tasks: [
+          "clean"
+          "recess"
+          "copy:server"
+          "dev"
+        ]
+        options:
+          event: ['deleted']
 
       scripts:
         files: [
@@ -272,20 +362,30 @@ module.exports = (grunt) ->
           "!<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          # "newer:copy:assets"
-          "copy:assets"
+          "newer:copy:assets" # good idea to use newer - well defined src-dest mappings
         ]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
 
       # The map.js script has metadata created by generateHtml
-      # TODO: possibly refactor this out into its own task?
+      # so we touch the map to force regeneration
       mapScript: 
         files: [
           "<%= yeoman.appSources %>/scripts/map.js"
         ]
         tasks: [
-          "expandMetadata"
-          "generateHtml"
+          "touch:map" 
         ]
+        # deleted wouldn't propagate correctly without a clean
+        options:
+          event: ['added', 'changed']
+
+    touch: 
+      map: 
+        options: 
+          mtime: true
+        src: ["layouts/map.html"]
 
     connect:
       options:
@@ -469,8 +569,6 @@ module.exports = (grunt) ->
         ]
 
     copy:
-
-
       assets:
         files: [
           expand: true
@@ -496,9 +594,8 @@ module.exports = (grunt) ->
             "*.{ico,txt}"
             "fonts/*"
             ".htaccess"
-            "bower_components/**/*.js"  # can we restrict to *.min.js in dist? NO! usemin concats and minifies
+            "bower_components/**/*.js"  # can we restrict to *.min.js in dist?
             "scripts/map.js"
-            "scripts/jquery.scrollintoview.min.js"
             "scripts/underscore-min.js"
             "resources/*/*.gif"
             "resources/*/*.jpg"
@@ -567,6 +664,9 @@ module.exports = (grunt) ->
   # register expandMetadata task
   expandMetadata grunt
 
+  # register configSrc task
+  setupGenerateHtml grunt
+
   # register generateHtml task
   generateHtml grunt
 
@@ -616,9 +716,8 @@ module.exports = (grunt) ->
       ])
 
   grunt.registerTask "test", [
-    #"clean:app"
-    #"clean:test"
-    "clean"
+    "clean:app"
+    "clean:test"
     "dev:html"
     # "lsc"
     # "panda:pass1"
@@ -683,57 +782,28 @@ module.exports = (grunt) ->
     grunt.log.writeln "Developing for targets:"
     _.each targets, (value, index, collection) -> grunt.log.writeln "  " + value
 
-    # # tasks common to all targets
-    # grunt.task.run ([ 
-    #   "newer:lsc" 
-    #   "clearance" # no newer implementation needed
-    #   "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadataser
-    #   "newer:expandMetadata"
-    #   "newer:lastUpdated" 
-    # ])
-    # if _.contains(targets, "html")
-    #   grunt.task.run([
-    #     "newer:tubemap:svg" 
-    #     "newer:panda:pass2html" 
-    #     "newer:copy:assets" 
-    #     "newer:generateHtml" 
-    #   ])
-    # if _.contains(targets, "printables")
-    #   grunt.task.run([
-    #     "newer:panda:pass2printables"
-    #     "newer:generatePrintables"
-    #     "newer:latex:printables"
-    #     "newer:copy:printables"
-    #   ])
-    # else if _.contains(targets, "quick")
-    #   grunt.task.run([
-    #     "panda:pass2printables"
-    #     "generatePrintables"
-    #     "latex:test"
-    #     "copy:printables"
-    #   ])
-
     # tasks common to all targets
     grunt.task.run ([ 
-      "lsc" 
-      "clearance" # no newer implementation needed
-      "panda:pass1" # newer causes expandMetadata to break since panda rewrites metadataser
-      "expandMetadata"
-      "lastUpdated" 
+      "newer:lsc"       # good idea to use newer - well defined src-dest mappings
+      "clearance"       #  bad idea to use newer - no dests
+      "panda:pass1"     #  bad idea to use newer - no dests
+      "expandMetadata"  #  bad idea to use newer - no dests
+      "lastUpdated"     #  bad idea to use newer - no dests
     ])
     if _.contains(targets, "html")
       grunt.task.run([
-        "tubemap:svg" 
-        "panda:pass2html" 
-        "copy:assets" 
-        "generateHtml" 
+        "newer:tubemap:svg"       # good idea to use newer - well defined src-dest mappings
+        "newer:panda:pass2html"   # good idea to use newer - well defined src-dest mappings
+        "newer:copy:assets"       # good idea to use newer - well defined src-dest mappings
+        "setupGenerateHtml"       #  bad idea to use newer - no dests
+        "newer:generateHtml"      # good idea to use newer - well defined src-dest mappings
       ])
     if _.contains(targets, "printables")
       grunt.task.run([
-        "panda:pass2printables"
-        "generatePrintables"
-        "latex:printables"
-        "copy:printables"
+        "newer:panda:pass2printables"   # good idea to use newer - well defined src-dest mappings
+        "generatePrintables"            #  bad idea to use newer - no dests (yet...)
+        "latex:printables"              #  bad idea to use newer - no dests (yet...)` 
+        "newer:copy:printables"         # good idea to use newer - well defined src-dest mappings
       ])
     else if _.contains(targets, "quick")
       grunt.task.run([
