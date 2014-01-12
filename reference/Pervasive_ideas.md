@@ -1,13 +1,28 @@
 Pervasive ideas
 ===============
 
+PI1: Multiple representations
+PI2: Linearity
+PI3: Proof
+PI4: Conjecturing
+PI5: Visualising
+PI6: Axioms and axiomatic systems
+PI7: Symmetry
+PI8: History of maths
+PI9: Iteration
+PI10: Group theory
+PI11: Averages
+PI12: Generalising and specialising
+PI13: Infinity
+PI14: Modelling
+
 Mathematical processes
 ----------------------
 
 familyID process
 
 - Proof (PI3)
-- Modelling
+- Modelling (PI14)
 - Generalising and specialising (PI12)
 - Doing and undoing
 - Multiple representations (PI1)
@@ -27,7 +42,7 @@ Pervasive mathematical concepts
 
 familyID concept
 
-- Infinity
+- Infinity (PI13)
 - Symmetry (PI7)
 - Averages (PI11)
 - Inverses

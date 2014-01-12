@@ -6,8 +6,7 @@ keywords:
   - giraffe
   - pineapple
 resourceType: RT2
-stids1:
-  - G2
+stids1: G2
 stids2:
 pvids1:
   - PI3

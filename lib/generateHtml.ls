@@ -11,7 +11,7 @@ module.exports = (grunt) ->
 
   # Please see the Grunt documentation for more information regarding task
   # creation: http://gruntjs.com/creating-tasks
-  grunt.registerTask "generateHtml", "Generate the site html, javascripts and CSS.", ->
+  grunt.registerMultiTask "generateHtml", "Generate the site html, javascripts and CSS.", ->
 
     #
     # Run the site generator on grunt panda generated metadata
@@ -22,7 +22,6 @@ module.exports = (grunt) ->
     #
     # set up some short cut references
     # 
-    # we do not need a deep copy
     metadata = grunt.config.data.metadata
 
     sources = metadata.sources
@@ -40,7 +39,9 @@ module.exports = (grunt) ->
     appDir = grunt.config.get "yeoman.app"
     appSourcesDir = grunt.config.get "yeoman.appSources"
 
-    # make html from resource layout and data
+    #
+    # read in ubiquitous layouts
+    #
     _head = grunt.file.read "layouts/_head.html"
     _nav = grunt.file.read "layouts/_nav.html"
     _foot = grunt.file.read "layouts/_foot.html"
@@ -52,11 +53,16 @@ module.exports = (grunt) ->
     #
     metadata.acknowledgements = grunt.file.readYAML "#{sourcesDir}/acknowledgements.yaml"
 
+    #
+    # generate template data for site resources
+    #
     getExamQuestionPartData = (require './getFilePartData.js') grunt, sources, partialsDir+'/html', 'examQuestions'
     getResourceData = (require './getResourceData.js') grunt, sources, partialsDir+'/html'
     getPervasiveIdeaData = (require './getPervasiveIdeaData.js') grunt, sources, partialsDir+'/html'
 
-
+    #
+    # Generate top level page
+    #
     generateTopLevelPage = (fname, ...moreData) ->
       if not sources[fname]?.meta?
         grunt.log.error "source file #{fname}.md has no metadata"
@@ -81,78 +87,8 @@ module.exports = (grunt) ->
         html = grunt.template.process grunt.file.read(layout), data
         grunt.file.write "#{appDir}/#{fname}.html", html 
 
-
     #
-    # Call the html generators
-    #
-    generateTopLevelPage 'index'
-    generateTopLevelPage 'map' do
-      _linesMenu: _linesMenu
-      # relative to app directory
-      pngUrl: './images/tubeMap.png'
-      # relative to base directory
-      svgContent: parseSVG grunt.file.read "./app/images/tubeMap.svg"
-    generateTopLevelPage 'index'
-    generateTopLevelPage 'pervasiveIdeasHome' do
-      families: families
-      pervasiveIdeas: pervasiveIdeas
-    generateTopLevelPage 'resourceTypesHome' do
-      resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
-    generateTopLevelPage 'privacy'
-    generateTopLevelPage 'cookies'
-
-    #
-    # pervasiveIdeas
-    #
-    for pvid, data of pervasiveIdeas
-
-      meta = data.meta
-      layout = getLayout sources, 'pervasiveIdeas', meta
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _piMenu: _piMenu
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          meta: meta
-          content: getPervasiveIdeaData pvid, meta
-          sources: sources
-          stations: stations
-          resources: resources
-          resourceTypes: resourceTypes
-          families: metadata.families
-          rootUrl: '..'
-          resourcesUrl: '../resources'
-      }
-
-      grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
-
-    #
-    # examQuestions
-    #
-    # examQuestions: 
-    #   Q1: 
-    #     index: 
-    #       meta: 
-    #         source: CamAss
-    #         layout: resource
-    #         clearance: 0
-    #         keywords: null
-    #         year: June 1953
-    #         paper: "Mathematics A level paper 2, 185"
-    #         qno: 2
-    #         stids1: 
-    #           - G2
-    #           - E2
-    #         stids2: null
-    #         pvids1: null
-    #         pvids2: null
-    #     solution: 
-    #       meta: 
-    #         alias: Solution
-
-    #
-    # Render individual questions to partialsDir
+    # Render individual examQuestions to partialsDir
     #
     referenceFor = (qmeta) -> {
       ref: [
@@ -164,7 +100,7 @@ module.exports = (grunt) ->
     }
 
     #
-    # Create a new resourceId for a station from a collection of rendered questions
+    # Create a new resourceId for a station from a collection of rendered examQuestions
     #
     createStationRT13s = (stid, rt13Sorted, resid) ->
 
@@ -226,117 +162,210 @@ module.exports = (grunt) ->
         #grunt.log.error "SORT sorting #{meta.id} on weight #weight"
         +meta.rt.substr(2)+idWeight
       R1s.splice insertAt, 0, resMeta
-
-
-    #
-    # Scan examQuestions to create rendered Questions
-    #
-
-    st13s = {}
-    pi13s = {}
-
-    for eqid, data of examQuestions
-      indexMeta = data.index?.meta
-      layout = getLayout sources, 'renderQuestion', null
-      content = getExamQuestionPartData eqid, data, indexMeta
-      content.0.alias = "#{eqid}"
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          content: content
-          reference: referenceFor indexMeta
-          eqid: eqid
-          rootUrl: '../..'
-          resourcesUrl: '..'
-      }
-      grunt.file.write "#{partialsDir}/html/renderedQuestions/#{eqid}/index.html", html
-
+      
+    if @target is "topLevelPages"
       #
-      # Collect eqids by station and by pervasiveIdea
+      # top level pages
       #
-      if indexMeta.stids1?
-        for id in (indexMeta.stids1)
-          st13s[id] ?= {}
-          rt13 = st13s[id]
-          rt13[eqid] = true
-          #grunt.log.error "stid = #{id} equid=#{eqid}"
+      pageNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[1]
+        destFileName = destFile.split(".")[0]
+        pageNames.push destFileName
 
-      if indexMeta.pvids1?
-        for id in (indexMeta.pvids1)
-          pi13s[id] ?= {}
-          rt13 = pi13s[id]
-          rt13[eqid] = true
-
-    #
-    # Create partial html for each station and pi RT13
-    #
-    for stid, rt13 of st13s
-
-      rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
-
-      # TODO: paginate instead of truncate
-      # rt13Sorted = _.filter rt13Sorted, (data, index) -> index < 9
-
-      # chop into max 5 questions per page
-      partition = _.groupBy rt13Sorted, (val, index)->Math.floor(index / 5)
-      for key, subset of partition
-        resid = "#{stid}_RT13_EQ_#{key}"
-        createStationRT13s stid, subset, resid
-
-    #
-    # stations
-    #
-    for stid, data of stations
-      #generateHTML sources, fder, stid, meta.meta
-
-      meta = data.meta
-      layout = getLayout sources, 'stations', meta
-
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
+      if 'index' in pageNames
+        generateTopLevelPage 'index'
+      if 'map' in pageNames
+        generateTopLevelPage 'map' do
           _linesMenu: _linesMenu
-          meta: meta
-          content: grunt.file.read "#{partialsDir}/html/stations/#{stid}.html"
-          sources: sources
-          rootUrl: ".."
-          resourcesUrl: '../resources'
-      }
+          # relative to app directory
+          pngUrl: 'images/tubeMap.png'
+          # relative to base directory
+          svgContent: parseSVG grunt.file.read "#{appDir}/images/tubeMap.svg"
+      if 'pervasiveIdeasHome' in pageNames
+        generateTopLevelPage 'pervasiveIdeasHome' do
+          families: families
+          pervasiveIdeas: pervasiveIdeas
+      if 'resourceTypesHome' in pageNames
+        generateTopLevelPage 'resourceTypesHome' do
+          resourceTypes: _.sortBy resourceTypes, ((data, rt) -> +rt.substr 2)
+      if 'privacy' in pageNames
+        generateTopLevelPage 'privacy'
+      if 'cookies' in pageNames
+        generateTopLevelPage 'cookies'
 
-      grunt.file.write "#{appDir}/stations/#{stid}.html", html
+    else if @target is "pervasiveIdeas"
+      #
+      # pervasiveIdeas
+      #
 
-    #
-    # resources
-    #
+      pvNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[2]
+        destFileName = destFile.split(".")[0]
+        pvNames.push destFileName
 
-    for resourceName, files of resources
-      indexMeta = files.index.meta
-      layout = getLayout sources, 'resources', indexMeta
-      content = getResourceData resourceName, files, indexMeta
-      ackText = if indexMeta.source then metadata.acknowledgements[indexMeta.source].acknowledgement else void
+      for pvid, data of pervasiveIdeas
+        if pvid not in pvNames
+          # we don't need to recompile
+          continue
+        meta = data.meta
+        layout = getLayout sources, 'pervasiveIdeas', meta
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            _piMenu: _piMenu
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            meta: meta
+            content: getPervasiveIdeaData pvid, meta
+            sources: sources
+            stations: stations
+            resources: resources
+            resourceTypes: resourceTypes
+            families: metadata.families
+            rootUrl: '..'
+            resourcesUrl: '../resources'
+        }
+        grunt.file.write "#{appDir}/pervasiveIdeas/#{pvid}.html", html
 
-      # grunt.log.error "id=#{indexMeta.id}: title=#{indexMeta.title}, lastUpdated=#{indexMeta.lastUpdated}"
-      html = grunt.template.process grunt.file.read(layout), {
-        data:
-          _head: _head
-          _nav: _nav
-          _foot: _foot
-          resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
-          content: content
-          meta: indexMeta
-          ackText: ackText
-          rootUrl: '../..'
-          resourcesUrl: '..'
-      }
-      grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
+    else if @target is "examQuestions"
+      #
+      # examQuestions 
+      #
 
+      eqNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFileName = destPath.split("/")[3]
+        eqNames.push destFileName
+
+      st13s = {}
+      pi13s = {}
+
+      for eqid, data of examQuestions
+        indexMeta = data.index?.meta
+        layout = getLayout sources, 'renderQuestion', null
+        unless eqid in eqNames
+          # we don't need to recompile
+          continue
+        content = getExamQuestionPartData eqid, data, indexMeta
+        content.0.alias = "#{eqid}"
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            content: content
+            reference: referenceFor indexMeta
+            eqid: eqid
+            rootUrl: '../..'
+            resourcesUrl: '..'
+        }
+        grunt.file.write "#{partialsDir}/html/renderedQuestions/#{eqid}/index.html", html
+
+        #
+        # Collect eqids by station and by pervasiveIdea
+        #
+        if indexMeta.stids1?
+          for id in (indexMeta.stids1)
+            st13s[id] ?= {}
+            rt13 = st13s[id]
+            rt13[eqid] = true
+            #grunt.log.error "stid = #{id} equid=#{eqid}"
+
+        if indexMeta.pvids1?
+          for id in (indexMeta.pvids1)
+            pi13s[id] ?= {}
+            rt13 = pi13s[id]
+            rt13[eqid] = true
+
+      #
+      # Create partial html for each station and pi RT13
+      #
+      for stid, rt13 of st13s
+
+        rt13Sorted = _.sortBy (_.keys rt13), (k) -> +k.substr(1)
+
+        # TODO: paginate instead of truncate
+        # rt13Sorted = _.filter rt13Sorted, (data, index) -> index < 9
+
+        # chop into max 5 questions per page
+        partition = _.groupBy rt13Sorted, (val, index)->Math.floor(index / 5)
+        for key, subset of partition
+          resid = "#{stid}_RT13_EQ_#{key}"
+          createStationRT13s stid, subset, resid
+
+    else if @target is "stations"
+      #
+      # stations
+      #
+      stationNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFile = destPath.split("/")[2]
+        destFileName = destFile.split(".")[0]
+        stationNames.push destFileName
+
+      for stid, data of stations
+        meta = data.meta
+        layout = getLayout sources, 'stations', meta
+        unless stid in stationNames
+          # we don't need to recompile
+          continue
+
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            _linesMenu: _linesMenu
+            meta: meta
+            content: grunt.file.read "#{partialsDir}/html/stations/#{stid}.html"
+            sources: sources
+            rootUrl: ".."
+            resourcesUrl: '../resources'
+        }
+        grunt.file.write "#{appDir}/stations/#{stid}.html", html
+
+    else if @target is "resources"
+      #
+      # resources
+      #
+      resNames = new Array()
+      _.each @files, (file, key) ->
+        destPath = file.dest
+        destFileName = destPath.split("/")[2]
+        resNames.push destFileName
+
+      for resourceName, files of resources
+        indexMeta = files.index.meta
+        layout = getLayout sources, 'resources', indexMeta
+        unless resourceName in resNames
+          # we don't need to recompile
+          continue
+        content = getResourceData resourceName, files, indexMeta
+        ackText = if indexMeta.source then metadata.acknowledgements[indexMeta.source].acknowledgement else void
+
+        # grunt.log.error "id=#{indexMeta.id}: title=#{indexMeta.title}, lastUpdated=#{indexMeta.lastUpdated}"
+        html = grunt.template.process grunt.file.read(layout), {
+          data:
+            _head: _head
+            _nav: _nav
+            _foot: _foot
+            resourceTypeMeta: sources.resourceTypes[indexMeta.resourceType].meta
+            content: content
+            meta: indexMeta
+            ackText: ackText
+            rootUrl: '../..'
+            resourcesUrl: '..'
+        }
+        grunt.file.write "#{appDir}/resources/#{resourceName}/index.html", html
+
+    # this isn't too computationally expensive so can run every time
     generateLess sources
 
     # return the metadata
-    # NB no writing of metadata needed, because we didn't get a deep copy!
     return metadata
-
 
     #
     # Generate line colours for less
@@ -347,14 +376,16 @@ module.exports = (grunt) ->
       _.each sources.lines, (line, lineId)->
         colour = line.meta.colour
         css += "@linecolor#{lineId}: #colour;\n"
-      grunt.file.write "#{appDir}/styles/lineVars.less", css
+      grunt.file.write "#{appSourcesDir}/styles/lineVars.less", css
 
       css = ''
       _.each sources.lines, (line, lineId)->
         css += ".button#{lineId} {\n  .button-line(@linecolor#{lineId})\n}\n"
-      grunt.file.write "#{appDir}/styles/lines.less", css
+      grunt.file.write "#{appSourcesDir}/styles/lines.less", css
 
-    # TODO: refactor into separate task?
+    #
+    # Parse SVG for map generation
+    #
     function parseSVG(data)
       # Removes titles and generates popover markup
       $ = cheerio.load data 
@@ -363,7 +394,7 @@ module.exports = (grunt) ->
         # The title contains the element id according to SVG spec
         # Maybe better to use http://www.graphviz.org/content/preservation-dot-id-svg
         ids = $(elem).text().split("-")
-        grunt.verbose.writeln 'Station ' + ids[0]
+        # grunt.verbose.writeln 'Station ' + ids[0]
         $(elem).parent().attr 'station-id', ids.join("-")
         # Generate appropriate popover data
         content = ''

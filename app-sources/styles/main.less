@@ -27,27 +27,6 @@ html, body {
 }
 
 /* Set the fixed height of the footer here */
-// #push,
-// #footer {
-//   height: @footer-height;
-//   padding-top: 30px;
-// }
-// #footer {
-//   background-color: #444;
-//   position:relative;
-//   bottom:0;
-// }
-// #footer .container {
-//   position:relative;
-//   top:20px;
-//   bottom:20px;
-//   left:0;
-//   padding-left: 20px;
-//   padding-right:20px;
-//   max-width:750px;
-// }
-
-/* Set the fixed height of the footer here */
 #footer {
   clear:both;
   margin-top: -@footer-height;
@@ -262,8 +241,14 @@ figure img, figure svg {
 figure {
     text-align: center;
     display: block;
-    max-width: 75%; 
+    max-width: 50%; 
     margin: 10px auto;
+}
+
+@media (max-width: 480px) {
+  figure {
+    max-width:100%;
+  }
 }
 
 #map {
