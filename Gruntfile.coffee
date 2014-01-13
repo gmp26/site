@@ -320,7 +320,7 @@ module.exports = (grunt) ->
           "<%= yeoman.sources %>/examQuestions/*"
           "<%= yeoman.sources %>/examQuestions/*/*"
           "<%= yeoman.sources %>/resources/*"
-          "<%= yeoman.sources %>/resources/*/*"
+          "<%= yeoman.sources %>/resources/*/*.md"
           "<%= yeoman.sources %>/resourceTypes/*.md"
           "<%= yeoman.sources %>/stations/*.md"
         ]
@@ -712,7 +712,7 @@ module.exports = (grunt) ->
         # livereload now handled in watch
         "connect:livereload"
         "open"
-        "watch"
+        "watch:dev"
       ])
 
   grunt.registerTask "test", [
@@ -726,7 +726,6 @@ module.exports = (grunt) ->
     # "panda:pass2html"
     # "copy:assets"
     # "generateHtml"
-
     "mochaTest:sources"
   ]
 

@@ -1,6 +1,7 @@
 *.sublime*
 *.swp
 app/
+app-sources/styles/line*.less
 app-sources/bower_components/
 app-sources/images/tubeMap.*
 dist/
