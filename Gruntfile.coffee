@@ -258,8 +258,11 @@ module.exports = (grunt) ->
 
       recess:
         files: ["<%= yeoman.appSources %>/styles/{,*/}*.less"]
-        tasks: ["newer: recess"] # good idea to use newer - well defined src-dest mappings
+        tasks: ["recess"] # good idea to use newer - well defined src-dest mappings
         # deleted wouldn't propagate correctly without a clean
+
+        # TEMPORARILY DISABLED -- see https://github.com/CMEPorg/CMEP-site/issues/158
+
         options:
           event: ['added', 'changed']
 
